@@ -1,0 +1,223 @@
+<div class="flexrow gap-2">
+
+  <div class="card grow h-full">
+    <div class="head">
+      <div class="font-bold">
+        <i class="fas fa-info-circle"></i>&nbsp;Check Information
+      </div>
+    </div>
+    <div class="p-2">
+      <table>
+		<tbody>
+        <tr>
+		  <th>Attempt</th>
+          <td>[% obj.current_attempt %]/[% obj.max_check_attempts %]</td>
+		</tr>
+		<tr>
+		  <th>State</th>
+          <td>[% IF obj.state_type == 1 %]HARD[% ELSE %]SOFT[% END%]</td>
+		  </tr>
+		<tr>
+		  <th>Type</th>
+          <td>[% IF obj.check_type == 0 %]ACTIVE[% ELSE %]PASSIVE[% END %]</td>		  
+		</tr>
+		</table>
+	  </div>
+	</div>
+
+  <div class="card grow h-full">
+    <div class="head">
+      <div class="font-bold">
+        <i class="fas fa-clock"></i>&nbsp;Last Check Time <span class="badge WARNING">[% last_check(c, obj.last_check) %]<span>
+      </div>
+    </div>
+    <div class="p-2">
+      <table>
+		<tbody>
+        <tr>
+		  <th>Next time</th>
+          <td>
+            [% IF obj.next_check %][% date_format(c, obj.next_check) %][% ELSE %]N/A[% END %]
+            [% IF obj.is_executing > 0 %]<div class="spinner" title="This [% type | html %] is currently executing its [% type | html %]check"></div>[% END %]
+            [% IF obj.depends_exec.size > 0 %]
+              (dependency: [% FOREACH parent IN obj.depends_exec %][% IF !loop.first() %], [% END %][% PROCESS parent_obj color=0 parent = parent %][% END %])
+            [% END %]
+          </td>
+		</tr>
+		<tr>
+		  <th>Repeat</th>
+		  <td>
+            [% IF obj.check_type == 0; d = duration(obj.check_interval * pi_detail.$peer_key.interval_length, 5) %]
+              <span class="check_interval" title="this [% type | html %] will be checked every [% d %]."> [% d %]</span>
+            [% END %]
+          </td>
+		</tr>
+		<tr>
+		  <th>When Changed</th>
+		  <td>[% date_format(c, obj.last_state_change) %]</td>
+		</tr>		
+		
+		  [% IF obj.last_notification != 0 %]
+		  <tr>
+			<th>
+			[% IF obj.current_notification_number > 1 %][% plural = 's' %][% ELSE %][% plural = '' %][% END %]
+			[% obj.current_notification_number %]&nbsp;notification[% plural %]
+			
+			</th>
+			<td>
+              [% date_format(c, obj.last_notification) %]
+              [% IF obj.current_notification_number == 0 && obj.first_notification_delay != "" && obj.first_notification_delay > 0 %]
+                [% first_remaining = calculate_first_notification_delay_remaining(obj) %]
+                [% IF first_remaining >= 0 %]
+                  <span title="This [% type | html %] will send out notifications in [% first_remaining %] minutes">~[% first_remaining %]min</span>
+                [% END %]
+              [% END %]
+              [% IF obj.exists('depends_parents') && obj.depends_parents.size > 0 %]
+                (parents: [% FOREACH parent IN obj.depends_parents %][% IF !loop.first() %], [% END %][% PROCESS parent_obj color=0 parent = parent %][% END %])
+              [% END %]
+              [% IF obj.depends_notify.size > 0 %]
+                (dependency: [% FOREACH parent IN obj.depends_notify %][% IF !loop.first() %], [% END %][% PROCESS parent_obj color=0 parent = parent %][% END %])
+              [% END %]
+            </td>
+		  </tr>
+          [% END %]		
+		</table>
+	  </div>
+	</div>
+
+  <div class="card h-full">
+    <div class="head">
+      <div class="font-bold">
+        <i class="fas fa-bolt"></i>&nbsp;Statistics
+      </div>
+    </div>
+    <div class="p-2">
+      <table>
+      <tbody>
+        <tr>                    
+			<th>Latency</th>
+            <td>
+              [% IF obj.check_type == 0 %]
+                [% FILTER format('%.3f') %][% obj.latency %][% END %] s.
+              [% ELSE %]
+                N/A
+              [% END %]
+              </td>
+			</tr>
+			<tr>
+			  <th>Duration</th>
+              <td>			  
+                [% FILTER format('%.3f') %][% obj.execution_time %][% END %] s.
+            </td>
+        </tr>
+      </tbody>
+      </table>
+    </div>
+   </div>
+  
+  <div class="card h-full">
+    <div class="head">
+      <div class="font-bold">
+        <i class="fas fa-plus-circle"></i>&nbsp;Extra [% type | html %] information
+      </div>
+    </div>
+    <div class="p-2">
+      <table>
+            [% IF obj.flap_detection_enabled %]
+            <tr>
+              <th>Flapping</th>
+              <td>
+              [% IF obj.is_flapping %]
+                <span class='badge NO'>FLAPPING</span>
+              [% ELSE %]
+                <span class='badge YES'>NO</span>
+                [% IF obj.percent_state_change > 0 %]([% FILTER format('%.2f') %][% obj.percent_state_change %][% END %]% state change)[% END %]
+              [% END %]
+              </td>
+            </tr>
+            [% END %]
+            [% IF obj.scheduled_downtime_depth > 0 %]
+            <tr>
+            <th>Downtime</th>
+            <td>
+              <span class='badge WARNING'>ACTIVE</span>
+              [% IF downtimes.size > 0 %]
+                [% FOREACH d = downtimes %]
+                  [% IF d.start_time > date.now; continue; END %]
+                  (<a class="link js-modal-command-link" href="cmd.cgi?cmd_typ=[% IF type == "host" %]78[% ELSE %]79[% END %]&amp;down_id=[% d.id %]&amp;backend=[% d.peer_key %]">[% date_format(c, d.start_time) %] - [% date_format(c, d.end_time) %]</a>)
+                [% END %]
+              [% END %]
+            </td>
+            </tr>
+            [% END %]
+            <tr>
+              <th>Check Period</th>
+              <td>
+              [% IF obj.in_check_period %]
+                <span class='badge YES'>YES</span>
+              [% ELSE %]
+                <span class='badge NO'>NO</span>
+              [% END %]
+              <i><a class="link" href="config.cgi?type=timeperiods&jump=[% obj.check_period | uri %]">[% obj.check_period | html %]</a></i>
+              </td>
+            </tr>
+            <tr>
+            <th>Notification Period</th>
+            <td>
+              [% IF obj.in_notification_period %]
+                <span class='badge YES'>YES</span>
+              [% ELSE %]
+                <span class='badge NO'>NO</span>
+              [% END %]
+              <i><a class="link" href="config.cgi?type=timeperiods&jump=[% obj.notification_period | uri %]">[% obj.notification_period | html %]</a></i>
+            </td>
+            </tr>
+        [% IF backends && backends.size > 1 %]
+          <tr>
+            <th>Monitored by</th>
+            <td>[% pi_detail.$peer_key.peer_name %]</td>
+          </tr>
+        [% END %]
+
+      [% IF show_modified_attributes && obj.modified_attributes_list.size > 0 %]
+        <tr>
+          <th class="w-1/3">Modifications</th>
+          <td>
+            [% IF obj.modified_attributes_list.size > 0 %]
+              [% FOREACH attr = obj.modified_attributes_list %]
+                <span class='badge WARNING px-2'>[% attr %]</span>
+              [% END %]
+            [% END %]
+          </td>
+        </tr>
+      [% END %]
+    </table>
+    </div>
+  </div>
+
+[% IF show_contacts && c.check_user_roles('authorized_for_configuration_information') && obj.contacts.size > 0 %]
+<div class="card w-1/5 h-full">
+    <div class="head">
+      <div class="font-bold">
+	  [% IF obj.contacts.size > 1 %][% plural = 's' %][% ELSE %][% plural = '' %][% END %]
+        <span class="fas fa-users"></span>&nbsp;[% obj.contacts.size %] contact[% plural %]
+      </div>
+    </div>
+    <div class="p-3">
+              [% colors = ['slate','orange','lime','sky','indigo','pink','yellow','green','gray'] %]
+              <div class="pl-3" style="white-space: normal !important;">    
+              <div>
+              [% FOREACH contact_user = obj.contacts %]              
+              [% USE Math %]
+              [% color_num = Math.int(Math.rand(colors.size)) %]
+              <span title="[% contact_user %]">
+                <i class="fas fa-circle-user" style="font-size: 1.8rem !important;height: inherit !important; width: inherit !important; color: var(--color-[% colors.$color_num %]-500)"></i>
+              </span>
+              [% END %]
+              </div>
+            </div>
+    </div>
+</div>
+[% END %]
+
+</div>

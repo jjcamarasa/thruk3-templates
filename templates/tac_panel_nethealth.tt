@@ -1,0 +1,58 @@
+﻿<div class="card min-w-[420px] overflow-hidden">
+      <div class="head">
+        <h3><a href='extinfo.cgi?type=4'>Network Health</a></h3>
+      </div>
+ <div class="body">
+        <div class="progressbar">
+          [% IF empty || (host_stats.total-host_stats.pending) == 0 %]
+            [% host_health = 0 %]
+          [% ELSE %]
+            [% host_health = host_stats.up / (host_stats.total-host_stats.pending) * 100 %]
+          [% END %]
+          [% host_health = sprintf('%i', host_health) %]
+          [% host_perc   = host_health %]
+          [% IF host_perc >= 90 %]
+            [% host_health_cls = 'UP' %]
+          [% ELSIF host_perc >= 75 %]
+            [% host_health_cls = 'WARNING' %]
+          [% ELSIF host_perc >= 5 %]
+            [% host_health_cls = 'DOWN' %]
+          [% ELSE %]
+            [% host_health_cls = 'DOWN' %]
+            [% host_perc = 5 %]
+          [% END %]
+          [% IF host_stats.total == 0 %]
+            [% host_health_cls = 'UP' %]
+          [% END %]
+          <div class="description"><span>Host Health</span></div>
+          <div class="bar"><div style="width:[% host_perc %]%" class="[% host_health_cls %]"></div></div>
+          <div class="percent"><span>[% host_health %]%</span></div>
+        </div>
+
+       <div class="progressbar mt-1">
+          [% IF empty || (service_stats.total-service_stats.pending) == 0 %]
+            [% service_health = 0 %]
+          [% ELSE %]
+            [% service_health = (service_stats.ok + service_stats.warning + service_stats.unknown) / ((service_stats.total-service_stats.pending)) * 100 %]
+          [% END %]
+          [% service_health = sprintf('%i', service_health) %]
+          [% service_perc   = service_health %]
+          [% IF service_health >= 90 %]
+            [% service_health_cls = 'OK' %]
+          [% ELSIF service_health >= 75 %]
+            [% service_health_cls = 'WARNING' %]
+          [% ELSIF service_health >= 5 %]
+            [% service_health_cls = 'CRITICAL' %]
+          [% ELSE %]
+            [% service_health_cls = 'CRITICAL' %]
+            [% service_perc = 5 %]
+          [% END %]
+          [% IF service_stats.total == 0 %]
+            [% service_health_cls = 'UP' %]
+          [% END %]
+          <div class="description"><span>Service Health</span></div>
+          <div class="bar"><div style="width:[% service_perc %]%" class="[% service_health_cls %]"></div></div>
+          <div class="percent"><span>[% service_health %]%</span></div>
+        </div>
+ </div>
+</div>

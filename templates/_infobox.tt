@@ -1,0 +1,15 @@
+﻿[% USE date %]
+[% DEFAULT extra_classes = "" %]
+[% IF extra_classes %]
+  [% SET extra_classes =  " " _ extra_classes %]
+  <div class="[% extra_classes %]">
+[% ELSE %]
+  <div>
+[% END %]
+  <div class="text-2xl text-slate-800">
+    [% infoBoxTitle %]
+  </div>
+  <div class="m-0 text-xl uppercase text-slate-400">
+    [% infoBoxPreTitle %]
+  </div>
+</div>

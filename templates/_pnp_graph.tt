@@ -1,0 +1,82 @@
+﻿[% USE date %]
+<script>
+  var pnp_source = [% pnp_source %];
+  var pnp_url    = "[% pnp_url %]/image?host=[% hst | uri %]&srv=[% svc | uri %]&view=1&graph_width=550";
+
+  /* try to fetch sources */
+  var source_url = pnp_url.replace(/\/image\?/, '/json?');
+  jQuery.ajax({
+    url: source_url,
+    type: 'POST',
+    xhrFields: {
+      withCredentials: true
+    },
+    success: function(data) {
+      if(!data.match(/^\[/)) { return; }
+      var sources    = eval(data);
+      var has_graphs = false;
+      jQuery('#pnp_source_select').find('option').remove();
+      jQuery(sources).each(function(x, s) {
+          jQuery('#pnp_source_select').append('<option value="'+x+'"'+(x==pnp_source ? ' selected' : '')+'>'+s.ds_name+'<\/option>');
+          has_graphs = true;
+      });
+      /* only useful for multiple sources */
+      if(has_graphs) {
+        jQuery('#pnp_source_select').show();
+      }
+    },
+    error: ajax_xhr_error_logonly
+  });
+</script>
+
+<div class="card w-full">
+  <div class="head justify-between">
+    <h3>Performance Graph</h3>
+    <div class='pnpSelector'>
+      <form action="#">
+        <select onchange="pnp_source=this.value; set_png_img();" id="pnp_source_select" style="display: none;">
+        </select>
+      </form>
+    </div>
+  </div>
+
+  <div class="head px-0 clickable">
+    <span	class="tabs text-center w-12"    onclick="return move_png_img(-0.5)"><i class="fas fa-angle-down text-lg contents"></i></span>
+    <span id="pnp_th1" class="tabs text-center w-[18%]" onclick="return set_png_img([% date.now -    14400 %], [% date.now %], this.id, pnp_source)">4 hours</span>
+    <span id="pnp_th2" class="tabs text-center w-[18%]" onclick="return set_png_img([% date.now -    90000 %], [% date.now %], this.id, pnp_source)">day</span>
+    <span id="pnp_th3" class="tabs text-center w-[18%]" onclick="return set_png_img([% date.now -   540000 %], [% date.now %], this.id, pnp_source)">week</span>
+    <span id="pnp_th4" class="tabs text-center w-[18%]" onclick="return set_png_img([% date.now -  2764800 %], [% date.now %], this.id, pnp_source)">month</span>
+    <span id="pnp_th5" class="tabs text-center w-[18%]" onclick="return set_png_img([% date.now - 30067200 %], [% date.now %], this.id, pnp_source)">year</span>
+    <span class="tabs text-center w-12"    onclick="return move_png_img( 0.5)"><i class="fas fa-angle-up text-lg contents"></i></span>
+  </div>
+  <div id="pnp_graph_pane" class="relative justify-center min-h-[100px]">
+    <a href="[% url_prefix %]#[% pnp_url %]/graph?host=[% hst | uri %]&amp;srv=[% svc | uri %]&amp;theme=smoothness" class="w-full">
+      <div id="pnpwaitimg" class="absolute top-10 left-1/2 transform -translate-x-1/2" title="waiting"><div class="spinner w-12 h-12"></div></div>
+      <img id="pnpimg" src="[% pnp_url %]/image?host=[% hst | uri %]&srv=[% svc | uri %]&view=1&graph_width=550" alt="pnp graph" class="mx-auto">
+      <div id="pnperr" style="display:none" class="textALERT text-center py-2">Could not retrieve graph data</div>
+      <iframe id="pnp_iframe" src="#" class="w-full h-[270px] p-0 m-0 mx-auto hidden"></iframe>
+    </a>
+  </div>
+</div>
+
+<script>
+  var pnp_id     = 'pnp_th2';
+  var pnp_start  = [% date.now - 90000 %];
+  var pnp_end    = [% date.now %];
+  if(window.location.hash != '#') {
+    var values = window.location.hash.split("/");
+    if(values[0]) {
+      pnp_id = values[0].replace(/^#/, '');
+    }
+    if(values[1]) {
+      pnp_start = values[1];
+    }
+    if(values[2]) {
+      pnp_end = values[2];
+    }
+    if(values[3] != undefined) {
+      pnp_source = values[3];
+    }
+  }
+  set_png_img(pnp_start, pnp_end, pnp_id, pnp_source);
+</script>

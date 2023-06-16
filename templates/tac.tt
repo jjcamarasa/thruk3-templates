@@ -1,0 +1,8 @@
+﻿[% PROCESS _header.tt %]
+[% PROCESS _message.tt %]
+[% PROCESS _sounds.tt %]
+[% SET empty = 0 %]
+[% SET empty = 1 UNLESS host_stats %]
+[% PROCESS tac_body.tt %]
+[% PROCESS _footer.tt %]
+

@@ -1,0 +1,22 @@
+﻿[% infoBoxPreTitle = "System Health Summary" %]
+
+<div class="flexcol h-full">
+  <div class="flexcol">
+    [% PROCESS _infobox.tt %]
+   <div class="flex">
+      [% PROCESS _status_filter.tt small_button = 1 %]
+      [% PROCESS _json_export.tt %]
+    </div>
+  </div>
+ 
+ <div class="flexrow gap-2">
+    [%PROCESS tac_panel_hosts.tt %]
+    [%PROCESS tac_panel_services.tt %]
+ </div>
+
+ <div class="flexrow mt-auto mb-0 gap-2">
+  [% PROCESS tac_panel_netoutage.tt %]
+  [% PROCESS tac_panel_monit_features.tt %]
+  [% PROCESS tac_panel_monitperf.tt %]
+ </div>
+</div>

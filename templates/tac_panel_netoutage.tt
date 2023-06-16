@@ -1,0 +1,17 @@
+﻿[% IF !empty && host_stats.outages > 0 %]
+<div class="card grow">
+    <div class="head">
+      <div class="text-xl font-bold"><span class="fas fa-share-alt"></span>&nbsp;Network Outages</div>
+    </div>
+    <div class="body">
+   <table>
+     <tr>
+      <th class="p-0 hoverable"><a class="block w-full p-2" href='outages.cgi'>[% host_stats.outages %] Outages</a></th>
+     </tr>
+      <tr>
+      <td class="p-0 importantProblem h-8"><a class="block w-full p-2 itemblock" href='outages.cgi'>[% host_stats.outages %] Blocking Outages</a></td>
+      </tr>
+    </table>
+</div>
+</div>
+[% END %]

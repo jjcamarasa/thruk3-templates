@@ -1,0 +1,264 @@
+﻿[% USE date %]
+<div class="card w-full">
+  <div class="head">
+    <h3>Service Actions</h3>
+  </div>
+    <div class="actionbox">
+    [% UNLESS c.check_cmd_permissions('service', service.description, service.host_name) %]   
+      <div class='p-2 text-center whitespace-normal textHINTsoft not-hoverable'>Your account does not have permissions to execute commands.</div>
+    [% ELSE %]
+      [% UNLESS command_disabled(c, '7') %]
+        <div class="flex flex-nowrap">
+          <a class="flex js-modal-command-link" href="cmd.cgi?cmd_typ=7&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
+            <span class="pr-2"><i class="far fa-calendar"></i></span>Re-schedule next check
+          </a>
+          <form class="flex mr-1 mx-auto" action='cmd.cgi' method='POST'>
+            <input type='hidden' name='cmd_typ' value='7'>
+            <input type='hidden' name='cmd_mod' value='2'>
+            <input type='hidden' name='start_time' value="[% date.now %]">
+            <input type='hidden' name='host' value="[% service.host_name | html %]">
+            <input type='hidden' name='service' value="[% service.description | html %]">
+            <input type='hidden' name='force_check' value='1'>
+            <input type='hidden' name='backend' value="[% service.peer_key %]">
+            <input type='hidden' name='referer' value="[% short_uri(c, {referer => 'undef'}) %]">
+            <input type="hidden" name="CSRFtoken" value="[% get_user_token(c) %]">
+            <a class="button" href="cmd.cgi?cmd_typ=7&amp;start_time=[% date.now %]&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;force_check=1&amp;backend=[% service.peer_key %]&amp;referer=[% as_url_arg(short_uri(c, {referer => 'undef'})) %]" onClick="setBtnSpinner(this); jQuery(this).closest('FORM').submit(); return false;">Now</a>
+          </form>
+        </div>
+      [% END %]
+
+      [% IF service.accept_passive_checks %]
+        [% UNLESS command_disabled(c, '30') %]
+          <div>
+            <a class="js-modal-command-link" href="cmd.cgi?cmd_typ=30&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
+              <span class="pr-2"><i class="fas fa-upload"></i></span>Submit passive check result
+            </a>
+          </div>
+        [% END %]
+      [% END %]
+
+      [% IF service.acknowledged || service.state >= 1 %]
+        [% UNLESS command_disabled(c, '34') || command_disabled(c, '52') %]
+          <div>
+            [% IF service.acknowledged %]
+            <a class="js-modal-command-link" href="cmd.cgi?cmd_typ=52&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
+              <span class="pr-2"><i class="fas fa-file-times hover-red-text"></i></span>Remove problem acknowledgement
+            </a>
+            [% ELSE %]
+            <a class="js-modal-command-link" href="cmd.cgi?cmd_typ=34&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
+              <span class="pr-2"><i class="far fa-comment"></i></span>Acknowledge this problem
+            </a>
+            [% END %]
+          </div>
+        [% END %]
+      [% END %]
+
+      [% IF service.state >= 1 %]
+        [% UNLESS command_disabled(c, '9') %]
+          <div>
+            <a class="js-modal-command-link" href="cmd.cgi?cmd_typ=9&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
+              <span class="pr-2"><i class="fas fa-clock"></i></span>Delay next notification
+            </a>
+          </div>
+        [% END %]
+      [% END %]
+
+      [% UNLESS command_disabled(c, '160') %]
+        <div>
+          <a class="js-modal-command-link" href="cmd.cgi?cmd_typ=160&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
+            <span class="pr-2"><i class="fas fa-comment-dots"></i></span>Send custom notification
+          </a>
+        </div>
+      [% END %]
+
+      [% UNLESS command_disabled(c, '56') %]
+        <div>
+          <a class="js-modal-command-link" href="cmd.cgi?cmd_typ=56&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
+            <span class="pr-2"><i class="fas fa-moon"></i></span>Schedule downtime
+          </a>
+        </div>
+      [% END %]
+
+      [% IF service.modified_attributes_list.size > 0 %]
+        [% UNLESS command_disabled(c, '155') %]
+          <div>
+            <a class="js-modal-command-link" href="cmd.cgi?cmd_typ=155&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
+              <span class="pr-2"><i class="fas fa-rotate-360"></i></span>Reset Modified Attributes
+            </a>
+          </div>
+        [% END %]
+      [% END %]
+    [% END %]
+  </div>
+</div>
+
+[% IF c.check_cmd_permissions('service', service.description, service.host_name) %]
+<div class="card w-full">
+    <div class="head">
+      <h3>Service Commands</h3>
+    </div>
+    <div class="my-2 px-1">
+    <table class="w-full">
+      [% UNLESS command_disabled(c, '5') || command_disabled(c, '6') %]
+        <tr class="py-2">
+        <th>
+        <i class="fas fa-download"></i>
+        Active checks
+        </th>
+          [% IF service.checks_enabled %]
+          <td class="text-center font-bold text-sm" style="color: var(--color-green-600);">ENABLED</td>
+          <td class="w-1/4">
+          <a class="js-modal-command-link button hover-red" href="cmd.cgi?cmd_typ=6&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
+            Disable
+          </a>
+          </td>
+          [% ELSE %]
+          <td class="text-center font-bold text-sm" style="color: var(--color-red-600);">DISABLED</td>
+          <td class="w-1/4">
+          <a class="js-modal-command-link button hover-green" href="cmd.cgi?cmd_typ=5&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
+            Enable
+          </a>
+          </td>
+          [% END %]
+        </tr>
+      [% END %]
+
+      [% UNLESS command_disabled(c, '39') || command_disabled(c, '40') %]
+        <tr>
+        <th>
+        <i class="fas fa-upload"></i>
+        Passive Checks
+        </th>
+          [% IF service.accept_passive_checks %]
+          <td class="text-center font-bold text-sm" style="color: var(--color-green-600);">ENABLED</td>
+          <td class="w-1/4">
+            <a class="js-modal-command-link button hover-red" href="cmd.cgi?cmd_typ=40&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
+              Disable
+            </a>
+          </td>
+          [% ELSE %]
+          <td class="text-center font-bold text-sm" style="color: var(--color-red-600);">DISABLED</td>
+          <td class="w-1/4">
+            <a class="js-modal-command-link button hover-green" href="cmd.cgi?cmd_typ=39&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
+              Enable
+            </a>
+          </td>
+          [% END %]
+        </tr>
+      [% END %]
+
+      [% UNLESS command_disabled(c, '99') || command_disabled(c, '100') %]
+        <tr>
+        <th>
+        <i class="fas fa-eye"></i>
+        Obsessing
+        </th>
+          [% IF service.obsess_over_service %]
+          <td class="text-center font-bold text-sm" style="color: var(--color-green-600);">ENABLED</td>
+          <td class="w-1/4">
+            <a class="js-modal-command-link button hover-red" href="cmd.cgi?cmd_typ=100&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
+              Disable
+            </a>
+          </td>
+          [% ELSE %]
+          <td class="text-center font-bold text-sm" style="color: var(--color-red-600);">DISABLED</td>
+          <td class="w-1/4">
+            <a class="js-modal-command-link button hover-green" href="cmd.cgi?cmd_typ=99&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
+              Enable
+            </a>
+          </td>
+          [% END %]
+        </tr>
+      [% END %]
+
+      [% UNLESS command_disabled(c, '22') || command_disabled(c, '23') %]
+        <tr>
+        <th>
+        <i class="fas fa-envelope"></i>
+        Notifications
+        </th>
+          [% IF service.notifications_enabled %]
+          <td class="text-center font-bold text-sm" style="color: var(--color-green-600);">ENABLED</td>
+          <td class="w-1/4">
+            <a class="js-modal-command-link button hover-red" href="cmd.cgi?cmd_typ=23&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
+              Disable
+            </a>
+          </td>
+          [% ELSE %]
+          <td class="text-center font-bold text-sm" style="color: var(--color-red-600);">DISABLED</td>
+          <td class="w-1/4">
+            <a class="js-modal-command-link button hover-green" href="cmd.cgi?cmd_typ=22&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
+              Enable
+            </a>
+          </td>
+          [% END %]
+        </tr>
+      [% END %]
+
+      [% UNLESS command_disabled(c, '45') || command_disabled(c, '46') %]
+        <tr>
+        <th>
+        <i class="fas fa-cog"></i>
+        Event Handler
+        </th>
+          [% IF service.event_handler_enabled %]
+          <td class="text-center font-bold text-sm" style="color: var(--color-green-600);">ENABLED</td>
+          <td class="w-1/4">
+            <a class="js-modal-command-link button hover-red" href="cmd.cgi?cmd_typ=46&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
+              Disable
+            </a>
+          </td>
+          [% ELSE %]
+          <td class="text-center font-bold text-sm" style="color: var(--color-red-600);">DISABLED</td>
+          <td class="w-1/4">
+            <a class="js-modal-command-link button hover-green" href="cmd.cgi?cmd_typ=45&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
+              Enable
+            </a>
+          </td>
+          [% END %]
+
+        </tr>
+      [% END %]
+      
+      [% IF enable_shinken_features %]
+        [% UNLESS command_disabled(c, '200') %]
+          <tr>
+          <td colspan=3 class="button">
+            <a class="js-modal-command-link button" href="cmd.cgi?cmd_typ=200&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
+              Launch event handler
+            </a>
+            </th>
+          </td>
+        [% END %]
+      [% END %]
+
+  
+    [% UNLESS command_disabled(c, '59') || command_disabled(c, '60') %]
+      <tr>
+      <th>
+      <i class="fas fa-shuffle"></i>
+      Flap Detection
+      </th>     
+      [% IF service.flap_detection_enabled %]          
+      <td class="text-center font-bold text-sm" style="color: var(--color-green-600);">
+        ENABLED
+      </td>
+      <td class="w-1/4">
+        <a class="js-modal-command-link button hover-red" href="cmd.cgi?cmd_typ=60&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
+        Disable
+        </a>
+      </td>
+      [% ELSE %]
+      <td class="text-center font-bold text-sm" style="color: var(--color-red-600);">DISABLED</td>
+      <td class="w-1/4">
+        <a class="js-modal-command-link button hover-green" href="cmd.cgi?cmd_typ=59&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
+        Enable
+        </a>
+      </td>
+      [% END %]      
+      </tr>
+      [% END %] 
+  </table>
+  </div>
+</div>
+[% END %]

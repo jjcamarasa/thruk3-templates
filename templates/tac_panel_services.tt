@@ -1,0 +1,342 @@
+﻿[%
+ colorfg = "fg"
+ colorbg = "bg" 
+ style_iconsize = "font-size: 4.1rem !important;height: inherit !important; width: inherit !important;"
+
+ state2color => { 
+  ok        => 'green', 
+  critical  => 'red',
+  warning   => 'yellow',
+  pending   => 'gray',
+  unknown   => 'orange'
+}
+%]
+[% IF theme == "Dark" %]
+ [% 
+  colorfg = "bg"
+  colorbg = "fg"
+  %]
+[% END %]
+
+[% BLOCK style_cardcolor %]
+  [% IF theme == "Dark" %]
+    color: var(--badge-[% state %]-[% colorfg %]); background-color: var(--color-[% state2color.$state %]-100);
+  [% ELSE %]
+    color: var(--badge-[% state %]-[% colorfg %]); background-color: var(--badge-[% state %]-[% colorbg %]);
+  [% END %]
+[% END %]
+
+[% BLOCK style_bordercolor %]
+ border-color: var(--badge-[% state %]-[% colorfg %]);
+[% END %]
+[% BLOCK style_bgcolor %]
+  background-color: var(--badge-[% state %]-[% colorbg %]);
+  [% END %]
+[% BLOCK style_fgcolor %]
+  background-color: var(--badge-[% state %]-[% colorfg %]);
+[% END %]
+[% BLOCK style_bgcolortext %]
+ color: var(--badge-[% state %]-[% colorbg %]);
+[% END %]
+
+<div class="card grow w-1/3 h-auto">
+  <div class="head">
+    <div class="text-xl font-bold"><span class="pl-1"><span class="fas fa-cog"></span></span>&nbsp;Services</div>
+  </div>
+  [% state='ok' %]
+  <div class="flexcol mt-4 mb-4 mx-4">    
+    <div class="flex border mx-2" style="[% INCLUDE style_bordercolor %]">
+      <div class="flex items-center p-5" style="[% INCLUDE style_fgcolor %]">
+        <span class="fas fa-check" style="[% INCLUDE style_bgcolortext %] [% style_iconsize %]"></span>
+      </div>
+      [% oks = service_stats.ok_and_disabled_active + service_stats.ok_and_disabled_passive %]      
+      [% IF oks > 0 %]
+      <div class="flex-col grow" style="[% INCLUDE style_cardcolor %]">
+        <div class="flexrow items-center grow">
+          [% ELSE %]
+          <div class="flexrow items-center grow" style="[% INCLUDE style_cardcolor %]">
+      [% END %]
+
+          <a class="text-3xl font-bold block p-2 mt-2" href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 2 })  %]'>
+          [% service_stats.ok %] OK
+          </a>
+          <!-- PROGRESS BAR -->
+          <div class="progressbar w-1/3 grow pt-3 pr-3">
+          [% IF empty || (service_stats.total-service_stats.pending) == 0 %]
+            [% service_health = 0 %]
+          [% ELSE %]
+            [% service_health = (service_stats.ok + service_stats.warning + service_stats.unknown) / ((service_stats.total-service_stats.pending)) * 100 %]
+          [% END %]
+
+            [% service_health = sprintf('%i', service_health) %]
+            [% service_perc   = service_health %]
+          
+          [% IF service_health >= 90 %]
+            [% service_health_cls = 'ok' %]
+          [% ELSIF service_health >= 75 %]
+            [% service_health_cls = 'warning' %]
+          [% ELSIF service_health >= 5 %]
+            [% service_health_cls = 'critical' %]
+          [% ELSE %]
+            [% service_health_cls = 'critical' %]
+            [% service_perc = 5 %]
+          [% END %]
+          [% IF service_stats.total > 0 %]
+            [% service_health_cls = 'ok' %]
+          [% END %]
+          <div class="items-center text-sm p-2">
+            <span class="fas fa-heart"></span>&nbsp;[% service_health %]%
+          </div>
+            <div class="bar">
+              <div style="width:[% service_perc %]%; background-color: var(--badge-[% service_health_cls %]-[% colorfg %]) !important;"></div>
+            </div>
+          </div>
+          [% IF oks > 0 %]
+        </div>
+
+          <div class="block pl-2 text-xl">
+              [% IF !empty && service_stats.ok_and_scheduled > 0 %]
+                <a class="font-bold block" href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 2, serviceprops => 1 }) %]' title="[% service_stats.ok_and_scheduled %] Scheduled">
+                  <span class="fas fa-calender"></span>&nbsp;[% service_stats.ok_and_scheduled %]
+                </a>
+                [% END %]
+              [% IF strict_passive_mode %]
+                [% IF !empty && service_stats.ok_and_disabled_active > 0  %]
+                <a class="font-bold block" href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 2, serviceprops => 131088 }) %]' title="[% service_stats.ok_and_disabled_active %] Disabled">
+                  <span class="fas fa-times-circle"></span>&nbsp;[% service_stats.ok_and_disabled_active %]
+                </a>
+                [% END %]
+              [% ELSE %]
+                [% IF !empty && service_stats.ok_and_disabled_active + service_stats.ok_and_disabled_passive > 0  %]
+                <a class="font-bold block" href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 2, serviceprops => 16 }) %]' title="[% service_stats.ok_and_disabled_active + service_stats.ok_and_disabled_passive %] Disabled">
+                  <span class="fas fa-times-circle"></span>&nbsp;[% service_stats.ok_and_disabled_active + service_stats.ok_and_disabled_passive %]
+                </a>
+                [% END %]
+              [% END %]
+          </div>
+          [% END %]
+
+      </div>
+    </div>
+
+    [% IF service_stats.critical > 0 %]
+    [% state = 'critical' %]
+    <div class="flex border mx-2" style="[% INCLUDE style_bordercolor state='critical' %]">
+      <div class="flex items-center p-5" style="[% INCLUDE style_fgcolor %]">
+        <span class="fas fa-exclamation-triangle" style="[% INCLUDE style_bgcolortext %] [% style_iconsize %]"></span>
+      </div>
+
+      [% crits = service_stats.critical_and_unhandled + service_stats.critical_on_down_host + service_stats.critical_and_scheduled + service_stats.critical_and_ack %]
+      [% IF crits > 0 %]
+        [% thisclass = "flex-col" %]
+      [% ELSE %]
+        [% thisclass = "flex items-center" %]
+      [% END %]
+
+      <div class="[% thisclass %] grow" style="[% INCLUDE style_cardcolor %]">
+        <a class="text-3xl font-bold block p-2 mt-2" href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 16 }) %]'>[% service_stats.critical %] Critical</a>
+        
+        [% IF crits > 0 %]
+        <div class="block pl-2 text-xl">
+        [% IF !empty && service_stats.critical_and_unhandled > 0 %]
+          <a class="px-1" href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 16, hoststatustypes => 3, serviceprops => 10 }) %]' title="[% service_stats.critical_and_unhandled %] Unhandled Problems">
+            <span class="fas fa-circle-question"></span>&nbsp;[% service_stats.critical_and_unhandled %]
+          </a>
+        [% END %]
+          [% IF !empty && service_stats.critical_on_down_host > 0  %]
+            <a class="px-1" href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 16, hoststatustypes => 12 }) %]' title="[% service_stats.critical_on_down_host %] on Problem Hosts">
+              <span class="fas fa-server-connection"></span>&nbsp;[% service_stats.critical_on_down_host %]
+            </a>
+          [% END %]
+          [% IF !empty && service_stats.critical_and_scheduled > 0 %]
+            <a class="px-1" href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 16, serviceprops => 1 }) %]' title="[% service_stats.critical_and_scheduled %] Scheduled">
+              <span class="fas fa-calender"></span>&nbsp;[% service_stats.critical_and_scheduled %]
+            </a>
+          [% END %]
+          [% IF !empty && service_stats.critical_and_ack > 0 %]
+            <a class="px-1" href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 16, serviceprops => 4 }) %]' title="[% service_stats.critical_and_ack %] Acknowledged">
+              <span class="fas fa-person-digging"></span>&nbsp;[% service_stats.critical_and_ack %]
+            </a>
+          [% END %]
+          [% IF strict_passive_mode %]
+            [% IF !empty && service_stats.critical_and_disabled_active > 0  %]
+              <a class="px-1" href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 16, serviceprops => 131088 }) %]' title="[% service_stats.critical_and_disabled_active %] Disabled">
+                <span class="fas fa-times-circle"></span>&nbsp;[% service_stats.critical_and_disabled_active %]
+              </a>
+            [% END %]
+            [% IF !empty && service_stats.critical_and_disabled_passive > 0  %]
+              <a class="px-1" href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 16, serviceprops => 65552 }) %]' title="[% service_stats.critical_and_disabled_passive %] Passive">
+                <span class="fas fa-upload"></span>&nbsp;[% service_stats.critical_and_disabled_passive %]
+              </a>
+            [% END %]
+          [% ELSE %]
+            [% IF !empty && service_stats.critical_and_disabled_active + service_stats.critical_and_disabled_passive > 0  %]
+              <a class="px-1" href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 16, serviceprops => 16 }) %]' title="[% service_stats.critical_and_disabled_active + service_stats.critical_and_disabled_passive %] Disabled">
+                <span class="fas fa-times-circle"></span>&nbsp;[% service_stats.critical_and_disabled_active + service_stats.critical_and_disabled_passive %]
+              </a>
+            [% END %]
+          [% END %]
+        </div>
+        [% END %]
+      </div>
+    </div>
+    [% END %]
+
+    [% IF service_stats.warning > 0 %]
+    [% state = 'warning' %]
+    <div class="flex border mx-2" style="[% INCLUDE style_bordercolor state='warning' %]">
+      <div class="flex items-center p-5" style="[% INCLUDE style_fgcolor %]">
+        <span class="fas fa-bell" style="color: var(--badge-warning-[% colorbg %]); [% style_iconsize %]"></span>
+      </div>
+      [% warns = service_stats.warning_and_unhandled + service_stats.warning_on_down_host + service_stats.warning_and_scheduled + service_stats.warning_and_ack %]
+      [% IF warns > 0 %]
+        [% thisclass = "flex-col" %]
+      [% ELSE %]
+        [% thisclass = "flex items-center" %]
+      [% END %]
+      <div class="[% thisclass %] grow" style="[% INCLUDE style_cardcolor %]">
+        <a class="text-3xl font-bold block p-2 mt-2" href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 4 })  %]'>[% service_stats.warning  %] Warning</a>
+
+        [% IF warns > 0 %]
+        <div class="block pl-2 text-xl">
+        [% IF !empty && service_stats.warning_and_unhandled > 0 %]
+          <a class="px-1" href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 4, hoststatustypes => 3, serviceprops => 10 }) %]' title="[% service_stats.warning_and_unhandled %] Unhandled Problems">
+            <span class="fas fa-circle-question"></span>&nbsp;[% service_stats.warning_and_unhandled %]
+          </a>
+        [% END %]
+        [% IF !empty && service_stats.warning_on_down_host > 0 %]
+          <a class="px-1" href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 4, hoststatustypes => 12 }) %]' title="[% service_stats.warning_on_down_host %] on Problem Hosts">
+            <span class="fas fa-server-connection"></span>&nbsp;[% service_stats.warning_on_down_host %]
+          </a>
+        [% END %]
+        [% IF !empty && service_stats.warning_and_scheduled > 0 %]
+          <a class="px-1" href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 4, serviceprops => 1 }) %]' title="[% service_stats.warning_and_scheduled %] Scheduled">
+            <span class="fas fa-calender"></span>&nbsp;[% service_stats.warning_and_scheduled %]
+          </a>
+        [% END %]
+        [% IF !empty && service_stats.warning_and_ack > 0 %]
+          <a class="px-1" href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 4, serviceprops => 4 }) %]' title="[% service_stats.warning_and_ack %] Acknowledged">
+            <span class="fas fa-person-digging"></span>&nbsp;[% service_stats.warning_and_ack %]
+          </a>
+        [% END %]
+        [% IF strict_passive_mode %]
+            [% IF !empty && service_stats.warning_and_disabled_active > 0 %]
+              <a class="px-1" href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 4, serviceprops => 131088 }) %]' title="[% service_stats.warning_and_disabled_active %] Disabled">
+                <span class="fas fa-times-circle"></span>&nbsp;[% service_stats.warning_and_disabled_active %]
+              </a>
+            [% END %]
+            [% IF !empty && service_stats.warning_and_disabled_passive > 0 %]
+              <a class="px-1" href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 4, serviceprops => 65552 }) %]' title="[% service_stats.warning_and_disabled_passive %] Passive">
+                <span class="fas fa-upload"></span>&nbsp;[% service_stats.warning_and_disabled_passive %]
+              </a>
+            [% END %]
+        [% ELSE %]
+            [% IF !empty && service_stats.warning_and_disabled_active + service_stats.warning_and_disabled_passive > 0 %]
+              <a class="px-1" href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 4, serviceprops => 16 }) %]' title="[% service_stats.warning_and_disabled_active + service_stats.warning_and_disabled_passive %] Disabled">
+                <span class="fas fa-times-circle"></span>&nbsp;[% service_stats.warning_and_disabled_active + service_stats.warning_and_disabled_passive %]
+              </a>
+            [% END %]
+        [% END %]
+            </div>
+        [% END %]
+
+        </div>
+      </div>
+    [% END %]
+
+    [% IF service_stats.unknown > 0 %]
+    [% state = 'unknown' %]
+    <div class="flex border mx-2" style="[% INCLUDE style_bordercolor %]">
+      <div class="flex items-center p-5" style="[% INCLUDE style_fgcolor %]">
+        <span class="fas fa-question-circle" style="color: var(--badge-unknown-[% colorbg %]); [% style_iconsize %]"></span>
+      </div>
+      [% unkn = service_stats.unknown_and_unhandled + service_stats.unknown_on_down_host + service_stats.unknown_and_scheduled + service_stats.unknown_and_ack %]
+      [% IF unkn > 0 %]
+        [% thisclass = "flex-col" %]
+      [% ELSE %]
+        [% thisclass = "flex items-center" %]
+      [% END %]
+      <div class="[% thisclass %] grow" style="[% INCLUDE style_cardcolor %]">
+          <a class="text-3xl font-bold block p-2 mt-2" href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 8 })  %]'>[% service_stats.unknown  %] Unknown</a>
+
+        [% IF unkn > 0 %]
+        <div class="block pl-2 text-xl">
+        [% IF !empty && service_stats.unknown_and_unhandled > 0 %]
+          <a class="px-1" href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 8, hoststatustypes => 3, serviceprops => 10 }) %]' title="[% service_stats.unknown_and_unhandled %] Unhandled Problems">
+            <span class="fas fa-circle-question"></span>&nbsp;[% service_stats.unknown_and_unhandled %]
+          </a>
+        [% END %]
+        [% IF !empty && service_stats.unknown_on_down_host > 0  %]
+          <a class="px-1" href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 8, hoststatustypes => 12 }) %]' title="[% service_stats.unknown_on_down_host %] on Problem Hosts">
+            <span class="fas fa-server-connection"></span>&nbsp;[% service_stats.unknown_on_down_host %]
+          </a>
+        [% END %]
+        [% IF !empty && service_stats.unknown_and_scheduled > 0 %]
+          <a class="px-1" href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 8, serviceprops => 1 }) %]' title="[% service_stats.unknown_and_scheduled %] Scheduled">
+            <span class="fas fa-calender"></span>&nbsp;[% service_stats.unknown_and_scheduled %]
+          </a>
+        [% END %]
+        [% IF !empty && service_stats.unknown_and_ack > 0 %]
+          <a class="px-1" href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 8, serviceprops => 4 }) %]' title="[% service_stats.unknown_and_ack %] Acknowledged">
+            <span class="fas fa-person-digging"></span>&nbsp;[% service_stats.unknown_and_ack %]
+          </a>
+        [% END %]
+        [% IF strict_passive_mode %]
+        [% IF !empty && service_stats.unknown_and_disabled_active > 0 %]
+          <a class="px-1" href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 8, serviceprops => 131088 }) %]' title="[% service_stats.unknown_and_disabled_active %] Disabled">
+            <span class="fas fa-times-circle"></span>&nbsp;[% service_stats.unknown_and_disabled_active %]
+          </a>
+        [% END %]
+        [% IF !empty && service_stats.unknown_and_disabled_passive > 0 %]
+          <a class="px-1" href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 8, serviceprops => 65552 }) %]' title="[% service_stats.unknown_and_disabled_passive %] Passive">
+            <span class="fas fa-upload"></span>&nbsp;[% service_stats.unknown_and_disabled_passive %]
+          </a>
+        [% END %]
+        [% ELSE %]
+          [% IF !empty && service_stats.unknown_and_disabled_active + service_stats.unknown_and_disabled_passive > 0  %]
+            <a class="px-1" href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 8, serviceprops => 16 }) %]' title="[% service_stats.unknown_and_disabled_active + service_stats.unknown_and_disabled_passive %] Disabled">
+              <span class="fas fa-times-circle"></span>&nbsp;[% service_stats.unknown_and_disabled_active + service_stats.unknown_and_disabled_passive %]
+            </a>
+          [% END %]
+        [% END %]
+        </div>
+        [% END %]
+        </div>
+      </div>
+    [% END %]
+
+    [% IF service_stats.pending > 0 %]
+    [% state = 'pending' %]
+    <div class="flex border mx-2" style="[% INCLUDE style_bordercolor %]">
+      <div class="flex items-center p-5" style="[% INCLUDE style_fgcolor %]">
+        <span class="fas fa-hourglass" style="color: var(--badge-pending-[% colorbg %]); [% style_iconsize %]"></span>
+      </div>
+      [% pend = service_stats.pending_and_unhandled + service_stats.pending_and_disabled %]
+      [% IF pend > 0 %]
+        [% thisclass = "flex-col" %]
+      [% ELSE %]
+        [% thisclass = "flex items-center" %]
+      [% END %]
+      <div class="[% thisclass %] grow" style="[% INCLUDE style_cardcolor %]">
+          <a class="text-3xl font-bold block p-2 mt-2" href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 1 })  %]' title="[% service_stats.pending  %] Pending">
+            [% service_stats.pending  %] Pending
+          </a>
+        [% IF pend > 0 %]
+        <div class="block pl-2 text-xl">
+        [% IF !empty && service_stats.pending_and_scheduled > 0 %]
+          <a class="px-1" href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 1, serviceprops => 1 }) %]' title="[% service_stats.pending_and_scheduled %] Scheduled">
+            <span class="fas fa-calender"></span>&nbsp;[% service_stats.pending_and_scheduled %]
+          </a>
+        [% END %]
+        [% IF !empty && service_stats.pending_and_disabled > 0  %]
+          <a class="px-1" href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 1, serviceprops => 16 }) %]' title="[% service_stats.pending_and_disabled %] Disabled">
+            <span class="fas fa-times-circle"></span>&nbsp;[% service_stats.pending_and_disabled %]
+          </a>
+        [% END %]
+        </div>
+        [% END %]
+      </div>
+    </div>
+    [% END %]
+  </div>
+ </div>
