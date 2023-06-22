@@ -10,7 +10,7 @@
 [% ELSE %]
   [% my_svc_desc = service.display_name %]
 [% END %]
-[% infoBoxPreTitle = "$my_svc_desc <i class='fas fa-angle-double-right'></i>&nbsp;<a class='link' href='extinfo.cgi?type=1&amp;host=$service.host_name'>$service.host_name</a>" %]
+[% infoBoxPreTitle = "$my_svc_desc <i class='fas fa-angle-double-right text-sm'></i>&nbsp;<a class='link' href='extinfo.cgi?type=1&amp;host=$service.host_name'>$service.host_name</a>" %]
 
 <div class="flexrow justify-between mb-2">
   [% PROCESS _infobox.tt %]

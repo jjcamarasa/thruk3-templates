@@ -78,10 +78,10 @@
   <div class="h-8 flex-shrink-0 mt-auto w-full m-0 hidden lg:block collapse-btn">
     <div class="flexrow flex-nowrap gap-0">
       <button class="iconOnly w-full py-0 px-1.5 pl-[15px] m-0 h-8 block text-down hoverable js-menu-collapse" title="toggle collapsed side navigation.">
-        <i class="fas fa-angle-double-left text-2xl contents" title="collapse navigation"></i>
+        <i class="fas fa-angle-double-left text-sm contents" title="collapse navigation"></i>
       </button>
       <button class="iconOnly w-full py-0 px-1.5 pl-[15px] m-0 h-8 block hoverable btn-nav-hide js-menu-hide" title="toggle hover side navigation.">
-        <i class="fas fa-angle-double-up text-2xl contents" title="hide navigation"></i>
+        <i class="fas fa-angle-double-up text-sm contents" title="hide navigation"></i>
       </button>
     </div>
   </div>
