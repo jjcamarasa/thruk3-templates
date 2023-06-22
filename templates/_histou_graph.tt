@@ -50,8 +50,8 @@
 	
 	[% kiosk_mode_url  = "$replace_url&kiosk=tv" %]
      <div class="font-bold">
-      <a href="[% url_prefix %]#[% histou_url %]">
-        <i class="fas fa-comparison"></i>&nbsp;Performance Graph
+      <a href="[% url_prefix %]#[% histou_url %]" title="Abrir grafica actual en marco">
+        <i class="fas fa-chart-area"></i>&nbsp;Performance Graph
       </a>
     </div>
      	
@@ -64,13 +64,13 @@
   </div>
 
   <div class="head px-0 clickable justify-between">
-    <span                 class="tabs text-center w-12"    onclick="return move_histou_img(-0.5)"><i class="fas fa-angle-down text-lg contents"></i></span>
+    <span                 class="tabs text-center w-12"    onclick="return move_histou_img(-0.5)"><i class="fas fa-angle-left text-lg contents"></i></span>
     <span id="histou_th1" class="tabs text-center w-[18%]" onclick="return set_histou_img([% date.now -    14400 %], [% date.now %], this.id, histou_source)">4 hours</span>
     <span id="histou_th2" class="tabs text-center w-[18%]" onclick="return set_histou_img([% date.now -    90000 %], [% date.now %], this.id, histou_source)">day</span>
     <span id="histou_th3" class="tabs text-center w-[18%]" onclick="return set_histou_img([% date.now -   540000 %], [% date.now %], this.id, histou_source)">week</span>
     <span id="histou_th4" class="tabs text-center w-[18%]" onclick="return set_histou_img([% date.now -  2764800 %], [% date.now %], this.id, histou_source)">month</span>
     <span id="histou_th5" class="tabs text-center w-[18%]" onclick="return set_histou_img([% date.now - 30067200 %], [% date.now %], this.id, histou_source)">year</span>
-    <span                 class="tabs text-center w-12"    onclick="return move_histou_img( 0.5)"><i class="fas fa-angle-up text-lg contents"></i></span>
+    <span                 class="tabs text-center w-12"    onclick="return move_histou_img( 0.5)"><i class="fas fa-angle-right text-lg contents"></i></span>
   </div>
   <div class="h-[262px] relative justify-center">
     <div id="histou_graph_pane" class="relative w-full h-full overflow-hidden">

@@ -28,7 +28,7 @@
   <div class="card grow h-full">
     <div class="head">
       <div class="font-bold">
-        <i class="fas fa-clock"></i>&nbsp;Last Check Time <span class="badge WARNING">[% last_check(c, obj.last_check) %]<span>
+        <i class="fas fa-clock"></i>&nbsp;Last Check Time <span class="badge [% IF theme=="Dark" %]WARNING[% ELSE %]INFO[% END %]">[% last_check(c, obj.last_check) %]<span>
       </div>
     </div>
     <div class="p-2">
