@@ -1,30 +1,60 @@
 ﻿[%
- state_color = [ 'ok', 'down', 'unreachable', 'unknown']
- state_icon = [ 'check', 'times', 'link-broken','question-circle' ]
  colorfg = "fg"
  colorbg = "bg"
+ style_iconsize = "font-size: 3rem !important;height: inherit !important; width: inherit !important;"
+
+ state2color => {
+  ok        => 'green',
+  critical  => 'red',
+  warning   => 'yellow',
+  pending   => 'gray',
+  unknown   => 'orange'
+}
 %]
 [% IF theme == "Dark" %]
- [% colorfg = "bg" %]
- [% colorbg = "fg" %]
+ [%
+  colorfg = "bg"
+  colorbg = "fg"
+  %]
+[% END %]
+
+[% BLOCK style_cardcolor %]
+  [% IF theme == "Dark" %]
+    color: var(--badge-[% state %]-[% colorfg %]); background-color: var(--color-[% state2color.$state %]-100);
+  [% ELSE %]
+    color: var(--badge-[% state %]-[% colorfg %]); background-color: var(--badge-[% state %]-[% colorbg %]);
+  [% END %]
+[% END %]
+
+[% BLOCK style_bordercolor %]
+border-color: var(--badge-[% state %]-[% colorfg %]);
+[% END %]
+[% BLOCK style_bgcolor %]
+background-color: var(--badge-[% state %]-[% colorbg %]);
+[% END %]
+[% BLOCK style_fgcolor %]
+background-color: var(--badge-[% state %]-[% colorfg %]);
+[% END %]
+[% BLOCK style_bgcolortext %]
+color: var(--badge-[% state %]-[% colorbg %]);
 [% END %]
 
 <div class="card grow w-1/3 h-auto">
-  <div class="head">
-  <div class="text-xl font-bold"><span class="pl-1"><span class="fas fa-desktop"></span></span>&nbsp;Hosts</div>
+  <div class="head text-xl">
+  <div class="font-bold"><span class="pl-1"><span class="fas fa-desktop"></span></span>&nbsp;Hosts</div>
   </div>
+   [% state='ok' %]
   <div class="flexcol mt-4 mb-4 mx-4">
-
-  <div class="flex border mx-2" style="border-color: var(--badge-ok-[% colorfg %]);">
-    <div class="flex items-center p-5" style="background-color: var(--badge-ok-[% colorfg %]);">
-      <i class="fas fa-check" style="color: var(--badge-ok-[% colorbg %]); font-size: 4.1rem !important;height: inherit !important; width: inherit !important;"></i>
+   <div class="flex border mx-2" style="[% INCLUDE style_bordercolor %]">
+    <div class="flex items-center p-5" style="[% INCLUDE style_fgcolor %]">
+	<span class="fas fa-circle-check" style="[% INCLUDE style_bgcolortext %] [% style_iconsize %]"></span>
     </div>
   [% hoks = host_stats.up_and_scheduled + host_stats.up_and_disabled_active + host_stats.up_and_disabled_active + host_stats.up_and_disabled_passive %]
   [% IF hoks > 0 %]
-  <div class="flex-col grow" style="color: var(--badge-ok-[% colorfg %]); background-color: var(--badge-ok-[% colorbg %]);">
+  <div class="flex-col grow" style="[% INCLUDE style_cardcolor %]">
     <div class="flexrow items-center grow">A
   [% ELSE %]
-      <div class="flexrow items-center grow" style="color: var(--badge-ok-[% colorfg %]); background-color: var(--badge-ok-[% colorbg %]);">
+      <div class="flexrow items-center grow" style="[% INCLUDE style_cardcolor %]">
   [% END %]
     <a class="text-3xl block p-2 [% numberclass %]" href='[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hoststatustypes => 2 }) %]'>
     [% host_stats.up %] Up
@@ -61,7 +91,7 @@
 
     [% IF hoks > 0 %]
       </div>
-    <div class="block pl-2">
+    <div class="block pl-2 text-xl">
       [% IF !empty && host_stats.up_and_scheduled > 0 %]
         <a class="font-bold block" href="[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hoststatustypes => 2, hostprops => 1 }) %]">[% host_stats.up_and_scheduled %] Scheduled</a>
       [% END %]
@@ -80,9 +110,10 @@
   </div>
 
   [% IF host_stats.down > 0 %]
-  <div class="flex border mx-2" style="border-color: var(--badge-down-[% colorfg %]);">
-  <div class="flex items-center p-5" style="background-color: var(--badge-down-[% colorfg %]);">
-    <i class="fas fa-times %]" style="color: var(--badge-down-[% colorbg %]); font-size: 4.1rem !important;height: inherit !important; width: inherit !important;"></i>
+  [% state = 'down' %] 
+   <div class="flex border mx-2" style="[% INCLUDE style_bordercolor %]">
+    <div class="flex items-center p-5" style="[% INCLUDE style_fgcolor %]">
+    <i class="fas fa-circle-xmark" style="[% INCLUDE style_bgcolortext %] [% style_iconsize %]"></i>
   </div>
   [% downs = host_stats.down_and_unhandled + host_stats.down_and_scheduled + host_stats.down_and_ack + host_stats.down_and_disabled_active + host_stats.down_and_disabled_passive %]
   [% IF downs > 0 %]
@@ -125,9 +156,10 @@
   [% END %]
 
   [% IF host_stats.unreachable > 0 %]
-  <div class="flex border mx-2" style="border-color: var(--badge-unreachable-[% colorfg %]);">
-  <div class="flex items-center p-5" style="background-color: var(--badge-unreachable-[% colorfg %]);">
-    <i class="fas fa-link-broken %]" style="color: var(--badge-unreachable-[% colorbg %]); font-size: 4.1rem !important;height: inherit !important; width: inherit !important;"></i>
+  [% state = 'unreachable' %]
+   <div class="flex border mx-2" style="[% INCLUDE style_bordercolor %]">
+    <div class="flex items-center p-5" style="[% INCLUDE style_fgcolor %]">
+    <i class="fas fa-circle-exclamation" style="[% INCLUDE style_bgcolortext %] [% style_iconsize %]"></i>
   </div>
   [% unreach =  host_stats.unreachable_and_unhandled + host_stats.unreachable_and_scheduled + host_stats.unreachable_and_ack + host_stats.unreachable_and_disabled_active + host_stats.unreachable_and_disabled_passive %]
   [% IF unreach > 0 %]
@@ -167,9 +199,10 @@
   [% END %]
 
   [% IF host_stats.pending > 0 %]
-  <div class="flex border mx-2 mb-2" style="border-color: var(--badge-pending-[% colorfg %]);">
-    <div class="flex items-center p-5" style="background-color: var(--badge-pending-[% colorfg %]);">
-      <i class="fas fa-question-circle %]" style="color: var(--badge-pending-[% colorbg %]); font-size: 4.1rem !important;height: inherit !important; width: inherit !important;"></i>
+  [% state = 'pending' %]
+   <div class="flex border mx-2" style="[% INCLUDE style_bordercolor %]">
+    <div class="flex items-center p-5" style="[% INCLUDE style_fgcolor %]">
+      <i class="fas fa-question-circle" style="[% INCLUDE style_bgcolortext %] [% style_iconsize %]"></i>
     </div>
     [% pend = host_stats.pending_and_scheduled + host_stats.pending_and_disabled %]
       [% IF pend > 0 %]
