@@ -15,6 +15,9 @@ I'm not a frontend developer, I have tested it in virtual environment, when it l
 I'm not responsible for any damage made to your environment (what could be go really bad? It's only css and html)
 If you have any idea or suggestion, make it, fork this repository or do whatever you want.
 
-## Screenshot 
+## Screenshots 
+Tactical Overview
+![TAC view](tac_view.png)
+
 This is how the service view looks
 ![Service view](screenshot_001.png)
