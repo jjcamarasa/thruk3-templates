@@ -6,8 +6,8 @@ This template rearranges html page objects like service/host info.
 It has been created trying not to modify too much the default Light/Dark themes (only added a few tailwind basic classes)
 I have tried to change as many fontawesome icons to uniicons counterpart.
 
-## How to test/put it
-Put in etc/thruk/templates (wherever it is), and restart thruk service or wait for this service to reload templates.
+## How to test/use it
+Copy in etc/thruk/templates (wherever it is), and restart thruk service or wait for this service to reload templates.
 Add additional css classes to the end of the theme you ar using at path: etc/thruk/themes/themes-available/stylesheets
 
 ## Disclaimer
