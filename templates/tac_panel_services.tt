@@ -1,7 +1,7 @@
 ﻿[%
  colorfg = "fg"
  colorbg = "bg" 
- style_iconsize = "font-size: 4.1rem !important;height: inherit !important; width: inherit !important;"
+ style_iconsize = "font-size: 3rem !important;height: inherit !important; width: inherit !important;"
 
  state2color => { 
   ok        => 'green', 
@@ -47,7 +47,7 @@
   <div class="flexcol mt-4 mb-4 mx-4">    
     <div class="flex border mx-2" style="[% INCLUDE style_bordercolor %]">
       <div class="flex items-center p-5" style="[% INCLUDE style_fgcolor %]">
-        <span class="fas fa-check" style="[% INCLUDE style_bgcolortext %] [% style_iconsize %]"></span>
+        <span class="fas fa-circle-check" style="[% INCLUDE style_bgcolortext %] [% style_iconsize %]"></span>
       </div>
       [% oks = service_stats.ok_and_disabled_active + service_stats.ok_and_disabled_passive %]      
       [% IF oks > 0 %]
@@ -57,7 +57,7 @@
           <div class="flexrow items-center grow" style="[% INCLUDE style_cardcolor %]">
       [% END %]
 
-          <a class="text-3xl font-bold block p-2 mt-2" href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 2 })  %]'>
+          <a class="text-3xl font-bold block p-2 [% numberclass %]" href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 2 })  %]'>
           [% service_stats.ok %] OK
           </a>
           <!-- PROGRESS BAR -->
@@ -186,7 +186,7 @@
     [% state = 'warning' %]
     <div class="flex border mx-2" style="[% INCLUDE style_bordercolor state='warning' %]">
       <div class="flex items-center p-5" style="[% INCLUDE style_fgcolor %]">
-        <span class="fas fa-bell" style="color: var(--badge-warning-[% colorbg %]); [% style_iconsize %]"></span>
+        <span class="fas fa-circle-exclamation" style="color: var(--badge-warning-[% colorbg %]); [% style_iconsize %]"></span>
       </div>
       [% warns = service_stats.warning_and_unhandled + service_stats.warning_on_down_host + service_stats.warning_and_scheduled + service_stats.warning_and_ack %]
       [% IF warns > 0 %]
