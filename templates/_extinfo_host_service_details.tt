@@ -46,8 +46,8 @@ END
     [% IF color && pObj.state != 0 %]
       <div class="badge [% state %] ">
         [% name %]
-        [% IF pObj.acknowledged %]<i class="fas fa-person-digging"></i>[% END %]
-        [% IF pObj.scheduled_downtime_depth %]<i class="fas fa-moon"></i>[% END %]
+        [% IF pObj.acknowledged %]<i class="las la-hammer la-lg"></i>[% END %]
+        [% IF pObj.scheduled_downtime_depth %]<i class="las la-moon la-lg"></i>[% END %]
       </div>
     [% ELSE %]
       [% name %]
@@ -63,7 +63,7 @@ END
   <h3>Stale [% type | html %] detected</h3>
   <div>
     This [% type | html %] has not been checked recently. Have a look at the
-    <a href="[% uri_with(c, { type => 'dtree' }) %]" class="link font-bold">dependency tree <i class="fas fa-share-alt align-middle"></i></a>
+    <a href="[% uri_with(c, { type => 'dtree' }) %]" class="link font-bold">dependency tree <i class="las la-share-alt align-middle"></i></a>
     to get a hint.
   </div>
 </div>
@@ -100,7 +100,7 @@ END
  <div class="w-1/2 grow">
   <div class="flex w-full border" style="border-color: var(--badge-[% state_color.${obj.state} %]-[% IF theme=="Dark"%][% colorbg %][% ELSE %][% colorfg %][% END %]);">
     <div class="flex items-center p-5" style="background-color: var(--badge-[% state_color.${obj.state} %]-[% colorbg %]);border-right: 1px solid var(--badge-[% state_color.${obj.state} %]-[% IF theme=="Dark"%][% colorbg %][% ELSE %][% colorfg %][% END %]);">
-      <i class="fas fa-[% state_icon.${obj.state} %]" style="color: var(--badge-[% state_color.${obj.state} %]-[% colorfg %]); font-size: 5rem !important;height: inherit !important; width: inherit !important;"></i>
+      <i class="las la-[% state_icon.${obj.state} %]" style="color: var(--badge-[% state_color.${obj.state} %]-[% colorfg %]); font-size: 5rem !important;height: inherit !important; width: inherit !important;"></i>
     </div>
     <div class="flex w-full p-2" style="background-color: var(--card-bg); border-color: var(--badge-[% state_color.${obj.state} %]-fg)">
     <table>
@@ -137,14 +137,14 @@ END
             [% IF obj.host_name != obj.host_display_name %]
               <a class="link" href="extinfo.cgi?type=1&amp;host=[% obj.host_name | uri %]">[% obj.host_display_name | html %]</a>
             [% END %]
-              <i class="fas fa-angle-double-right text-sm"></i>&nbsp;[% obj.host_address %]
+              <i class="las la-angle-double-right la-xs"></i>&nbsp;[% obj.host_address %]
           [% ELSE %]
             [% IF obj.name != obj.display_name %]            
               <a class="link" href="extinfo.cgi?type=1&amp;host=[% obj.name | uri %]">[% obj.display_name | html %]</a>
             [% ELSE %]
               <a class="link" href="extinfo.cgi?type=1&amp;host=[% hst_name | uri %]">[% hst_name | html %]</a>              
             [% END %]
-              <i class="fas fa-angle-double-right text-sm"></i>&nbsp;[% obj.address %]
+              <i class="las la-angle-double-right la-xs"></i>&nbsp;[% obj.address %]
           [% END %]
       </td>
     </tr>
@@ -158,7 +158,7 @@ END
 
     [% IF obj.depends.size > 0 %]
     <tr>
-      <td class="font-bold"><a href="[% uri_with(c, { type => 'dtree' }) %]" class="link">Dependencies <i class="fas fa-share-alt align-middle"></i></a></td>
+      <td class="font-bold"><a href="[% uri_with(c, { type => 'dtree' }) %]" class="link">Dependencies <i class="las la-share-alt align-middle"></i></a></td>
       <td class='whitespace-normal'>
         [% FOREACH parent IN obj.depends.sort %][% IF !loop.first() %][% END %][% PROCESS parent_obj color=1 parent = parent %][% END %]
       </td>
@@ -215,12 +215,12 @@ END
       [% END %]
       [% IF obj.scheduled_downtime_depth > 0 %]
       <span class='badge WARNING px-2'>
-        <i class="fas fa-moon" style="color: inherit;"></i>&nbsp;[% type | html %] in maintenance
+        <i class="las la-moon" style="color: inherit;"></i>&nbsp;[% type | html %] in maintenance
       </span>
       [% END %]
       [% IF obj.acknowledged %]
       <span class='badge WARNING px-2'>
-        <i class="fas fa-person-digging" style="color: inherit;"></i>&nbsp;[% type | html %] acknowledged
+        <i class="las la-hammer" style="color: inherit;"></i>&nbsp;[% type | html %] acknowledged
       </span>
       [% END %]
     </td>
@@ -241,7 +241,7 @@ END
  <div class="card w-1/3 grow h-full" style="border-color: var(--badge-[% state_color.${obj.state} %]-[% colorfg %]);">
   <div class="head justify-between" style="background-color: var(--badge-[% state_color.${obj.state} %]-[% colorbg %]);border-color: var(--badge-[% state_color.${obj.state} %]-[% IF theme=="Dark"%][% colorbg %][% ELSE %][% colorfg %][% END %]);">
 	<div class="font-bold" style="color: var(--badge-[% state_color.${obj.state} %]-[% colorfg %]) !important;">
-	  <i class="fas fa-info-circle" style="color: inherit !important;"></i>&nbsp;Plugin Output
+	  <i class="las la-info-circle la-lg" style="color: inherit !important;"></i>&nbsp;Plugin Output
 	</div>
   </div>
 	<div class='detail_plugin_output whitespace-normal p-3'>
@@ -270,14 +270,14 @@ END
   <div class="card [% card_size %]">
     <div class="head justify-between">
     <div class="font-bold">
-      <i class="fas fa-chart-bar"></i>&nbsp;Performance Data
+      <i class="las la-chart-area la-lg"></i>&nbsp;Performance Data
     </div>
     <span>
       <div class="link hoverable rounded clickable font-normal" id="raw_perf_switch" onclick="showElement('perfdata_raw'); hideElement('perfdata_human'); hideElement('raw_perf_switch'); showElement('human_perf_switch');">
-        <i class="fas fa-align-left" title="Show raw data"></i>
+        <i class="las la-align-left la-lg" title="Show raw data"></i>
       </div>
       <div class="link hoverable rounded clickable font-normal" style="display: none;" id="human_perf_switch" onclick="hideElement('perfdata_raw'); showElement('perfdata_human'); hideElement('human_perf_switch'); showElement('raw_perf_switch');">
-        <i class="fas fa-face-smile" title="Show human data"></i>
+        <i class="las la-eye la-lg" title="Show human data"></i>
       </div>
     </span>
   </div>

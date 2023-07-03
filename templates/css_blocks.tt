@@ -1,0 +1,43 @@
+[% BLOCK button_small_last %]
+button-default rounded-r-lg border-t border-b border-r px-2 py-1 focus:z-10 focus:text-blue-700 focus:ring-2 focus:ring-blue-700
+[% END %]
+
+[% BLOCK button_small_first %]
+button-default rounded-l-lg border px-2 py-1 hover:bg-gray-100 focus:z-10 focus:text-blue-700 focus:ring-2 focus:ring-blue-700
+[% END %]
+
+[% BLOCK button_small_middle %]
+button-default border-t border-b border-r border-l px-2 py-1 focus:z-10 focus:text-blue-700 focus:ring-2 focus:ring-blue-700
+[% END %]
+
+[% BLOCK button_small %]
+button-default rounded-lg border px-2 py-1 focus:z-10 focus:text-blue-700 focus:ring-2 focus:ring-blue-700
+[% END %]
+
+[% BLOCK button_small_light %]
+button-default rounded-lg border px-2 py-0 focus:z-10 focus:text-blue-700 focus:ring-2 focus:ring-blue-700
+[% END %]
+
+[% BLOCK button_small_light_last %]
+button-default rounded-r-lg border-t border-b border-r px-2 py-0 focus:z-10 focus:text-blue-700 focus:ring-2 focus:ring-blue-700
+[% END %]
+
+[% BLOCK button_small_light_first %]
+button-default rounded-l-lg border px-2 py-0 hover:bg-gray-100 focus:z-10 focus:text-blue-700 focus:ring-2 focus:ring-blue-700
+[% END %]
+
+[% BLOCK button_first %]
+button-default rounded-l-lg border-l border-t border-b px-4 py-2 focus:z-10 focus:text-blue-700 focus:ring-2 focus:ring-blue-700
+[% END %]
+
+[% BLOCK button_last %]
+button-default rounded-r-lg border-t border-b border-r px-4 py-2 focus:z-10 focus:text-blue-700 focus:ring-2 focus:ring-blue-700
+[% END %]
+
+[% BLOCK button_middle %]
+button-default border-t border-b border-r border-l px-4 py-2 focus:z-10 focus:text-blue-700 focus:ring-2 focus:ring-blue-700
+[% END %]
+
+[% BLOCK button_alone %]
+button-default rounded-lg border px-4 py-2 focus:z-10 focus:text-blue-700 focus:ring-2 focus:ring-blue-700
+[% END %]

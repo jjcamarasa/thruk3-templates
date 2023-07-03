@@ -3,7 +3,7 @@
   <div class="card grow h-full">
     <div class="head">
       <div class="font-bold">
-        <i class="fas fa-info-circle"></i>&nbsp;Check Information
+        <i class="las la-info-circle la-lg"></i>&nbsp;Check Information
       </div>
     </div>
     <div class="p-2">
@@ -28,7 +28,7 @@
   <div class="card grow h-full">
     <div class="head">
       <div class="font-bold">
-        <i class="fas fa-clock"></i>&nbsp;Last Check Time <span class="badge [% IF theme=="Dark" %]WARNING[% ELSE %]INFO[% END %]">[% last_check(c, obj.last_check) %]<span>
+        <i class="las la-clock la-lg"></i>&nbsp;Last Check Time <span class="badge [% IF theme=="Dark" %]WARNING[% ELSE %]INFO[% END %]">[% last_check(c, obj.last_check) %]<span>
       </div>
     </div>
     <div class="p-2">
@@ -57,7 +57,7 @@
 		  <td>[% date_format(c, obj.last_state_change) %]</td>
 		</tr>		
 		
-		  [% IF obj.last_notification != 0 %]
+		  [% IF obj.last_notification != 0 && obj.current_notification_number > 0 %]
 		  <tr>
 			<th>
 			[% IF obj.current_notification_number > 1 %][% plural = 's' %][% ELSE %][% plural = '' %][% END %]
@@ -88,7 +88,7 @@
   <div class="card h-full">
     <div class="head">
       <div class="font-bold">
-        <i class="fas fa-bolt"></i>&nbsp;Statistics
+        <i class="las la-bolt la-lg"></i>&nbsp;Statistics
       </div>
     </div>
     <div class="p-2">
@@ -118,7 +118,7 @@
   <div class="card h-full">
     <div class="head">
       <div class="font-bold">
-        <i class="fas fa-plus-circle"></i>&nbsp;Extra [% type | html %] information
+        <i class="las la-plus-circle la-lg"></i>&nbsp;Extra [% type | html %] information
       </div>
     </div>
     <div class="p-2">
@@ -185,9 +185,20 @@
           <td>
             [% IF obj.modified_attributes_list.size > 0 %]
               [% FOREACH attr = obj.modified_attributes_list %]
-                <span class='badge WARNING px-2'>[% attr %]</span>
+                [% IF attr == obj.modified_attributes_list.0 %]
+                  [% margingy = '' %]
+                [% ELSE %]
+                  [% margingy = "mt-1" %]
+                [% END %]
+				  [% attribute = attr.replace('_',' ') %]
+				  [% IF attr.match("enabled") %]
+					[% attribute = attribute.replace(' enabled','') %]
+				  [% END %]
+                  <span class='block [% margingy %] text-xs'>
+					<span class="badge WARNING">[% attribute %]</span>
+				  </span>
               [% END %]
-            [% END %]
+            [% END %]            
           </td>
         </tr>
       [% END %]
@@ -200,18 +211,18 @@
     <div class="head">
       <div class="font-bold">
 	  [% IF obj.contacts.size > 1 %][% plural = 's' %][% ELSE %][% plural = '' %][% END %]
-        <span class="fas fa-users"></span>&nbsp;[% obj.contacts.size %] contact[% plural %]
+        <span class="las la-users la-lg"></span>&nbsp;[% obj.contacts.size %] contact[% plural %]
       </div>
     </div>
     <div class="p-3">
               [% colors = ['slate','orange','lime','sky','indigo','pink','yellow','green','gray'] %]
-              <div class="pl-3" style="white-space: normal !important;">    
+              <div class="pl-3 whitespace-normal">
               <div>
               [% FOREACH contact_user = obj.contacts %]              
               [% USE Math %]
               [% color_num = Math.int(Math.rand(colors.size)) %]
               <span title="[% contact_user %]">
-                <i class="fas fa-circle-user" style="font-size: 1.8rem !important;height: inherit !important; width: inherit !important; color: var(--color-[% colors.$color_num %]-500)"></i>
+                <i class="las la-user-circle" style="font-size: 1.8rem !important;height: inherit !important; width: inherit !important; color: var(--color-[% colors.$color_num %]-500)"></i>
               </span>
               [% END %]
               </div>

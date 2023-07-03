@@ -5,14 +5,14 @@
   <div class="actionbox">
     <div>
         <a href="status.cgi?host=[% host.name | uri %]">
-            <span class="pr-2"><i class="far fa-clipboard"></i></span> Host Status Detail
+            <i class="las la-clipboard-list la-lg"></i>&nbsp;Host Status Detail
         </a>
     </div>
 
     [% IF host.childs.size > 0 %]
     <div>
         <a href="status.cgi?style=hostdetail&amp;s0_type=parent&amp;s0_op=%3D&amp;s0_value=[% host.name | uri %]">
-        <span class="pr-2"><i class="fas fa-code-branch"></i></span> Host Childs
+        <i class="las la-code-branch la-lg"></i>&nbsp;Host Childs
         </a>
     </div>
     [% END %]
@@ -20,7 +20,7 @@
     [% IF show_impacts_link %]
     <div>
         <a href="shinken_status.cgi?style=bothtypes&amp;s0_type=impact&amp;s0_op=%3D&amp;s0_value=[% host.name | uri %]&amp;title=Impacts of [% host.name | uri %]">
-        <span class="pr-2"><i class="fas fa-code-branch"></i></span> Impacts For This Problem
+        <i class="las la-code-branchla-lg"></i>&nbsp;Impacts For This Problem
         </a>
     </div>
     [% END %]
@@ -28,45 +28,51 @@
     [% IF show_rootproblems_link %]
     <div>
         <a href="shinken_status.cgi?style=bothtypes&amp;s0_type=rootproblem&amp;s0_op=%3D&amp;s0_value=[% host.name | uri %]&amp;title=Root problems of [% host.name | uri %]">
-        <span class="pr-2"><i class="fas fa-channel"></i></span> Root Problem For This Impact
+        <i class="las la-channel la-lg"></i>&nbsp;Root Problem For This Impact
         </a>
     </div>
     [% END %]
 
-    <div class="flex flex-nowrap gap-x-1">
+    <div class="block">
         <a href="history.cgi?host=[% host.name | uri %]&amp;nosystem=1&amp;backend=[% host.peer_key %]">
-        <span class="pr-2"><i class="fas fa-note-sticky"></i></span>
-        Host Alert History</a> (<a href="showlog.cgi?host=[% host.name | uri %]&amp;backend=[% host.peer_key %]">Logs</a> / <a href="avail.cgi?outages=1&host=[% host.name | uri %]&amp;backend=[% host.peer_key %]">Outages</a>)
+        <i class="las la-file-alt la-lg"></i>&nbsp;Host Alert History</a>
+        <span class="navsectionsubtitle text-xs">
+            <a href="showlog.cgi?host=[% host.name | uri %]&amp;backend=[% host.peer_key %]">Logs</a>
+            <span class="px-1">&nbsp;-&nbsp;</span>
+            <a href="avail.cgi?outages=1&host=[% host.name | uri %]&amp;backend=[% host.peer_key %]">Outages</a>
+        </span>
     </div>
 
     [% IF use_feature_trends %]
     <div>
         <a href="trends.cgi?host=[% host.name | uri %]">
-        <span class="pr-2"><i class="fas fa-chart-line"></i></span> Host Trends
+        <i class="las la-chart-line la-lg"></i>&nbsp;Host Trends
         </a>
     </div>
     [% END %]
 
         <div>
             <a href="avail.cgi?host=[% host.name | uri %]&amp;show_log_entries">
-            <span class="pr-2"><i class="fas fa-file-lines"></i></span> Host Availability Report
+            <i class="las la-book la-lg"></i>&nbsp;Host Availability Report
             </a>
             </div>
         <div>
             <a href="notifications.cgi?host=[% host.name | uri %]">
-            <span class="pr-2"><i class="fas fa-bell"></i></span> Host Notifications
+            <i class="las la-bell la-lg"></i>&nbsp;Host Notifications
             </a>
         </div>
 
     [% IF c.check_user_roles('authorized_for_configuration_information') %]
-        <div class="flex flex-nowrap gap-x-1">
+        <div class="block">
             <a href="config.cgi?type=hosts&amp;jump2=[% host.name | uri %]">
-            <span class="pr-2"><i class="fas fa-edit"></i></span> Host Configuration
+            <i class="las la-edit la-lg"></i>&nbsp;Host Configuration
             </a>
         [% IF use_feature_configtool && c.check_user_roles('authorized_for_system_commands') && backends_with_obj_config.$peer_key %]
+        <span class="navsectionsubtitle text-xs">
             <a href="conf.cgi?edit&amp;host=[% host.name | uri %]&amp;backend=[% host.peer_key %]">
-            (Edit)
+				<i class="las la-pen"></i>&nbsp;Edit in tool
             </a>
+        </span>
         [% END %]
         </div>
     [% END %]

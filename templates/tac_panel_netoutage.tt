@@ -1,7 +1,8 @@
 ﻿[% IF !empty && host_stats.outages > 0 %]
 <div class="card grow">
     <div class="head">
-      <div class="text-xl font-bold"><span class="fas fa-share-alt"></span>&nbsp;Network Outages</div>
+      <div class="text-xl font-bold">
+        <span class="las la-share-alt la-lg"></span>&nbsp;Network Outages</div>
     </div>
     <div class="body">
    <table>

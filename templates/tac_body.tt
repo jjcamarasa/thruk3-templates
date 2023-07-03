@@ -3,9 +3,9 @@
 <div class="flexcol h-full">
   <div class="flexcol">
     [% PROCESS _infobox.tt %]
-   <div class="flex">
+    <div class="inline-flex text-xl">
       [% PROCESS _status_filter.tt small_button = 1 %]
-      [% PROCESS _json_export.tt %]
+      [% PROCESS _json_export.tt %]    
     </div>
   </div>
  

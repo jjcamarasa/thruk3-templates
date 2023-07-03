@@ -13,10 +13,9 @@
       [% cookie_section_name = section.name.replace(' ', '_') | lower %]
         <li>
           <a class="navsectiontitle navitem">
-            <!--<i class="fas fa-[% IF section.defined('icon') && section.icon != "" %][% section.icon | html %][% ELSE %]folder[% END %] text-base h-fit"></i>-->
-            <i class="fas [% IF section.defined('icon') && section.icon != "" %][% section.icon | html %][% ELSE %]fa-folder[% END %]"></i>
-            <span class="ml-1">[% section.name | html %]</span>
-            <i class="fas fa-angle-down ml-auto"></i>
+            <i class="las [% IF section.defined('icon') && section.icon != "" %][% section.icon | html %][% ELSE %]la-folder[% END %] la-lg"></i>
+              <span class="ml-1">[% section.name | html %]</span>
+            <i class="las la-angle-down ml-auto"></i>
           </a>
 
           <ul class="navsectionlinks" [% IF !menu_states.exists(cookie_section_name) || menu_states.$cookie_section_name == 0 %] style="display:none;"[% END %]>
@@ -28,7 +27,7 @@
                   </a>
                   [% IF link.defined("html") %][% link.html %][% END %]
                   [% IF link.links.size > 0 %]
-                    <i class="fas fa-angle-down w-fit h-fit absolute right-0 top-0 mr-[-2px] px-1 rounded text-lg clickable hoverable navsectionsubtoggle"></i>
+                    <i class="las la-angle-down w-fit h-fit absolute right-0 top-0 mr-[-2px] px-1 rounded text-lg clickable hoverable navsectionsubtoggle"></i>
                     [% cookie_section_sub_name = cookie_section_name _ '.' _ link.name.replace(' ', '_') | lower %]
                     <ul class="navsectionsublinks" [% IF !menu_states.exists(cookie_section_sub_name) || menu_states.$cookie_section_sub_name == 0 %] style="display:none;"[% END %]>
                       [% FOREACH sublink = link.links %]
@@ -78,10 +77,10 @@
   <div class="h-8 flex-shrink-0 mt-auto w-full m-0 hidden lg:block collapse-btn">
     <div class="flexrow flex-nowrap gap-0">
       <button class="iconOnly w-full py-0 px-1.5 pl-[15px] m-0 h-8 block text-down hoverable js-menu-collapse" title="toggle collapsed side navigation.">
-        <i class="fas fa-angle-double-left text-sm contents" title="collapse navigation"></i>
+        <i class="las la-angle-double-left text-sm contents" title="collapse navigation"></i>
       </button>
       <button class="iconOnly w-full py-0 px-1.5 pl-[15px] m-0 h-8 block hoverable btn-nav-hide js-menu-hide" title="toggle hover side navigation.">
-        <i class="fas fa-angle-double-up text-sm contents" title="hide navigation"></i>
+        <i class="las la-angle-double-up text-sm contents" title="hide navigation"></i>
       </button>
     </div>
   </div>

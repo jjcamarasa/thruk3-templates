@@ -1,0 +1,3 @@
+﻿<a href="[% uri_with(c, 'view_mode' => 'json') %]" target="_blank" title="Export to JSON" class="[% INCLUDE button_small_last %]">
+	<i class="las la-file-export"></i>
+</a>

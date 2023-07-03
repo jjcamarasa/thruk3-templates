@@ -1,6 +1,6 @@
 <div class="card grow">
   <div class="head">
-    <div class="text-xl text-slate-800 font-bold"><span class="pl-1"><span class="fas fa-pen-ruler"></span>&nbsp;</span>Monitoring Features</div>
+    <div class="text-xl text-slate-800 font-bold"><span class="pl-1"><span class="las la-sliders-h la-lg"></span>&nbsp;</span>Monitoring Features</div>
   </div> 
   <div class="pt-2">
     <table class="striped pr-5">
@@ -25,7 +25,7 @@
             [% icon = "times" %]
           [% END %]
           <a class="text-[% color %] text-2xl" href='extinfo.cgi?type=0' title='[% color %]'>
-            <span class="fas fa-[% icon %]-square"></span>
+            <span class="las la-[% icon %]-circle"></span>
           </a>
         </td>
       <td>    
@@ -76,7 +76,7 @@
         [% END %]
 
         <a class="text-[% color %] text-2xl" href='extinfo.cgi?type=0' title='[% color %]'>
-          <span class="fas fa-[% icon %]-square"></span>
+          <span class="las la-[% icon %]-circle"></span>
         </a>
         </td>
         <td>
@@ -116,7 +116,7 @@
         [% END %]
 
         <a class="text-[% color %] text-2xl" href='extinfo.cgi?type=0' title='[% color %]'>
-          <span class="fas fa-[% icon %]-square"></span>
+          <span class="las la-[% icon %]-circle"></span>
         </a>
         </td>
         <td>
@@ -157,7 +157,7 @@
         [% END %]
       </a>
         <a class="text-[% color %] text-2xl" href='extinfo.cgi?type=0' title='[% color %]'>
-          <span class="fas fa-[% icon %]-square"></span>
+          <span class="las la-[% icon %]-circle"></span>
         </a>
         </td>
         <td>
@@ -197,7 +197,7 @@
           [% icon = "times" %]
         [% END %]
         <a class="text-[% color %] text-2xl" href='extinfo.cgi?type=0' title='[% color %]'>
-          <span class="fas fa-[% icon %]-square"></span>
+          <span class="las la-[% icon %]-circle"></span>
         </a>
         </td>
         <td>

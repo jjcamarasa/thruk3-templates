@@ -1,4 +1,13 @@
-﻿<!DOCTYPE HTML>
+﻿[% PROCESS css_blocks.tt %]
+
+
+[% IF theme == "Dark" %]
+  [% bgbutton = 'bg-neutral-700' %]
+[% ELSE %]
+  [% bgbutton = 'bg-slate-50' %]
+[% END %]
+
+<!DOCTYPE HTML>
 <html [% IF extrahtmlclass %]class="[% extrahtmlclass | html %]"[% END %] lang="en">
   <head>
     <title>[% title_prefix %][% escape_html(title) %]</title>
@@ -38,7 +47,9 @@
     [% UNLESS minimal %]
       <header class="header">
         <div class="h-[50px] min-w-fit flexrow flex-nowrap items-center overflow-y-hidden">
-          <button id="mainNavBtn" class="big iconOnly w-10 h-10 ml-[-10px] clickable min-w-[30px]"><i class="fa-solid fa-bars"></i></button>
+          <button id="mainNavBtn" class="big iconOnly w-10 h-10 ml-[-10px] clickable min-w-[30px]">
+            <i class="las la-bars"></i>
+          </button>
           <div class="flex-grow h-min relative">
             [% IF c.user_exists %][% PROCESS _header_sites.tt %][% END %]
           </div>
@@ -57,21 +68,36 @@
                 </form>
               </div>
             [% END %]
+            
+            <div class="inline-flex text-2xl">
+            
+            <button class="[% INCLUDE button_first %] [% bgbutton %]" title="reload page" id="refresh_button" onClick="refresh_button()">
+              <i class="las la-sync"></i>
+            </button>
+            
+            [% IF show_error_reports %]
             <div class="w-fit" id="bug_report" style="display: none;">
-              [% IF show_error_reports %]
-                <button class="noprint big red round" id="bug_report-btnEl"><i class="fas fa-thunderstorm"></i></button>
-              [% END %]
+              <button class="[% INCLUDE button_first %] [% bgbutton %] text-2xl" id="bug_report-btnEl">
+                <i class="las la-spider"></i>
+              </button>
             </div>
-            <button class="noprint big primary round" title="reload page" id="refresh_button" onClick="refresh_button()"><i class="fas fa-sync"></i></button>
+            [% END %]
+            
             [% IF c.user_exists %]
-              <button class="noprint big primary round"  title="user preferences" onClick="toggleElementRemote('pref_pane', '_header_prefs', true); return false;"><i class="fas fa-cog"></i></button>
+              <button class="[% INCLUDE button_middle %] [% bgbutton %] text-2xl"  title="user preferences" onClick="toggleElementRemote('pref_pane', '_header_prefs', true); return false;">
+                <i class="la la-cog"></i>
+              </button>
               [% IF cookie_auth && show_logout_button %]
                 <form action="[% IF c.config.logout_link; c.config.logout_link; ELSE %][% url_prefix %]cgi-bin/login.cgi?logout[% END %]" method='POST' target='_top' style="display: initial;">
-                  <button class="noprint big primary round" title="sign out"><i class="fas fa-right-from-bracket"></i></button>
+                  <button class="[% INCLUDE button_last %] [% bgbutton %] hover:text-red-500 text-2xl" title="sign out">
+                    <i class="las la-sign-out-alt"></i>
+                  </button>
                 </form>
               [% END %]
             [% END %]
+            </div>
           </div>
+          
           [% IF c.user_exists %]
             <div id="pref_pane" class="card z-50 shadow-float fixed left-0 md:left-auto md:right-0 top-[50px] mt-0 min-h-[150px] w-full md:w-[500px] rounded-t-none rounded-r-none" style="display: none;"></div>
           [% END %]

@@ -10,7 +10,7 @@
 [% ELSE %]
   [% my_svc_desc = service.display_name %]
 [% END %]
-[% infoBoxPreTitle = "$my_svc_desc <i class='fas fa-angle-double-right text-sm'></i>&nbsp;<a class='link' href='extinfo.cgi?type=1&amp;host=$service.host_name'>$service.host_name</a>" %]
+[% infoBoxPreTitle = "$my_svc_desc <i class='las la-angle-double-right text-sm'></i>&nbsp;<a class='link' href='extinfo.cgi?type=1&amp;host=$service.host_name'>$service.host_name</a>" %]
 
 <div class="flexrow justify-between mb-2">
   [% PROCESS _infobox.tt %]
@@ -46,7 +46,7 @@
         [% UNLESS command_disabled(c, '3') %]
           <div>
             <a class="button js-modal-command-link" href="cmd.cgi?cmd_typ=3&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
-              <i class="fa-solid fa-comment mr-1"></i>Add comment
+              <i class="las la-comment mr-1"></i>Add comment
             </a>
           </div>
         [% END %]
@@ -54,7 +54,7 @@
           [% UNLESS command_disabled(c, '21') %]
             <div>
               <a class="button hover-red js-modal-command-link" href="cmd.cgi?cmd_typ=21&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
-                <i class="fa-solid fa-trash mr-1"></i>Delete all
+                <i class="las la-trash mr-1"></i>Delete all
               </a>
             </div>
           [% END %]
@@ -85,12 +85,12 @@
         [% IF downtimes %]
           [% UNLESS command_disabled(c, '5') %]
             <a class="button hover-red js-modal-command-link" href="cmd.cgi?quick_command=5&amp;confirm=no&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]&amp;referer=[% as_url_arg(short_uri(c, {referer => 'undef'})) %]">
-              <i class="fa-solid fa-trash mr-1"></i>Delete all
+              <i class="las la-trash mr-1"></i>Delete all
             </a>
           [% END %]
         [% END %]
         <a class="button" href="showlog.cgi?host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]&amp;pattern=DOWNTIME&amp;start=[% date.now - 86400 * 7 %]&amp;end=[% date.now %]">
-          <i class="fa-solid fa-bars mr-1"></i>List recent downtimes
+          <i class="las la-bars mr-1"></i>List recent downtimes
         </a>
       </div>
     [% END %]
@@ -174,9 +174,9 @@
       <h3>Configuration Information</h3>
       <div class="flex gap-x-1">
         [% IF use_feature_configtool && c.check_user_roles('authorized_for_system_commands') && backends_with_obj_config.$peer_key %]
-          <a class="button" href="conf.cgi?edit&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]"><i class="fa-solid fa-wrench small"></i>Configure service</a>
+          <a class="[% INCLUDE button_small %]" href="conf.cgi?edit&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]"><i class="las la-wrench la-lg"></i>Configure service</a>
         [% ELSE %]
-          <a class="button" href="config.cgi?type=services&amp;jump2=[% service.host_name | uri %]&amp;jump3=[% service.description | uri %]"><i class="fa-solid fa-eye small"></i>View Configuration</a>
+          <a class="[% INCLUDE button_small %]" href="config.cgi?type=services&amp;jump2=[% service.host_name | uri %]&amp;jump3=[% service.description | uri %]"><i class="las la-eye la-lg"></i>View Configuration</a>
         [% END %]
       </div>
     </div>
