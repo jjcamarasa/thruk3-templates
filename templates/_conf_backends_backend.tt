@@ -1,0 +1,85 @@
+﻿<tr class="backend_conf_[% x %] m-1">
+  <th class="p-2">Name</th>
+  <td>
+    <input type="hidden" name="id[% x %]" value="[% b.id %]">
+    <input type="text" name="name[% x %]" value="[% b.name | html %]" class="w-full" placeholder="connection name">
+  </td>
+  <td class="px-2">
+    <button class="iconOnly" title="remove connection" onclick="[% IF x == 0 %]conf_sites_add_hide();[% ELSE %]delete_site_row(this);[% END %]return false;">
+      <i class="las la-times-circle la-lg hover:text-red-500"></i>
+    </button>
+  </td>
+</tr>
+<tr class="backend_conf_[% x %]">
+  <th class="p-2">Type</th>
+  <td>
+    <select name="type[% x %]" id="sel_type[% x %]" class="w-full" onchange="check_backends_config(this)">
+      <option value="livestatus"[% IF b.type == 'livestatus' %] selected[% END %]>livestatus</option>
+      <option value="http"[% IF       b.type == 'http'       %] selected[% END %]>http</option>
+      <option value="configonly"[% IF b.type == 'configonly' %] selected[% END %]>config only</option>
+    </select>
+  </td>
+</tr>
+[% FOREACH addr IN b.addr.list %]
+<tr class="backend_conf_[% x %] backend_connection">
+  <th class="px-2 align-top">Connection</th>
+  <td>
+    <div class="flexrow gap-x-1 w-full flex-nowrap">
+      <input type="text" name="peer[% x %]" value="[% addr | html %]" class="grow peer_[% x %]_[% loop.index %]" placeholder="server:6557 or socket">
+      <input type="button" name="test[% x %]" class="bg-gray-300 hover:bg-gray-400 rounded-lg border border-gray-400 px-2 py-0 text-sm" value="test" onclick="conf_test_connection(this, '[% x %]_[% loop.index %]')">
+    </div>
+  </td>
+  <td>
+    <div class="hidden spinner testimg_c_[% x %]_[% loop.index %]" title="checking connection"></div>
+    <i class="las la-exclamation-circle fa-lg text-yellow-500 hidden testimg_e_[% x %]_[% loop.index %]"></i>
+    <i class="las la-check-circle fa-lg text-green-500 hidden testimg_o_[% x %]_[% loop.index %]"></i>
+  </td>
+</tr>
+[% END %]
+<tr class="backend_conf_[% x %] backend_auth">
+  <th class="p-2">Auth-Key</th>
+  <td>
+    <div class="flexrow gap-px w-full flex-nowrap items-center">
+      <input type="text" name="auth[% x %]" value="[% b.auth | html %]" class="w-full" placeholder="authkey">
+      <a href="#" onclick="overcard({ 'bodyCls': 'p-2', 'body': 'The authorization key is used to authorize http requests.<br>It must be provided from the remote host and can be either:<br><ul><li>an api key (<a href=&quot;http://thruk.org/documentation/rest.html#_api-key&quot; target=&quot;_blank&quot; class=&quot;link&quot;>read more in the docs <i class=&quot;las la--external-link-alt text-sm&quot;></i></a>)<\/li><li>the key from /var/lib/thruk/secret.key<\/li><li> the key from ~/var/thruk/secret.key (for OMD)<\/li><\/ul>', 'caption': 'Authorization Key', 'width': 600 }); return false;">
+        <i class="las la-circle-question" id="authinfoimg[% x %]" title="help"></i>
+      </a>
+    </div>
+  </td>
+</tr>
+<tr class="backend_conf_[% x %] backend_proxy">
+  <th class="p-2">Proxy</th>
+  <td>
+    <input type="text" name="proxy[% x %]" value="[% b.proxy | html %]" class="w-full" placeholder="http://proxyhost:proxyport">
+  </td>
+</tr>
+<tr class="backend_conf_[% x %] backend_remote_name">
+  <th class="p-2">Remote Name</th>
+  <td>
+    <input type="text" name="remote_name[% x %]" value="[% b.remote_name | html %]" class="w-full" placeholder="name of remote peer">
+  </td>
+</tr>
+<tr class="backend_conf_[% x %] backend_hidden">
+  <th class="p-2">Hidden</th>
+  <td>
+    <div class="radiogroup">
+      <input type="radio" name="hidden[% x %]" id="hidden[% x %]_0" value="0"[% IF b.hidden == 0 %] checked[% END %]><label for="hidden[% x %]_0">No</label>
+      <input type="radio" name="hidden[% x %]" id="hidden[% x %]_1" value="1"[% IF b.hidden == 1 %] checked[% END %]><label for="hidden[% x %]_1">Yes</label>
+    </div>
+  </td>
+</tr>
+<tr class="backend_conf_[% x %]">
+  <th class="p-2">Section</th>
+  <td>
+    <input type="text" name="section[% x %]" value="[% b.section | html %]" class="w-full" placeholder="group sites by sections">
+  </td>
+</tr>
+<tr class="backend_conf_[% x %]">
+  <th class="p-2">Source</th>
+  <td>
+    [% IF b.file != "" %][% b.file %]:[% b.lineno %][% ELSE %][% conf_file %][% END %]
+  </td>
+</tr>
+[% IF x > 1 %]
+<tr class="backend_conf_[% x %]"><td colspan=3><hr class="pb-2 mt-2"></td></tr>
+[% END %]

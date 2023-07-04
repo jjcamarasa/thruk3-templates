@@ -51,7 +51,7 @@ color: var(--badge-[% state %]-[% colorbg %]);
   [% hoks = host_stats.up_and_scheduled + host_stats.up_and_disabled_active + host_stats.up_and_disabled_active + host_stats.up_and_disabled_passive %]
   [% IF hoks > 0 %]
   <div class="flex-col grow p-2" style="[% INCLUDE style_cardcolor %]">
-    <div class="flexrow items-center grow">A
+    <div class="flexrow items-center grow">
   [% ELSE %]
       <div class="flexrow items-center grow p-2" style="[% INCLUDE style_cardcolor %]">
   [% END %]

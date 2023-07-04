@@ -1,0 +1,185 @@
+﻿[% WRAPPER _conf_frame.tt %]
+
+[% IF readonly %]
+<div class="card red alert top-center w-fit">
+  <div class="body textALERT"><b>Readonly:</b> Make sure the config file is writable!</div>
+</div>
+[% END %]
+
+<form action="conf.cgi" method="POST">
+  <input type="hidden" name="sub" value="backends">
+  [%# make sure IE can submit form by pressing enter #%]
+  <input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;"/>
+  <input type="hidden" name="action" value="save">
+  <input type="hidden" name="CSRFtoken" value="[% get_user_token(c) %]">
+
+    <div class="head justify-between">
+      <h3>Backends Configuration</h3>
+      <button colspan=3 class="bg-green-500 hover:bg-green-700 font-bold py-2 px-4 rounded text-green-100 hover:text-white clickable hoverable text-center" onclick="conf_sites_add(); return false;">
+        <i class="las la-plus-circle"></i>&nbsp;New connection
+      </button>
+    </div>
+    <div class="body">
+    <span class="textHINT block text-center">Note: some options are not accessible here for security reasons.</span>    
+    <table class="m-2">
+      [% x = 0 %]
+      [% FOREACH b = conf_sites %]
+        [% x = x + 1 %]
+        [% PROCESS _conf_backends_backend.tt %]
+      [% END %]
+
+      [% PROCESS _conf_backends_backend.tt b = { name => '', addr => '', auth => '', proxy => '', remote_name => '', id => '', hidden => 0, type => 'livestatus', section => '', file => '', lineno => '' } x = 0 %]
+    </table>
+    </div>
+    
+    <div class="footer m-0 p-0">
+      <button class="mx-auto bg-blue-500 hover:bg-blue-700 font-bold py-2 px-4 rounded text-blue-100 hover:text-white" [% IF readonly %]disabled[% ELSE %]onclick="setBtnSpinner(this);"[% END %]>
+        <i class="las la-save"></i>Save Changes
+      </button>
+    </div>
+</form>
+
+<script>
+<!--
+  function conf_sites_add_hide() {
+    jQuery('.backend_conf_0').each(function() {
+      hideElement(this);
+    });
+    jQuery('.backend_conf_0_add').each(function() {
+      showElement(this);
+    });
+  }
+  conf_sites_add_hide();
+
+  function conf_sites_add() {
+    jQuery('.backend_conf_0_add').each(function() {
+      hideElement(this);
+    });
+    jQuery('.backend_conf_0').each(function() {
+      showElement(this);
+    });
+    var sel = document.getElementById('sel_type0');
+    check_backends_config(sel);
+  }
+
+  function delete_site_row(btn) {
+    jQuery('.'+btn.parentNode.parentNode.className).each(function() {
+      var p = this.parentNode;
+      p.removeChild(this);
+    });
+  }
+
+  function list_roles(roles) {
+    if(!roles) { return("none"); }
+    var list = [];
+    for(var x = 0; x < roles.length; x++) {
+      roles[x] = roles[x].replace(/^authorized_for_/, "")
+      if(roles[x] == "admin") {
+        return("admin");
+      }
+      list.push(roles[x]);
+    }
+    return(list.join(",<br>"));
+  }
+
+  var orig_src;
+  function conf_test_connection(btn, loopid) {
+    var nr          = btn.name.substr(4);
+    var peer        = jQuery('INPUT.peer_'+loopid).val();
+    var typ         = jQuery('SELECT[name=type'+nr+']').val();
+    var auth        = jQuery('INPUT[name=auth'+nr+']').val();
+    var proxy       = jQuery('INPUT[name=proxy'+nr+']').val();
+    var remote_name = jQuery('INPUT[name=remote_name'+nr+']').val();
+    jQuery('.testimg_c_'+loopid).removeClass("hidden");
+    jQuery('.testimg_e_'+loopid).addClass("hidden");
+    jQuery('.testimg_o_'+loopid).addClass("hidden");
+    jQuery('#thruk_message').remove();
+
+    jQuery("#backend_conf_"+nr+"_details").hide();
+    jQuery.ajax({
+        url:  'conf.cgi',
+        data: {
+                sub:         'backends',
+                action:      'check_con',
+                peer:         peer,
+                type:         typ,
+                auth:         auth,
+                proxy:        proxy,
+                remote_name:  remote_name,
+                CSRFtoken:    CSRFtoken
+        },
+        type: 'POST',
+        cache: false,
+        success: function(data) {
+          jQuery('.testimg_c_'+loopid).addClass("hidden");
+          if(data.ok == 1) {
+            jQuery('.testimg_o_'+loopid).removeClass("hidden").attr("title", 'connection test successful')
+            details = "";
+            if(data.data) {
+              details +=  "<tr><th>Version:</th><td>"+data.data.program_version+"</td></tr>"
+            }
+            if(data.whoami) {
+              details +=  "<tr><th>User:</th><td>"+data.whoami.id+"</td></tr>"
+                         +"<tr><th>Readonly:</th><td>"+(data.whoami.can_submit_commands ? 'no' : 'yes')+"</td></tr>"
+                         +"<tr><th>Groups:</th><td>"+(data.whoami.groups ? data.whoami.groups.join(", ") : 'none')+"</td></tr>"
+                         +"<tr><th>Roles:</th><td>"+list_roles(data.whoami.roles)+"</td></tr>"
+            }
+            if(data.data && data.data.thruk && data.data.thruk.thruk_version) {
+              details +=  "<tr><th>Thruk:</th><td>"+data.data.thruk.thruk_version+"</td></tr>";
+            }
+            if(data.data && data.data.thruk && data.data.thruk.extra_version) {
+              details +=  "<tr><th>OMD:</th><td>"+data.data.thruk.extra_version+"</td></tr>";
+            }
+            overcard({
+              'bodyCls': 'p-2',
+              'body':    "<table>"+details+"</table>",
+              'caption': 'Connection details',
+              'minWidth': 200
+            });
+          } else {
+            jQuery('.testimg_e_'+loopid).removeClass("hidden").attr("title", 'connection test failed: '+data.error)
+            thruk_message(1, "<pre class='max-w-[85vw] text-left overflow-auto'>"+data.error + ' ('+peer+')</pre>', 0);
+          }
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          thruk_xhr_error('connection test unknown: ', '', textStatus, jqXHR, errorThrown);
+          jQuery('.testimg_e_'+loopid).removeClass("hidden").attr("title", 'connection test failed')
+        }
+    });
+  }
+
+  /* change visibility of backend attributes */
+  function check_backends_config(sel) {
+    var value = jQuery(sel).val();
+    var nr    = sel.name.replace('type', '');
+
+    jQuery('.backend_conf_'+nr+'.backend_connection').hide();
+    jQuery('.backend_conf_'+nr+'.backend_auth').hide();
+    jQuery('.backend_conf_'+nr+'.backend_proxy').hide();
+    jQuery('.backend_conf_'+nr+'.backend_remote_name').hide();
+
+    if(value == 'livestatus' || value == 'http') {
+      jQuery('.backend_conf_'+nr+'.backend_connection').show();
+    }
+    if(value == 'http') {
+      jQuery('.backend_conf_'+nr+'.backend_auth').show();
+      jQuery('.backend_conf_'+nr+'.backend_proxy').show();
+      jQuery('.backend_conf_'+nr+'.backend_remote_name').show();
+      jQuery('INPUT[name=peer'+nr+']').attr('placeholder', 'https://server/[sitename]');
+    }
+
+    if(value == 'livestatus') {
+      jQuery('INPUT[name=peer'+nr+']').attr('placeholder', 'server:6557 or socket');
+    }
+  }
+
+  [% x = 0 %]
+  [% FOREACH b = conf_sites %]
+  [% x = x + 1 +%]
+  var sel = document.getElementById('sel_type[% x %]');
+  check_backends_config(sel);
+  [%+ END %]
+-->
+</script>
+
+[% END %]

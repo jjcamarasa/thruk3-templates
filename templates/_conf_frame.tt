@@ -46,23 +46,25 @@
       [% END %]
     </select>
     </form>
-
-    <div class="h-3">
-    [% IF last_changed || needs_commit || show_save_reload %]
-      [% PROCESS _button btn = {
-        form   => { action => 'conf.cgi', },
-        data   => { sub => 'objects', 'apply' => 'yes', save_and_reload => 'yes', CSRFtoken => get_user_token(c), },
-        button => { class => 'w-full', title => "Apply all changes and reload core", onclick => "return save_reload_apply(this, '" _ show_save_reload _ "')", html => '<i class="las la-save"></i>Save &amp; Reload' },
-      }%]
-    [% END %]
-    </div>
   </div>
 </div>
 
+  <div class="card mx-auto mt-3 w-2/3">
+    <div class="body">
+      [% content %]
+    </div>
 
+  [% IF last_changed || needs_commit || show_save_reload %]
+    <div class="footer">
+      [% PROCESS _button btn = {
+        form   => { action => 'conf.cgi', class => 'mx-auto'},
+        data   => { sub => 'objects', 'apply' => 'yes', save_and_reload => 'yes', CSRFtoken => get_user_token(c), },          
+        button => { class => 'bg-blue-500 hover:bg-blue-700 font-bold py-2 px-4 rounded text-blue-100 hover:text-white', title => "Apply all changes and reload core", onclick => "return save_reload_apply(this, '" _ show_save_reload _ "')", html => '<i class="las la-save la-lg"></i>Save &amp; Reload' },
+      }%]
+    </div>  
+    [% END %]
+  </div>
 
-
-[% content %]
 
 <script>
 <!--

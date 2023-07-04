@@ -6862,16 +6862,40 @@ i.fa-solid.fa-person-digging.clickable {
     background-color: var(--color-blue-500);
 }
 
+.bg-green-500 {
+    background-color: var(--color-green-500);
+}
+
 .bg-blue-700 {
     background-color: var(--color-blue-700);
+}
+
+.bg-gray-300 {
+    background-color: var(--color-gray-300);
+}
+
+.bg-gray-700 {
+    background-color: var(--color-gray-700);
 }
 
 .border-blue-300 {
     border-color: var(--color-blue-300);
 }
 
+.border-gray-400 {
+    border-color: var(--color-gray-400);
+}
+
 .hover\:bg-blue-700:hover {
     background-color: var(--color-blue-700);
+}
+
+.hover\:bg-green-700:hover {
+    background-color: var(--color-green-700);
+}
+
+.hover\:bg-gray-400:hover {
+    background-color: var(--color-gray-400);
 }
 
 .hover\:text-white:hover {
@@ -6880,4 +6904,24 @@ i.fa-solid.fa-person-digging.clickable {
 
 .w-2\/3 {
     width: 66% !important
+}
+
+.text-green-100 {
+  color: var(--color-green-100);
+}
+
+.text-gray-100 {
+  color: var(--color-gray-100);
+}
+
+.hover\:text-red-500:hover {
+    color: var(--color-red-500);
+}
+
+.text-yellow-500 {
+  color: var(--color-yellow-500);
+}
+
+.text-green-500 {
+  color: var(--color-green-500);
 }
