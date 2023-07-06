@@ -256,7 +256,8 @@
         [% thisclass = "flex items-center" %]
       [% END %]
       <div class="[% thisclass %] grow p-2" style="[% INCLUDE style_cardcolor %]">
-          <a class="text-3xl font-bold block mt-2" href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 8 })  %]'>[% service_stats.unknown  %] Unknown</a>
+          <a title="[% service_stats.unknown  %] Unknown" class="text-3xl font-bold block mt-2" href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 8 })  %]'>
+          <span class="las la-question-circle"></span>[% service_stats.unknown  %]</a>
 
         [% IF unkn > 0 %]
         <div class="block text-xl">
