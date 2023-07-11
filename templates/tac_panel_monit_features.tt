@@ -1,13 +1,11 @@
-<div class="card grow">
-  <div class="head">
-    <div class="text-xl text-slate-800 font-bold"><span class="pl-1"><span class="las la-sliders-h la-lg"></span>&nbsp;</span>Monitoring Features</div>
-  </div> 
-  <div class="pt-2">
-    <table class="striped pr-5">
-    <thead class="font-bold">
-      <th class="w-24 pl-2">Feature</th>
+<div class="card">
+  <div>
+    <table class="striped">
+    <thead class="text-bold">
+      <th class="w-24 p-2"><span class="las la-sliders-h"></span>&nbsp;Features</th>
       <th class="text-center">Status</th>
-      <th>Information</th>
+      <th class="text-center">Services</th>
+      <th class="text-center">Hosts</th>
     </thead>
     <tr>
       <td class="font-bold pl-2">Active Checks</td>
@@ -24,43 +22,66 @@
             [% color = "disabled" %]
             [% icon = "times" %]
           [% END %]
-          <a class="text-[% color %] text-2xl" href='extinfo.cgi?type=0' title='[% color %]'>
-            <span class="las la-[% icon %]-circle"></span>
+          <a class="text-[% color %]" href='extinfo.cgi?type=0' title='[% color %]'>
+            <span class="las la-[% icon %]"></span>
           </a>
         </td>
-      <td>    
-              [% IF pi.keys.size > 0 && pi.execute_service_checks == 0 %]
-                <a class="text-disabled" href='extinfo.cgi?type=0'>Feature disabled</a>
-              [% ELSE %]                
-                  [% IF empty || service_stats.active_checks_disabled_active + service_stats.active_checks_disabled_passive == 0 %]
-                    <span class="text-enabled">
-					  <span class="font-bold" style="color: var(--color-slate-500);">Services</span> All Enabled
-					</span>
-                  [% ELSE %]
-                    [% IF strict_passive_mode %]
-                      [% IF service_stats.active_checks_disabled_active > 0 %]<a class="text-disabled" href='[% uri_with(c, { _page => "status.cgi", style => "detail", serviceprops => 131088 }) %]'><span class="font-bold" style="color: var(--color-slate-500);">Services</span> [% service_stats.active_checks_disabled_active %] Disabled</a>[% END %]
-                      [% IF service_stats.active_checks_disabled_passive > 0 %]<a class="text-unknown" href='[% uri_with(c, { _page => "status.cgi", style => "detail", serviceprops => 65552 }) %]'><span class="font-bold" style="color: var(--color-slate-500);">Services</span> [% service_stats.active_checks_disabled_passive %] Passive</a>[% END %]
-                    [% ELSE %]
-                      <a class="text-disabled" href='[% uri_with(c, { _page => "status.cgi", style => "detail", serviceprops => 16 }) %]'><span class="font-bold" style="color: var(--color-slate-500);">Services</span> [% service_stats.active_checks_disabled_active + service_stats.active_checks_disabled_passive %] Disabled</a>
-                    [% END %]
-                  [% END %]
-
-                  [% IF empty || host_stats.active_checks_disabled_active + host_stats.active_checks_disabled_passive == 0 %]
-                    <span class="text-enabled">
-					  <span class="font-bold" style="color: var(--color-slate-500);">Hosts</span> All Enabled
-					</span>
-                  [% ELSE %]
-                    [% IF strict_passive_mode %]
-                      [% IF host_stats.active_checks_disabled_active > 0 %]<a class="text-disabled" href='[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hostprops => 131088 }) %]'><span class="font-bold" style="color: var(--color-slate-500);">Hosts</span> [% host_stats.active_checks_disabled_active %] Disabled</a>[% END %]
-                      [% IF host_stats.active_checks_disabled_passive > 0 %]<a class="text-unknown" href='[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hostprops => 65552 }) %]'><span class="font-bold" style="color: var(--color-slate-500);">Hosts</span> [% host_stats.active_checks_disabled_passive %] Passive</a>[% END %]
-                    [% ELSE %]
-                      <a class="text-disabled" href='[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hostprops => 16 }) %]'><span class="font-bold" style="color: var(--color-slate-500);">Hosts</span> [% host_stats.active_checks_disabled_active + host_stats.active_checks_disabled_passive %] Disabled</a>
-                    [% END %]
-                  [% END %]
+      
+      [% IF pi.keys.size > 0 && pi.execute_service_checks == 0 %]
+      <td colspan='2' class='pl-2'>
+        <a class="text-disabled" href='extinfo.cgi?type=0'>Feature disabled</a>
+      </td>
+      [% ELSE %]              
+        <td class="text-center px-2">
+          [% IF empty || service_stats.active_checks_disabled_active + service_stats.active_checks_disabled_passive == 0 %]          
+          <span class="text-enabled">All Enabled</span>
+          [% ELSE %]
+            [% svc_css = 'text-disabled' %]
+            [% svc_text = '' %]
+            [% IF strict_passive_mode %]
+              [% IF service_stats.active_checks_disabled_active > 0 %]
+                <a class="text-disabled" href='[% uri_with(c, { _page => "status.cgi", style => "detail", serviceprops => 131088 }) %]'>
+                  [% svc_text = $service_stats.active_checks_disabled_active + 'Disabled' %]
+                </a>
               [% END %]
-    </td>
+              
+              [% IF service_stats.active_checks_disabled_passive > 0 %]
+                <a class="text-unknown" href='[% uri_with(c, { _page => "status.cgi", style => "detail", serviceprops => 65552 }) %]'>
+                  <span class="font-bold" style="color: var(--color-slate-500);">Services</span> [% service_stats.active_checks_disabled_passive %] Passive
+                </a>
+              [% END %]              
+            [% ELSE %]
+              <a class="text-disabled" href='[% uri_with(c, { _page => "status.cgi", style => "detail", serviceprops => 16 }) %]'>
+                <span class="font-bold" style="color: var(--color-slate-500);">Services
+                </span> [% service_stats.active_checks_disabled_active + service_stats.active_checks_disabled_passive %] Disabled
+              </a>
+            [% END %]            
+          [% END %]
+          </td>
+          <td class="text-center px-2">
+          [% IF empty || host_stats.active_checks_disabled_active + host_stats.active_checks_disabled_passive == 0 %]
+            <span class="text-enabled">All Enabled</span>
+          [% ELSE %]
+            [% IF strict_passive_mode %]
+              [% IF host_stats.active_checks_disabled_active > 0 %]
+                <a class="text-disabled" href='[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hostprops => 131088 }) %]'>                  
+                  [% host_stats.active_checks_disabled_active %] Disabled
+                </a>
+              [% END %]
+              [% IF host_stats.active_checks_disabled_passive > 0 %]
+                <a class="text-unknown" href='[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hostprops => 65552 }) %]'>
+                [% host_stats.active_checks_disabled_passive %] Passive
+                </a>
+              [% END %]
+            [% ELSE %]
+                <a class="text-disabled" href='[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hostprops => 16 }) %]'>              
+                [% host_stats.active_checks_disabled_active + host_stats.active_checks_disabled_passive %] Disabled
+                </a>
+            [% END %]
+          [% END %]      
+        </td>
+    [% END %]
     </tr>
-
     <tr>
         <td class="font-bold pl-2">Passive Checks</td>
         <td class="text-center">
@@ -74,33 +95,35 @@
           [% color = "disabled" %]
           [% icon = "times" %]
         [% END %]
-
-        <a class="text-[% color %] text-2xl" href='extinfo.cgi?type=0' title='[% color %]'>
-          <span class="las la-[% icon %]-circle"></span>
+        <a class="text-[% color %]" href='extinfo.cgi?type=0' title='[% color %]'>
+          <span class="las la-[% icon %]"></span>
         </a>
         </td>
-        <td>
         [% IF pi.keys.size > 0 && pi.accept_passive_service_checks == 0 %]
-          <a class="text-disabled" href='extinfo.cgi?type=0'><div class="disabled">Feature disabled</div></a>
+          <td colspan='2' class='pl-2'>
+            <a class="text-disabled" href='extinfo.cgi?type=0'>Feature disabled</a>
+          </td>
         [% ELSE %]
-            [% IF empty || service_stats.passive_checks_disabled == 0 %]
-              <span class="text-enabled">
-				<span class="font-bold" style="color: var(--color-slate-500);">Services</span> All Enabled
-			  </span>
-            [% ELSE %]
-              <a class="text-disabled" href='[% uri_with(c, { _page => "status.cgi", style => "detail", serviceprops => 16384 }) %]'><span class="font-bold" style="color: var(--color-slate-500);">Services</span> [% service_stats.passive_checks_disabled %] Disabled</a>
-            [% END %]
+        <td class="text-center px-2">
+          [% IF empty || service_stats.passive_checks_disabled == 0 %]
+            <span class="text-enabled">All Enabled</span>
+          [% ELSE %]
+              <a class="text-disabled" href='[% uri_with(c, { _page => "status.cgi", style => "detail", serviceprops => 16384 }) %]'>
+                [% service_stats.passive_checks_disabled %] Disabled
+              </a>
+          [% END %]
+          </td>
+          <td class="text-center px-2">
             [% IF empty || host_stats.passive_checks_disabled == 0 %]
-              <span class="text-enabled">
-				<span class="font-bold" style="color: var(--color-slate-500);">Hosts</span> All Enabled
-			  </span>			  
+              <span class="text-enabled">All Enabled</span>
             [% ELSE %]
-              <a class="text-disabled" href='[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hostprops => 16384 }) %]'><span class="font-bold" style="color: var(--color-slate-500);">Hosts</span> [% host_stats.passive_checks_disabled %] Disabled</a>
+              <a class="text-disabled" href='[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hostprops => 16384 }) %]'>
+                [% host_stats.passive_checks_disabled %] Disabled
+              </a>
             [% END %]
+          </td>
         [% END %]
-        </td>
     </tr>
-
     <tr>
         <td class="font-bold pl-2">Notifications</td>
         <td class="text-center">
@@ -114,31 +137,34 @@
           [% color = "disabled" %]
           [% icon = "times" %]
         [% END %]
-
-        <a class="text-[% color %] text-2xl" href='extinfo.cgi?type=0' title='[% color %]'>
-          <span class="las la-[% icon %]-circle"></span>
+        <a class="text-[% color %]" href='extinfo.cgi?type=0' title='[% color %]'>
+          <span class="las la-[% icon %]"></span>
         </a>
         </td>
-        <td>
-
         [% IF pi.keys.size > 0 && pi.enable_notifications == 0 %]
+        <td colspan='2' class='pl-2'>
           <a class="text-disabled" href='extinfo.cgi?type=0'>Feature disabled</a>
-        [% ELSE %]
-            [% IF empty || service_stats.notifications_disabled == 0 %]
-              <span class="text-enabled"><span class="font-bold" style="color: var(--color-slate-500);">Services</span> All Enabled
-              </span>
-            [% ELSE %]
-              <a class="text-disabled" href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicveprops => 4096 }) %]'><span class="font-bold" style="color: var(--color-slate-500);">Services</span> [% service_stats.notifications_disabled %] Disabled</a>
-            [% END %]
-            [% IF empty || host_stats.notifications_disabled == 0 %]
-            <span class="text-enabled">
-			  <span class="font-bold" style="color: var(--color-slate-500);">Hosts</span> All Enabled
-			</span>
-            [% ELSE %]
-              <a class="text-disabled" href='[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hostprops => 4096 }) %]'><span class="font-bold" style="color: var(--color-slate-500);">Hosts</span> [% host_stats.notifications_disabled %] Disabled</a>
-            [% END %]
-        [% END %]
         </td>
+        [% ELSE %]
+        <td class="text-center px-2">
+            [% IF empty || service_stats.notifications_disabled == 0 %]
+              <span class="text-enabled">All Enabled</span>
+            [% ELSE %]
+              <a class="text-disabled" href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicveprops => 4096 }) %]'>
+               [% service_stats.notifications_disabled %] Disabled
+              </a>
+            [% END %]
+            </td>
+            <td class="text-center px-2">
+            [% IF empty || host_stats.notifications_disabled == 0 %]
+              <span class="text-enabled">All Enabled</span>
+            [% ELSE %]
+              <a class="text-disabled" href='[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hostprops => 4096 }) %]'>
+                [% host_stats.notifications_disabled %] Disabled
+                </a>
+            [% END %]
+            </td>
+        [% END %]
     </tr>
 
     <tr>
@@ -156,31 +182,34 @@
           [% icon = "times" %]
         [% END %]
       </a>
-        <a class="text-[% color %] text-2xl" href='extinfo.cgi?type=0' title='[% color %]'>
-          <span class="las la-[% icon %]-circle"></span>
+        <a class="text-[% color %]" href='extinfo.cgi?type=0' title='[% color %]'>
+          <span class="las la-[% icon %]"></span>
         </a>
         </td>
-        <td>
         [% IF pi.keys.size > 0 && pi.enable_event_handlers == 0 %]
+        <td colspan='2' class='pl-2'>
           <a class="text-disabled" href='extinfo.cgi?type=0'>Feature disabled</a>
+        </td>        
         [% ELSE %]
+        <td class="text-center">
             [% IF empty || service_stats.eventhandler_disabled == 0 %]
-            <span class="text-enabled">
-			  <span class="font-bold" style="color: var(--color-slate-500);">Services</span> All Enabled
-			</span>
+            <span class="text-enabled">All Enabled</span>
             [% ELSE %]
-            <a class="text-disabled" href='[% uri_with(c, { _page => "status.cgi", style => "detail", serviceprops => 64 }) %]'><span class="font-bold" style="color: var(--color-slate-500);">Services</span> [% service_stats.eventhandler_disabled %] Disabled</a>
+              <a class="text-disabled" href='[% uri_with(c, { _page => "status.cgi", style => "detail", serviceprops => 64 }) %]'>
+                [% service_stats.eventhandler_disabled %] Disabled
+              </a>
             [% END %]
+            </td>
+            <td class="text-center">
             [% IF empty || host_stats.eventhandler_disabled == 0 %]
-            <span class="text-enabled">
-			  <span class="font-bold" style="color: var(--color-slate-500);">Hosts</span> All Enabled
-			</span>
-			
+              <span class="text-enabled">All Enabled</span>			
             [% ELSE %]
-            <a class="text-disabled" href='[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hostprops => 64 }) %]'><span class="font-bold" style="color: var(--color-slate-500);">Hosts</span> [% host_stats.eventhandler_disabled %] Disabled</a>
+              <a class="text-disabled" href='[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hostprops => 64 }) %]'>
+                [% host_stats.eventhandler_disabled %] Disabled
+              </a>
             [% END %]
+            </td>
         [% END %]
-        </td>
     </tr>
 
     <tr>
@@ -196,15 +225,17 @@
           [% color = "disabled" %]
           [% icon = "times" %]
         [% END %]
-        <a class="text-[% color %] text-2xl" href='extinfo.cgi?type=0' title='[% color %]'>
-          <span class="las la-[% icon %]-circle"></span>
+        <a class="text-[% color %]" href='extinfo.cgi?type=0' title='[% color %]'>
+          <span class="las la-[% icon %]"></span>
         </a>
         </td>
-        <td>
-        [% IF pi.keys.size > 0 && pi.enable_flap_detection == 0 %]
-          <a class="text-disabled" href='extinfo.cgi?type=0'>Feature disabled</a>
+        
+        [% IF pi.keys.size > 0 && pi.enable_flap_detection == 0 %]          
+          <td colspan='2' class='pl-2'>
+            <a class="text-disabled" href='extinfo.cgi?type=0'>Feature disabled</a>
+          </td>
         [% ELSE %]
-            <div>
+            <div class="w-1/2">
             [% IF empty || service_stats.flapping_disabled == 0 %]
               <span class="font-bold" style="color: var(--color-slate-500);">Services</span><span class="text-enabled"> All Enabled</span>
             [% ELSE %]
@@ -216,7 +247,7 @@
               <span class="text-enabled">(No Services Flapping)</span>
             [% END %]
             </div>
-            <div>
+            <div class="w-1/2">
             [% IF empty || host_stats.flapping_disabled == 0 %]
               <span class="font-bold" style="color: var(--color-slate-500);">Hosts</span><span class="text-enabled"> All Enabled</span>
             [% ELSE %]
@@ -229,7 +260,6 @@
             [% END %]
             </div>
         [% END %]
-        </td>
     </tr>
     </table>
   </div>

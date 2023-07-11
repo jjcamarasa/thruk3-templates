@@ -14,7 +14,7 @@
     [%PROCESS tac_panel_services.tt %]
  </div>
 
- <div class="flexrow mt-auto mb-0 gap-2">
+ <div class="flexrow mt-auto mb-0 w-full gap-2">
   [% PROCESS tac_panel_netoutage.tt %]
   [% PROCESS tac_panel_monit_features.tt %]
   [% PROCESS tac_panel_monitperf.tt %]
