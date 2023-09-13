@@ -1,0 +1,40 @@
+﻿[% USE date %]
+[% WRAPPER _conf_objects_frame.tt %]
+
+
+<div class="card flexcol gap-1 w-fit min-w-[700px]">
+  <div class="head justify-center">
+    <div>[% PROCESS _pager.tt %]</div>
+  </div>
+  [% SET  today = date_format(c, date.now, '%Y-%m-%d') %]
+  [% SET last_day = '' %]
+  [% FOREACH l = data %]
+    [% this_day = date_format(c, l.date, '%Y-%m-%d') %]
+    [% IF this_day != last_day %]
+        [% SET last_day = this_day %]
+        <div class="head border-0 justify-center"><h3>[% IF today == this_day %]Today[% ELSE %][% this_day %][% END %]</h3></div>
+    [% END %]
+
+    [% link = "conf.cgi?sub=objects&amp;action=history&id=" _ l.id _ "&dir=" _ dir %]
+    <div class="hoverable clickable px-2 pb-2" onclick="location='[% link %]'">
+      <a href="[% link %]" class="flexrow flex-nowrap gap-1 w-full">
+        <div class="flexcol flex-nowrap gap-1 grow">
+          <div class="flexrow flex-nowrap gap-2">
+            <div class="w-32 whitespace-nowrap">[% date_format(c, l.date) %]</div>
+            <div class="font-bold">[% l.message | html %]</div>
+          </div>
+          <div>
+            [% l.author_name | html %] &lt;[% l.author_email | html %]&gt;
+          </div>
+        </div>
+        <div class="w-5 flex items-center">
+          <i class="uil uil-angle-right"></i>
+        </div>
+      </a>
+    </div>
+  [% END %]
+
+</div>
+
+
+[% END %]

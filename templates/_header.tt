@@ -1,6 +1,5 @@
 ﻿[% PROCESS css_blocks.tt %]
 
-
 [% IF theme == "Dark" %]
   [% bgbutton = 'bg-neutral-700' %]
 [% ELSE %]
@@ -21,9 +20,7 @@
     [%- IF extra_header %][% extra_header %][% END -%]
     [%- IF c.config.useragentcompat %]<meta http-equiv="X-UA-Compatible" content="[% c.config.useragentcompat %]">[% END -%]
   </head>
-  <!-- Produced by Thruk (http://www.thruk.org).
-      Copyright (c) 2009-present Thruk Developer Team.
-  -->
+  <!-- Produced by Thruk (http://www.thruk.org). Copyright (c) 2009-present Thruk Developer Team. -->
   <body class="h-screen w-screen overflow-visible [% IF menu_states.exists('cl') && menu_states.cl == 2 %]topnav[% END %] [% page %][% IF real_page %] page_[% real_page | html +%][%+ END %][% IF extrabodyclass +%] [%+ extrabodyclass | html %][% END %][% IF iframed %] iframed[% END %][% IF minimal ==3 %] minimal3[% END %]" id='[% page %]'>
   [% PROCESS _common_js.tt %]
   [% IF ssi_header; ssi_header | evaltt; END %]
@@ -48,7 +45,7 @@
       <header class="header">
         <div class="h-[50px] min-w-fit flexrow flex-nowrap items-center overflow-y-hidden">
           <button id="mainNavBtn" class="big iconOnly w-10 h-10 ml-[-10px] clickable min-w-[30px]">
-            <i class="las la-bars"></i>
+            <i class="ti ti-menu-2"></i>
           </button>
           <div class="flex-grow h-min relative">
             [% IF c.user_exists %][% PROCESS _header_sites.tt %][% END %]
@@ -69,33 +66,31 @@
               </div>
             [% END %]
             
-            <div class="inline-flex text-2xl">
-            
-            <button class="[% INCLUDE button_first %] [% bgbutton %]" title="reload page" id="refresh_button" onClick="refresh_button()">
-              <i class="las la-sync"></i>
-            </button>
-            
-            [% IF show_error_reports %]
-            <div class="w-fit" id="bug_report" style="display: none;">
-              <button class="[% INCLUDE button_first %] [% bgbutton %] text-2xl" id="bug_report-btnEl">
-                <i class="las la-spider"></i>
-              </button>
-            </div>
-            [% END %]
-            
-            [% IF c.user_exists %]
-              <button class="[% INCLUDE button_middle %] [% bgbutton %] text-2xl"  title="user preferences" onClick="toggleElementRemote('pref_pane', '_header_prefs', true); return false;">
-                <i class="la la-cog"></i>
-              </button>
-              [% IF cookie_auth && show_logout_button %]
-                <form action="[% IF c.config.logout_link; c.config.logout_link; ELSE %][% url_prefix %]cgi-bin/login.cgi?logout[% END %]" method='POST' target='_top' style="display: initial;">
-                  <button class="[% INCLUDE button_last %] [% bgbutton %] hover:text-red-500 text-2xl" title="sign out">
-                    <i class="las la-sign-out-alt"></i>
-                  </button>
-                </form>
-              [% END %]
-            [% END %]
-            </div>
+			<div class="btn-group">
+			  <button class="btn" title="reload page" id="refresh_button" onClick="refresh_button()">
+				<i class="ti ti-refresh"></i>
+			  </button>
+			  [% IF !show_error_reports %]
+			  <span class="w-fit" id="bug_report" style="display: none;">
+				<button class="btn" id="bug_report-btnEl">
+				  <i class="ti ti-bug"></i>
+				</button>
+			  </div>
+			  [% END %]
+			  [% IF c.user_exists %]
+				<button class="btn"  title="user preferences" onClick="toggleElementRemote('pref_pane', '_header_prefs', true); return false;">
+				  <i class="ti ti-settings"></i>
+				</button>
+				[% IF cookie_auth && show_logout_button %]                    
+				  <!--<form action="[% IF c.config.logout_link; c.config.logout_link; ELSE %][% url_prefix %]cgi-bin/login.cgi?logout[% END %]" method='POST' target='_top' style="display: initial;">					
+				  </form>-->
+                  <a class="btn hover-red" title="sign out" href="[% IF c.config.logout_link; c.config.logout_link; ELSE %][% url_prefix %]cgi-bin/login.cgi?logout[% END %]">
+					  <i class="ti ti-logout"></i>
+					</a>
+                    
+				[% END %]
+			  [% END %]
+            </div>			
           </div>
           
           [% IF c.user_exists %]

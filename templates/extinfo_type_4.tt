@@ -1,0 +1,434 @@
+﻿[% PROCESS _header.tt %]
+
+<div class="flexcol">
+  [% PROCESS _infobox.tt %]
+  [% IF c.check_user_roles('authorized_for_configuration_information') && c.check_user_roles('authorized_for_system_information') && ( apache_status.size > 0 || c.cluster.is_clustered ) %]
+    <div class="card overflow-hidden">
+      <div class="actionbox less-padding">
+        [% IF c.cluster.is_clustered %]
+          <div>
+            <a href='extinfo.cgi?type=4&amp;cluster=1'>Show Cluster Status</a>
+          </div>
+        [% END %]
+        [% FOREACH link IN apache_status %]
+          <div>
+            <a href='extinfo.cgi?type=4&amp;apache=[% link %]'>Show [% link %] Apache Status</a>
+          </div>
+        [% END %]
+      </div>
+    </div>
+  [% END %]
+</div>
+
+<h1 class="py-4">Program-Wide Performance Information</h1>
+
+<div class="w-fit mx-auto">
+  <div class="flexrow lg:justify-center">
+    <div>
+      <div class="flexrow lg:justify-center">
+        <div class="card w-[400px] h-auto">
+          <div class="head">
+            <h3>Hosts Actively Checked</h3>
+          </div>
+          <div class="body">
+            <table class="cellspacing">
+              <tr>
+                <th>Time Frame</th>
+                <th>Hosts Checked</th>
+              </tr>
+              <tr>
+                <td>&lt;= 1 minute</td>
+                <td>[% stats.hosts_active_1_sum %] ([% sprintf('%.1f',stats.hosts_active_1_perc) %]%)</td>
+              </tr>
+              <tr>
+                <td>&lt;= 5 minutes</td>
+                <td>[% stats.hosts_active_5_sum %] ([% sprintf('%.1f',stats.hosts_active_5_perc) %]%)</td>
+              </tr>
+              <tr>
+                <td>&lt;= 15 minutes</td>
+                <td>[% stats.hosts_active_15_sum %] ([% sprintf('%.1f',stats.hosts_active_15_perc) %]%)</td>
+              </tr>
+              <tr>
+                <td>&lt;= 1 hour</td>
+                <td>[% stats.hosts_active_60_sum %] ([% sprintf('%.1f',stats.hosts_active_60_perc) %]%)</td>
+              </tr>
+              <tr>
+                <td>Since program start</td>
+                <td>[% stats.hosts_active_all_sum %] ([% sprintf('%.1f',stats.hosts_active_all_perc) %]%)</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="card w-[400px] h-auto">
+          <div class="head">
+            <h3>Active Hosts Metrics</h3>
+          </div>
+          <div class="body">
+            <table class="cellspacing">
+              <tr>
+                <th>Metric</th>
+                <th>Min.</th>
+                <th>Max.</th>
+                <th>Average</th>
+              </tr>
+              <tr>
+                <td>Check Execution Time</td>
+                <td>[% sprintf('%.2f',stats.hosts_execution_time_min) %] sec</td>
+                <td>[% sprintf('%.2f',stats.hosts_execution_time_max) %] sec</td>
+                <td>[% sprintf('%.3f',stats.hosts_execution_time_avg) %] sec</td>
+              </tr>
+              <tr>
+                <td>Check Latency</td>
+                <td>[% sprintf('%.2f',stats.hosts_latency_min) %] sec</td>
+                <td>[% sprintf('%.2f',stats.hosts_latency_max) %] sec</td>
+                <td>[% sprintf('%.3f',stats.hosts_latency_avg) %] sec</td>
+              </tr>
+              <tr>
+                <td>Percent State Change</td>
+                <td>[% sprintf('%.2f',stats.hosts_active_state_change_min) %]%</td>
+                <td>[% sprintf('%.2f',stats.hosts_active_state_change_max) %]%</td>
+                <td>[% sprintf('%.2f',stats.hosts_active_state_change_avg) %]%</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="flexrow lg:justify-center mt-5">
+        <div class="card w-[400px] h-auto">
+          <div class="head">
+            <h3>Hosts Passively Checked</h3>
+          </div>
+          <div class="body">
+            <table class="cellspacing">
+              <tr>
+                <th>Time Frame</th>
+                <th>Hosts Checked</th>
+              </tr>
+              <tr>
+                <td>&lt;= 1 minute</td>
+                <td>[% stats.hosts_passive_1_sum %] ([% sprintf('%.1f',stats.hosts_passive_1_perc) %]%)</td>
+              </tr>
+              <tr>
+                <td>&lt;= 5 minutes</td>
+                <td>[% stats.hosts_passive_5_sum %] ([% sprintf('%.1f',stats.hosts_passive_5_perc) %]%)</td>
+              </tr>
+              <tr>
+                <td>&lt;= 15 minutes</td>
+                <td>[% stats.hosts_passive_15_sum %] ([% sprintf('%.1f',stats.hosts_passive_15_perc) %]%)</td>
+              </tr>
+              <tr>
+                <td>&lt;= 1 hour</td>
+                <td>[% stats.hosts_passive_60_sum %] ([% sprintf('%.1f',stats.hosts_passive_60_perc) %]%)</td>
+              </tr>
+              <tr>
+                <td>Since program start</td>
+                <td>[% stats.hosts_passive_all_sum %] ([% sprintf('%.1f',stats.hosts_passive_all_perc) %]%)</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="card w-[400px] h-auto">
+          <div class="head">
+            <h3>Passive Hosts Metrics</h3>
+          </div>
+          <div class="body">
+            <table class="cellspacing">
+              <tr>
+                <th>Metric</th>
+                <th>Min.</th>
+                <th>Max.</th>
+                <th>Average</th>
+              </tr>
+              <tr>
+                <td>Percent State Change</td>
+                <td>[% sprintf('%.2f',stats.hosts_passive_state_change_min) %]%</td>
+                <td>[% sprintf('%.2f',stats.hosts_passive_state_change_max) %]%</td>
+                <td>[% sprintf('%.2f',stats.hosts_passive_state_change_avg) %]%</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="flexrow lg:justify-center">
+        <div class="card w-[400px] h-auto">
+          <div class="head">
+            <h3>Services Actively Checked</h3>
+          </div>
+          <div class="body">
+            <table class="cellspacing">
+              <tr>
+                <th>Time Frame</th>
+                <th>Services Checked</th>
+              </tr>
+              <tr>
+                <td>&lt;= 1 minute</td>
+                <td>[% stats.services_active_1_sum %] ([% sprintf('%.1f',stats.services_active_1_perc) %]%)</td>
+              </tr>
+              <tr>
+                <td>&lt;= 5 minutes</td>
+                <td>[% stats.services_active_5_sum %] ([% sprintf('%.1f',stats.services_active_5_perc) %]%)</td>
+              </tr>
+              <tr>
+                <td>&lt;= 15 minutes</td>
+                <td>[% stats.services_active_15_sum %] ([% sprintf('%.1f',stats.services_active_15_perc) %]%)</td>
+              </tr>
+              <tr>
+                <td>&lt;= 1 hour</td>
+                <td>[% stats.services_active_60_sum %] ([% sprintf('%.1f',stats.services_active_60_perc) %]%)</td>
+              </tr>
+              <tr>
+                <td>Since program start</td>
+                <td>[% stats.services_active_all_sum %] ([% sprintf('%.1f',stats.services_active_all_perc) %]%)</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="card w-[400px] h-auto">
+          <div class="head">
+            <h3>Active Services Metrics</h3>
+          </div>
+          <div class="body">
+            <table class="cellspacing">
+              <tr>
+                <th>Metric</th>
+                <th>Min.</th>
+                <th>Max.</th>
+                <th>Average</th>
+              </tr>
+              <tr>
+                <td>Check Execution Time</td>
+                <td>[% sprintf('%.2f',stats.services_execution_time_min) %] sec</td>
+                <td>[% sprintf('%.2f',stats.services_execution_time_max) %] sec</td>
+                <td>[% sprintf('%.3f',stats.services_execution_time_avg) %] sec</td>
+              </tr>
+              <tr>
+                <td>Check Latency</td>
+                <td>[% sprintf('%.2f',stats.services_latency_min) %] sec</td>
+                <td>[% sprintf('%.2f',stats.services_latency_max) %] sec</td>
+                <td>[% sprintf('%.3f',stats.services_latency_avg) %] sec</td>
+              </tr>
+              <tr>
+                <td>Percent State Change</td>
+                <td>[% sprintf('%.2f',stats.services_active_state_change_min) %]%</td>
+                <td>[% sprintf('%.2f',stats.services_active_state_change_max) %]%</td>
+                <td>[% sprintf('%.2f',stats.services_active_state_change_avg) %]%</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="flexrow lg:justify-center mt-5">
+        <div class="card w-[400px] h-auto">
+          <div class="head">
+            <h3>Services Passively Checked</h3>
+          </div>
+          <div class="body">
+            <table class="cellspacing">
+              <tr>
+                <th>Time Frame</th>
+                <th>Services Checked</th>
+              </tr>
+              <tr>
+                <td>&lt;= 1 minute</td>
+                <td>[% stats.services_passive_1_sum %] ([% sprintf('%.1f',stats.services_passive_1_perc) %]%)</td>
+              </tr>
+              <tr>
+                <td>&lt;= 5 minutes</td>
+                <td>[% stats.services_passive_5_sum %] ([% sprintf('%.1f',stats.services_passive_5_perc) %]%)</td>
+              </tr>
+              <tr>
+                <td>&lt;= 15 minutes</td>
+                <td>[% stats.services_passive_15_sum %] ([% sprintf('%.1f',stats.services_passive_15_perc) %]%)</td>
+              </tr>
+              <tr>
+                <td>&lt;= 1 hour</td>
+                <td>[% stats.services_passive_60_sum %] ([% sprintf('%.1f',stats.services_passive_60_perc) %]%)</td>
+              </tr>
+              <tr>
+                <td>Since program start</td>
+                <td>[% stats.services_passive_all_sum %] ([% sprintf('%.1f',stats.services_passive_all_perc) %]%)</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="card w-[400px] h-auto">
+          <div class="head">
+            <h3>Passive Services Metrics</h3>
+          </div>
+          <div class="body">
+            <table class="cellspacing">
+              <tr>
+                <th>Metric</th>
+                <th>Min.</th>
+                <th>Max.</th>
+                <th>Average</th>
+              </tr>
+              <tr>
+                <td>Percent State Change</td>
+                <td>[% sprintf('%.2f',stats.services_passive_state_change_min) %]%</td>
+                <td>[% sprintf('%.2f',stats.services_passive_state_change_max) %]%</td>
+                <td>[% sprintf('%.2f',stats.services_passive_state_change_avg) %]%</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flexrow lg:justify-center mt-5">
+    <div class="card w-[400px]">
+      <div class="head">
+        <h3>Livestatus Statistics</h3>
+      </div>
+      <div class="body">
+        <table class="cellspacing">
+          <tr>
+            <th>Type</th>
+            <th>Total</th>
+            <th>Rate</th>
+            <th>Cached</th>
+          </tr>
+          <tr title="The number of completed service checks since program start">
+            <td>Servicechecks</td>
+            <td>[% format_number(perf_stats.service_checks) %]</td>
+            <td>[% sprintf('%.2f',perf_stats.service_checks_rate) %] /sec</td>
+            <td></td>
+          </tr>
+          <tr title="The number of host checks since program start">
+            <td>Hostchecks</td>
+            <td>[% format_number(perf_stats.host_checks) %]</td>
+            <td>[% sprintf('%.2f',perf_stats.host_checks_rate) %] /sec</td>
+            <td></td>
+          </tr>
+          <tr title="The number of process creations since program start">
+            <td>Forks</td>
+            <td>[% format_number(perf_stats.forks) %]</td>
+            <td>[% sprintf('%.2f',perf_stats.forks_rate) %] /sec</td>
+            <td></td>
+          </tr>
+          <tr title="The number of client connections to Livestatus since program start">
+            <td> Connections</td>
+            <td>[% format_number(perf_stats.connections) %]</td>
+            <td>[% sprintf('%.2f',perf_stats.connections_rate) %] /sec</td>
+            <td></td>
+          </tr>
+          <tr title="The number of requests to Livestatus since program start">
+            <td>Requests</td>
+            <td>[% format_number(perf_stats.requests) %]</td>
+            <td>[% sprintf('%.2f',perf_stats.requests_rate) %] /sec</td>
+            <td></td>
+          </tr>
+          <tr title="The number of NEB call backs since program start">
+            <td title="The number of NEB call backs since program start">NEB Callbacks</td>
+            <td>[% format_number(perf_stats.neb_callbacks) %]</td>
+            <td>[% sprintf('%.2f',perf_stats.neb_callbacks_rate) %] /sec</td>
+            <td></td>
+          </tr>
+          <tr title="The number of new log messages since program start">
+            <td>Log Messages</td>
+            <td>[% format_number(perf_stats.log_messages) %]</td>
+            <td>[% sprintf('%.2f',perf_stats.log_messages_rate) %] /sec</td>
+            <td>[% format_number(perf_stats.cached_log_messages) %]</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    [% IF ( has_logcache || logcache_error ) && has_lmd %]
+    <div class="flexrow lg:justify-center xl:min-w-[1240px]">
+    [% END %]
+    [% IF has_logcache || logcache_error %]
+    <div class="card w-fit h-auto">
+      <div class="head">
+        <h3>Logcache Statistics</h3>
+      </div>
+      <div class="body">
+        <table class="cellspacing rowhover">
+          <tr>
+            <th>Backend</th>
+            <th>Data Usage</th>
+            <th>Index Usage</th>
+            <th>Items</th>
+            <th>Oldest Item</th>
+            <th>Latest Item</th>
+            <th></th>
+          </tr>
+          [% IF logcache_error %]
+            <tr>
+              <td colspan=6 class="whitespace-normal"><div class="textALERT">[% logcache_error %]</div></td>
+            </tr>
+          [% ELSE %]
+            [% FOREACH s = logcache_stats %]
+            <tr>
+              <td><a href="extinfo.cgi?type=4&logcachedetails=[% s.key | uri %]">[% s.name | html %]</a></td>
+              [% IF s.mode == "import" %]
+              <td colspan="5">currently running <i>[% s.mode %]</i> since [% date_format(c, s.last_update) %]...</td>
+              [% ELSE %]
+              <td>[% n = reduce_number(s.data_size, 'B', 1024); sprintf('%.2f %s',n.0, n.1) %]</td>
+              <td>[% n = reduce_number(s.index_size, 'B', 1024); sprintf('%.2f %s',n.0, n.1) %]</td>
+              <td>[% format_number(s.items) %]</td>
+              <td>[% IF s.defined('start') %][% date_format(c, s.start) %][% END %]</td>
+              <td>[% IF s.defined('end') %][% date_format(c, s.end,) %][% END %]</td>
+              [% END %]
+              <td class="p-0 w-5">
+                <a href="extinfo.cgi?type=4&logcachedetails=[% s.key | uri %]" class="button iconOnly">
+                  <i class="ti ti-folder-open" title="Show Details"></i>
+                </a>
+              </td>
+            </tr>
+            [% END %]
+          [% END %]
+        </table>
+      </div>
+    </div>
+    [% END %]
+
+    [% IF has_lmd %]
+    <div class="card w-fit h-auto">
+      <div class="head">
+        <h3>LMD Statistics</h3>
+      </div>
+      <div class="body">
+        <table class="cellspacing rowhover">
+          <tr>
+            <th>Backend</th>
+            <th>Send</th>
+            <th>Received</th>
+            <th>Send Rate</th>
+            <th>Received Rate</th>
+            <th>Last Update</th>
+            <th>Latency</th>
+          </tr>
+          [% FOREACH s = lmd_stats %]
+          <tr>
+            <td>[% s.name %]</td>
+            <td>[% n = reduce_number(s.bytes_send, 'B', 1024); sprintf('%.2f %s',n.0, n.1) %]</td>
+            <td>[% n = reduce_number(s.bytes_received, 'B', 1024); sprintf('%.2f %s',n.0, n.1) %]</td>
+            <td>[% n = reduce_number(s.bytes_send_rate, 'B', 1024); sprintf('%.2f %s',n.0, n.1) %]/s</td>
+            <td>[% n = reduce_number(s.bytes_received_rate, 'B', 1024); sprintf('%.2f %s',n.0, n.1) %]/s</td>
+            <td>[% date_format(c, s.last_update) %]</td>
+            <td>[% sprintf('%.2f', s.response_time) %]s</td>
+          </tr>
+          [% END %]
+        </table>
+      </div>
+    </div>
+    [% END %]
+    [% IF ( has_logcache || logcache_error ) && has_lmd %]
+    </div>
+    [% END %]
+  </div>
+</div>
+
+[% PROCESS _footer.tt %]

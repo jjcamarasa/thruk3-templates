@@ -1,0 +1,55 @@
+﻿[% USE date %]
+[% WRAPPER _conf_objects_frame.tt %]
+
+  <div class="card flexcol gap-1 w-[1000px]">
+    <div class="head flexrow justify-between">
+      <div class="w-44 text-right">
+        [% IF next %]
+          <a class="button header-button" href="conf.cgi?sub=objects&amp;action=history&id=[% next.id %]&dir=[% dir | uri %]">
+            <i class="uil uil-angle-double-left mr-1"></i>
+            [% date_format(c, next.date) %]
+          </a>
+        [% END %]
+      </div>
+      <h3>Commit: [% data.message | html %]</h3>
+      <div class="w-44 text-right">
+        [% IF previous %]
+          <a class="button header-button" href="conf.cgi?sub=objects&amp;action=history&id=[% previous.id %]&dir=[% dir | uri %]">
+            [% date_format(c, previous.date) %]
+            <i class="uil uil-angle-double-right ml-1"></i>
+          </a>
+        [% END %]
+      </div>
+    </div>
+    <table>
+      <tr>
+        <th class="px-2">Author</th>
+        <td>[% data.author_name | html %] &lt;[% data.author_email | html %]&gt;</td>
+      </tr>
+      <tr>
+        <th class="px-2">Date</th>
+        <td>[% date_format(c, data.date) %]</td>
+      </tr>
+      <tr>
+        <th class="px-2 align-top">Subject</th>
+        <td>[% data.message | html %]<br>[% data.body | html %]</td>
+      </tr>
+      <tr>
+        <th class="px-2 align-top">Changed Files</th>
+        <td>
+          <ul>
+          [% FOREACH f = links %]
+            <li><a class="link" href="#file[% loop.index %]">[% f %]</a></li>
+          [% END %]
+          </ul>
+        </td>
+      </tr>
+    </table>
+    <div class="w-full overflow-x-auto p-2">
+      <pre>
+        [% data.diff %]
+      </pre>
+    </div>
+  </div>
+
+[% END %]

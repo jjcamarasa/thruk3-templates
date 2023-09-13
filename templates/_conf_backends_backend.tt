@@ -6,7 +6,7 @@
   </td>
   <td class="px-2">
     <button class="iconOnly" title="remove connection" onclick="[% IF x == 0 %]conf_sites_add_hide();[% ELSE %]delete_site_row(this);[% END %]return false;">
-      <i class="las la-times-circle la-lg hover:text-red-500"></i>
+      <i class="ti ti-circle-x  hover:text-red-500"></i>
     </button>
   </td>
 </tr>
@@ -31,8 +31,8 @@
   </td>
   <td>
     <div class="hidden spinner testimg_c_[% x %]_[% loop.index %]" title="checking connection"></div>
-    <i class="las la-exclamation-circle fa-lg text-yellow-500 hidden testimg_e_[% x %]_[% loop.index %]"></i>
-    <i class="las la-check-circle fa-lg text-green-500 hidden testimg_o_[% x %]_[% loop.index %]"></i>
+    <i class="ti ti-exclamation-circle text-lg text-yellow-500 hidden testimg_e_[% x %]_[% loop.index %]"></i>
+    <i class="ti ti-circle-check text-lg text-green-500 hidden testimg_o_[% x %]_[% loop.index %]"></i>
   </td>
 </tr>
 [% END %]
@@ -41,8 +41,8 @@
   <td>
     <div class="flexrow gap-px w-full flex-nowrap items-center">
       <input type="text" name="auth[% x %]" value="[% b.auth | html %]" class="w-full" placeholder="authkey">
-      <a href="#" onclick="overcard({ 'bodyCls': 'p-2', 'body': 'The authorization key is used to authorize http requests.<br>It must be provided from the remote host and can be either:<br><ul><li>an api key (<a href=&quot;http://thruk.org/documentation/rest.html#_api-key&quot; target=&quot;_blank&quot; class=&quot;link&quot;>read more in the docs <i class=&quot;las la--external-link-alt text-sm&quot;></i></a>)<\/li><li>the key from /var/lib/thruk/secret.key<\/li><li> the key from ~/var/thruk/secret.key (for OMD)<\/li><\/ul>', 'caption': 'Authorization Key', 'width': 600 }); return false;">
-        <i class="las la-circle-question" id="authinfoimg[% x %]" title="help"></i>
+      <a href="#" onclick="overcard({ 'bodyCls': 'p-2', 'body': 'The authorization key is used to authorize http requests.<br>It must be provided from the remote host and can be either:<br><ul><li>an api key (<a href=&quot;http://thruk.org/documentation/rest.html#_api-key&quot; target=&quot;_blank&quot; class=&quot;link&quot;>read more in the docs <i class=&quot;ti ti--external-link-alt text-sm&quot;></i></a>)<\/li><li>the key from /var/lib/thruk/secret.key<\/li><li> the key from ~/var/thruk/secret.key (for OMD)<\/li><\/ul>', 'caption': 'Authorization Key', 'width': 600 }); return false;">
+        <i class="ti ti-circle-question" id="authinfoimg[% x %]" title="help"></i>
       </a>
     </div>
   </td>

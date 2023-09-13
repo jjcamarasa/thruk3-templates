@@ -1,0 +1,90 @@
+﻿<table class='mainTable striped' id="downtimes_table">
+  <thead title="click to sort">
+    <tr>
+      [% IF names %]
+      <th>
+        <a class="sort-by" href="#" data-sort-type[% sortprefix %]="1" data-sort-option[% sortprefix %]="1">Host Name</a>
+      </th>
+      [% IF type == 'service' %]
+      <th>
+        <a class="sort-by" href="#" data-sort-type[% sortprefix %]="1" data-sort-option[% sortprefix %]="2">Service</a>
+      </th>
+      [% END %]
+      [% IF backends.size > 1 %]
+      <th class='text-center'>
+        <a class="sort-by" href="#" data-sort-type[% sortprefix %]="1" data-sort-option[% sortprefix %]="10">Site</a>
+      </th>
+      [% END %]
+      [% END %]
+      <th class='text-center'>
+        <a class="sort-by" href="#" data-sort-type[% sortprefix %]="1" data-sort-option[% sortprefix %]="3">Entry Time</a>
+      </th>
+      <th>
+        <a class="sort-by" href="#" data-sort-type[% sortprefix %]="1" data-sort-option[% sortprefix %]="4">Author</a>
+      </th>
+      <th>
+        <a class="sort-by" href="#" data-sort-type[% sortprefix %]="1" data-sort-option[% sortprefix %]="5">Comment</a>
+      </th>
+      <th class='text-center'>
+        <a class="sort-by" href="#" data-sort-type[% sortprefix %]="1" data-sort-option[% sortprefix %]="6">Start Time</a>
+      </th>
+      <th class='text-center'>
+        <a class="sort-by" href="#" data-sort-type[% sortprefix %]="1" data-sort-option[% sortprefix %]="7">End Time</a>
+      </th>
+      <th class='text-center'>
+        <a class="sort-by" href="#" data-sort-type[% sortprefix %]="1" data-sort-option[% sortprefix %]="8">Type</a>
+      </th>
+      <th class='text-center'>
+        <a class="sort-by" href="#" data-sort-type[% sortprefix %]="1" data-sort-option[% sortprefix %]="9">Duration</a>
+      </th>
+      <th class='text-center'>
+        <a class="sort-by" href="#" data-sort-type[% sortprefix %]="1" data-sort-option[% sortprefix %]="10">Downtime ID</a>
+      </th>
+      <th class='text-center'>
+        <a class="sort-by" href="#" data-sort-type[% sortprefix %]="1" data-sort-option[% sortprefix %]="11">Trigger ID</a>
+      </th>
+      <th class='text-center'>Actions</th>
+    </tr>
+  </thead>
+  [%  FOREACH d = downtimes %]
+    <tr class='[% IF names %] clickable[% END %] js-downtime-row' id="[% IF d.service_description == '' %]hst[% ELSE %]svc[% END %]_[% d.id %]_[% d.peer_key %]">
+      [% IF names %]
+        <td><a href="extinfo.cgi?type=1&amp;host=[% d.host_name | uri %]">[% _host(d.host_name) | html %]</a></td>
+        [% IF type == 'service' %]
+          [% IF d.service_description != "" %]
+            <td><a href="extinfo.cgi?type=2&amp;host=[% d.host_name | uri %]&amp;service=[% d.service_description | uri %]">[% _service(d.host_name, d.service_description) | html %]</a></td>
+          [% ELSE %]
+            <td></td>
+          [% END %]
+        [% END %]
+        [% IF backends.size > 1 %]
+          <td class='text-center'>[% peer_name(d) %]</td>
+        [% END %]
+      [% END %]
+      <td class='text-center'>[% date_format(c, d.entry_time) %]</td>
+      <td >[% d.author %]</td>
+      <td class='whitespace-nowrap truncate w-1/2 max-w-xs'>[% IF escape_html_tags %][% escape_html(d.comment) | replace_links %][% ELSE %][% d.comment | replace_links %][% END %]</td>
+      <td class='text-center'>[% date_format(c, d.start_time) %]</td>
+      <td class='text-center'>[% date_format(c, d.end_time) %]</td>
+      <td class='text-center'>[% IF d.fixed %]Fixed[% ELSE%]Flexible[% END %]</td>
+      <td class='text-center'>[% IF d.fixed %][% duration(d.end_time - d.start_time) %][% ELSE%][% duration(d.duration) %][% END %]</td>
+      <td class='text-center'>[% d.id %]</td>
+      <td class='text-center'>[% IF d.triggered_by %][% d.triggered_by %][% ELSE %]N/A[% END %]</td>
+      [% IF type == 'host' %]
+        [% UNLESS command_disabled(c, 78) %]
+        <td class='text-center'><a class="js-modal-command-link" href='cmd.cgi?cmd_typ=78&amp;down_id=[% d.id %]&amp;backend=[% d.peer_key %]'><i class="ti ti-trash text-base" title='Delete This Downtime'></i></a></td>
+        [% END %]
+      [% END %]
+      [% IF type == 'service' %]
+        [% UNLESS command_disabled(c, 79) %]
+        <td class='text-center'><a class="js-modal-command-link" href='cmd.cgi?cmd_typ=79&amp;down_id=[% d.id %]&amp;backend=[% d.peer_key %]'><i class="ti ti-trash text-base" title='Delete This Downtime'></i></a></td>
+        [% END %]
+      [% END %]
+    </tr>
+    [% END %]
+    [% IF downtimes.size == 0 %]
+    <tr>
+      <td class='text-center textALERT' colspan="13">There are no downtimes</td>
+    </tr>
+  [% END %]
+</table>

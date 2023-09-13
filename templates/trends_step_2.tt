@@ -1,0 +1,36 @@
+﻿[% PROCESS _header.tt %]
+
+[% PROCESS _infobox.tt %]
+
+<h1 class="mt-5">Host and Service State Trends</h1>
+
+<div class="card mx-auto min-w-[420px] max-w-[800px] w-full mt-5 overflow-hidden">
+  <div class="head p-0">
+    <span class="tabs w-40"><a class="flex" href="trends.cgi">1. Report Type</a></span>
+    <i class="ti ti-angle-right text-sm"></i>
+    <span class="tabs w-40 active"><a class="flex" href="#">2. Select [% IF input == 'gethost' %]Host[% ELSIF input == 'getservice' %]Service[% END %]</a></span>
+  </div>
+
+  <form method="get" action="trends.cgi">
+    <input type='hidden' name='input' value='getoptions'>
+    <div class="body">
+      <table class="cellspacing-x w-fit mx-auto">
+        <tr>
+          <th class="text-right">[% IF input == 'gethost' %]Host[% ELSIF input == 'getservice' %]Service[% END %]</th>
+          <td>
+            <select name='[% IF input == 'gethost' %]host[% ELSIF input == 'getservice' %]service[% END %]'>
+              [% FOREACH d = data %]
+                <option value="[% d | html %]">[% d | html %]</option>
+              [% END %]
+            </select>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="footer justify-center">
+      <input class="green" type='submit' value='Continue to Step 3'>
+    </div>
+  </form>
+</div>
+
+[% PROCESS _footer.tt %]

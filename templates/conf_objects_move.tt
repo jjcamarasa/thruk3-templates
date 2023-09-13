@@ -1,0 +1,34 @@
+﻿[% WRAPPER _conf_objects_frame.tt %]
+<script>
+<!--
+    var data = [% filenames_json %];
+-->
+</script>
+
+<form action="conf.cgi" method="POST">
+<input type="submit" name="move" value="move" style="display:none">
+<input type="hidden" name="sub" value="objects">
+<input type="hidden" name="data.id" value="[% object.get_id() %]">
+<input type="hidden" name="action" value="movefile">
+<input type="hidden" name="CSRFtoken" value="[% get_user_token(c) %]">
+  <div class="card w-[600px]">
+    <div class="head justify-between">
+      <div class="w-20">
+        <a class="button header-button" href='conf.cgi?sub=objects&amp;type=[% object.get_type() %]&amp;data.id=[% object.get_id %]'>
+          <i class="uil uil-angle-double-left"></i>Back
+        </a>
+      </div>
+      <h3>Relocate Object</h3>
+      <div class="w-[70px]"></div>
+    </div>
+    <div class='body flexrow gap-3'>
+      <div class="text-center w-full">Move [% object.get_type() %] <b>'[% object.get_name() %]'</b> to</div>
+      <input type="text" class="deletable w-full" name="newfile" id="fileselect" onclick="ajax_search.init(this, 'file', {striped:false, autosubmit:false, templates:false, data:data})" placeholder="select new location">
+    </div>
+    <div class="footer justify-center">
+      <input type="submit" name="move" value="move" style="width:90px" class="green">
+    </div>
+  </div>
+</form>
+
+[% END %]

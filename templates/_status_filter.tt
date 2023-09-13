@@ -8,19 +8,21 @@
 <input type="hidden" name="[% paneprefix %]columns" id="[% paneprefix %]columns" value="">
 [% END %]
 [% DEFAULT extra_params = [] %]
-[% FOREACH ep IN extra_params %]
-  <input type="hidden" name="[% ep.name | html %]" value="[% ep.value | html %]">
-[% END %]
+  [% FOREACH ep IN extra_params %]
+	<input type="hidden" name="[% ep.name | html %]" value="[% ep.value | html %]">
+  [% END %]
 
-<div class="flex">
+<!--<div class="flex">-->
   [% DEFAULT small_button = "" %]
   [% IF small_button %]
-    <!--<button title="Display Filter Options" class="round small [% IF filter_active %] textActive2 hover:textActive2[% END %]" onClick="toggleFilterPopup('[% paneprefix %]_all_filter_card'); return false;">-->
-    <a title="Display Filter Options" class="[% INCLUDE button_small_first %]" onClick="toggleFilterPopup('[% paneprefix %]_all_filter_card'); return false;">
-      <i class="las la-filter"></i>
+    <!--<button title="Display Filter Options" class="round [% IF filter_active %] textActive2 hover:textActive2[% END %]" onClick="toggleFilterPopup('[% paneprefix %]_all_filter_card'); return false;">-->
+    <a title="Display Filter Options" onClick="toggleFilterPopup('[% paneprefix %]_all_filter_card'); return false;">
+      <i class="ti ti-filter"></i>
     </a>
   [% ELSE %]
-    <button title="Display Filter Options" class="w-36 text-sm rounded border-0 font-medium display-filter [% IF filter_active %]textActive2 hover:textActive2[% END %]" onClick="toggleFilterPopup('[% paneprefix %]_all_filter_card'); return false;">[% IF filter_active %]Filters active[% ELSE %]Display Filter[% END %]
+    <button class="iconOnly" title="Display Filter Options" onClick="toggleFilterPopup('[% paneprefix %]_all_filter_card'); return false;">
+    [% IF filter_active %][% filtercolor = "" %][% ELSE %][% filtercolor = "-off" %][% END %]
+    <i class="ti ti-filter[% filtercolor %]"></i>
     </button>
   [% END %]
   <div class="absolute w-[90vw]">
@@ -72,7 +74,7 @@
             [% END %]
           </div>
           <button class="iconOnly" type="submit" name="update" title="accept">
-            <i class="lar la-check-circle la-lg text-green-400"></i>            
+            <i class="ti ti-circle-check  text-green-400"></i>            
           </button>
         </div>
       </div>
@@ -85,14 +87,14 @@
         </div>
         <div class="clickable hoverable p-0 rounded-br-lg" onClick="new_filter('[% paneprefix %]filter_pane')" id="[% paneprefix %]new_filter_box_btn">
           <div class="flexcol gap-1 text-center pt-10">
-            <i class="uil uil-angle-right text-lg" title="add new filter"></i>
+            <i class="ti ti-angle-right text-lg" title="add new filter"></i>
             <span>or</span>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+<!--</div>-->
 [% IF show_form %]
 </form>
 [% END %]

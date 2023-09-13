@@ -1,0 +1,631 @@
+﻿[% PROCESS _header.tt
+    js           => [ "vendor/billboard-3.5.1/billboard.pkgd.min.js" ],
+    css          => [ "vendor/billboard-3.5.1/billboard.css" ]
+%]
+[% PROCESS _message.tt %]
+[% USE date %]
+
+<style>
+  .mini-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    grid-gap: 20px;
+  }
+  .my-card {
+    min-width: 264px;
+    flex: 1 1 calc(25% - 1rem);
+  }
+
+</style>
+
+<h1>[% page_title %]</h1>
+
+<div class="card w-full absolute top-0 left-0 rounded-none shadow-none border-t border-b">
+  <div class="head border-b-0 flexrow flex-nowrap gap-0 justify-between" id="view_tabs">
+    <div class="ml-6 w-32">
+      [% PROCESS _status_filter.tt entries="" show_substyle_selector=1 extra_params = [{ name => 'v', value => currentview.name }] %]
+    </div>
+    <div class="flexrow flex-nowrap gap-0 w-min">
+      [% FOREACH mp IN mainviews %]
+      <span class="tabs sortable min-w-[140px] h-[42px] w-52 px-2 text-center font-medium text-base [% IF mp.name == currentview.name %]active[% END %]" data-name="[% mp.name | html %]">
+        <a class="block" href="main.cgi?v=[% mp.name | uri %]">
+          [% mp.name | html %]
+        </a>
+      </span>
+      [% END %]
+      <div class="relative">
+        <span class="tabs px-2 mt-px text-center font-medium text-base border-none hover:border-none">
+          <button class="iconOnly" onclick="showElement('edit_menu', undefined, true); return false;" title="add new view"><i class="ti ti-ellipsis-vertical text-lg"></i></button>
+        </span>
+        <div id="edit_menu" style="display: none;" class="context_menu w-[160px] left-0 top-[40px]">
+          <ul class="w-full">
+            <li><a href="#" onclick="openModalWindow('new_view')"><i class="ti ti-plus text-xs"></i>Create New View</a></li>
+            <li>
+              <form action='main.cgi' method='POST'>
+                <input type='hidden' name='remove' value='1'>
+                <input type='hidden' name='v' value="[% currentview.name | html %]">
+                <input type="hidden" name="CSRFtoken" value="[% get_user_token(c) %]">
+                <a href="#" onClick="[% IF currentview.locked %]return false;[% ELSE %]jQuery(this).closest('FORM').submit(); return false;[% END %]" [% IF currentview.locked %]class="disabled"[% END %] >
+                  <i class="ti ti-trash text-xs"></i>Remove Current View
+                </a>
+              </form>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="w-32 flex justify-end min-w-fit">
+      [% IF !currentview.locked && view_save_required %]
+        <form action="[% uri_with(c, {}) %]" method="POST" onsubmit="setFormBtnSpinner(this)">
+          <input type='hidden' name='save' value='1'>
+          <input type="hidden" name="CSRFtoken" value="[% get_user_token(c) %]">
+          <button class="green ml-6" type="submit"><i class="ti ti-device-floppy"></i> save changes</button>
+        </form>
+      [% END %]
+      <div class="spinner ml-2 mr-6 hidden" id="tabsavespinner" title="tabs order is beeing saved"></div>
+    </div>
+  </div>
+</div>
+
+<div class="card" id='new_view' style="display: none;">
+  <div class="head justify-between">
+    <h3>Create New View</h3>
+    <button class="iconOnly medium" onClick="closeModalWindow(); return false;"><i class="ti ti-square-x-filled text-red-600"></i></button>
+  </div>
+  <div class="body">
+    <form action="[% uri_with(c, { v => 'undef' }) %]" method="POST" onsubmit="setFormBtnSpinner(this)">
+      <input type="hidden" name="new" value="1">
+      <input type="hidden" name="CSRFtoken" value="[% get_user_token(c) %]">
+      <div class='flexrow flex-nowrap gap-x-2'>
+        <label class="px-2">Name</label>
+        <input type="text" name="name" class="w-40" required>
+        <button class="green" type="submit">
+          <i class="ti ti-device-floppy"></i>
+          Create
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="flex flex-wrap mt-10 gap-4">
+
+  <div class="my-card">
+    <div class="mini-grid">
+      <div class="card w-auto">
+        <div class="head">
+          <h3>Total Hosts</h3>
+        </div>
+        <div class="flex justify-center h-[75px]">
+          <div class="self-center">
+            <span class="text-2xl font-bold">[% host_stats.total %]</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card w-auto">
+        <div class="head">
+          <h3>Total Services</h3>
+        </div>
+        <div class="flex justify-center h-[75px]">
+          <div class="self-center">
+            <span class="text-2xl font-bold">[% service_stats.total %]</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mini-grid mt-5">
+      <div class="card w-auto">
+        <div class="head">
+          <h3>Total Backends</h3>
+        </div>
+        <div class="flex justify-center h-[75px]">
+          <div class="self-center">
+            <span class="text-2xl font-bold">[% backend_stats.enabled %]</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card w-auto">
+        <div class="head">
+          <h3>Total Contacts</h3>
+        </div>
+        <div class="flex justify-center h-[75px]">
+          <div class="self-center">
+            <span class="text-2xl font-bold">[% contacts %]</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="my-card">
+    <div class="card w-auto min-h-[250px]">
+      <div class="head">
+        <h3><a href="status.cgi?hostgroup=all&style=hostdetail" class="link">Hosts</a></h3>
+      </div>
+      <div id="hosts-gaugeChart">
+      </div>
+    </div>
+  </div>
+
+  <div class="my-card">
+    <div class="card w-auto min-h-[250px]">
+      <div class="head">
+        <h3><a href="status.cgi" class="link">Services</a></h3>
+      </div>
+      <div id="services-gaugeChart">
+      </div>
+    </div>
+  </div>
+
+  [% IF backend_stats.available > 1 %]
+    <div class="my-card">
+      <div class="card w-auto min-h-[250px]">
+        <div class="head">
+          <h3>Available Backends</h3>
+        </div>
+        <div id="backends-gaugeChart">
+        </div>
+      </div>
+    </div>
+    [% IF backend_stats.enabled - backend_stats.down > 1 %]
+    <div class="my-card">
+      <div class="card w-auto min-h-[250px]">
+        <div class="head">
+          <h3>Hosts per Backend</h3>
+        </div>
+        <div id="hostloc-pieChart">
+        </div>
+      </div>
+    </div>
+    [% END %]
+  [% END %]
+
+  <div class="my-card">
+    <div class="card w-auto h-full min-h-[250px]">
+      <div class="head">
+        <h3><a href="status.cgi?style=hostoverview" class="link">Top 5 Hostgroups</a></h3>
+      </div>
+      <div id="hostgroups-barChart"></div>
+    </div>
+  </div>
+
+  <div class="my-card">
+    <div class="card w-auto min-h-[250px]">
+      <div class="head">
+        <h3><a class="link" href="notifications.cgi">Notifications</a></h3>
+        [% IF notifications_age && notifications_age > 30 %]<div class="ml-4 textHINTsoft" title="last update: [% date_format(c, date.now - notifications_age) %]">updated [% duration(notifications_age, 6) %] ago</div>[% END %]
+      </div>
+      <a href="notifications.cgi?start=&end=" id="notifications-link" class="relative">
+        <div id="notifications-barChart"></div>
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<div class="flex flex-wrap gap-4 mt-4">
+  <div class="my-card min-w-[370px]">
+    <div class="card w-auto h-full overflow-hidden">
+      <div class="head">
+        <h3><a href="status.cgi?hostgroup=all&style=hostdetail&hoststatustypes=12&hostprops=42" class="link">Unhandled Host Problems</a></h3>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="cellspacing-x">
+          <thead>
+            <tr>
+              <th class="px-2 pt-2">Host</th>
+              <th class="px-2 pt-2 text-center">State</th>
+              <th class="px-2 pt-2">Output</th>
+              <th class="px-2 pt-2">Duration</th>
+            </tr>
+          </thead>
+          <tbody>
+            [% FOR h = problemhosts %]
+            <tr>
+              <td><a class="link" href="extinfo.cgi?type=1&amp;host=[% h.name | uri %]">[% h.name | html %]</a></td>
+              <td class="flex justify-center"><div class="badge DOWN">DOWN</div></td>
+              <td class="truncate w-1/2 max-w-0">[% h.plugin_output %]</td>
+              <td>[% duration(date.now - h.last_hard_state_change, 6) %]</td>
+            </tr>
+            [% END %]
+            [% IF problemhosts.size == 0 %]
+              <tr>
+                <td class='text-center' colspan="4">Currently no hosts with unhandled problems</td>
+              </tr>
+            [% END %]
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="my-card min-w-[370px]">
+    <div class="card w-auto h-full overflow-hidden">
+      <div class="head">
+        <h3><a class="link" href="status.cgi?host=all&type=detail&hostprops=10&hoststatustypes=3&serviceprops=42&servicestatustypes=28">Unhandled Service Problems</a></h3>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="cellspacing-x">
+          <thead>
+            <tr>
+              <th class="px-2 pt-2">Host</th>
+              <th class="px-2 pt-2">Service</th>
+              <th class="px-2 pt-2 text-center">State</th>
+              <th class="px-2 pt-2">Output</th>
+              <th class="px-2 pt-2">Duration</th>
+            </tr>
+          </thead>
+          <tbody>
+            [% FOR s = problemservices %]
+              [% IF s.state == 1 %]
+                [% state = 'WARNING' %]
+              [% ELSIF s.state == 2 %]
+                [% state = 'CRITICAL' %]
+              [% ELSIF s.state == 3 %]
+                [% state = 'UNKNOWN' %]
+              [% END %]
+            <tr>
+              <td><a class="link" href="extinfo.cgi?type=1&amp;host=[% s.host_name | uri %]">[% s.host_name | html %]</a></td>
+              <td><a class="link" href="extinfo.cgi?type=2&amp;host=[% s.host_name | uri %]&amp;service=[% s.description | uri %]&amp;backend=[% s.peer_key | uri %]">[% s.description | html %]</a></td>
+              <td class="flex justify-center"><div class="badge [% state %]">[% state %]</div></td>
+              <td class="truncate w-1/2 max-w-0">[% s.plugin_output %]</td>
+              <td>[% duration(date.now - s.last_hard_state_change, 6) %]</td>
+            </tr>
+            [% END %]
+            [% IF problemservices.size == 0 %]
+              <tr>
+                <td class='text-center' colspan="5">Currently no services with unhandled problems</td>
+              </tr>
+            [% END %]
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<div class="flex gap-x-2 justify-center w-full mt-4">
+  <button><a class="w-36" href="http://www.thruk.org/download.html?version=[% thrukversion %]" target="_blank">Check for updates</a></button>
+  <button><a class="w-36" href="[% url_prefix %]changes.html">Changelog</a></button>
+</div>
+
+
+
+
+<script>
+
+function getToolTipTemplate(data) {
+  var template = '<table class="{=CLASS_TOOLTIP}"><tbody>{=TITLE}';
+  if(data != null) {
+    jQuery(data).each(function(i, row) {
+      if(row.value > 0) {
+        template += getToolTipTemplateRow(row.name, row.value, row.color, '');
+      }
+    });
+    template += '{{}}';
+  } else {
+    template += '{{'+getToolTipTemplateRow()+'}}';
+  }
+  template += '<\/tbody><\/table>';
+  return(template);
+}
+
+function getToolTipTemplateRow(name, value, color, cls) {
+  cls   = cls   != null ? cls   : '{=CLASS_TOOLTIP_NAME}';
+  color = color != null ? color : '{=COLOR}';
+  name  = name  != null ? name  : '{=NAME}';
+  value = value != null ? value : '{=VALUE}';
+  return(''
+    +'<tr class="'+cls+'">'
+    +'<td class="name"><span style="background-color:'+color+'"></span>'+name+'<\/td>'
+    +'<td class="value text-right">'+value+'<\/td>'
+    +'<\/tr>'
+  );
+}
+
+function initGraphs() {
+  // chrome sometimes draws panels to big on refresh, delay rendering graphs until the cards have a sane size
+  if(jQuery("#hosts-gaugeChart").innerWidth() > jQuery(document).innerWidth() * 0.8) {
+    window.setTimeout(function() {
+      initGraphs();
+    }, 50);
+    return;
+  }
+  //avail backends
+  [% IF backend_stats.available > 1 %]
+    var backends = bb.generate({
+      data: {
+        columns: [% json_encode(backend_gauge_data) %],
+        type: "gauge"
+      },
+      gauge: {
+        max: [% backend_stats.enabled %],
+        label: {
+          format: function(value, ratio) { return value; }
+        }
+      },
+      color: {
+          pattern: ['var(--badge-ok-bg)','var(--badge-critical-bg)']
+      },
+      size: {
+        height: 210
+      },
+      bindto: "#backends-gaugeChart"
+    });
+
+    [% IF backend_stats.enabled - backend_stats.down > 1 %]
+      //hosts per backend
+      var hostloc = bb.generate({
+        data: {
+          columns: [% json_encode(hosts_by_backend) %],
+          type: "pie"
+        },
+        pie : {
+          label: {
+            format: function(value, ratio, id) { return value; }
+          }
+        },
+        tooltip: {
+          format: {
+            value: function(value, ratio, id) { return value; }
+          }
+        },
+        size: {
+          height: 210
+        },
+        interaction: {
+          enabled: true,
+          brighten: false //DOESNT WORK FOR SOME REASON
+        },
+        [% IF backend_stats.enabled - backend_stats.down > 20 %]
+        legend: {
+          hide: true
+        },
+        [% END %]
+        bindto: "#hostloc-pieChart"
+      });
+    [% END %]
+  [% END %]
+
+  //hosts gauge
+  [% SET empty_hosts = 0 %]
+  [% SET empty_hosts = 1 UNLESS host_stats %]
+  [% IF empty_hosts || (host_stats.total-host_stats.pending) == 0 %]
+    [% host_health = 0 %]
+  [% ELSE %]
+    [% host_health = host_stats.up / (host_stats.total-host_stats.pending) * 100 %]
+  [% END %]
+  var hosts = bb.generate({
+    data: {
+      columns: [
+        ["Hosts UP", [% host_health %]]
+      ],
+      type: "gauge"
+    },
+    gauge: {},
+    color: {
+      pattern: [
+        "var(--badge-critical-bg)",
+        "var(--badge-warning-bg)",
+        "var(--badge-ok-bg)"
+      ],
+      threshold: {
+        values: [
+          75,
+          90,
+          100
+        ]
+      }
+    },
+    size: {
+      height: 210
+    },
+    interaction: {
+      enabled: true
+    },
+    tooltip: {
+      contents: {
+        template: getToolTipTemplate([
+                    {name:'Up',          value: [% host_stats.up %],          color: 'var(--badge-ok-bg)'},
+                    {name:'Down',        value: [% host_stats.down %],        color: 'var(--badge-down-bg)'},
+                    {name:'Unreachable', value: [% host_stats.unreachable %], color: 'var(--badge-unreachable-bg)'},
+                    {name:'Pending',     value: [% host_stats.pending %],     color: 'var(--badge-pending-bg)'}
+                  ])
+      }
+    },
+    bindto: "#hosts-gaugeChart"
+  });
+
+  //services gauge
+  [% SET empty_services = 0 %]
+  [% SET empty_services = 1 UNLESS service_stats %]
+  [% IF empty_services || (service_stats.total-service_stats.pending) == 0 %]
+    [% service_health = 0 %]
+  [% ELSE %]
+    [% service_health = (service_stats.ok + service_stats.warning + service_stats.unknown) / ((service_stats.total-service_stats.pending)) * 100 %]
+  [% END %]
+  var services = bb.generate({
+    data: {
+      columns: [
+        ["Services OK", [% service_health %]]
+      ],
+      type: "gauge"
+    },
+    gauge: {},
+    color: {
+      pattern: [
+        "var(--badge-critical-bg)",
+        "var(--badge-warning-bg)",
+        "var(--badge-ok-bg)"
+      ],
+      threshold: {
+        values: [
+          75,
+          90,
+          100
+        ]
+      }
+    },
+    size: {
+      height: 210
+    },
+    interaction: {
+      enabled: true
+    },
+    tooltip: {
+      contents: {
+        template: getToolTipTemplate([
+                    {name:'OK',       value: [% service_stats.ok %],       color: 'var(--badge-ok-bg)'},
+                    {name:'Warning',  value: [% service_stats.warning %],  color: 'var(--badge-warning-bg)'},
+                    {name:'Unknown',  value: [% service_stats.unknown %],  color: 'var(--badge-unknown-bg)'},
+                    {name:'Critical', value: [% service_stats.critical %], color: 'var(--badge-critical-bg)'},
+                    {name:'Pending',  value: [% service_stats.pending %],  color: 'var(--badge-pending-bg)'}
+                  ])
+      }
+    },
+    bindto: "#services-gaugeChart"
+  });
+
+
+  //hostgroups
+  var hostgroups = bb.generate({
+    data: {
+      x: "x",
+      columns: [
+        ["x", "Number of hosts"],
+        [% IF hostgroups.size > 0 %]
+        [% FOR hostgroup = hostgroups %]
+          [ "[% hostgroup.name %]", [% hostgroup.value %] ][% IF !loop.last %],[% END %]
+        [% END %]
+        [% ELSE %]
+          ["no hostgroups defined", 0]
+        [% END %]
+      ],
+      type: "bar"
+    },
+    bar: {
+      padding: 5
+    },
+    color: {
+      pattern: ['var(--dashboard-series-1)','var(--dashboard-series-2)','var(--badge-ok-bg)','var(--badge-critical-bg)','var(--dashboard-series-3)']
+    },
+    size: {
+      height: 210
+    },
+    axis: {
+      x: {
+        type: "category"
+      }
+    },
+    interaction: {
+      enabled: true,
+      brighten: false //DOESNT WORK FOR SOME REASON
+    },
+    bindto: "#hostgroups-barChart"
+  });
+
+  var linkHideTimer;
+  var notificationsLabels = [% json_encode(notifications.label) %];
+  var notifications = bb.generate({
+    data: {
+      x: "x",
+      columns: [% json_encode(notifications.data) %],
+      type: "bar",
+      onover: function(d, element) {
+        window.clearTimeout(linkHideTimer);
+        var start = Math.round(d.x.getTime()/1000);
+        var end   = start + 3600;
+        var hostfilter = "";
+        [% IF notification_pattern %]
+          hostfilter = "&pattern="+encodeURIComponent("[% notification_pattern | html %]");
+        [% END %]
+        jQuery("#notifications-link").attr("href", "notifications.cgi?start="+encodeURIComponent(start)+"&end="+encodeURIComponent(end)+hostfilter);
+      },
+      onout: function(d, element) {
+        linkHideTimer = window.setTimeout(function() {
+          jQuery("#notifications-link").attr("href", "notifications.cgi?start=&end=");
+        }, 50);
+      }
+    },
+    color: {
+      pattern: ['var(--dashboard-series-1)']
+    },
+    size: {
+      height: 210
+    },
+    axis: {
+      x: {
+        type: "timeseries",
+        localtime: true,
+        tick: {
+          tooltip: true,
+          format: function(x, a) {
+            var ts = x.getTime()/1000;
+            return notificationsLabels[ts];
+          }
+        },
+        padding: {
+          right: 15,
+          unit: "px"
+        }
+      }
+    },
+    tooltip: {
+      format: {
+        title: function(x) {
+            var ts = x.getTime()/1000;
+            return notificationsLabels[ts]+" - "+notificationsLabels[ts+3600];
+        }
+      }
+    },
+    bindto: "#notifications-barChart"
+  });
+}
+
+function initTabSorting() {
+  if(!has_jquery_ui()) {
+    load_jquery_ui(function() {
+        initTabSorting();
+    });
+    return;
+  }
+
+  jQuery('#view_tabs').sortable({
+    items                : 'SPAN.tabs.sortable',
+    helper               : 'clone',
+    tolerance            : 'pointer',
+    placeholder          : 'sortable-placeholder',
+    update               : function(event, ui) {
+      var order = [];
+      jQuery('#view_tabs').find("SPAN.tabs.sortable").each(function(i, el) {
+          order.push(el.dataset["name"]);
+      });
+      jQuery("#tabsavespinner").removeClass("hidden");
+      jQuery.ajax({
+          url: url_prefix + 'cgi-bin/main.cgi',
+          type: 'POST',
+          data: {
+            reorder:  '1',
+            order:     order
+          },
+          success: function() {
+            jQuery("#tabsavespinner").addClass("hidden");
+          },
+          error:     ajax_xhr_error_logonly
+      });
+    }
+  });
+}
+
+jQuery(document).ready(function() {
+  initGraphs();
+})
+
+</script>
+
+[% PROCESS _footer.tt %]

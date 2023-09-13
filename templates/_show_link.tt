@@ -1,0 +1,23 @@
+﻿<button class="btn btn-sm" title="Show link to this page" onclick="toggleElement('show_link', undefined, true); document.getElementById('url_input').focus(); return false;">
+  <i class="ti ti-link"></i>
+</button>
+<div class="flex relative">
+<div class="card shadow-float absolute z-20 top-7 left-0" style="display: none;" id="show_link">
+    <div class="head justify-between">
+      <h3>Permanent link to this page</h3>
+      <button class="iconOnly btn-sm hover-red" onClick="toggleElement('show_link'); return false;"><i class="ti ti-square-x-filled text-red-600"></i></button>
+    </div>
+    <div class="body">
+      [% IF style != 'combined' %]
+        <form action='#' method="GET" id="url_form">
+      [% END %]
+      <div class="flexrow flex-nowrap gap-1">
+        <input type="text" size="60" value="" id="url_input" onfocus="updateExportLink(this); this.select()" readonly>
+        <button class="iconOnly px-1 copy_button hover-lime" onclick="copyCode(event, 'url_input'); return false;"><i class="ti ti-copy" title="Copy to clipboard"></i></button>
+      </div>
+      [% IF style != 'combined' %]
+        </form>
+      [% END %]
+    </div>
+  </div>
+</div>

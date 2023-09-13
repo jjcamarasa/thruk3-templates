@@ -1,0 +1,46 @@
+﻿[% WRAPPER config_detail.tt
+   dataTitle = 'Commands'
+%]
+
+<table class='mainTable striped sticky-2d' id="configtable">
+  <thead>
+    <tr>
+      <th class="!shadow-as-border-bottom"></th>
+      <th class="left-8 !shadow-as-border z-[11]">Command Name</th>
+      <th class="border-l-0">Command Line</th>
+      [% IF backends.size > 1 %]
+        <th>Backend</th>
+    [% END %]
+    </tr>
+  </thead>
+  <tbody>
+    [% FOREACH d = data %]
+      [% SET class = '' %]
+      [% SET class = 'tableRowSelected' IF jump == d.name %]
+      <tr class='[% class %]' id="[% name2id(d.name, 'command') %]">
+        <td class='[% class %] shadow-none'>
+          [% IF use_feature_configtool && c.check_user_roles('authorized_for_system_commands') %]
+            <a href="conf.cgi?sub=objects&amp;type=command&amp;data.name=[% d.name | uri %]&amp;backend=[% d.peer_key.join(",") %]">
+              <i class="ti ti-pencil text-sm" title="configure this command"></i>
+            </a>
+          [% ELSE %]
+            <i class="ti ti-pencil text-sm disabled" title="no permissions or configtool disabled"></i>
+          [% END %]
+        </td>
+        <td class='[% class %] sticky left-8 z-[9] bg-inherit shadow-as-border-right'>[% d.name | html %]</td>
+        <td class='[% class %] border-l-0'>[% d.line | html %]</td>
+        [% IF backends.size > 1 %]
+          <td class='[% class %]'>
+            [% IF d.peer_key.size < backends.size %]
+              [% peer_name(d).join(', ') %]
+            [% ELSE %]
+            <i>all</i>
+            [% END %]
+          </td>
+        [% END %]
+      </tr>
+    [% END %]
+  </tbody>
+</table>
+
+[% END %]

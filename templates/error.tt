@@ -1,0 +1,90 @@
+﻿[% auto_reload_fn = '' %]
+[% IF die_on_errors %][% throw(errorMessage) %][% END %]
+[% PROCESS _header.tt %]
+[% PROCESS _message.tt %]
+
+[% PROCESS _infobox.tt has_proc_info=0 %]
+
+[% IF errorMessage %]
+  <h1 class='textALERT mt-5'>[% errorMessage %]</h1>
+  <h2 class="whitespace-normal text-center">[% dump2str(errorDescription, 0, 0) | nl2br %]</h2>
+[% ELSE %]
+  <h1 class='textALERT mt-5'>internal server error</h1>
+  <h2 class="whitespace-normal text-center">internal server error occured, please look at your logfiles</h2>
+  [% IF c.error.size > 0 %][% stacktrace = c.error.0 %][% END %]
+[% END %]
+
+[% IF errorDetails %]
+  <div class='card text-left w-fit mx-auto mt-2'>
+    <div class="head">
+      <h3>Details</h3>
+    </div>
+    <div class="body whitespace-pre font-mono">[% nice_stacktrace(escape_html(dump2str(errorDetails, 0, 0))) %]</div>
+  </div>
+[% END %]
+
+[% IF stacktrace %]
+  [% IF !make_test_mode && !thruk_author %]
+    <div class="text-center w-fit mx-auto mt-2">
+      <textarea class="w-full h-20" placeholder="please add any hints which might help to reproduce this issue..." onkeyup="el=document.getElementById('error_report_text'); el.innerHTML = el.innerHTML.replace(/Please describe what you did:.*Make sure the report does not contain/s, 'Please describe what you did:\n\n'+this.value+'\n\nMake sure the report does not contain')"></textarea>
+      <a
+        href="mailto:[% bug_email_rcpt %]?subject=Thruk%20Error%20Report&amp;body="
+        class="button mt-1"
+        onmouseover="this.href=this.href.replace(/body=.*/, 'body='+encodeURIComponent(document.getElementById('error_report_text').innerText));"
+      >
+        <i class="ti ti-bug" title="Send Bug Report"></i>
+        Help making Thruk better by sending an anonymous bug report.
+      </a>
+      <a href="#" onclick="document.getElementById('error_report_card').style.display=''; return false;" class="button flexrow gap-0 justify-between mt-5">
+        <div class="w-5"></div>
+        <span>Preview included details</span>
+        <i class="ti ti-plus" title="open bug report preview"></i>
+      </a>
+    </div>
+  [% END %]
+[% END %]
+
+[% IF thruk_author %]
+  [% IF stacktrace %]
+    [% PROCESS _stacktrace.tt stacktrace=stacktrace %]
+  [% END %]
+  [% DEFAULT errorDebugInfo = [] %]
+  [% IF errorDebugInfo.list.size > 0 %]
+    <div class='card w-fit min-w-[400px] mx-auto mt-2'>
+      <div class="head">
+        <h3>Details</h3>
+      </div>
+      <div class="body">
+        [% FOREACH deb IN errorDebugInfo.list %]
+          <pre class="w-full">[% escape_html(dump2str(deb, 0, 0)) %]</pre>
+        [% END %]
+      </div>
+    </div>
+  [% END %]
+[% END %]
+
+
+[% IF make_test_mode || thruk_author %]
+<!--error:
+[%+ errorMessage +%]
+[%+ dump2str(errorDetails) +%]
+[%+ stacktrace +%]
+:error-->
+[% ELSE %]
+  <div class="card mt-2 mx-auto w-fit" style="display: none;" id="error_report_card">
+    <div class="head">
+      <h3>Bug Report Preview</h3>
+    </div>
+    <div class="body">
+      <div class="flexrow w-fit align-middle">
+        <div class="flex self-center">Please report this issue by mail to:</div>
+        <a href="mailto:[% bug_email_rcpt %]?subject=Thruk%20Error%20Report&amp;body=[% PROCESS _error_report.tt | uri %]" class="button">
+          <i class="ti ti-envelope"></i>
+          [% bug_email_rcpt %]
+        </a>
+      </div>
+      <pre class="text-left mt-5" id="error_report_text">[% PROCESS _error_report.tt | html %]</pre>
+    </div>
+  </div>
+[% END %]
+[% PROCESS _footer.tt %]

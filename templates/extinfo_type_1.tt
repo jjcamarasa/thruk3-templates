@@ -73,7 +73,7 @@
         [% UNLESS command_disabled(c, '1') %]
           <div>
             <a class="button js-modal-command-link" href="cmd.cgi?cmd_typ=1&amp;host=[% host.name | uri %]&amp;backend=[% host.peer_key %]">
-              <i class="las la-comment mr-1"></i>Add comment
+              <i class="ti ti-message-plus"></i>&nbsp;Add comment
             </a>
           </div>
         [% END %]
@@ -81,7 +81,7 @@
           [% UNLESS command_disabled(c, '20') %]
             <div>
               <a class="button hover-red js-modal-command-link" href="cmd.cgi?cmd_typ=20&amp;host=[% host.name | uri %]&amp;backend=[% host.peer_key %]">
-                <i class="las la-trash mr-1"></i>Delete all
+                <i class="ti ti-trash mr-1"></i>Delete all
               </a>
             </div>
           [% END %]
@@ -104,13 +104,13 @@
         [% UNLESS command_disabled(c, '55') %]
           <div>
             <a class="button js-modal-command-link" href="cmd.cgi?cmd_typ=55&amp;host=[% host.name | uri %]&amp;backend=[% host.peer_key %]">
-              <i class="las la-comment mr-1"></i>Add downtime
+              <i class="ti timessage-plus"></i>Add downtime
             </a>
           </div>
           [% IF use_feature_recurring_downtime %]
             <div>
               <a href="extinfo.cgi?type=6&amp;recurring=add&amp;target=host&amp;host=[% host.name | uri %]&amp;backend=[% host.peer_key %]" class="button js-modal-command-link">
-                <i class="las la-comment mr-1"></i>Add recurring downtime</a>
+                <i class="ti timessage-plus"></i>Add recurring downtime</a>
             </div>
           [% END %]
         [% END %]
@@ -118,14 +118,14 @@
           [% UNLESS command_disabled(c, '5') %]
             <div>
               <a class="button hover-red js-modal-command-link" href="cmd.cgi?quick_command=5&amp;confirm=no&amp;host=[% host.name | uri %]&amp;backend=[% host.peer_key %]&amp;referer=[% as_url_arg(short_uri(c, {referer => 'undef'})) %]">
-                <i class="las la-trash mr-1"></i>Delete all
+                <i class="ti ti-trash mr-1"></i>Delete all
               </a>
             </div>
           [% END %]
         [% END %]
         <div>
           <a class="button" href="showlog.cgi?host=[% host.name | uri %]&amp;backend=[% host.peer_key %]&amp;pattern=DOWNTIME&amp;start=[% date.now - 86400 * 7 %]&amp;end=[% date.now %]">
-            <i class="las la-bars mr-1"></i>List recent downtimes
+            <i class="ti ti-menu-2 mr-1"></i>List recent downtimes
           </a>
         </div>
       </div>
@@ -154,9 +154,9 @@
       <h3>Configuration Information</h3>
       <div class="flex gap-x-1">
         [% IF use_feature_configtool && c.check_user_roles('authorized_for_system_commands') && backends_with_obj_config.$peer_key %]
-          <a class="[% INCLUDE button_small %]" href="conf.cgi?edit&amp;host=[% host.name | uri %]&amp;backend=[% host.peer_key %]"><i class="las la-wrench small"></i>Configure host</a>
+          <a class="[% INCLUDE button_small %]" href="conf.cgi?edit&amp;host=[% host.name | uri %]&amp;backend=[% host.peer_key %]"><i class="ti ti-tool"></i>Configure host</a>
         [% ELSE %]
-          <a class="button" href="config.cgi?type=hosts&amp;jump2=[% host.name | uri %]"><i class="las la-eye small"></i>View Configuration</a>
+          <a class="button" href="config.cgi?type=hosts&amp;jump2=[% host.name | uri %]"><i class="ti ti-eye"></i>View Configuration</a>
         [% END %]
       </div>
     </div>

@@ -1,0 +1,227 @@
+﻿[% USE date %]
+[% WRAPPER _conf_frame.tt %]
+
+[% IF readonly %]
+<div class="card red alert top-center w-fit">
+  <div class="body textALERT"><b>Readonly:</b> Make sure the config file is writable!</div>
+</div>
+[% END %]
+
+<div class="flexcol mx-auto w-fit">
+  <form action="conf.cgi" method="GET" class="mt-5 w-full">
+    <input type="hidden" name="sub" value="users">
+    <input type="hidden" name="action" value="change">
+    <div class="card w-full min-w-[400px]">
+      <div class="head">
+        <h3>select user to change</h3>
+      </div>
+      <table class="body cellspacing-y">
+        <tr>
+          <th class="w-0 pr-2">Username</th>
+          <td>
+            <input type="text" name="data.username" id="data.username" value="[% user_name | html %]" onclick="ajax_search.init(this, 'contact', {url:'conf.cgi?action=cgi_contacts'})" class="w-full">
+          </td>
+        </tr>
+        <tr>
+          <td colspan=2 class="pb-2">
+            <div class="flexrow justify-evenly">
+              <a class="button" style="width:80px" href="conf.cgi">cancel</a>
+              <input type="submit" name="send" value="show" style="width:80px">
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </form>
+
+
+  [% IF show_user %]
+    <form action="conf.cgi" method="POST" autocomplete="off" onsubmit="setFormBtnSpinner(this)">
+      <input type="submit" name="send" value="save" style="display:none">
+      <input type="hidden" name="sub" value="users">
+      <input type="hidden" name="action" value="store">
+      <input type="hidden" name="hex" value="[% hex %]">
+      <input type="hidden" name="data.username" value="[% user_name | html %]">
+      <input type="hidden" name="CSRFtoken" value="[% get_user_token(c) %]">
+      <div class="card">
+        <div class="head">
+          <h3>Editing: [% user_name | html %]</h3>
+        </div>
+        <div class="body flexrow flex-nowrap">
+          <table>
+            <tr>
+              <th>Contact Exists</th>
+              <td>
+                <div class="flexrow gap-1 flex-nowrap items-center">
+                  [% IF has_contact %]Yes[% ELSE %]No[% END %]
+                  [% IF backends_with_obj_config.keys.size > 0 %]
+                    [% IF has_contact %]
+                      - <a class="button w-full" href="conf.cgi?sub=objects&amp;type=contact&amp;data.name=[% user_name | html %]">edit in config tool</a>
+                    [% ELSE %]
+                      - <a class="button w-full" href="conf.cgi?sub=objects&amp;action=new&amp;type=contact&amp;obj.contact_name=[% user_name | uri %]">create</a>
+                    [% END %]
+                  [% END %]
+                </div>
+              </td>
+            </tr>
+            [% IF conf_config.exists('htpasswd') %]
+              <tr>
+                <th>Password Set</th>
+                <td>
+                  [% IF has_htpasswd_entry %]
+                  <div class="flexrow gap-1 flex-nowrap items-center">
+                    Yes - <input type="submit" name="send" value="remove password" class="w-full">
+                  </div>
+                  [% ELSE %]
+                    No
+                  [% END %]
+                </td>
+              </tr>
+              <tr>
+                <th>Password</th>
+                <td><input type="password" name="data.password" value="" class="w-full" autocomplete="off"></td>
+              </tr>
+              <tr>
+                <th class="align-top">Verify Password</th>
+                <td><input type="password" name="data.password2" value="" class="w-full" autocomplete="off"><br>
+                  <i>([% htpasswd_file %])</i>
+                </td>
+              </tr>
+            [% END %]
+            [% IF profile_user.is_locked %]
+            <tr>
+              <th class="textALERT">Account is Locked</th>
+              <td><input type="submit" name="send" value="unlock account" class="w-full"></td>
+            </tr>
+            [% ELSE %]
+            <tr>
+              <th>Account is not Locked</th>
+              <td><input type="submit" name="send" value="lock account" class="w-full hover-red"></td>
+            </tr>
+            [% END %]
+            [% IF profile_user.settings.exists('login') && profile_user.settings.login.exists('last_failed') %]
+            <tr>
+              <th class="align-top textALERT">Failed Logins</th>
+              <td>
+                There had been [% profile_user.settings.login.failed %] failed login attempts.<br>
+                (Date: [% date_format(c, profile_user.settings.login.last_failed.time) %] - IP: [% profile_user.settings.login.last_failed.ip %][% IF profile_user.settings.login.last_failed.defined('forwarded_for') %] ([% profile_user.settings.login.last_failed.forwarded_for %][% END %])
+              </td>
+            </tr>
+            [% END %]
+            [% IF conf_config.exists('cgi.cfg') %]
+              <tr>
+                <th colspan=2 >Roles (cgi.cfg)</th>
+              </tr>
+              [% FOR auth = role_keys %]
+                <tr class="hoverable">
+                  <th>[% auth | html %]</th>
+                  <td>
+                    <input type="radio" name="data.[% auth | html %]" id="data.[% auth | html %]_0" value="0"[% IF roles.$auth == 0 %] checked[% END %]><label class="clickable pl-1 pr-3" for="data.[% auth | html %]_0">No</label>
+                    <input type="radio" name="data.[% auth | html %]" id="data.[% auth | html %]_1" value="1"[% IF roles.$auth == 1 %] checked[% END %]><label class="clickable px-1" for="data.[% auth | html %]_1">Yes</label>
+                  </td>
+                </tr>
+              [% END %]
+            [% END %]
+          </table>
+
+          <div class="flexcol">
+            <table class="min-w-[650px] rowhover">
+              <tr>
+                <th colspan=2 >
+                  <div class="flexrow flex-nowrap gap-1 justify-between">
+                    <span>Contact Information</span>
+                    [% cache_age = date.now() - profile_user.timestamp; IF cache_age > 5 %]<span class="textHINTsoft" title="auth cache last updated: [% date_format(c, profile_user.timestamp, datetime_format) %]">(auth cache updated [% duration(cache_age, 6) %] ago)</span>[% END %]
+                  </div>
+                </th>
+              </tr>
+              <tr>
+                <th class="w-48 align-top">Authoritive Backends</th>
+                <td>
+                  <div class="truncate max-w-[400px]">
+                    [% FOREACH peer_key IN profile_user.contact_src_peer %][% IF !loop.first %], [% END %]<span title="[% peer_key %]">[% peer_name(peer_key) %]</span>[% END %]
+                    [% IF profile_user.contact_src_peer.size == 0 %]all backends
+                    [% END %]
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <th>Groups</th>
+                <td>
+                  [% IF profile_user.groups.size == 0 %]
+                    this contact has no groups.
+                  [% ELSE %]
+                    [% IF backends_with_obj_config.keys.size > 0 %]
+                      [% FOREACH group = profile_user.groups %]
+                        <a class="link" href="conf.cgi?sub=objects&amp;type=contactgroup&amp;data.name=[% group | uri %]">[% group | html %]</a>[% UNLESS loop.last %], [% END %]
+                      [% END %]
+                    [% ELSE %]
+                      [% profile_user.groups.join(', ') %]
+                    [% END %]
+                  [% END %]
+                </td>
+              </tr>
+              [% IF has_contact %]
+                <tr>
+                  <th>E-Mail</th>
+                  <td><a class="link" href="mailto:[% contact.email | uri %]">[% contact.email | html %]</a></td>
+                </tr>
+                <tr>
+                  <th>Host Notification Period</th>
+                  <td>[% contact.host_notification_period %]</td>
+                </tr>
+                <tr>
+                  <th>Service Notification Period</th>
+                  <td>[% contact.service_notification_period %]</td>
+                </tr>
+                [% IF contact.pager %]
+                  <tr>
+                    <th>Pager</th>
+                    <td>[% contact.pager %]</td>
+                  </tr>
+                [% END %]
+              [% END %]
+              <tr>
+                <th>Can Submit Commands</th>
+                <td>
+                  <div class="flexrow flex-nowrap gap-1 justify-between">
+                    <span>[% IF profile_user.can_submit_commands %]Yes[% ELSE %]No[% END %]</span>
+                    [% IF profile_user.defined("can_submit_commands_src"); %]<span class="textHINTsoft">reason: [% profile_user.can_submit_commands_src | html %]</span>[% END %]
+                  </div>
+                </td>
+              </tr>
+                <tr class="no-hover">
+                <th class="align-top">Effective Roles</th>
+                <td>
+                  [% PROCESS _user_roles.tt %]
+                </td>
+              </tr>
+            </table>
+
+
+            <table>
+              <tr>
+                <th colspan=2 >Contact Actions</th>
+              </tr>
+              <tr>
+                <th class="align-top">Remove</th>
+                <td>
+                  <div class="flexcol gap-1">
+                    <button class="w-fit hover-red" name="send" value="remove_user_profile" [% IF !profile_file_exists %] disabled[% END %]><i class="uil uil-trash-alt"></i>remove user profile data</button>
+                    <span>Location: [% profile_file %][% IF !profile_file_exists %]<i class="ml-3">(profile file does not exist)</i>[% END %]</span>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="footer flexrow justify-evenly">
+          <a class="button" style="width:80px" href="conf.cgi?sub=users">cancel</a>
+          <button class="submit green" style="width:120px"[% IF readonly %] disabled[% END %]><i class="ti ti-device-floppy"></i>save</button>
+        </div>
+      </div>
+    </form>
+  [% END %]
+
+</div>
+
+[% END %]

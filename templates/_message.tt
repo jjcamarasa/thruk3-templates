@@ -1,0 +1,40 @@
+﻿[% SET message = get_message(c) %]
+[% IF message %]
+<div id="thruk_message">
+  <div>
+    <div class="w-5">
+      [% IF message.0 == 'fail_message' %]<i class="ti ti-exclamationyellow ml-2" title="Errors detected"></i>[% END %]
+    </div>
+    <div class="flex-grow text-center font-semibold whitespace-nowrap">
+      <span class="[% message.0 | html %]">[% message.1 %]</span>
+      [% IF message.2 %]
+        <div class="mt-1"><a class="link" href="#" onclick="showElement('message_details'); hideElement(this.parentNode); window.clearInterval(thruk_message_fade_timer); return false;">show details...</a></div>
+      [% END %]
+    </div>
+    <div class="w-5">
+      <button class="iconOnly medium" title="close this message" onclick="fade('thruk_message', 500);return false;"><i class="ti ti-square-x-filled text-red-600"></i></button>
+    </div>
+  </div>
+
+  [% IF message.2 == 2 %]
+    [% thruk_message_details = message.3 %]
+  [% END %]
+  [% IF message.2 %]
+    <div class="w-full flex justify-center">
+      <pre class="[% message.0 | html %]" style="display:none;" id="message_details">
+        [% FOREACH detail = thruk_message_details %]
+        [% detail %]
+        [% END %]
+      </pre>
+    </div>
+  [% END %]
+
+  [% IF message.0 == 'success_message' && !message.0.match("js-no-auto-hide") %]
+  <script>
+  <!--
+  thruk_message_fade_timer = window.setTimeout("fade('thruk_message')", 5000);
+  -->
+  </script>
+  [% END %]
+</div>
+[% END %]

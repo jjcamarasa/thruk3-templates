@@ -1,0 +1,170 @@
+﻿[% USE date %]
+[% PROCESS _header.tt %]
+[% PROCESS _message.tt %]
+
+<div class="grid grid-cols-1 lg:grid-cols-2">
+  [% PROCESS _infobox.tt %]
+</div>
+
+<div class="flexrow py-2 w-full flex-nowrap">
+  <div class="flex basis-1/4">
+    <div class="flex place-items-end gap-1">
+      [% PROCESS _json_export.tt %]
+    </div>
+  </div>
+</div>
+
+<div class="flexrow">
+  <div class="card overflow-hidden min-w-[420px]">
+    <div class="head justify-between gap-x-1">
+      <h3>Process Information</h3>
+      <div class="flex gap-x-2 items-center">
+        [% IF backends.size > 1 %]
+          [% PROCESS _table_search_field.tt ids=["procInfoTable"] %]
+        [% END %]
+        [% IF list_mode == "list" %]
+        <a class="button round" title="Details View" href="[% uri_with(c, 'list' => 'details') %]"><i class="ti ti-dialpad"></i></a>
+        [% ELSE %]
+        <a class="button round" title="List View" href="[% uri_with(c, 'list' => 'list') %]"><i class="ti ti-list-ul"></i></a>
+        [% END %]
+      </div>
+    </div>
+    <div class="overflow-auto">
+      [% IF list_mode == "list" %]
+        [% PROCESS _extinfo_type_0_table.tt %]
+      [% ELSE %]
+        [% PROCESS _extinfo_type_0_blocks.tt %]
+      [% END %]
+    </div>
+  </div>
+
+  <div class="card w-fit overflow-hidden">
+    <div class="head">
+      <h3>Process Commands</h3>
+    </div>
+    [% IF ! c.check_cmd_permissions('system') %]
+      <div class='p-2 text-center whitespace-normal textHINTsoft not-hoverable'>Your account does not have permissions to execute commands.</div>
+    [% ELSE %]
+      <div class="actionbox">
+        [% IF !command_disabled(c, '14') %]
+        <div><a class="js-modal-command-link" href='cmd.cgi?cmd_typ=14'><i class="ti ti-power text-red-500red"></i>Shutdown the Backend process</a></div>
+        [% END %]
+        [% IF !command_disabled(c, '13') %]
+        <div><a class="js-modal-command-link" href='cmd.cgi?cmd_typ=13'><i class="ti ti-refresh round"></i>Restart the Backend process</a></div>
+        [% END %]
+
+        [% IF pi.keys.size > 0 && pi.enable_notifications != 0 %]
+          [% IF !command_disabled(c, '11') %]
+          <div><a class="js-modal-command-link" href='cmd.cgi?cmd_typ=11'><i class="ti ti-x text-red-600"></i>Disable notifications</a></div>
+          [% END %]
+        [% END %]
+        [% IF pi.keys.size == 0 || pi.enable_notifications != 1 %]
+          [% IF !command_disabled(c, '12') %]
+          <div><a class="js-modal-command-link" href='cmd.cgi?cmd_typ=12'><i class="ti ti-checkgreen"></i>Enable notifications</a></div>
+          [% END %]
+        [% END %]
+
+        [% IF pi.keys.size > 0 && pi.execute_service_checks != 0 %]
+          [% IF !command_disabled(c, '36') %]
+          <div><a class="js-modal-command-link" href='cmd.cgi?cmd_typ=36'><i class="ti ti-x text-red-600"></i>Stop executing service checks</a></div>
+          [% END %]
+        [% END %]
+        [% IF pi.keys.size == 0 || pi.execute_service_checks != 1 %]
+          [% IF !command_disabled(c, '35') %]
+          <div><a class="js-modal-command-link" href='cmd.cgi?cmd_typ=35'><i class="ti ti-checkgreen"></i>Start executing service checks</a></div>
+          [% END %]
+        [% END %]
+
+        [% IF pi.keys.size > 0 && pi.accept_passive_service_checks != 0 %]
+          [% IF !command_disabled(c, '38') %]
+          <div><a class="js-modal-command-link" href='cmd.cgi?cmd_typ=38'><i class="ti ti-x text-red-600"></i>Stop accepting passive service checks</a></div>
+          [% END %]
+        [% END %]
+        [% IF pi.keys.size == 0 || pi.accept_passive_service_checks != 1 %]
+          [% IF !command_disabled(c, '37') %]
+          <div><a class="js-modal-command-link" href='cmd.cgi?cmd_typ=37'><i class="ti ti-checkgreen"></i>Start accepting passive service checks</a></div>
+          [% END %]
+        [% END %]
+
+        [% IF pi.keys.size > 0 && pi.execute_host_checks != 0 %]
+          [% IF !command_disabled(c, '89') %]
+          <div><a class="js-modal-command-link" href='cmd.cgi?cmd_typ=89'><i class="ti ti-x text-red-600"></i>Stop executing host checks</a></div>
+          [% END %]
+        [% END %]
+        [% IF pi.keys.size == 0 || pi.execute_host_checks != 1 %]
+          [% IF !command_disabled(c, '88') %]
+          <div><a class="js-modal-command-link" href='cmd.cgi?cmd_typ=88'><i class="ti ti-checkgreen"></i>Start executing host checks</a></div>
+          [% END %]
+        [% END %]
+
+        [% IF pi.keys.size > 0 && pi.accept_passive_host_checks != 0 %]
+          [% IF !command_disabled(c, '91') %]
+          <div><a class="js-modal-command-link" href='cmd.cgi?cmd_typ=91'><i class="ti ti-x text-red-600"></i>Stop accepting passive host checks</a></div>
+          [% END %]
+        [% END %]
+        [% IF pi.keys.size == 0 || pi.accept_passive_host_checks != 1 %]
+          [% IF !command_disabled(c, '90') %]
+          <div><a class="js-modal-command-link" href='cmd.cgi?cmd_typ=90'><i class="ti ti-checkgreen"></i>Start accepting passive host checks</a></div>
+          [% END %]
+        [% END %]
+
+        [% IF pi.keys.size > 0 && pi.enable_event_handlers != 0 %]
+          [% IF !command_disabled(c, '42') %]
+          <div><a class="js-modal-command-link" href='cmd.cgi?cmd_typ=42'><i class="ti ti-x text-red-600"></i>Disable event handlers</a></div>
+          [% END %]
+        [% END %]
+        [% IF pi.keys.size == 0 || pi.enable_event_handlers != 1 %]
+          [% IF !command_disabled(c, '41') %]
+          <div><a class="js-modal-command-link" href='cmd.cgi?cmd_typ=41'><i class="ti ti-checkgreen"></i>Enable event handlers</a></div>
+          [% END %]
+        [% END %]
+
+        [% IF pi.keys.size > 0 && pi.obsess_over_services != 0 %]
+          [% IF !command_disabled(c, '50') %]
+          <div><a class="js-modal-command-link" href='cmd.cgi?cmd_typ=50'><i class="ti ti-x text-red-600"></i>Stop obsessing over services</a></div>
+          [% END %]
+        [% END %]
+        [% IF pi.keys.size == 0 || pi.obsess_over_services != 1 %]
+          [% IF !command_disabled(c, '49') %]
+          <div><a class="js-modal-command-link" href='cmd.cgi?cmd_typ=49'><i class="ti ti-checkgreen"></i>Start obsessing over services</a></div>
+          [% END %]
+        [% END %]
+
+        [% IF pi.keys.size > 0 && pi.obsess_over_hosts != 0 %]
+          [% IF !command_disabled(c, '95') %]
+          <div><a class="js-modal-command-link" href='cmd.cgi?cmd_typ=95'><i class="ti ti-x text-red-600"></i>Stop obsessing over hosts</a></div>
+          [% END %]
+        [% END %]
+        [% IF pi.keys.size == 0 || pi.obsess_over_hosts != 1 %]
+          [% IF !command_disabled(c, '94') %]
+          <div><a class="js-modal-command-link" href='cmd.cgi?cmd_typ=94'><i class="ti ti-checkgreen"></i>Start obsessing over hosts</a></div>
+          [% END %]
+        [% END %]
+
+        [% IF pi.keys.size > 0 && pi.enable_flap_detection != 0 %]
+          [% IF !command_disabled(c, '62') %]
+          <div><a class="js-modal-command-link" href='cmd.cgi?cmd_typ=62'><i class="ti ti-x text-red-600"></i>Disable flap detection</a></div>
+          [% END %]
+        [% END %]
+        [% IF pi.keys.size == 0 || pi.enable_flap_detection != 1 %]
+          [% IF !command_disabled(c, '61') %]
+          <div><a class="js-modal-command-link" href='cmd.cgi?cmd_typ=61'><i class="ti ti-checkgreen"></i>Enable flap detection</a></div>
+          [% END %]
+        [% END %]
+
+        [% IF pi.keys.size > 0 && pi.process_performance_data != 0 %]
+          [% IF !command_disabled(c, '83') %]
+          <div><a class="js-modal-command-link" href='cmd.cgi?cmd_typ=83'><i class="ti ti-x text-red-600"></i>Disable performance data</a></div>
+          [% END %]
+        [% END %]
+        [% IF pi.keys.size == 0 || pi.process_performance_data != 1 %]
+          [% IF !command_disabled(c, '82') %]
+          <div><a class="js-modal-command-link" href='cmd.cgi?cmd_typ=82'><i class="ti ti-checkgreen"></i>Enable performance data</a></div>
+          [% END %]
+        [% END %]
+      </div>
+    [% END %]
+  </div>
+</div>
+
+[% PROCESS _footer.tt %]

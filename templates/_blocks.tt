@@ -1,0 +1,222 @@
+﻿[% BLOCK _status_host_attributes %]
+  [%
+    host_accept_passive_checks    = hostprefix _ 'accept_passive_checks'
+    host_acknowledged             = hostprefix _ 'acknowledged'
+    host_active_checks_enabled    = hostprefix _ 'active_checks_enabled'
+    host_action_url_expanded      = hostprefix _ 'action_url_expanded'
+    host_check_type               = hostprefix _ 'check_type'
+    host_name                     = hostprefix _ 'name'
+    host_notifications_enabled    = hostprefix _ 'notifications_enabled'
+    host_notes_url_expanded       = hostprefix _ 'notes_url_expanded'
+    host_icon_image_alt           = hostprefix _ 'icon_image_alt'
+    host_icon_image_expanded      = hostprefix _ 'icon_image_expanded'
+    host_is_executing             = hostprefix _ 'is_executing'
+    host_is_flapping              = hostprefix _ 'is_flapping'
+    host_scheduled_downtime_depth = hostprefix _ 'scheduled_downtime_depth'
+    peer_key                      = host.peer_key
+    passive_icon                  = 'ti ti-arrows-down-to-line'
+    has_bp                        = has_business_process(host, hostprefix)
+    custom_vars                   = get_custom_vars(c, host, hostprefix)
+  %]
+
+ [% IF hide_passive_icon %]
+   [% passive_icon ='' %]
+ [% END %]
+
+ <div class="flex pl-1.5 gap-px">
+    [% IF host.$host_is_executing > 0 %]
+  <div id="[% paneprefix %]r[% loop.index %]_h_exec" class="flex overflow-hidden"><div class="spinner js-autohide not-clickable" title="This host is currently executing its hostcheck"></div></div>[% ELSE%]<div id="[% paneprefix %]r[% loop.index %]_h_exec"></div>[% END %]
+    [% IF host.$host_notifications_enabled == 0   %]<i class="ti ti-bell-x not-clickable text-2xl text-red-500" title="Notifications for this host have been disabled"></i>[% END %]
+    [% IF ! has_bp %]
+    [% IF strict_passive_mode %]
+      [% IF host.$host_check_type == 0 && host.$host_active_checks_enabled == 0 %]<i class="ti ti-x text-red-500 not-clickable text-2xl" title="Checks of this host have been disabled"></i>[% END %]
+      [% IF host.$host_check_type == 1 && host.$host_accept_passive_checks == 0 %]<i class="ti ti-x text-red-500 not-clickable text-2xl" title="Checks of this host have been disabled"></i>[% END %]
+      [% IF host.$host_check_type == 1 && host.$host_accept_passive_checks == 1 && passive_icon != "" %]<i class="[% passive_icon %] not-clickable" title="Active checks of the host have been disabled - only passive checks are being accepted"></i>[% END %]
+    [% ELSE %]
+      [% IF host.$host_active_checks_enabled == 0   %]<i class="ti ti-x text-red-500 not-clickable text-2xl" title="Checks of this host have been disabled"></i>[% END %]
+    [% END %]
+    [% END %]
+    [% IF host.$host_is_flapping                  %]<i class="ti ti-shuffle clickable" title='This host is flapping between states' onclick="return(host_comments_popup('[% escape_js(host.$host_name) %]', '[% peer_key %]'))"></i>[% END %]
+    [% IF host.$host_acknowledged                 %]<i class="ti ti-barrier-block clickable text-2xl text-amber-600" title="This host problem has been acknowledged" onclick="return(host_comments_popup('[% escape_js(host.$host_name) %]', '[% peer_key %]'))"></i>[% END %]
+    [% IF host_comment_count > 0                  %]<i class="ti ti-comment clickable" title="This host has [% host_comment_count %] comment associated with it" onclick="return(host_comments_popup('[% escape_js(host.$host_name) %]', '[% peer_key %]'))"></i>[% END %]
+    [% IF host.$host_scheduled_downtime_depth > 0 %]<i class="[% IF with_status %]has_downtime[% END %] ti ti-moon clickable" title="This host is currently in a period of scheduled downtime" onclick="return(host_downtimes_popup('[% escape_js(host.$host_name) %]', '[% peer_key %]'))"></i>[% END %]
+    [% IF host.$host_action_url_expanded          %][% action_url = proxifiy_url(c, host, get_action_url(c, 2, 1, host.$host_action_url_expanded , host, hostprefix)) %]<a href='[% l = set_target_link(action_url, c.config.action_url_target); l.0 %]' target='[% l.1 %]'><i class="ti ti-chart-line clickable text-2xl" title='Show Performance Chart'></i></a>[% END %]
+    [% IF host.$host_notes_url_expanded           %]<a href='[% l = set_target_link(host.$host_notes_url_expanded, c.config.notes_url_target); l.0 %]' target='[% l.1 %]'><i class="ti ti-arrow-up-right-from-square clickable" title='View Extra Host Notes'></i></a>[% END %]
+    [% IF host.$host_icon_image_expanded          %]<div><img class="not-clickable" src="[% logo_path_prefix %][% host.$host_icon_image_expanded %]" alt='[% host.$host_icon_image_alt %]' title='[% host.$host_icon_image_alt %]' border="0" width="20" height="20"></div>[% END %]
+    [% IF with_status && show_config_edit_buttons && backends_with_obj_config.$peer_key %]<a href="conf.cgi?edit&amp;host=[% host.$host_name | uri %]&amp;backend=[% peer_key %]"><i class="ti ti-pencil clickable" title='Configure This Host'></i></a>[% END %]
+    [% IF has_bp                                  %]<a href="bp.cgi?action=details&amp;bp=[% has_bp %]"><i class="ti ti-sitemap clickable" title='Show Business Process'></i></a>[% END %]
+    [% IF custom_vars.exists('THRUK_ACTION_MENU') %]
+    <div class="flex gap-px">
+      [% menu = get_action_menu(c, custom_vars.THRUK_ACTION_MENU) %]
+      [% IF menu.defined('err') && menu.err %]
+        <i class="ti ti-exclamationyellow" title="[% menu.err | html %]"></i>
+      [% ELSE %]
+        <script>
+        [% IF menu.defined('icons') %]action_images = [% json_encode(menu.icons) %];[% END %]
+        [% IF menu.type == "js" %]
+          [% IF !action_menus_inserted.defined(menu.data) %]
+          [% menu.data %]
+          [% action_menus_inserted.item(menu.data) = 1 %]
+          [% END %]
+          print_action_menu([% menu.function %], [% json_encode({"backend" => host.peer_key, "host" => host.$host_name}) %]);
+        [% ELSE %]
+          print_action_menu([% menu.data %], [% json_encode({"backend" => host.peer_key, "host" => host.$host_name}) %]);
+        [% END %]
+        </script>
+      [% END %]
+    </div>
+    [% END %]
+    [% IF with_status                             %]<div><a href="status.cgi?host=[% host.$host_name | uri %]" title='View Service Details For This Host'><i class="ti ti-menu-2"></i></a></div>[% END %]
+  </div>
+[% END %]
+
+[% BLOCK _status_service_attributes %]
+  [%
+    peer_key     = service.peer_key
+    passive_icon = 'ti ti-arrows-down-to-line'
+    custom_vars  = get_custom_vars(c, service)
+  %]
+
+  [% IF hide_passive_icon %]
+    [% passive_icon ='' %]
+  [% END %]
+
+  <div class="flex pl-1.5 gap-px">
+    [% IF service.is_executing > 0             %]<div class="flex overflow-hidden" id="[% paneprefix %]r[% loop.index %]_s_exec"><div class="spinner js-autohide not-clickable w-5 h-5" title="This service is currently executing its servicecheck"></div></div>[% ELSE %]<div class="flex" id="[% paneprefix %]r[% loop.index %]_s_exec"></div>[% END %]
+    [% IF service.notifications_enabled == 0   %]<i class="ti ti-bell-x not-clickable text-red-500 text-2xl" title="Notifications for this service have been disabled"></i>[% END %]
+    [% IF ! has_bp %]
+      [% IF strict_passive_mode %]
+        [% IF service.check_type == 0 && service.active_checks_enabled == 0 %]<i class="ti ti-x text-red-500 not-clickable text-2xl" title="Checks of this service have been disabled"></i>[% END %]
+        [% IF service.check_type == 1 && service.accept_passive_checks == 0 %]<i class="ti ti-x text-red-500 not-clickable text-2xl" title="Checks of this service have been disabled"></i>[% END %]
+        [% IF service.check_type == 1 && service.accept_passive_checks == 1 && passive_icon != "" %]<i class="[% passive_icon %] not-clickable" title='Active checks of the service have been disabled - only passive checks are being accepted'></i>[% END %]
+      [% ELSE %]
+        [% IF service.active_checks_enabled == 0 && service.accept_passive_checks == 0 %]<i class="ti ti-x text-red-500 not-clickable text-2xl" title="Checks of this service have been disabled"></i>
+        [% ELSIF service.active_checks_enabled == 0   %][% IF passive_icon != "" %]<i class="[% passive_icon %] not-clickable" title='Active checks of the service have been disabled - only passive checks are being accepted'></i>[% END %][% END %]
+      [% END %]
+    [% END %]
+    [% IF service.is_flapping                  %]<i class="ti ti-shuffle clickable" title='This service is flapping between states' onclick="return(service_comments_popup('[% escape_js(service.host_name) %]', '[% escape_js(service.description) %]', '[% peer_key %]'))"></i>[% END %]
+    [% IF service.acknowledged                 %]<i class="ti ti-barrier-block clickable text-2xl text-amber-600" title="This service problem has been acknowledged" onclick="return(service_comments_popup('[% escape_js(service.host_name) %]', '[% escape_js(service.description) %]', '[% peer_key %]'))"></i>[% END %]
+    [% IF service_comment_count > 0            %]<i class="ti ti-comment clickable" title="This service has [% service_comment_count %] comment associated with it" onclick="return(service_comments_popup('[% escape_js(service.host_name) %]', '[% escape_js(service.description) %]', '[% peer_key %]'))"></i>[% END %]
+    [% IF service.scheduled_downtime_depth > 0 %]<i class="ti ti-moon clickable has_downtime" title="This service is currently in a period of scheduled downtime" onclick="return(service_downtimes_popup('[% escape_js(service.host_name) %]', '[% escape_js(service.description) %]', '[% peer_key %]'))"></i>[% END %]
+    [% IF service.action_url_expanded          %][% action_url = proxifiy_url(c, service, get_action_url(c, 2, 1, service.action_url_expanded, service)) %]<a href='[% l = set_target_link(action_url, c.config.action_url_target); l.0 %]' target='[% l.1 %]'><i class="ti ti-chart-line clickable text-2xl" title='Show Performance Chart'></i></a>[% END %]
+    [% IF service.notes_url_expanded           %]<a href='[% l = set_target_link(service.notes_url_expanded, c.config.notes_url_target); l.0 %]' target='[% l.1 %]'><i class="ti ti-arrow-up-right-from-square clickable" title='View Extra Service Notes'></i></a>[% END %]
+    [% IF service.icon_image_expanded          %]<div class="flex"><img class="not-clickable" src='[% logo_path_prefix %][% service.icon_image_expanded %]' border="0" width="20" height="20" alt="[% service.icon_image_alt | html %]" title="[% service.icon_image_alt | html %]"></div>[% END %]
+    [% IF show_config_edit_buttons  && backends_with_obj_config.$peer_key %]<a href="conf.cgi?edit&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% peer_key %]"><i class="ti ti-pencil clickable" title='Configure This Service'></i></a>[% END %]
+    [% IF custom_vars.exists('THRUK_ACTION_MENU') %]
+    <div class="flex gap-px">
+        [% menu = get_action_menu(c, custom_vars.THRUK_ACTION_MENU) %]
+        [% IF menu.defined('err') && menu.err %]
+          <i class="ti ti-exclamationyellow" title="[% menu.err | html %]"></i>
+        [% ELSE %]
+          <script>
+          [% IF menu.defined('icons') %]action_images = [% json_encode(menu.icons) %];[% END %]
+          [% IF menu.type == "js" %]
+            [% IF !action_menus_inserted.defined(menu.data) %]
+            [% menu.data %]
+            [% action_menus_inserted.item(menu.data) = 1 %]
+            [% END %]
+            print_action_menu([% menu.function %], [% json_encode({"backend" => service.peer_key, "host" => service.host_name, "service" => service.description}) %]);
+          [% ELSE %]
+            print_action_menu([% menu.data %], [% json_encode({"backend" => service.peer_key, "host" => service.host_name, "service" => service.description}) %]);
+          [% END %]
+          </script>
+        [% END %]
+    </div>
+    [% END %]
+  </div>
+[% END %]
+
+
+
+
+[% BLOCK _perfdata_table %]
+  [% IF perf_bar_mode != 'off' %]
+    <div
+      class="js-perf-bar w-[75px] h-5 relative"
+      data-add-link="[% add_link | html %]"
+      data-state="[% state %]"
+      data-perfdata="[% escape_html(perfdata) %]"
+      data-plugin-output="[% escape_html(plugin_output) %]"
+      data-check-command="[% escape_html(check_command) %]"
+      data-pnp-url="[% IF pnp_url; pnp_url | html %]/graph?host=[% hst | html %]&srv=[% svc | html; END %]"
+      data-is-host=[% IF svc == '_HOST_' %]true[% ELSE %]false[% END %]
+    ></div>
+  [% END %]
+[% END %]
+
+
+
+[% BLOCK _logs_line %]
+[% SET message = l.message.substr(13) %]
+[% SET has_type = 1 %]
+[% SET type = 'INFO' %]
+[% SET info = "" %]
+[% IF !l.defined("type"); l.type = ""; END %]
+
+[%    IF l.type == 'CURRENT SERVICE STATE'        %][% SET pic = "ti ti-flag"   desc = "Informational Message" %]
+[% ELSIF l.type == 'CURRENT HOST STATE'           %][% SET pic = "ti ti-flag"   desc = "Informational Message" %]
+[% ELSIF l.type == 'SERVICE NOTIFICATION'         %][% SET pic = "ti ti-bell"   desc = "Service Notification" %]
+[% ELSIF l.type == 'HOST NOTIFICATION'            %][% SET pic = "ti ti-bell"   desc = "Host Notification" %]
+[% ELSIF l.type == 'SERVICE ALERT'                %]
+                            [%    IF l.state == 0 %][% SET pic = "ti ti-checkgreen"        desc = "Service Ok" %]
+                            [% ELSIF l.state == 1 %][% SET pic = "ti ti-exclamationyellow" desc = "Service Warning" %]
+                            [% ELSIF l.state == 2 %][% SET pic = "ti ti-exclamationred"    desc = "Service Critical" %]
+                            [% ELSIF l.state == 3 %][% SET pic = "ti ti-questionorange"    desc = "Service Unknown" %]
+                            [% END %]
+[% ELSIF l.type == 'HOST ALERT'                   %]
+                            [%    IF l.state == 0 %][% SET pic = "ti ti-checkgreen"      desc = "Host Up" %]
+                            [% ELSIF l.state == 1 %][% SET pic = "ti ti-exclamationred"  desc = "Host Down" %]
+                            [% ELSIF l.state == 2 %][% SET pic = "ti ti-exclamationred"  desc = "Host Unreachable" %]
+                            [% END %]
+[% ELSIF l.type == 'SERVICE EVENT HANDLER'        %][% SET pic = "ti ti-rocket"              desc = "Service Event Handler" %]
+[% ELSIF l.type == 'HOST EVENT HANDLER'           %][% SET pic = "ti ti-rocket"              desc = "Host Event Handler" %]
+[% ELSIF l.type == 'EXTERNAL COMMAND'             %][% SET pic = "ti ti-hand-point-right"    desc = "External Command" %]
+[% ELSIF l.type == 'PASSIVE SERVICE CHECK'        %][% SET pic = "ti ti-arrows-down-to-line" desc = "Passive Service Check" %]
+[% ELSIF l.type == 'PASSIVE HOST CHECK'           %][% SET pic = "ti ti-arrows-down-to-line" desc = "Passive Host Check" %]
+
+[% ELSIF l.type == 'SERVICE FLAPPING ALERT'       %]
+          [%    IF l.message.match(';STARTED;')   %][% SET pic = "ti ti-shuffle"     desc = "Service started flapping" %]
+          [% ELSIF l.message.match(';STOPPED;')   %][% SET pic = "ti ti-shuffle"     desc = "Service stopped flapping" %]
+          [% ELSIF l.message.match(';DISABLED;')  %][% SET pic = "ti ti-shuffle"     desc = "Service flap detection disabled" %]
+          [% END %]
+[% ELSIF l.type == 'HOST FLAPPING ALERT'          %]
+          [%    IF l.message.match(';STARTED;')   %][% SET pic = "ti ti-shuffle"     desc = "Host started flapping" %]
+          [% ELSIF l.message.match(';STOPPED;')   %][% SET pic = "ti ti-shuffle"     desc = "Host stopped flapping" %]
+          [% ELSIF l.message.match(';DISABLED;')  %][% SET pic = "ti ti-shuffle"     desc = "Host flap detection disabled" %]
+          [% END %]
+[% ELSIF l.type == 'SERVICE DOWNTIME ALERT'       %]
+         [%    IF l.message.match(';STARTED;')    %][% SET pic = "ti ti-moon"        desc = "Service entered a period of scheduled downtime" %][% SET info = "STARTED" %]
+         [% ELSIF l.message.match(';STOPPED;')    %][% SET pic = "ti ti-moon"        desc = "Service exited a period of scheduled downtime" %][% SET info = "STOPPED" %]
+         [% ELSIF l.message.match(';CANCELLED;')  %][% SET pic = "ti ti-moon"        desc = "Service scheduled downtime has been cancelled" %][% SET info = "CANCELLED" %]
+         [% END %]
+[% ELSIF l.type == 'HOST DOWNTIME ALERT'          %]
+         [%    IF l.message.match(';STARTED;')    %][% SET pic = "ti ti-moon"        desc = "Host entered a period of scheduled downtime" %][% SET info = "STARTED" %]
+         [% ELSIF l.message.match(';STOPPED;')    %][% SET pic = "ti ti-moon"        desc = "Host exited a period of scheduled downtime" %][% SET info = "STOPPED" %]
+         [% ELSIF l.message.match(';CANCELLED;')  %][% SET pic = "ti ti-moon"        desc = "Host scheduled downtime has been cancelled" %][% SET info = "CANCELLED" %]
+         [% END %]
+[% ELSIF l.type == 'LOG ROTATION'                 %][% SET pic = "ti ti-rotate"      desc = "Log Rotation" %]
+[% ELSIF l.type == 'INITIAL HOST STATE'           %][% SET pic = "ti ti-flag"        desc = "Initial Host State" %]
+[% ELSIF l.type == 'INITIAL SERVICE STATE'        %][% SET pic = "ti ti-flag"        desc = "Initial Service State" %]
+[% ELSIF l.type == 'TIMEPERIOD TRANSITION'        %][% SET pic = "ti ti-clock"       desc = "Timeperiods Transition" %]
+[% ELSIF l.type.match('TIMEPERIOD TRANSITION')    %][% SET pic = "ti ti-info-circle"        desc = "Timeperiod Transition" %][% SET has_type = 0 %][% SET type = 'TIMEPERIOD TRANSITION' %]
+[% ELSIF l.type.match('restarting\.\.\.')         %][% SET pic = "ti ti-arrows-spin" desc = "Program Restart" %][% SET has_type = 0 %][% SET type = 'RESTART' %]
+[% ELSIF l.type.match('starting\.\.\.')           %][% SET pic = "ti ti-play"        desc = "Program Start" %][% SET has_type = 0 %][% SET type = 'START' %]
+[% ELSIF l.type.match('shutting down\.\.\.')      %][% SET pic = "ti ti-power text-red-500"   desc = "Program End" %][% SET has_type = 0 %][% SET type = 'SHUTDOWN' %]
+[% ELSIF l.type.match('Bailing\ out')             %][% SET pic = "ti ti-power text-red-500"   desc = "Program End" %][% SET has_type = 0 %][% SET type = 'SHUTDOWN' %]
+[% ELSE                                           %][% SET pic = "ti ti-info-circle"        desc = "Informational Message" %][% SET has_type = 0 %]
+[% END %]
+[% END %]
+
+
+[% BLOCK small_button %]
+  [% UNLESS btn.defined('skipform') && btn.skipform %]
+  <form [% IF !btn.form.defined("method") %]method="POST"[% END %][% FOREACH k = btn.form.keys %] [% k | html %]="[% btn.form.$k | html %]"[% END %]>
+  [% END %]
+  [% IF btn.defined("data") %]
+  [% FOREACH k = btn.data.keys %]
+  <input type="hidden" name="[% k | html %]" value="[% btn.data.$k | html %]">
+  [% END %]
+  [% END %]
+  <button[% FOREACH k = btn.button.keys; IF k == "text" || k == "html"; NEXT; END %] [% k | html %]="[% btn.button.$k | html %]"[% END %]>[% IF btn.button.defined('text'); btn.button.text | html; END %][% IF btn.button.defined('html'); btn.button.html; END %]</button>
+  [% UNLESS btn.defined('skipform') && btn.skipform %]</form>[% END %]
+[% END %]

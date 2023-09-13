@@ -1,17 +1,17 @@
 ﻿[% USE date %]
 [% BLOCK command_enabled %]
 [% 
-  status = 'check'
+  status = 'circle-check text-xl'
   statuscolor = 'green-600'
-  btn_hov = 'hover-red'
+  btn_hov = 'hover-red w-full'
   btn_text = 'Disable'
 %]
 [% END %]
 [% BLOCK command_disabled %]
 [% 
-  status = 'times'
+  status = 'circle-x text-xl'
   statuscolor = 'red-600'
-  btn_hov = 'hover-green'
+  btn_hov = 'hover-green w-full'
   btn_text = 'Enable'
 %]
 [% END %]
@@ -26,7 +26,7 @@
       [% UNLESS command_disabled(c, '7') %]
         <div class="flex flex-nowrap">
           <a class="flex js-modal-command-link" href="cmd.cgi?cmd_typ=7&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
-            <i class="las la-calendar la-lg"></i>&nbsp;Schedule next check
+            <i class="ti ti-calendar"></i>&nbsp;Schedule next check
           </a>
           <form class="flex" action='cmd.cgi' method='POST'>
             <input type='hidden' name='cmd_typ' value='7'>
@@ -38,7 +38,7 @@
             <input type='hidden' name='backend' value="[% service.peer_key %]">
             <input type='hidden' name='referer' value="[% short_uri(c, {referer => 'undef'}) %]">
             <input type="hidden" name="CSRFtoken" value="[% get_user_token(c) %]">
-            <a class="ml-2 [% INCLUDE button_small %] hover-green text-sm" href="cmd.cgi?cmd_typ=7&amp;start_time=[% date.now %]&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;force_check=1&amp;backend=[% service.peer_key %]&amp;referer=[% as_url_arg(short_uri(c, {referer => 'undef'})) %]" onClick="setBtnSpinner(this); jQuery(this).closest('FORM').submit(); return false;">Now</a>            
+            <a class="ml-2 btn btn-sm hover-green text-sm" href="cmd.cgi?cmd_typ=7&amp;start_time=[% date.now %]&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;force_check=1&amp;backend=[% service.peer_key %]&amp;referer=[% as_url_arg(short_uri(c, {referer => 'undef'})) %]" onClick="setBtnSpinner(this); jQuery(this).closest('FORM').submit(); return false;">Now</a>            
           </form>
         </div>
       [% END %]
@@ -46,7 +46,7 @@
         [% UNLESS command_disabled(c, '30') %]
           <div>
             <a class="js-modal-command-link" href="cmd.cgi?cmd_typ=30&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
-              <i class="las la-upload la-lg"></i>&nbsp;Submit passive check result
+              <i class="ti ti-upload"></i>&nbsp;Submit passive check result
             </a>
           </div>
         [% END %]
@@ -56,11 +56,11 @@
           <div>
             [% IF service.acknowledged %]
             <a class="js-modal-command-link" href="cmd.cgi?cmd_typ=52&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
-              <i class="las la-file-times hover-red-text la-lg"></i>&nbsp;Remove problem acknowledgement
+              <i class="ti ti-eraser hover-red-text"></i>&nbsp;Remove acknowledgement
             </a>
             [% ELSE %]
             <a class="js-modal-command-link" href="cmd.cgi?cmd_typ=34&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
-              <i class="las la-comment la-lg"></i>&nbsp;Acknowledge this problem
+              <i class="ti ti-comment"></i>&nbsp;Acknowledge this problem
             </a>
             [% END %]
           </div>
@@ -70,7 +70,7 @@
         [% UNLESS command_disabled(c, '9') %]
           <div>
             <a class="js-modal-command-link" href="cmd.cgi?cmd_typ=9&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
-              <i class="las la-clock la-lg"></i>&nbsp;Delay next notification
+              <i class="ti ti-clock"></i>&nbsp;Delay next notification
             </a>
           </div>
         [% END %]
@@ -78,14 +78,14 @@
       [% UNLESS command_disabled(c, '160') %]
         <div>
           <a class="js-modal-command-link" href="cmd.cgi?cmd_typ=160&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
-            <i class="las la-comment-dots la-lg"></i>&nbsp;Send custom notification
+            <i class="ti ti-message-dots"></i>&nbsp;Send custom notification
           </a>
         </div>
       [% END %]
       [% UNLESS command_disabled(c, '56') %]
         <div>
           <a class="js-modal-command-link" href="cmd.cgi?cmd_typ=56&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
-            <i class="las la-moon la-lg"></i>&nbsp;Schedule downtime
+            <i class="ti ti-moon"></i>&nbsp;Schedule downtime
           </a>
         </div>
       [% END %]
@@ -93,7 +93,7 @@
         [% UNLESS command_disabled(c, '155') %]
           <div>
             <a class="js-modal-command-link" href="cmd.cgi?cmd_typ=155&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
-              <i class="las la-undo la-lg"></i>&nbsp;Reset Modified Attributes
+              <i class="ti ti-file-off"></i>&nbsp;Reset Modified Attributes
             </a>
           </div>
         [% END %]
@@ -118,10 +118,10 @@
             [% PROCESS command_disabled %]
           [% END %]
           <td>
-            <i class="las la-[% status %]-circle text-[% statuscolor %] la-lg"></i>&nbsp;Active checks
+            <i class="ti ti-[% status %] text-[% statuscolor %]"></i>&nbsp;Active checks
           </td>
           <td class="w-1/4">
-            <a class="js-modal-command-link [% INCLUDE button_small %] [% btn_hov %] block" href="cmd.cgi?cmd_typ=[% cmd_type %]&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
+            <a class="js-modal-command-link btn btn-sm [% btn_hov %]" href="cmd.cgi?cmd_typ=[% cmd_type %]&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
             [% btn_text %]
           </a>
           </td>
@@ -137,10 +137,10 @@
             [% PROCESS command_disabled %]
           [% END %]          
 		  <td>
-            <i class="las la-[% status %]-circle text-[% statuscolor %] la-lg"></i>&nbsp;Passive checks
+            <i class="ti ti-[% status %] text-[% statuscolor %]"></i>&nbsp;Passive checks
           </td>
           <td class="w-1/4">
-            <a class="js-modal-command-link [% INCLUDE button_small %] [% btn_hov %] block" href="cmd.cgi?cmd_typ=[% cmd_type %]&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
+            <a class="js-modal-command-link btn btn-sm [% btn_hov %]" href="cmd.cgi?cmd_typ=[% cmd_type %]&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
             [% btn_text %]
           </a>
           </td>
@@ -156,10 +156,10 @@
             [% PROCESS command_disabled %]
 		  [% END %]
           <td>
-            <i class="las la-[% status %]-circle text-[% statuscolor %] la-lg"></i>&nbsp;Obsessing
+            <i class="ti ti-[% status %] text-[% statuscolor %]"></i>&nbsp;Obsessing
           </td>
           <td class="w-1/4">
-            <a class="js-modal-command-link [% INCLUDE button_small %] [% btn_hov %] block" href="cmd.cgi?cmd_typ=[% cmd_type %]&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
+            <a class="js-modal-command-link btn btn-sm [% btn_hov %]" href="cmd.cgi?cmd_typ=[% cmd_type %]&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
             [% btn_text %]
           </a>
           </td>
@@ -175,10 +175,10 @@
             [% PROCESS command_disabled %]
 		  [% END %]
           <td>
-            <i class="las la-[% status %]-circle text-[% statuscolor %] la-lg"></i>&nbsp;Notifications
+            <i class="ti ti-[% status %] text-[% statuscolor %]"></i>&nbsp;Notifications
           </td>
           <td class="w-1/4">
-            <a class="js-modal-command-link [% INCLUDE button_small %] [% btn_hov %] block" href="cmd.cgi?cmd_typ=[% cmd_type %]&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
+            <a class="js-modal-command-link btn btn-sm [% btn_hov %]" href="cmd.cgi?cmd_typ=[% cmd_type %]&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
             [% btn_text %]
           </a>
           </td>
@@ -194,10 +194,10 @@
             [% PROCESS command_disabled %]
 		  [% END %]
           <td>
-            <i class="las la-[% status %]-circle text-[% statuscolor %] la-lg"></i>&nbsp;Event Handler
+            <i class="ti ti-[% status %] text-[% statuscolor %]"></i>&nbsp;Event Handler
           </td>
           <td class="w-1/4">
-            <a class="js-modal-command-link [% INCLUDE button_small %] [% btn_hov %] block" href="cmd.cgi?cmd_typ=[% cmd_type %]&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
+            <a class="js-modal-command-link btn btn-sm [% btn_hov %]" href="cmd.cgi?cmd_typ=[% cmd_type %]&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
             [% btn_text %]
           </a>
           </td>
@@ -210,10 +210,10 @@
             [% PROCESS command_disabled %]
           <tr>
 		  <td>
-            <i class="las la-bolt la-lg"></i>&nbsp;Launch event handler
+            <i class="ti ti-bolt"></i>&nbsp;Launch event handler
           </td>
           <td class="w-1/4">
-            <a class="js-modal-command-link [% INCLUDE button_small %] [% btn_hov %] block" href="cmd.cgi?cmd_typ=[% cmd_type %]&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
+            <a class="js-modal-command-link btn btn-sm [% btn_hov %]" href="cmd.cgi?cmd_typ=[% cmd_type %]&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
             [% btn_text %]
           </a>
           </td>
@@ -230,10 +230,10 @@
         [% PROCESS command_disabled %]
 	  [% END %]
       <td>
-          <i class="las la-[% status %]-circle text-[% statuscolor %] la-lg"></i>&nbsp;Flap Detection
+          <i class="ti ti-[% status %] text-[% statuscolor %]"></i>&nbsp;Flap Detection
       </td>
 	  <td class="w-1/4">
-		<a class="js-modal-command-link [% INCLUDE button_small %] [% btn_hov %] block" href="cmd.cgi?cmd_typ=[% cmd_type %]&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
+		<a class="js-modal-command-link btn btn-sm [% btn_hov %]" href="cmd.cgi?cmd_typ=[% cmd_type %]&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
             [% btn_text %]
 		</a>
       </td>

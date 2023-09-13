@@ -1,0 +1,41 @@
+﻿<button class="plugin_wzd_button" id="[% id %]_btn"><i class="ti ti-bulb mx-0"></i></button>
+<input type="hidden" id="[% id %]_orig_inp" value="[% inp | html %]">
+
+<div id="[% id %]_dialog" style="display: none" class="card w-[700px]">
+  <div class="head justify-between">
+    <h3>Command Line Wizzard</h3>
+    <button class="iconOnly medium" onClick="closeModalWindow(); return false;"><i class="ti ti-square-x"></i></button>
+  </div>
+  <table class="body">
+    <tr>
+      <th>Choose Plugin</th>
+      <td>
+        <input class="w-full" type="text" id="[% id %]_inp_plugin" value="" onchange="close_accordion(); update_command_preview('[% id %]');" onclick="ajax_search.init(this, 'plugin', {url:'conf.cgi?action=json&amp;type=plugin', striped:false, autosubmit:false})" style="width:650px" onkeyup="update_command_preview('[% id %]')">
+      </td>
+    </tr>
+    <tr>
+      <th>Plugin Arguments</th>
+      <td>
+        <textarea id="[% id %]_inp_args" class="w-full h-[150px] " onclick="ajax_search.init(this, 'full', {url:'conf.cgi?action=json&amp;type=macro&amp;withargs=1&amp;withuser=1&amp;plugin=', autosubmit:false, list:'[ =\'&quot;]', hideempty:true, append_value_of:'[% id %]_inp_plugin'})" onkeyup="update_command_preview('[% id %]')" onchange="update_command_preview('[% id %]')"></textarea>
+      </td>
+    </tr>
+  </table>
+  <div id="[% id %]_help_accordion" class="w-full accordion my-1">
+    [% IF conf_config.show_plugin_syntax_helper %]
+    <button class="w-full" onclick="toggleAccordion(this, function() { check_plugin_help('[% id %]_'); }); return false;">Plugin Help<i class="ti ti-plus ml-auto"></i></button>
+    <div class="w-full" style="max-width:1000px;">
+      <span id="[% id %]_plugin_help"></span>
+      <div class="spinner mx-auto" id="[% id %]_wait_help" title="please wait till the plugin help is loaded"></div>
+    </div>
+    [% END %]
+
+    <button class="w-full" id="[% id %]_help_accordion_preview" onclick="toggleAccordion(this); return false;">Input Preview<i class="ti ti-plus ml-auto"></i></button>
+    <div class="w-full" style="max-width:1000px;">
+      <span id="[% id %]_command_line"></span>
+      <div class="spinner mx-auto" id="[% id %]_wait" title="please wait till the command line is loaded"></div>
+    </div>
+  </div>
+  <div class="footer justify-center">
+    <button id="[% id %]_accept" class="w-40 green">accept</button>
+  </div>
+</div>

@@ -2,7 +2,7 @@
   <div>
     <table class="striped">
     <thead class="text-bold">
-      <th class="w-24 p-2"><span class="las la-sliders-h"></span>&nbsp;Features</th>
+      <th class="w-24 p-2"><span class="ti ti-adjustments"></span>&nbsp;Features</th>
       <th class="text-center">Status</th>
       <th class="text-center">Services</th>
       <th class="text-center">Hosts</th>
@@ -20,10 +20,10 @@
             [% icon = "question" %]
           [% ELSE %]
             [% color = "disabled" %]
-            [% icon = "times" %]
+            [% icon = "x" %]
           [% END %]
           <a class="text-[% color %]" href='extinfo.cgi?type=0' title='[% color %]'>
-            <span class="las la-[% icon %]"></span>
+            <span class="ti ti-[% icon %]"></span>
           </a>
         </td>
       
@@ -36,24 +36,21 @@
           [% IF empty || service_stats.active_checks_disabled_active + service_stats.active_checks_disabled_passive == 0 %]          
           <span class="text-enabled">All Enabled</span>
           [% ELSE %]
-            [% svc_css = 'text-disabled' %]
-            [% svc_text = '' %]
             [% IF strict_passive_mode %]
               [% IF service_stats.active_checks_disabled_active > 0 %]
                 <a class="text-disabled" href='[% uri_with(c, { _page => "status.cgi", style => "detail", serviceprops => 131088 }) %]'>
-                  [% svc_text = $service_stats.active_checks_disabled_active + 'Disabled' %]
+                  [% service_stats.active_checks_disabled_active %] Disabled
                 </a>
               [% END %]
               
               [% IF service_stats.active_checks_disabled_passive > 0 %]
                 <a class="text-unknown" href='[% uri_with(c, { _page => "status.cgi", style => "detail", serviceprops => 65552 }) %]'>
-                  <span class="font-bold" style="color: var(--color-slate-500);">Services</span> [% service_stats.active_checks_disabled_passive %] Passive
+                  [% service_stats.active_checks_disabled_passive %] Passive
                 </a>
               [% END %]              
             [% ELSE %]
               <a class="text-disabled" href='[% uri_with(c, { _page => "status.cgi", style => "detail", serviceprops => 16 }) %]'>
-                <span class="font-bold" style="color: var(--color-slate-500);">Services
-                </span> [% service_stats.active_checks_disabled_active + service_stats.active_checks_disabled_passive %] Disabled
+                [% service_stats.active_checks_disabled_active + service_stats.active_checks_disabled_passive %] Disabled
               </a>
             [% END %]            
           [% END %]
@@ -93,10 +90,10 @@
           [% icon = "question" %]
         [% ELSE %]
           [% color = "disabled" %]
-          [% icon = "times" %]
+          [% icon = "x" %]
         [% END %]
         <a class="text-[% color %]" href='extinfo.cgi?type=0' title='[% color %]'>
-          <span class="las la-[% icon %]"></span>
+          <span class="ti ti-[% icon %]"></span>
         </a>
         </td>
         [% IF pi.keys.size > 0 && pi.accept_passive_service_checks == 0 %]
@@ -135,10 +132,10 @@
             [% icon = "question" %]
         [% ELSE                                                 %]
           [% color = "disabled" %]
-          [% icon = "times" %]
+          [% icon = "x" %]
         [% END %]
         <a class="text-[% color %]" href='extinfo.cgi?type=0' title='[% color %]'>
-          <span class="las la-[% icon %]"></span>
+          <span class="ti ti-[% icon %]"></span>
         </a>
         </td>
         [% IF pi.keys.size > 0 && pi.enable_notifications == 0 %]
@@ -179,11 +176,11 @@
           [% icon = "question" %]
         [% ELSE                                                  %]
           [% color = "disabled" %]
-          [% icon = "times" %]
+          [% icon = "x" %]
         [% END %]
       </a>
         <a class="text-[% color %]" href='extinfo.cgi?type=0' title='[% color %]'>
-          <span class="las la-[% icon %]"></span>
+          <span class="ti ti-[% icon %]"></span>
         </a>
         </td>
         [% IF pi.keys.size > 0 && pi.enable_event_handlers == 0 %]
@@ -223,15 +220,15 @@
           [% icon = "question" %]
         [% ELSE                                                  %]
           [% color = "disabled" %]
-          [% icon = "times" %]
+          [% icon = "x" %]
         [% END %]
         <a class="text-[% color %]" href='extinfo.cgi?type=0' title='[% color %]'>
-          <span class="las la-[% icon %]"></span>
+          <span class="ti ti-[% icon %]"></span>
         </a>
         </td>
         
         [% IF pi.keys.size > 0 && pi.enable_flap_detection == 0 %]          
-          <td colspan='2' class='pl-2'>
+          <td colspan='2' class='pl-1'>
             <a class="text-disabled" href='extinfo.cgi?type=0'>Feature disabled</a>
           </td>
         [% ELSE %]

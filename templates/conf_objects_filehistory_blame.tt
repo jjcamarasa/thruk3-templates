@@ -1,0 +1,46 @@
+﻿[% USE date %]
+[% WRAPPER _conf_objects_frame.tt %]
+
+  <div class="card flexcol gap-1 w-[1000px]">
+    <div class="head flexrow justify-between">
+      <div class="w-20 text-right">
+        <a class="button header-button" href="conf.cgi?sub=objects&amp;data.id=[% object.get_id() %]">
+          <i class="uil uil-angle-double-left mr-1"></i>
+          back
+        </a>
+      </div>
+      <h3 class="text-center">
+        <a class="link flexcol gap-0" href="conf.cgi?sub=objects&amp;data.id=[% object.get_id() %]">
+          <span class="block">[%+ object.get_long_name('&nbsp;') %]</span>
+          <span class="block text-xs">[% object.file.display %] line [% object.line %]</span>
+        </a>
+      </h3>
+      <div class="w-20 text-right"></div>
+    </div>
+    <div class="w-full overflow-x-auto">
+      <table class="body cellspacing-x">
+        <tr>
+          <th>Commit</th>
+          <th>Author</th>
+          <th>Date</th>
+          <th>Summary</th>
+          <th>Line</th>
+          <th></th>
+        </tr>
+        [% FOREACH l = blame.lines %]
+          [% hash = l.hash %]
+          [% commit = blame.commits.$hash %]
+          <tr>
+            <td><a class="link" href="conf.cgi?sub=objects&action=history&id=[% hash | html %]">[% hash.substr(0, 6) %]</a></td>
+            <td><a class="link" href="mailto:[% commit.item('author-mail').replace('<', '').replace('>', '') %]">[% commit.author | html %]</a></td>
+            <td style="text-align: right;">[% date_format(c, commit.item('author-time')) %]</td>
+            <td title="[% commit.summary | html %]"><a class="link" href="conf.cgi?sub=objects&action=history&id=[% hash | html %]">[% commit.summary.substr(0, 30) | html %]</a></td>
+            <td>[% l.sourceline %]</td>
+            <td><pre style="margin: 0; padding: 0;">[%- l.line | html -%]</pre></td>
+          </tr>
+        [% END %]
+      </table>
+    </div>
+  </div>
+
+[% END %]

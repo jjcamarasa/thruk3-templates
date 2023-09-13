@@ -1,0 +1,604 @@
+﻿[% USE date %]
+[% PROCESS _header.tt %]
+[% PROCESS _message.tt %]
+
+<div class="flexrow justify-between">
+  [% PROCESS _infobox.tt %]
+  <div class="card min-w-[150px] place-items-center grid grid-cols-1">
+    <h3 class="text-center w-full">Switch Theme</h3>
+    <div class="flex">
+      <select multiple onchange="switchTheme(this)" size="[% c.config.themes.size %]" style="scrollbar-width: none;">
+        [% FOREACH t = c.config.themes %]
+          <option value="[% t | html %]"[% IF t == theme %] selected[% END %]>[% t | html %]</option>
+        [% END %]
+      </select>
+    </div>
+  </div>
+</div>
+
+<div class="flexrow mt-5">
+  <div class="card overflow-hidden">
+    <div class="head justify-between">
+      <h3>Icons</h3>
+      [% PROCESS _table_search_field.tt ids=["iconsBox"] %]
+    </div>
+    <div class="actionbox" id="iconsBox">
+      <!-- icons are updated automatically by running ./script/theme-icons-update.pl (do not change manually) -->
+      <div><a class="flex" href="#"><i class="ti ti-align-center"></i>ti ti-align-center</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-angle-right"></i>ti ti-angle-right</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-arrow-left"></i>ti ti-arrow-left</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-arrow-right"></i>ti ti-arrow-right</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-arrow-right-to-bracket"></i>ti ti-arrow-right-to-bracket</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-arrow-rotate-left"></i>ti ti-arrow-rotate-left</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-arrow-turn-down"></i>ti ti-arrow-turn-down</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-arrow-up-right-from-square"></i>ti ti-arrow-up-right-from-square</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-arrows-rotate"></i>ti ti-arrows-rotate</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-arrows-turn-to-dots"></i>ti ti-arrows-turn-to-dots</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-backward-step"></i>ti ti-backward-step</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-menu-2"></i>ti ti-menu-2</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-bell"></i>ti ti-bell</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-bell-x"></i>ti ti-bell-x</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-bolt"></i>ti ti-bolt</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-broom"></i>ti ti-broom</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-bug"></i>ti ti-bug</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-business-time"></i>ti ti-business-time</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-chart-line"></i>ti ti-chart-line</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-chart-simple"></i>ti ti-chart-simple</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-check"></i>ti ti-check</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-checkgreen"></i>ti ti-checkgreen</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-circle-pause"></i>ti ti-circle-pause</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-circle-play"></i>ti ti-circle-play</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-circle-question"></i>ti ti-circle-question</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-circle-xmark"></i>ti ti-circle-xmark</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-clipboard"></i>ti ti-clipboard</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-clipboard-question"></i>ti ti-clipboard-question</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-clock"></i>ti ti-clock</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-clock-rotate-left"></i>ti ti-clock-rotate-left</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-clone"></i>ti ti-clone</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-code"></i>ti ti-code</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-code-commit"></i>ti ti-code-commit</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-comment"></i>ti ti-comment</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-copy"></i>ti ti-copy</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-ellipsis-vertical"></i>ti ti-ellipsis-vertical</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-envelope"></i>ti ti-envelope</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-exclamationred"></i>ti ti-exclamationred</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-exclamationyellow"></i>ti ti-exclamationyellow</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-expand"></i>ti ti-expand</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-eye"></i>ti ti-eye</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-file-circle-check"></i>ti ti-file-circle-check</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-file-circle-plus"></i>ti ti-file-circle-plus</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-file-code"></i>ti ti-file-code</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-folder-open"></i>ti ti-folder-open</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-folder-tree"></i>ti ti-folder-tree</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-house"></i>ti ti-house</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-link"></i>ti ti-link</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-lock"></i>ti ti-lock</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-magnifying-glass-arrow-right"></i>ti ti-magnifying-glass-arrow-right</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-magnifying-glass-minus"></i>ti ti-magnifying-glass-minus</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-magnifying-glass-plus"></i>ti ti-magnifying-glass-plus</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-maximize"></i>ti ti-maximize</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-moon"></i>ti ti-moon</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-pencil"></i>ti ti-pencil</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-barrier-block"></i>ti ti-barrier-block</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-plus"></i>ti ti-plus</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-power text-red-500red"></i>ti ti-power text-red-500red</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-question round"></i>ti ti-question round</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-rectangle-list"></i>ti ti-rectangle-list</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-reply-all"></i>ti ti-reply-all</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-right-from-bracket"></i>ti ti-right-from-bracket</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-rocket"></i>ti ti-rocket</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-device-floppy"></i>ti ti-device-floppy</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-shuffle"></i>ti ti-shuffle</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-sitemap"></i>ti ti-sitemap</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-square-caret-left"></i>ti ti-square-caret-left</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-square-minus false;"></i>ti ti-square-minus false;</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-tag"></i>ti ti-tag</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-thumbtack"></i>ti ti-thumbtack</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-trash"></i>ti ti-trash</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-truck"></i>ti ti-truck</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-up-right-and-down-left-from-center"></i>ti ti-up-right-and-down-left-from-center</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-user-pen"></i>ti ti-user-pen</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-volume-high"></i>ti ti-volume-high</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-wand-magic-sparkles"></i>ti ti-wand-magic-sparkles</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-tool"></i>ti ti-tool</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-square-x-filled text-red-600"></i>ti ti-x</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-x text-red-600"></i>ti ti-x text-red-600</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-arrow-badge-left"></i>ti ti-arrow-badge-left</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-chevrons-right"></i>ti ti-chevrons-right</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-arrow-badge-up"></i>ti ti-arrow-badge-up</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-chevron-down"></i>ti ti-chevron-down</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-angle-left"></i>ti ti-angle-left</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-angle-right"></i>ti ti-angle-right</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-angle-up"></i>ti ti-angle-up</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-arrow-from-top"></i>ti ti-arrow-from-top</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-arrows-shrink-v"></i>ti ti-arrows-shrink-v</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-bolt"></i>ti ti-bolt</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-bookmark"></i>ti ti-bookmark</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-brush-alt"></i>ti ti-brush-alt</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-check"></i>ti ti-check</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-settings"></i>ti ti-cog</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-columns"></i>ti ti-columns</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-copy"></i>ti ti-copy</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-corner-down-right"></i>ti ti-corner-down-right</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-data-sharing"></i>ti ti-data-sharing</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-dialpad"></i>ti ti-dialpad</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-draggabledots"></i>ti ti-draggabledots</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-envelope-add"></i>ti ti-envelope-add</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-external-link-alt"></i>ti ti-external-link-alt</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-eye-slash"></i>ti ti-eye-slash</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-fast-mail"></i>ti ti-fast-mail</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-file-export"></i>ti ti-file-export</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-file-plus-alt"></i>ti ti-file-plus-alt</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-filter"></i>ti ti-filter</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-folder"></i>ti ti-folder</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-folder-minus"></i>ti ti-folder-minus</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-folder-open"></i>ti ti-folder-open</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-info-circle round"></i>ti ti-info-circle round</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-key-skeleton"></i>ti ti-key-skeleton</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-left-arrow-to-left"></i>ti ti-left-arrow-to-left</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-lightbulb"></i>ti ti-lightbulb</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-link"></i>ti ti-link</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-link-h"></i>ti ti-link-h</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-list-ul"></i>ti ti-list-ul</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-lock-open-alt"></i>ti ti-lock-open-alt</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-news"></i>ti ti-news</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-picture"></i>ti ti-picture</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-placeholder"></i>ti ti-placeholder</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-plus"></i>ti ti-plus</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-circle-plus"></i>ti ti-circle-plus</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-puzzle"></i>ti ti-puzzle</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-device-floppy"></i>ti ti-device-floppy</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-schedule"></i>ti ti-schedule</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-search"></i>ti ti-search</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-server"></i>ti ti-server</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-share"></i>ti ti-share</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-signout"></i>ti ti-signout</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-adjustments"></i>ti ti-sliders-v</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-adjustments"></i>ti ti-sliders-v-alt</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-square-full"></i>ti ti-square-full</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-star"></i>ti ti-star</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-refresh"></i>ti ti-refresh</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-table"></i>ti ti-table</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-thunderstorm"></i>ti ti-thunderstorm</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-square-x-filled text-red-600"></i>ti ti-x</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-circle-x"></i>ti ti-circle-x</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-trash-alt"></i>ti ti-trash-alt</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-trowel"></i>ti ti-trowel</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-user"></i>ti ti-user</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-users"></i>ti ti-users</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-volume"></i>ti ti-volume</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-volume-off"></i>ti ti-volume-off</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-web-section-alt"></i>ti ti-web-section-alt</a></div>
+<!-- end of "do not change manually" -->
+      <div>
+        <a>
+        <div class="spinner mr-2"></div>Spinner
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-2 2xl:grid-cols-3 gap-5 h-fit">
+    <div class="card min-w-[300px]">
+      <div class="head">
+        <h3>Logos</h3>
+      </div>
+      <div class="body">
+        <table>
+          <tr>
+            <th>small</th>
+            <td><img src="[% url_prefix %]themes/[% theme %]/images/logo_thruk_small.png" alt="Thruk" title="Thruk"></td>
+          </tr>
+          <tr>
+            <th>normal</th>
+            <td><img src="[% url_prefix %]themes/[% theme %]/images/logo_thruk.png" alt="Thruk" title="Thruk"></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="card min-w-[300px]">
+      <div class="head">
+        <h3>.card</h3>
+      </div>
+      <div class="body">
+        <table>
+          <tr>
+            <th><a href='#'>table header</a></th>
+            <th><a href='#'>table header</a></th>
+          </tr>
+          <tr>
+            <td><a href='#'>table row</a></td>
+            <td><a href='#'>table row</a></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="card shadow-float min-w-[300px]">
+      <div class="head">
+        <h3>.card .shadow-float</h3>
+      </div>
+      <div class="body">
+        <table>
+          <tr><td><span class="textBody">.textBody</span></td></tr>
+          <tr><td><span class="textCard">.textCard</span></td></tr>
+          <tr><td><span class="textTH">.textTH</span></td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="card min-w-[400px] text-center">
+      <div class="head">
+        <h3 class="text-left">Host Colors</h3>
+      </div>
+      <table class="w-full">
+        <tr>
+          <td class="UP">UP</td>
+          <td class="UNREACHABLE">UNREACHABLE</td>
+          <td class="DOWN">DOWN</td>
+          <td class="PENDING">PENDING</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="card min-w-[400px] text-center">
+      <div class="head">
+        <h3 class="text-left">Service Colors</h3>
+      </div>
+      <table class="w-full">
+        <tr>
+          <td class="OK">OK</td>
+          <td class="WARNING">WARNING</td>
+          <td class="UNKNOWN">UNKNOWN</td>
+          <td class="CRITICAL">CRITICAL</td>
+          <td class="PENDING">PENDING</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="head">
+        <h3>Progressbar</h3>
+      </div>
+      <div class="body">
+        <div class="progressbar">
+          <div class="description textBody font-semibold" style="width: 90px;">Description</div>
+          <div class="bar" style="height: 30px; width: 300px;">
+            <div class="UP" style="width:20%"></div>
+            <div class="WARNING" style="width:25%"></div>
+            <div class="CRITICAL" style="width:10%"></div>
+          </div>
+          <div class="percent"><span>66%</span></div>
+        </div>
+        <div class="progressbar w-full mt-5" style="height:20px;">
+          <div class="bar" style="height:20px;"><div style="width:33%; height:20px;"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card w-fit">
+      <div class="head">
+        <h3>Buttons</h3>
+      </div>
+      <div>
+        <table class="w-full innercellborder cellspacing text-center">
+          <tr>
+            <th></th>
+            <th>small</th>
+            <th>(no class)</th>
+            <th>big</th>
+            <th>large</th>
+          </tr>
+          <tr>
+            <th>default</th>
+            <td></td>
+            <td><button>default</button></td>
+            <td><button class="big">big</button></td>
+            <td></td>
+          </tr>
+          <tr>
+            <th>with icon</th>
+            <td></td>
+            <td><button><i class="ti ti-grin"></i>default</button></td>
+            <td><button class="big"><i class="ti ti-grin"></i>big</button></td>
+            <td></td>
+          </tr>
+          <tr>
+            <th>.round</th>
+            <td><button class="small round"><i class="ti ti-grin"></i></button></td>
+            <td><button class="round"><i class="ti ti-grin"></i></button></td>
+            <td><button class="big round"><i class="ti ti-grin"></i></button></td>
+            <td></td>
+          </tr>
+          <tr>
+            <th>.green</th>
+            <td></td>
+            <td><button class="green">default</button></td>
+            <td><button class="big green">big</button></td>
+            <td></td>
+          </tr>
+          <tr>
+            <th>.red</th>
+            <td></td>
+            <td><button class="red">default</button></td>
+            <td><button class="big red">big</button></td>
+            <td></td>
+          </tr>
+          <tr>
+            <th>.iconOnly</th>
+            <td></td>
+            <td><button class="iconOnly"><i class="ti ti-grin"></i></button></td>
+            <td><button class="big iconOnly"><i class="ti ti-grin"></i></button></td>
+            <td><button class="large iconOnly"><i class="ti ti-grin"></i></button></td>
+          </tr>
+          <tr>
+            <th>.iconOnly</th>
+            <td><button class="iconOnly"><i class="ti ti-checkgreen"></i></button></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <th>.iconOnly submit</th>
+            <td><button class="iconOnly" type="submit"><i class="ti ti-checkgreen"></i></button></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <th>buttongroup</th>
+            <td></td>
+            <td colspan=3>
+              <div class="buttongroup">
+                <button>btn1</button>
+                <button>btn2</button>
+                <button>btn3</button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th>disabled</th>
+            <td></td>
+            <td><button disabled>disabled</button></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <th>.spinner</th>
+            <td></td>
+            <td colspan=3>
+              <button>
+                <div class="spinner mr-1"></div>processing commands...
+              </button>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="card w-fit">
+      <div class="head">
+        <h3>Peer Buttons</h3>
+      </div>
+      <div class="backends">
+        <table class="w-full innercellborder cellspacing text-center">
+          <tr>
+            <th>Up</th>
+            <td><button class="button_peer button_peerUP w-30">Up</button></td>
+          </tr>
+          <tr>
+            <th>Down</th>
+            <td><button class="button_peer button_peerDOWN w-30">Down</button></td>
+          </tr>
+          <tr>
+            <th>Disabled</th>
+            <td><button class="button_peer button_peerDIS w-30">Disabled</button></td>
+          </tr>
+          <tr>
+            <th>Hidden</th>
+            <td><button class="button_peer button_peerHID w-30">Hidden</button></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="head">
+        <h3>Forms</h3>
+      </div>
+      <div class="body">
+        <form>
+          <table class="cellspacing">
+            <tr>
+              <th>Textfield</th>
+              <td><input type="text" class="w-full"></td>
+            </tr>
+            <tr>
+              <th class="required">Invalid</th>
+              <td><input type="text" class="w-full" name="test" required></td>
+            </tr>
+            <tr>
+              <th>Disabled</th>
+              <td><input type="text" value="disabled text" class="w-full" disabled></td>
+            </tr>
+            <tr>
+              <th>Password</th>
+              <td><input type="password" class="w-full"></td>
+            </tr>
+            <tr>
+              <th>Search</th>
+              <td><input type="search" class="deletable" class="w-full"></td>
+            </tr>
+            <tr>
+              <th>Submit</th>
+              <td>
+                <div class="flexrow gap-2 flex-nowrap">
+                  <input type="submit" value="submit">
+                  <input type="submit" value="disabled" disabled>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th>Dropdown</th>
+              <td>
+                <select>
+                  <optgroup label="optgroup">
+                    <option>option</option>
+                    <option>option</option>
+                  </optgroup>
+                  <option>option</option>
+                  <option>option</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <th>Radiobox</th>
+              <td>
+                <div class="flexrow gap-0 flex-nowrap">
+                  <input type="radio" name="radio" value="1" checked><label class="ml-1">Option 1</label>
+                  <input type="radio" name="radio" value="2" class="ml-2"><label class="ml-1">Option 2</label>
+                  <div class="radiogroup ml-5">
+                    <input type="radio" name="radiog" value="1" checked><label>Option 1</label>
+                    <input type="radio" name="radiog" value="2"><label>Option 2</label>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th>Checkbox</th>
+              <td>
+                <input type="checkbox" name="check" value="1" checked><label class="ml-1">Option 1</label>
+                <input type="checkbox" name="check" value="2" class="ml-2"><label class="ml-1">Option 2</label>
+              </td>
+            </tr>
+          </table>
+        </form>
+      </div>
+    </div>
+
+    <div class="grid gap-3 grid-cols-2 h-fit w-fit">
+      <div class="card alert red relative w-36">
+        <div class="head">
+          <h3>red alert</h3>
+        </div>
+        <div class="body text-left">div.card.red.alert</div>
+      </div>
+
+      <div class="card alert yellow relative w-36">
+        <div class="head">
+          <h3>yellow alert</h3>
+        </div>
+        <div class="body text-left">div.card.yellow.alert</div>
+      </div>
+
+      <div class="card alert orange relative w-36">
+        <div class="head">
+          <h3>orange alert</h3>
+        </div>
+        <div class="body text-left">div.card.orange.alert</div>
+      </div>
+
+      <div class="card alert green relative w-36">
+        <div class="head">
+          <h3>green alert</h3>
+        </div>
+        <div class="body text-left">div.card.green.alert</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="head">
+        <h3>Console</h3>
+      </div>
+      <div class="body">
+        <textarea class="CONSOLE w-[300px] h-[80px]">#> whoami
+          root</textarea>
+      </div>
+    </div>
+
+    <div>
+      <div class="body">
+        [% PROCESS _log_date_select.tt start=date.now-86400 end=date.now  %]
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="card w-full mt-5">
+  <div class="mainTableHeader">
+    <div>
+      <i class="ti ti-menu-2"></i>
+    </div>
+    <div>
+      [% PROCESS _pager.tt pager={ page => 1, total_pages => 15, entries => 10 } data => [] %]
+    </div>
+    <div>
+      [% PROCESS _pager_per_page.tt %]
+    </div>
+  </div>
+  <div class="mainTable [% IF main_table_full %]fullsize[% END %]">
+    <table class="mainTable striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Service</th>
+          <th class="text-center">Duration</th>
+          <th>Attempt</th>
+          <th>ASDasdas</th>
+          <th>ASDasdas</th>
+          <th>ASDasdas</th>
+          <th>ASDasdas</th>
+          <th>Status Information</th>
+          <th>Attempt</th>
+          <th>ASDasdas</th>
+          <th>ASDasdas</th>
+          <th>ASDasdas</th>
+        </tr>
+      </thead>
+      <tbody>
+        [% index = 0 %]
+        [% WHILE index < 60 %]
+          <tr>
+            <td>
+              <div class="col_host_name">Test Host</div>
+            </td>
+            <td>
+              <div class="col_description">Checks the current CPU load on the system</div>
+            </td>
+            <td class="text-center">4d 10h 05m 10s</td>
+            <td>1/3</td>
+            <td>123</td>
+            <td>345</td>
+            <td>123</td>
+            <td>123</td>
+            <td class="col_plugin_output">
+              <div class="col_plugin_output">OK: OK - hostname: rta 2.526ms, lost 0%</div>
+            </td>
+            <td>123</td>
+            <td>123</td>
+            <td>123</td>
+            <td>123</td>
+          </tr>
+          [% index = index + 1 %]
+        [% END %]
+      </tbody>
+    </table>
+  </div>
+
+  <div class="mainTableFooter">
+    <div class="flex-1 self-center">
+      [% PROCESS _pager_total_items.tt size=100 total_items=242 %]
+    </div>
+  </div>
+</div>
+
+<script>
+jQuery("#iconsBox A").click(function(evt) {
+  copyCode(evt, jQuery(this).find("I").attr("class"));
+  return false;
+});
+</script>
+
+[% PROCESS _footer.tt %]

@@ -1,0 +1,69 @@
+﻿[% PROCESS _header.tt %]
+
+[% PROCESS _infobox.tt %]
+
+<h1 class="mt-5">Availability Report</h1>
+
+<div class="card mx-auto min-w-[420px] max-w-[800px] w-full mt-5 overflow-hidden">
+  <div class="head p-0">
+    <span class="tabs w-44"><a class="flex" href="avail.cgi">1. Report Type</a></span>
+    <i class="ti ti-angle-right text-sm"></i>
+    <span class="tabs w-44 active">
+      <a class="flex" href="#">
+        [% IF report_type == 'hosts' %]
+        2. Select Host
+        [% ELSIF report_type == 'hostgroups' %]
+        2. Select Hostgroup
+        [% ELSIF report_type == 'services' %]
+        2. Select Service
+        [% ELSIF report_type == 'servicegroups' %]
+        2. Select Servicegroup
+        [% END %]
+      </a>
+    </span>
+  </div>
+
+  <form method="get" action="avail.cgi">
+    <input type='hidden' name='get_date_parts'>
+    <div class="body">
+      <table class="cellspacing-x w-fit mx-auto">
+        <tr>
+          <th class="text-right">
+            [% IF report_type == 'hosts' %]
+            Host(s)
+            [% ELSIF report_type == 'hostgroups' %]
+            Hostgroup(s)
+            [% ELSIF report_type == 'services' %]
+            Service(s)
+            [% ELSIF report_type == 'servicegroups' %]
+            Servicegroup(s)
+            [% END %]
+          </th>
+          <td>
+            <select name='[% IF report_type == 'hosts' %]host[% ELSIF report_type == 'services' %]service[% ELSIF report_type == 'servicegroups' %]servicegroup[% ELSIF report_type == 'hostgroups' %]hostgroup[% END %]'>
+              <option value='all'>
+                [% IF report_type == 'hosts' %]
+                ** ALL HOSTS **
+                [% ELSIF report_type == 'hostgroups' %]
+                ** ALL HOSTGROUPS **
+                [% ELSIF report_type == 'services' %]
+                ** ALL SERVICES **
+                [% ELSIF report_type == 'servicegroups' %]
+                ** ALL SERVICEGROUPS **
+                [% END %]
+              </option>
+              [% FOREACH opt = data %]
+              <option>[% opt %]</option>
+              [% END %]
+            </select>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="footer justify-center">
+      <input class="green" type='submit' value='Continue to Step 3'>
+    </div>
+  </form>
+</div>
+
+[% PROCESS _footer.tt %]

@@ -8,14 +8,14 @@
     [% IF conf_config.exists('thruk') %]
     <div>
       <a class="link" href="conf.cgi?sub=thruk">
-        <i class="las la-sliders-h"></i>
+        <i class="ti ti-adjustments"></i>
         <span class="inline-block w-1/4 font-semibold">Thruk Settings</span>
         <span>Thruks settings from the thruk_local.conf</span>
       </a>
     </div>
     <div>
       <a class="link" href="conf.cgi?sub=backends">
-        <i class="las la-share-alt"></i>
+        <i class="ti ti-share"></i>
         <span class="inline-block w-1/4 font-semibold">Backends / Sites</span>
         <span>Configure Backends Connections</span>
       </a>
@@ -24,7 +24,7 @@
     [% IF conf_config.exists('cgi.cfg') %]
     <div>
       <a class="link" href="conf.cgi?sub=cgi">
-        <i class="las la-lock-open"></i>
+        <i class="ti ti-lock-open"></i>
         <span class="inline-block w-1/4 font-semibold">CGI &amp; Access</span>
         <span>Change CGI and access settings from your cgi.cfg</span>
       </a>
@@ -33,7 +33,7 @@
     [% IF conf_config.exists('cgi.cfg') || c.config.exists('htpasswd') %]
     <div>
       <a class="link" href="conf.cgi?sub=users">
-        <i class="las la-users"></i>
+        <i class="ti ti-users"></i>
         <span class="inline-block w-1/4 font-semibold">User settings</span>
         <span>User settings, passwords and permissions</span>
       </a>
@@ -41,7 +41,7 @@
     [% END %]
     <div>
       <a class="link" href="conf.cgi?sub=plugins">
-        <i class="las la-puzzle-piece"></i>
+        <i class="ti ti-puzzle"></i>
         <span class="inline-block w-1/4 font-semibold">Plugins</span>
         <span>Plugin Manager for Thruk Addons</span>
       </a>
@@ -58,7 +58,7 @@
     <div>
       [% IF has_obj_conf %]
         <a class="link" href="conf.cgi?sub=objects">
-          <i class="las la-server"></i>
+          <i class="ti ti-server"></i>
           <span class="inline-block w-1/4 font-semibold">Object settings</span>
           <span>Host, service, timeperiods and notification settings</span>
         </a>
@@ -68,7 +68,7 @@
         <span class="textALERT">
           No object configuration enabled, see
           <a class="link" href="http://thruk.org/documentation.html#_component_thruk_backend" target="_blank">documentation
-          <i class="las la-external-link-alt"></i>
+          <i class="ti ti-external-link-alt"></i>
           </a>
         </span>
       [% END %]

@@ -1,0 +1,149 @@
+﻿[% WRAPPER _conf_frame.tt %]
+
+[% BLOCK dir_block %]
+  [% FOREACH d = dir.dirs.keys.sort %]
+  [% folder = dir.dirs.$d %]
+    <ul>
+      <li>
+        <a href="conf.cgi?sub=objects&amp;action=tree_objects&amp;dir=[% dir.path | uri %][% d | uri%]" target="content_frame">[% d | html%]</a>
+        [% INCLUDE dir_block dir = folder %]
+      </li>
+    </ul>
+  [% END %]
+  [% FOREACH f = dir.files.keys.sort %]
+    <ul>
+      <li class="file_node">
+        <a href="conf.cgi?sub=objects&amp;action=tree_objects&amp;dir=[% dir.path | uri %][% f | uri %]" target="content_frame">[% f | html %]</a>
+      </li>
+    </ul>
+  [% END %]
+[% END %]
+
+<h1>Objects Browser</h1>
+
+<div class="card flexrow flex-nowrap gap-0 w-full h-[calc(100%_-_170px)] mt-5">
+  <div class="w-[200px] flexcol gap-0 borderDefault border-r">
+    <div class="head justify-between">
+      <a href="conf.cgi?sub=objects" class="button header-button rounded w-[70px]">
+        <i class="uil uil-angle-double-left"></i>Back
+      </a>
+      <div class="buttongroup">
+        <button class="header-button" name="expand" id="tool_collapse" title="collapse all folder"><i class="uil uil-folder-minus"></i></button>
+        <button class="header-button" name="expand" id="tool_expand" title="expand all folder"><i class="ti ti-folder-open"></i></button>
+      </div>
+    </div>
+    <div id="container" class="grow max-h-full overflow-y-auto">
+      <ul>
+        <li id="o_files">
+          <a href="conf.cgi?sub=objects&amp;action=tree_objects" target="content_frame">Files</a>
+          [% INCLUDE dir_block dir = files_tree %]
+        </li>
+
+        <li id="o_objects" class="jstree-open">
+          <a href="conf.cgi?sub=objects&amp;action=tree_objects" target="content_frame">Objects</a>
+          <ul>
+            <li id="o_commands">
+              <a href="conf.cgi?sub=objects&amp;action=tree_objects&amp;type=command" target="content_frame">Commands</a>
+              <ul>
+                <li id="o_commands_checks"><a href="conf.cgi?sub=objects&amp;action=tree_objects&amp;type=command&amp;origin=check" target="content_frame">Checks</a></li>
+                <li id="o_commands_eventhandler"><a href="conf.cgi?sub=objects&amp;action=tree_objects&amp;type=command&amp;origin=eventhandler" target="content_frame">Eventhandler</a></li>
+                <li id="o_commands_notifications"><a href="conf.cgi?sub=objects&amp;action=tree_objects&amp;type=command&amp;origin=notification" target="content_frame">Notifications</a></li>
+              </ul>
+            </li>
+            <li id="o_contacts">
+              <a href="conf.cgi?sub=objects&amp;action=tree_objects&amp;type=contact" target="content_frame">Contacts</a>
+              [% PROCESS child childs=contacttemplates type="contact" %]
+            </li>
+            <li id="o_contactgroups"><a href="conf.cgi?sub=objects&amp;action=tree_objects&amp;type=contactgroup" target="content_frame">Contactgroups</a></li>
+            <li id="o_hosts">
+              <a href="conf.cgi?sub=objects&amp;action=tree_objects&amp;type=host" target="content_frame">Hosts</a>
+              [% BLOCK child %]
+                [% IF childs.size > 0 %]
+                <ul>
+                [% FOREACH tname = childs.keys.sort %]
+                  [% t = childs.$tname %]
+                  <li>
+                    <a href="conf.cgi?sub=objects&amp;action=tree_objects&amp;type=[% type | uri %]&amp;template=[% tname | uri %]" target="content_frame">[% tname | uri %]</a>
+                    [% IF t.exists('child_templates') %][% INCLUDE child childs=t.child_templates %][% END %]
+                  </li>
+                [% END %]
+                </ul>
+                [% END %]
+              [% END %]
+              [% PROCESS child childs=hosttemplates type="host" %]
+            </li>
+            <li id="o_hostgroups"><a href="conf.cgi?sub=objects&amp;action=tree_objects&amp;type=hostgroup" target="content_frame">Hostgroups</a></li>
+            <li id="o_services">
+              <a href="conf.cgi?sub=objects&amp;action=tree_objects&amp;type=service" target="content_frame">Services</a>
+              [% PROCESS child childs=servicetemplates type="service" %]
+            </li>
+            <li id="o_servicegroups"><a href="conf.cgi?sub=objects&amp;action=tree_objects&amp;type=servicegroup" target="content_frame">Servicegroups</a></li>
+            <li id="o_timeperiods"><a href="conf.cgi?sub=objects&amp;action=tree_objects&amp;type=timeperiod" target="content_frame">Timeperiods</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="w-full">
+    <iframe class="w-full h-full" name="content_frame" src="conf.cgi?sub=objects&amp;action=tree_objects" id="content_frame"></iframe>
+  </div>
+</div>
+
+<script>
+<!--
+
+jQuery(function($) {
+
+    jQuery('#tool_collapse').click(function() {
+        jQuery('#container').jstree('close_all');
+        jQuery('#container').jstree('open_node', '#o_objects');
+        return;
+    });
+    jQuery('#tool_expand').click(function() {
+        jQuery('#container').jstree('open_all');
+        return;
+    });
+
+  jQuery('#container')
+  .on('changed.jstree', function (e, data) {
+    var node=data.instance.get_node(data.selected[0]);
+    if(node && node.a_attr && node.a_attr.href) {
+      jQuery('#content_frame').attr('src', node.a_attr.href);
+    }
+  })
+  .jstree({
+    plugins: [ "themes", "dnd"/*, "contextmenu"*/ ],
+    core:    {
+      animation: 0
+    },
+    themes: {
+      theme: 'classic',
+      dots: true
+    },
+    dnd: {
+      drag_target: '.jstree-draggable',
+        "drop_finish" : function () {
+          alert("DROP");
+        },
+        "drag_check" : function (data) {
+          if(data.r.attr("id") == "phtml_1") {
+            return false;
+          }
+          return {
+            after : false,
+            before : false,
+            inside : true
+          };
+        },
+        "drag_finish" : function (data) {
+          alert("DRAG OK");
+      }
+    }
+  });
+});
+
+-->
+</script>
+
+[% type="" %]
+[% END %]

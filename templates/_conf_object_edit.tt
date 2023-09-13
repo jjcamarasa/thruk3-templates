@@ -1,0 +1,99 @@
+﻿[% PROCESS _conf_object_row.tt %]
+<table id="attr_table" class="rowhover">
+
+  <tr style="display: none" id="el_0">
+    <th class="pl-2 align-top w-[210px]" abbr="" onmouseover="jQuery('#d'+this.parentNode.id).css('display', '')" onmouseout="jQuery('#d'+this.parentNode.id).css('display', 'none')"></th>
+    <td class="clickable align-top w-6 " abbr="" onmouseover="jQuery('#d'+this.parentNode.id).css('display', '')" onmouseout="jQuery('#d'+this.parentNode.id).css('display', 'none')"><i class="uil uil-square-minus" title="remove this attribute" id="del_0" onclick="remove_conf_attribute(this.parentNode.abbr, 'del_0'); return false;" style="display: none;"></i></td>
+    <td colspan=2></td>
+    <td class='clickable pr-2 w-6 js-help-icon' onclick="return overcard({ 'body': this.abbr, 'caption': 'Help', 'width': 600, bodyCls: 'p-2' });" abbr=''><i class="uil uil-circle-question"></i></td>
+  </tr>
+
+  [% FOREACH key = obj.get_sorted_keys() %]
+    [% NEXT IF key.substr(0, 1) == ":" %]
+    [% NEXT IF obj.default.exists(key) && obj.default.$key.type == "DEPRECATED" %]
+    [% class = "" %]
+    [% IF duplicate_keys.exists(key) %]
+      [% class = "line-through font-normal" %]
+    [% END %]
+    <tr>
+      <th class='[%+ class %] pl-2 align-top w-[210px]' abbr="[% key %]" onmouseover="jQuery('#del_[% loop.count %]').css('display', '')" onmouseout="jQuery('#del_[% loop.count %]').css('display' ,'none')">[% IF !obj.default.exists(key) %]<input type="text" name="objkey.[% loop.count %]" value="[% key %]" class="attrkey" onchange="conf_update_attr_customvar_name(this)">[% ELSE %][% key %][% END %]</th>
+      <td class='[%+ class %] clickable align-top w-6' abbr="[% key %]" onmouseover="jQuery('#del_[% loop.count %]').css('display', '')" onmouseout="jQuery('#del_[% loop.count %]').css('display', 'none')"><i class="uil uil-square-minus" id="del_[% loop.count %]" title="remove this attribute" onclick="remove_conf_attribute(this.parentNode.abbr, 'del_[% loop.count %]'); return false;" style="display: none;"></i></td>
+      <td colspan=2>
+        [% PROCESS _conf_object_row nr = loop.count edit = 1 defaults = obj.default key = key obj_conf = obj.conf %]
+      </td>
+      [% SET helpkey = key %]
+      [% IF !obj.default.exists(key) %]
+        [% IF key.substr(0, 1) == "_" %]
+          [% SET helpkey = "customvar" %]
+        [% ELSIF type == "timeperiod" %]
+          [% SET helpkey = "[exception]" %]
+        [% END %]
+      [% ELSIF obj.default.$key.exists('help') %]
+        [% SET helpkey = obj.default.$key.help %]
+      [% END %]
+      <td class='clickable pr-2 w-6 js-help-icon' data-name="[% helpkey %]" onclick="return overcard({ 'body': this.abbr, 'caption': 'Help', 'width': 600, bodyCls: 'p-2' });" abbr="&lt;b&gt;[% helpkey %]&lt;/b&gt;&lt;br&gt;[% escape_html(obj.get_help(helpkey)) | nl2br %]"><i class="uil uil-circle-question"></i></td>
+    </tr>
+
+    [% IF !obj.default.exists(key) || obj.default.$key.type != 'LIST' || (obj_conf.$key.size > 0 && obj.conf.$key.0.substr(0,1) != '+') %]
+      [% SET duplicate_keys.$key = 1 %]
+    [% END %]
+  [% END %]
+
+  <tr>
+    <td class="pl-2">
+      <input type="text" class="attrkey new_attr" name="newattr" id="newattr" value="new attribute..." onfocus="this.click()" onclick="ajax_search.init(this, 'attribute', { url:'conf.cgi?action=json&amp;type=attribute&amp;obj=[% type | html %]', autosubmit:false, empty: true, emptytxt: 'new attribute...', emptyclass:'new_attr', filter:new_attr_filter[% IF obj.defined("has_custom") %], emptymsg:'add custom variable'[% END %], onselect:function() { on_attr_select(); return false; }, onemptyclick: function() { on_empty_click(); } })">
+    </td>
+    <td class="w-6"></td>
+    <td colspan=3>
+      <button title="Select one or multiple attributes that you want to add" onclick="openModalWindow(document.getElementById('new_attribute_pane')); return false;">
+        <i class="ti ti-plus"></i>
+        add new attribute
+      </button>
+      <script>
+      <!--
+      var fields = new Object({
+        [% FOREACH key_cat = obj.get_default_keys() %]
+          [% FOREACH key = key_cat.keys %]'[% key %]': { 'input': '[% PROCESS _conf_object_row nr=0 edit=1 defaults = obj.default key = key obj_conf = obj.conf | escape_html | replace("'", "\\'") | replace("\n", "") %]', 'help': '[% SET helpkey = key %][% IF !obj.default.exists(key) %][% SET helpkey = "customvar" %][% ELSIF obj.default.$key.exists('help') %][% SET helpkey = obj.default.$key.help %][% END %]&lt;b&gt;[% helpkey %]&lt;/b&gt;&lt;br&gt;[% escape_html(obj.get_help(helpkey)) | nl2br | replace("'", "\\'") | replace("\n", "") %]' }
+            [% UNLESS loop.last %],[% END %]
+          [% END %]
+          [% UNLESS loop.last %],[% END %]
+        [% END %]
+      });
+      -->
+      </script>
+    </td>
+  </tr>
+
+  <tr>
+    <th class="pl-2 align-bottom">comments</th>
+    <td colspan=4 class="align-top pr-2">
+      <div class="card w-[800px]" id="new_attribute_pane" style="display:none">
+        <div class="head justify-between">
+          <h3>Add New Attributes</h3>
+          <button class="iconOnly medium" onClick="closeModalWindow(); return false;"><i class="ti ti-square-x"></i></button>
+        </div>
+        <table class="body cellspacing-x">
+          [% FOREACH key_cat = obj.get_default_keys() %]
+            <tr>
+              <th>[% key_cat.name %]</th>
+              <td>
+                <div class="flexrow gap-px">
+                  [% FOREACH key = key_cat.keys %]
+                    <button onclick="add_conf_attribute('attr_table', '[% key %]'); return false;" id="new_[% key %]_btn" style="min-width:80px;[% IF key != 'customvariable' && key != 'exception' && obj.conf.defined(key) %] display:none[% END %]">[% key %]</button>
+                  [% END %]
+                </div>
+              </td>
+            </tr>
+          [% END %]
+        </table>
+        <div class="footer justify-center">
+          <button class="green" onclick="closeModalWindow(); return false;">continue</button>
+        </div>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td class="px-2" colspan=5><textarea rows=8 class="w-full" name="conf_comment" wrap="off">[% obj.comments.join("\n") %]</textarea></td>
+  </tr>
+
+</table>

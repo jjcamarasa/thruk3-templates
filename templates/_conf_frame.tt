@@ -16,7 +16,7 @@
 
 [% infoBoxPreTitle = "Configuration Type" %]
 [% IF action != "tree" %]
-  [% infoBoxPreTitle = "Configuration Type <i class='las la-angle-double-right text-sm'></i>&nbsp;<span class='text-sm italic'>$subtitle</span>" %]
+  [% infoBoxPreTitle = "Configuration Type <i class='ti ti-chevrons-right text-sm'></i>&nbsp;<span class='text-sm italic'>$subtitle</span>" %]
 [% END %]
 
 <div class="flexrow justify-between mb-2">  
@@ -56,10 +56,10 @@
 
   [% IF last_changed || needs_commit || show_save_reload %]
     <div class="footer">
-      [% PROCESS _button btn = {
+      [% PROCESS small_button btn = {
         form   => { action => 'conf.cgi', class => 'mx-auto'},
         data   => { sub => 'objects', 'apply' => 'yes', save_and_reload => 'yes', CSRFtoken => get_user_token(c), },          
-        button => { class => 'bg-blue-500 hover:bg-blue-700 font-bold py-2 px-4 rounded text-blue-100 hover:text-white', title => "Apply all changes and reload core", onclick => "return save_reload_apply(this, '" _ show_save_reload _ "')", html => '<i class="las la-save la-lg"></i>Save &amp; Reload' },
+        button => { class => 'btn hover-green', title => "Apply all changes and reload core", onclick => "return save_reload_apply(this, '" _ show_save_reload _ "')", html => '<i class="ti ti-device-floppy "></i>Save &amp; Reload' },
       }%]
     </div>  
     [% END %]

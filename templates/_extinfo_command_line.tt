@@ -22,7 +22,7 @@
     <td>
       <div class="flex px-2 rounded-md items-center codeBG">
         <div>
-          <button class="iconOnly px-1 copy_button" onclick="copyCode(event, 'copyToClipboard'); return false;"><i class="las la-copy" title="Copy command to clipboard"></i></button>
+          <button class="iconOnly px-1 copy_button" onclick="copyCode(event, 'copyToClipboard'); return false;"><i class="ti ti-copy" title="Copy command to clipboard"></i></button>
         </div>
         <div class="flex-grow">
           <pre id="copyToClipboard" class="whitespace-normal"><code>[% command.line | html %]</code></pre>
@@ -40,7 +40,7 @@
       [% END %]
       <div class="flex px-2 rounded-md items-center codeBG">
         <div>
-          <button class="iconOnly px-1 copy_button" onclick="copyCode(event, 'copyToClipboard2'); return false;"><i class="las la-copy" title="Copy expanded command to clipboard"></i></button>
+          <button class="iconOnly px-1 copy_button" onclick="copyCode(event, 'copyToClipboard2'); return false;"><i class="ti ti-copy" title="Copy expanded command to clipboard"></i></button>
         </div>
         <div class="flex-grow">
           <pre id="copyToClipboard2" class="whitespace-normal"><code>[% command.line_expanded | html %]</code></pre>
@@ -54,7 +54,7 @@
       <td>
         <div class="flex px-2 rounded-md codeBG">
           <div>
-            <button class="iconOnly px-1 copy_button" onclick="copyCode(event, 'copyToClipboard3'); return false;"><i class="las la-copy" title="Copy thruk command to clipboard"></i></button>
+            <button class="iconOnly px-1 copy_button" onclick="copyCode(event, 'copyToClipboard3'); return false;"><i class="ti ti-copy" title="Copy thruk command to clipboard"></i></button>
           </div>
           [% cmd = 'thruk command -n' %]
           [% IF command.backend && show_sitepanel != 'off'; cmd = "${cmd} -b \"${command.backend}\""; END %]

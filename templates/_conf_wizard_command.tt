@@ -1,0 +1,56 @@
+﻿<button class="cmd_wzd_button px-1" id="[% id %]_btn" title="open command line wizard"><i class="ti ti-bolt mx-0"></i></button>
+<input type="hidden" id="[% id %]_orig_inp1" value="[% inp1 | html %]">
+<input type="hidden" id="[% id %]_orig_inp2" value="[% inp2 | html %]">
+
+<div id="[% id %]_dialog" style="display: none;" class="card flexcol gap-0 w-[800px] min-h-[400px]">
+  <div class="head justify-between">
+    <h3>Command Line Wizard</h3>
+    <button class="iconOnly medium" onClick="closeModalWindow(); return false;"><i class="ti ti-square-x"></i></button>
+  </div>
+  <div class="body grow">
+    <table>
+      <tr>
+        <th class="w-32">Choose Command</th>
+        <td>
+          <input class="w-full" type="text" id="[% id %]_inp_command" value="" onclick="ajax_search.init(this, 'command', {url:'conf.cgi?action=json&amp;type=command', striped:false, autosubmit:false})">
+          <input type="hidden" id="[% id %]_inp_args" value="">
+        </td>
+      </tr>
+      <tr>
+        <th class="w-32">Command Line</th>
+        <td><div class="spinner" id="[% id %]_wait" title="please wait till the command line is loaded"></div></td>
+      </tr>
+    </table>
+    <div id="[% id %]_command_line" class="pl-5 font-mono whitespace-pre"></div>
+    [% IF conf_config.show_plugin_syntax_helper %]
+      <div class="w-full accordion">
+        <button class="w-full" onclick="toggleAccordion(this, function() { check_plugin_help('[% id %]_'); }); return false;">Plugin Help<i class="ti ti-plus ml-auto"></i></button>
+        <div class="w-full" style="max-width:1000px;">
+          <span id="[% id %]_plugin_help" style="text-align: left;"></span>
+          <div class="spinner mx-auto" id="[% id %]_wait_help" title="please wait till the plugin help is loaded"></div>
+        </div>
+        <button class="w-full" onclick="toggleAccordion(this, function() { init_plugin_exec('[% id %]_'); }); return false;">Preview<i class="ti ti-plus ml-auto"></i></button>
+        <div class="w-full" style="max-width:1000px;">
+          <div class="flexrow flex-nowrap gap-1 items-center">
+            <span>Host:</span>
+            <input type="text" id="[% id %]_inp_preview_host" value="" onfocus="this.click(); ajax_search.autoopen=false;" onclick="ajax_search.init(this, 'host', {url:'conf.cgi?action=json&amp;type=host', striped:false, autosubmit:false})">
+            [% IF type == 'service' %]
+              <input type="hidden" id="[% id %]_inp_preview_service" value="">
+            [% END %]
+            <button id="[% id %]_preview" class="conf_preview_button">
+              <i class="ti ti-corner-down-right"></i>
+              preview
+            </button>
+          </div>
+          <span id="[% id %]_plugin_exec_output" style="text-align: left;"></span>
+        </div>
+      </div>
+    [% END %]
+  </div>
+  <div class="footer justify-center">
+    <button id="[% id %]_accept" class="green">
+      <i class="ti ti-check"></i>
+      accept
+    </button>
+  </div>
+</div>

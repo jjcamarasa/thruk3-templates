@@ -4,7 +4,7 @@
           <table class="striped">
           <thead class="text-bold">
           <tr>
-            <th class="w-24 p-2"><span class="las la-tachometer-alt la-lg"></span>&nbsp;Performance</th>
+            <th class="w-24 p-2"><span class="ti ti-gauge"></span>&nbsp;Performance</th>
           </tr>
           </thead>
           <tbody>
@@ -46,7 +46,7 @@
 <div class="flexcol h-full gap-1">
   <div class="card w-44">
     <div class="p-1 text-center">
-      <span class="las la-desktop la-lg"></span>&nbsp;Active Hosts
+      <span class="ti ti-device-desktop "></span>&nbsp;Active Hosts
     </div>
     <div class="body text-center text-3xl">
       <a href='[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hostprops => 131072 }) %]'>
@@ -57,7 +57,7 @@
 
   <div class="card w-44">
     <div class="p-1 text-center">
-      <span class="las la-cogs la-lg"></span>&nbsp;Active Services
+      <span class="ti ti-settings"></span>&nbsp;Active Services
     </div>
     <div class="body text-center text-3xl">
       <a href='[% uri_with(c, { _page => "status.cgi", style => "detail", serviceprops => 131072 }) %]'>
@@ -72,7 +72,7 @@
   [% IF host_stats.total_passive > 0 %]
   <div class="card w-44">
     <div class="p-1 text-center">
-      <span class="las la-desktop la-lg"></span>&nbsp;Passive Hosts
+      <span class="ti ti-device-desktop "></span>&nbsp;Passive Hosts
     </div>
     <div class="body text-center text-3xl">
       <a href='[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hostprops => 65536 }) %]'>
@@ -85,7 +85,7 @@
   [% IF service_stats.total_passive > 0 %]
   <div class="card w-44">
     <div class="p-1 text-center">
-      <span class="las la-cogs la-lg"></span>&nbsp;Passive Services
+      <span class="ti ti-settings"></span>&nbsp;Passive Services
     </div>
   <div class="body text-center text-3xl">
     <a href='[% uri_with(c, { _page => "status.cgi", style => "detail", serviceprops => 65536 }) %]'>
@@ -100,7 +100,7 @@
 <!--
 <div class="card w-1/2">
   <div class="head">
-    <div class="text-xl font-bold"><span class="pl-1"><span class="las la-info-circle la-lg"></span>&nbsp;</span>General State</div>
+    <div class="text-xl font-bold"><span class="pl-1"><span class="ti ti-info-circle "></span>&nbsp;</span>General State</div>
     </div>
   <div>
     <table class="striped">

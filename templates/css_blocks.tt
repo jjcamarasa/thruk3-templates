@@ -1,13 +1,21 @@
+[% BLOCK btn_sm %]
+text-sm font-medium
+[% END %]
+
+[% BLOCK btn %]
+px-4 py-2 border-slate-300 text-slate-500 bg-slate-200 hover:border-black hover:bg-white hover:text-black
+[% END %]
+
 [% BLOCK button_small_last %]
-button-default rounded-r-lg border-t border-b border-r px-2 py-1 focus:z-10 focus:text-blue-700 focus:ring-2 focus:ring-blue-700
+rounded-r-lg border-t border-b border-r [% INCLUDE btn %] [% INCLUDE btn_sm %] hover:border-l
 [% END %]
 
 [% BLOCK button_small_first %]
-button-default rounded-l-lg border px-2 py-1 hover:bg-gray-100 focus:z-10 focus:text-blue-700 focus:ring-2 focus:ring-blue-700
+rounded-l-lg border [% INCLUDE btn %] [% INCLUDE btn_sm %]
 [% END %]
 
 [% BLOCK button_small_middle %]
-button-default border-t border-b border-r border-l px-2 py-1 focus:z-10 focus:text-blue-700 focus:ring-2 focus:ring-blue-700
+border-t border-b [% INCLUDE btn %] [% INCLUDE btn_sm %]
 [% END %]
 
 [% BLOCK button_small %]

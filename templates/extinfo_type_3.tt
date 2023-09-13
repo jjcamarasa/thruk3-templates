@@ -1,0 +1,66 @@
+﻿[% USE date %]
+[% PROCESS _header.tt %]
+[% PROCESS _message.tt %]
+
+[% PROCESS _extinfo_cmd_pane.tt cmd_type="comments" %]
+
+[% PROCESS _infobox.tt %]
+<h1 class="mt-5">Comments</h1>
+
+<div class="flexrow flex-nowrap my-2">
+  <div class="flex basis-1/3 self-end gap-1">
+    <div class="btn-group">
+    [% style="comments" %]
+    [% PROCESS _json_export.tt %]
+    [% columns=[ 'Hostname', 'Service', 'Site', 'Entry Time', 'Author', 'Comment', 'Comment ID', 'Persistent', 'Type', 'Expires' ] %]
+    [% PROCESS _excel_export.tt columns=columns with_custom_vars=0 %]
+    </div>
+  </div>
+  <div class="basis-1/3 self-end">
+    <div class="hint text-center whitespace-nowrap text-xs">Mark comments with leftclick. Select multiple with shift + mouse.</div>
+  </div>
+  <div class="basis-1/3 flex"></div>
+</div>
+
+<div class="card w-full mt-2 min-w-[420px]">
+  <div class="mainTableHeader">
+    <div class="relative">
+      <button
+        class="w-36 text-sm rounded-[5px] border-0 font-medium header-button [% IF has_filter %]textActive2[% END %] hover:textActive2"
+        onClick="toggleElement('filterForm', null, true, null, function() { submitFormIfChanged('#filterForm'); return false; }); return false;">[% IF has_filter %]Filters active[% ELSE %]Display Filter[% END %]
+      </button>
+      <form action="extinfo.cgi" method="GET" onsubmit="setFormBtnSpinner(this)" id="filterForm" class="absolute top-8 z-40 hidden">
+        <div class="card shadow-float w-52">
+          <div class="head justify-between">
+            <h3>Display Filter</h3>
+            <button class="iconOnly" type="submit" name="update" title="accept">
+              <i class="ti ti-checkgreen"></i>
+            </button>
+          </div>
+          <div class="body">
+            <input type="hidden" name="type" value="3">
+            <input type="text" class="w-full deletable" name='host' id='host' value="[% IF host != ''; escape_html(host); END %]" onfocus="this.click()" onclick="ajax_search.init(this, 'host', { url: 'status.cgi?format=search&amp;type=host', autosubmit:false })" placeholder="host name">
+            <input type="text" class="w-full deletable" name='service' id='service' value="[% service | html %]" onfocus="this.click()" onclick="ajax_search.init(this, 'service', { url: 'status.cgi?format=search&amp;type=services&amp;host=', autosubmit:false, append_value_of: 'host' })" placeholder="service">
+            <input type="text" class="w-full deletable" name="pattern" value="[% pattern | html %]" placeholder="search pattern">
+          </div>
+        </div>
+      </form>
+    </div>
+    <div>
+      [% PROCESS _pager.tt %]
+    </div>
+    <div>
+      [% PROCESS _pager_per_page.tt %]
+    </div>
+  </div>
+  <div class="mainTable [% IF main_table_full %]fullsize[% END %]">
+    [% PROCESS _comments_table.tt comments=data names=1 type="service" %]
+  </div>
+  <div class="mainTableFooter">
+    <div class="flex-1 self-center">
+      [% PROCESS _pager_total_items.tt %]
+    </div>
+  </div>
+</div>
+
+[% PROCESS _footer.tt %]

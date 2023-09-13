@@ -1,0 +1,44 @@
+﻿<table class="[% type | html %]comments cellspacing-x innercellborder w-full">
+  <thead>
+    <tr class="rowOdd border-b">
+      <th class="pl-2">Entry Time</th>
+      <th>Author</th>
+      <th>Comment</th>
+      <th>Type</th>
+      [% UNLESS command_disabled(c, 2) && command_disabled(c, 4) %]
+        <th class="text-center w-7">Actions</th>
+      [% END %]
+    </tr>
+  </thead>
+  <tbody>
+    [% FOR com = comments %]
+    <tr>
+      <td class="align-top pl-2">[% date_format(c, com.entry_time) %]</td>
+      <td class="align-top">[% escape_quotes(com.author) %]</td>
+      <td class="align-top whitespace-normal">[% IF escape_html_tags %][% escape_html(com.comment) | replace_links %][% ELSE %][% com.comment | replace_links %][% END %]</td>
+      <td class="align-top">[% IF com.entry_type == 1 %]User[% ELSIF com.entry_type == 2 %]Scheduled Downtime[% ELSIF com.entry_type == 3 %]Flap Detection[% ELSIF com.entry_type == 4 %]Acknowledgement[% ELSE %]?[% END %]</td>
+      [% UNLESS command_disabled(c, 2) && command_disabled(c, 4) %]
+        <td class="align-top w-7">
+          <form class="flex" action='cmd.cgi' method='POST' onsubmit="setFormBtnSpinner(this); submitFormInBackground(this, function(form) { fade(jQuery(form).parents('TR'), 500, true); }); return false;">
+            [% IF com.service_description == "" %]
+            <input type='hidden' name='cmd_typ' value='2'>
+            [% ELSE %]
+            <input type='hidden' name='cmd_typ' value='4'>
+            [% END %]
+            <input type='hidden' name='cmd_mod' value='2'>
+            <input type='hidden' name='com_id' value='[% com.id %]'>
+            <input type='hidden' name='json' value='1'>
+            <input type='hidden' name='host' value="[% com.host_name | html %]">
+            <input type='hidden' name='service' value="[% com.service_description | html %]">
+            <input type='hidden' name='backend' value="[% com.peer_key %]">
+            <input type="hidden" name="CSRFtoken" value="[% get_user_token(c) %]">
+            <button class="iconOnly submit mx-auto">
+              <i class="ti ti-trash text-base" title='Delete This Comment'></i>
+            </button>
+          </form>
+        </td>
+      [% END %]
+    </tr>
+    [% END %]
+  </tbody>
+</table>

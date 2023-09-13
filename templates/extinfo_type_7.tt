@@ -1,0 +1,140 @@
+﻿[% USE date %]
+[% PROCESS _header.tt %]
+
+<div class="flexcol">
+  [% PROCESS _infobox.tt %]
+  [% IF c.config.use_feature_core_scheduling %]
+    <div class="card overflow-hidden">
+      <div class="actionbox">
+        <div>
+          <a href="[% c.config.use_feature_core_scheduling %]?action=scheduling">Core Scheduling Graph</a>
+        </div>
+      </div>
+    </div>
+  [% END %]
+</div>
+
+<h1 class='py-4'>Scheduling Queue</h1>
+
+<div class="card w-full min-w-[420px]">
+  <div class="mainTableHeader">
+    <div>
+      [% PROCESS _status_filter.tt %]
+    </div>
+    <div>
+      [% PROCESS _pager.tt %]
+    </div>
+    <div>
+      [% PROCESS _pager_per_page.tt %]
+    </div>
+  </div>
+
+  <div class="mainTable [% IF main_table_full %]fullsize[% END %]">
+    <table class="mainTable striped">
+      <thead title="click to sort">
+        <tr>
+          <th>
+            <a class="sort-by" href="#" data-sort-type[% sortprefix %]="1" data-sort-option[% sortprefix %]="1">Host</a>
+          </th>
+          <th>
+            <a class="sort-by" href="#" data-sort-type[% sortprefix %]="1" data-sort-option[% sortprefix %]="2">Service</a>
+          </th>
+          <th>
+            <a class="sort-by text-center" href="#" data-sort-type[% sortprefix %]="1" data-sort-option[% sortprefix %]="4">Last Check</a>
+          </th>
+          <th>
+            <a class="sort-by text-center" href="#" data-sort-type[% sortprefix %]="1" data-sort-option[% sortprefix %]="7">Next Check</a>
+          </th>
+          <th class="text-center">Type</th>
+          <th class="text-center">Active Checks</th>
+          <th class="text-center">Actions</th>
+        </tr>
+      </thead>
+      [%  FOREACH q = data %]
+        [% SET class = 'queueEven' IF loop.even %]
+        [% SET class = 'queueOdd'  IF loop.odd %]
+        <tr class='[% class %]'>
+
+          [% IF q.defined("description") %]
+          <td class='[% class %]'><a href="extinfo.cgi?type=1&amp;host=[% q.host_name | uri %]">[% _shost(q) | html %]</a></td>
+          <td class='[% class %]'><a href="extinfo.cgi?type=2&amp;host=[% q.host_name | uri %]&amp;service=[% q.description | uri %]">[% _service(q) | html %]</a></td>
+          [% ELSE %]
+          <td class='[% class %]'><a href="extinfo.cgi?type=1&amp;host=[% q.name | uri %]">[% _host(q) | html %]</a></td>
+          <td class='[% class %]'></td>
+          [% END %]
+
+          <td class='[% class %] text-center'>[% last_check(c, q.last_check) %]</td>
+          <td class='[% class %] text-center'>[% date_format(c, q.next_check) %]</td>
+
+          [% IF q.check_options == 0 || q.check_options == '' %]
+          <td class='[% class %] text-center'>Normal</td>
+          [% ELSIF q.check_options == 1 %]
+          <td class='[% class %] text-center'>Forced</td>
+          [% ELSIF q.check_options == 2 %]
+          <td class='[% class %] text-center'>Freshness</td>
+          [% ELSIF q.check_options == 4 %]
+          <td class='[% class %] text-center'>Orphan</td>
+          [% ELSE %]
+          <td class='[% class %]'></td>
+          [% END %]
+
+          [% IF q.active_checks_enabled %]
+          <td class='queueENABLED text-center'>ENABLED</td>
+          [% ELSE %]
+          <td class='queueDISABLED text-center'>DISABLED</td>
+          [% END %]
+
+          <td class='[% class %]'>
+            <div class="flex gap-1 justify-center">
+              [% IF q.defined("description") %]
+                [% IF q.active_checks_enabled %]
+                  [% UNLESS command_disabled(c, '6') %]
+                  <a href="cmd.cgi?cmd_typ=6&amp;host=[% q.host_name | uri %]&amp;service=[% q.description | uri %]">
+                    <i class="ti ti-x text-red-600" title="Disable Active Checks Of This Service"></i>
+                  </a>
+                  [% END %]
+                [% ELSE %]
+                  [% UNLESS command_disabled(c, '5') %]
+                  <a href="cmd.cgi?cmd_typ=5&amp;host=[% q.host_name | uri %]&amp;service=[% q.description | uri %]">
+                    <i class="ti ti-checkgreen" title="Enable Active Checks Of This Service"></i>
+                  </a>
+                  [% END %]
+                [% END %]
+                [% UNLESS command_disabled(c, '7') %]
+                <a class="button iconOnly medium" href="cmd.cgi?cmd_typ=7&amp;host=[% q.host_name | uri %]&amp;service=[% q.description | uri %]&amp;force_check">
+                  <i class="ti ti-clock" title="Re-schedule This Service Check"></i>
+                </a>
+                [% END %]
+              [% ELSE %]
+                [% IF q.active_checks_enabled %]
+                  [% UNLESS command_disabled(c, '4') %]
+                  <a href="cmd.cgi?cmd_typ=4&amp;host=[% q.name | uri %]">
+                    <i class="ti ti-x text-red-600" title='Disable Active Checks Of This Host'></i>
+                  </a>
+                  [% END %]
+                [% ELSE %]
+                  [% UNLESS command_disabled(c, '47') %]
+                  <a href="cmd.cgi?cmd_typ=47&amp;host=[% q.name | uri %]">
+                    <i class="ti ti-checkgreen" title="Enable Active Checks Of This Host"></i>
+                  </a>
+                  [% END %]
+                [% END %]
+                [% UNLESS command_disabled(c, '96') %]
+                <a class="button iconOnly medium" href="cmd.cgi?cmd_typ=96&amp;host=[% q.name | uri %]&amp;force_check">
+                  <i class="ti ti-clock" title="Re-schedule This Host Check"></i>
+                </a>
+                [% END %]
+              [% END %]
+            </div>
+          </td>
+        </tr>
+      [%  END %]
+    </table>
+  </div>
+
+  <div class="mainTableFooter">
+    [% PROCESS _pager_total_items.tt %]
+  </div>
+</div>
+
+[% PROCESS _footer.tt %]

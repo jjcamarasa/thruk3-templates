@@ -16,7 +16,7 @@
     <div class="head justify-between">
       <h3>Backends Configuration</h3>
       <button colspan=3 class="bg-green-500 hover:bg-green-700 font-bold py-2 px-4 rounded text-green-100 hover:text-white clickable hoverable text-center" onclick="conf_sites_add(); return false;">
-        <i class="las la-plus-circle"></i>&nbsp;New connection
+        <i class="ti ti-circle-plus"></i>&nbsp;New connection
       </button>
     </div>
     <div class="body">
@@ -33,8 +33,8 @@
     </div>
     
     <div class="footer m-0 p-0">
-      <button class="mx-auto bg-blue-500 hover:bg-blue-700 font-bold py-2 px-4 rounded text-blue-100 hover:text-white" [% IF readonly %]disabled[% ELSE %]onclick="setBtnSpinner(this);"[% END %]>
-        <i class="las la-save"></i>Save Changes
+      <button class="btn btn-primary" [% IF readonly %]disabled[% ELSE %]onclick="setBtnSpinner(this);"[% END %]>
+        <i class="ti ti-device-floppy"></i>Save Changes
       </button>
     </div>
 </form>

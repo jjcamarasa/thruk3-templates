@@ -3,9 +3,13 @@
 <div class="flexcol h-full">
   <div class="flexcol">
     [% PROCESS _infobox.tt %]
-    <div class="inline-flex text-xl">
-      [% PROCESS _status_filter.tt small_button = 1 %]
+    <div class="flexrow w-fit gap-2 flex-nowrap">
+      <div class="btn-group">
+        <div class="btn btn-sm">
+          [% PROCESS _status_filter.tt small_button = 1 %]
+        </div>
       [% PROCESS _json_export.tt %]    
+      </div>
     </div>
   </div>
  

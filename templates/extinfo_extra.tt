@@ -3,7 +3,7 @@
   <div class="card grow h-full">
     <div class="head">
       <div class="font-bold">
-        <i class="las la-info-circle la-lg"></i>&nbsp;Check Information
+        <i class="ti ti-info-circle "></i>&nbsp;Check Information
       </div>
     </div>
     <div class="p-2">
@@ -28,7 +28,7 @@
   <div class="card grow h-full">
     <div class="head">
       <div class="font-bold">
-        <i class="las la-clock la-lg"></i>&nbsp;Last Check Time <span class="badge [% IF theme=="Dark" %]WARNING[% ELSE %]INFO[% END %]">[% last_check(c, obj.last_check) %]<span>
+        <i class="ti ti-clock "></i>&nbsp;Last Check Time <span class="badge [% IF theme=="Dark" %]WARNING[% ELSE %]INFO[% END %]">[% last_check(c, obj.last_check) %]<span>
       </div>
     </div>
     <div class="p-2">
@@ -88,7 +88,7 @@
   <div class="card h-full">
     <div class="head">
       <div class="font-bold">
-        <i class="las la-bolt la-lg"></i>&nbsp;Statistics
+        <i class="ti ti-bolt "></i>&nbsp;Statistics
       </div>
     </div>
     <div class="p-2">
@@ -118,7 +118,7 @@
   <div class="card h-full">
     <div class="head">
       <div class="font-bold">
-        <i class="las la-plus-circle la-lg"></i>&nbsp;Extra [% type | html %] information
+        <i class="ti ti-circle-plus "></i>&nbsp;Extra [% type | html %] information
       </div>
     </div>
     <div class="p-2">
@@ -211,7 +211,7 @@
     <div class="head">
       <div class="font-bold">
 	  [% IF obj.contacts.size > 1 %][% plural = 's' %][% ELSE %][% plural = '' %][% END %]
-        <span class="las la-users la-lg"></span>&nbsp;[% obj.contacts.size %] contact[% plural %]
+        <span class="ti ti-users"></span>&nbsp;[% obj.contacts.size %] contact[% plural %]
       </div>
     </div>
     <div class="p-3">
@@ -222,7 +222,7 @@
               [% USE Math %]
               [% color_num = Math.int(Math.rand(colors.size)) %]
               <span title="[% contact_user %]">
-                <i class="las la-user-circle" style="font-size: 1.8rem !important;height: inherit !important; width: inherit !important; color: var(--color-[% colors.$color_num %]-500)"></i>
+                <i class="ti ti-user-circle" style="font-size: 1.8rem !important;height: inherit !important; width: inherit !important; color: var(--color-[% colors.$color_num %]-500)"></i>
               </span>
               [% END %]
               </div>

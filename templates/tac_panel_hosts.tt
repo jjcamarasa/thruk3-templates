@@ -40,18 +40,18 @@ color: var(--badge-[% state %]-[% colorbg %]);
 
 <div class="card grow w-1/3 h-auto">
   <div class="head text-xl">
-  <div class="font-bold"><span class="pl-1"><span class="las la-desktop la-lg"></span></span>&nbsp;Hosts</div>
+  <div class="font-bold"><span class="pl-1"><span class="ti ti-device-desktop text-2xl"></span></span>&nbsp;Hosts</div>
   </div>
    [% state='ok' %]
   <div class="flexcol mt-4 mb-4 mx-4">
    <div class="flex border mx-2" style="[% INCLUDE style_bordercolor %]">
     <div class="flex items-center p-5" style="[% INCLUDE style_fgcolor %]">
-	<span class="las la-check-circle la-3x" style="[% INCLUDE style_bgcolortext %]"></span>
+	<span class="ti ti-circle-check text-5xl" style="[% INCLUDE style_bgcolortext %]"></span>
     </div>
   [% hoks = host_stats.up_and_scheduled + host_stats.up_and_disabled_active + host_stats.up_and_disabled_active + host_stats.up_and_disabled_passive %]
   [% IF hoks > 0 %]
   <div class="flex-col grow p-2" style="[% INCLUDE style_cardcolor %]">
-    <div class="flexrow items-center grow">
+    <div class="flexrow items-end grow">
   [% ELSE %]
       <div class="flexrow items-center grow p-2" style="[% INCLUDE style_cardcolor %]">
   [% END %]
@@ -81,7 +81,7 @@ color: var(--badge-[% state %]-[% colorbg %]);
       [% host_health_cls = 'ok' %]
       [% END %]
       <div class="items-center text-sm p-2">
-        <span class="las la-heart"></span>&nbsp;[% host_health %]%
+        <span class="ti ti-heart"></span>&nbsp;[% host_health %]%
       </div>
       <div class="bar">
         <div style="width:[% host_perc %]%; background-color: var(--badge-[% host_health_cls %]-[% colorfg %]) !important;"></div>
@@ -93,17 +93,17 @@ color: var(--badge-[% state %]-[% colorbg %]);
     <div class="block pl-2 text-xl">
       [% IF !empty && host_stats.up_and_scheduled > 0 %]
         <a title="[% host_stats.up_and_scheduled %] Scheduled" href="[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hoststatustypes => 2, hostprops => 1 }) %]">
-        <span class="las la-calendar"></span>[% host_stats.up_and_scheduled %]</a>
+        <span class="ti ti-calendar"></span>[% host_stats.up_and_scheduled %]</a>
       [% END %]
       [% IF strict_passive_mode %]
         [% IF !empty && host_stats.up_and_disabled_active > 0  %]
           <a title="" href="[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hoststatustypes => 2, hostprops => 131088 }) %]">
-          <span class="las la-times-circle"></span>[% host_stats.up_and_disabled_active %] Disabled</a>
+          <span class="ti ti-circle-x"></span>[% host_stats.up_and_disabled_active %] Disabled</a>
         [% END %]
       [% ELSE %]
         [% IF !empty && host_stats.up_and_disabled_active + host_stats.up_and_disabled_passive > 0 %]
           <a title="" href="[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hoststatustypes => 2, hostprops => 16 }) %]">
-          <span class="las la-times-circle"></span>[% host_stats.up_and_disabled_active + host_stats.up_and_disabled_passive %] Disabled</a>
+          <span class="ti ti-circle-x"></span>[% host_stats.up_and_disabled_active + host_stats.up_and_disabled_passive %] Disabled</a>
         [% END %]
       [% END %]
     </div>
@@ -115,7 +115,7 @@ color: var(--badge-[% state %]-[% colorbg %]);
   [% state = 'down' %] 
    <div class="flex border mx-2" style="[% INCLUDE style_bordercolor %]">
     <div class="flex items-center p-5" style="[% INCLUDE style_fgcolor %]">
-    <i class="las la-times-circle la-3x" style="[% INCLUDE style_bgcolortext %]"></i>
+    <i class="ti ti-circle-x text-5xl" style="[% INCLUDE style_bgcolortext %]"></i>
   </div>
   [% downs = host_stats.down_and_unhandled + host_stats.down_and_scheduled + host_stats.down_and_ack + host_stats.down_and_disabled_active + host_stats.down_and_disabled_passive %]
   [% IF downs > 0 %]
@@ -133,20 +133,20 @@ color: var(--badge-[% state %]-[% colorbg %]);
     <div class="block text-xl">
       [% IF !empty && host_stats.down_and_unhandled > 0 %]
         <a title="[% host_stats.down_and_unhandled %] Unhandled Problems" href="[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hoststatustypes => 4, hostprops => 10 }) %]">
-        <span class="las la-question-circle"></span>&nbsp;[% host_stats.down_and_unhandled %]</a>
+        <span class="ti ti-help-circle"></span>&nbsp;[% host_stats.down_and_unhandled %]</a>
       [% END %]
       [% IF !empty && host_stats.down_and_scheduled > 0 %]
         <a title="[% host_stats.down_and_scheduled %] Scheduled" href="[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hoststatustypes => 4, hostprops => 1 }) %]">
-        <span class="las la-calendar"></span>[% host_stats.down_and_scheduled %]</a>
+        <span class="ti ti-calendar"></span>[% host_stats.down_and_scheduled %]</a>
       [% END %]
       [% IF !empty && host_stats.down_and_ack > 0 %]
         <a title="[% host_stats.down_and_ack %] Acknowledged" href="[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hoststatustypes => 4, hostprops => 4 }) %]">
-        <span class="las la-hammer"></span>[% host_stats.down_and_ack %]</a>
+        <span class="ti ti-barrier-block"></span>[% host_stats.down_and_ack %]</a>
       [% END %]
       [% IF strict_passive_mode %]
         [% IF !empty && host_stats.down_and_disabled_active > 0  %]
           <a title="" href="[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hoststatustypes => 4, hostprops => 131088 }) %]">
-          <span class="las la-times-circle"></span>[% host_stats.down_and_disabled_active %] Disabled</a>
+          <span class="ti ti-circle-x"></span>[% host_stats.down_and_disabled_active %] Disabled</a>
         [% END %]
         [% IF !empty && host_stats.down_and_disabled_passive > 0  %]
           <a title="" href="[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hoststatustypes => 4, hostprops => 65552 }) %]">
@@ -155,7 +155,7 @@ color: var(--badge-[% state %]-[% colorbg %]);
       [% ELSE %]
         [% IF !empty && host_stats.down_and_disabled_active + host_stats.down_and_disabled_passive > 0  %]
           <a title="" href="[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hoststatustypes => 4, hostprops => 16 }) %]">
-          <span class="las la-times-circle"></span>[% host_stats.down_and_disabled_active + host_stats.down_and_disabled_passive %] Disabled</a>
+          <span class="ti ti-circle-x"></span>[% host_stats.down_and_disabled_active + host_stats.down_and_disabled_passive %] Disabled</a>
         [% END %]
       [% END %]
     </div>
@@ -168,7 +168,7 @@ color: var(--badge-[% state %]-[% colorbg %]);
   [% state = 'unreachable' %]
    <div class="flex border mx-2" style="[% INCLUDE style_bordercolor %]">
     <div class="flex items-center p-5" style="[% INCLUDE style_fgcolor %]">
-    <i class="las la-unlink la-3x" style="[% INCLUDE style_bgcolortext %]"></i>
+    <i class="ti ti-unlink text-5xl" style="[% INCLUDE style_bgcolortext %]"></i>
   </div>
   [% unreach =  host_stats.unreachable_and_unhandled + host_stats.unreachable_and_scheduled + host_stats.unreachable_and_ack + host_stats.unreachable_and_disabled_active + host_stats.unreachable_and_disabled_passive %]
   [% IF unreach > 0 %]
@@ -180,33 +180,33 @@ color: var(--badge-[% state %]-[% colorbg %]);
 
   <div class="[% thisclass %] grow p-2" style="color: var(--badge-unreachable-[% colorfg %]); background-color: var(--badge-unreachable-[% colorbg %]); ">
     <a title="[% host_stats.unreachable %] Unreachable" class="text-3xl font-bold block" href='[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hoststatustypes => 8 }) %]'>
-    <span class="las la-unlink"></span>[% host_stats.unreachable %]</a>
+    <span class="ti ti-unlink"></span>[% host_stats.unreachable %]</a>
 
     [% IF !empty && host_stats.unreachable_and_unhandled > 0 %]
       <a title="[% host_stats.unreachable_and_unhandled %] Unhandled Problems" href="[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hoststatustypes => 8, hostprops => 10 }) %]">
-      <span class="las la-question-circle"></span>[% host_stats.unreachable_and_unhandled %]</a>
+      <span class="ti ti-help-circle"></span>[% host_stats.unreachable_and_unhandled %]</a>
     [% END %]
     [% IF !empty && host_stats.unreachable_and_scheduled > 0 %]
       <a title="[% host_stats.unreachable_and_scheduled %] Scheduled" href="[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hoststatustypes => 8, hostprops => 1 }) %]">
-      <span class="las la-calendar"></span>[% host_stats.unreachable_and_scheduled %]</a>
+      <span class="ti ti-calendar"></span>[% host_stats.unreachable_and_scheduled %]</a>
     [% END %]
     [% IF !empty && host_stats.unreachable_and_ack > 0 %]
       <a title="[% host_stats.unreachable_and_ack %] Acknowledged" href="[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hoststatustypes => 8, hostprops => 4 }) %]">
-      <span class="las la-hammer"></span>&nbsp;[% host_stats.unreachable_and_ack %]</a>
+      <span class="ti ti-barrier-block"></span>&nbsp;[% host_stats.unreachable_and_ack %]</a>
     [% END %]
     [% IF strict_passive_mode %]
       [% IF !empty && host_stats.unreachable_and_disabled_active > 0  %]
       <a title="[% host_stats.unreachable_and_disabled_active %] Disabled" href="[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hoststatustypes => 8, hostprops => 131088 }) %]">
-      <span class="las la-times-circle"></span>&nbsp;[% host_stats.unreachable_and_disabled_active %]</a>
+      <span class="ti ti-circle-x"></span>&nbsp;[% host_stats.unreachable_and_disabled_active %]</a>
       [% END %]
       [% IF !empty && host_stats.unreachable_and_disabled_passive > 0  %]
         <a title="[% host_stats.unreachable_and_disabled_passive %] Passive" href="[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hoststatustypes => 8, hostprops => 65552 }) %]">
-        <span class="las la-upload"></span>&nbsp;[% host_stats.unreachable_and_disabled_passive %]</a>
+        <span class="ti ti-upload"></span>&nbsp;[% host_stats.unreachable_and_disabled_passive %]</a>
       [% END %]
       [% ELSE %]
         [% IF !empty && host_stats.unreachable_and_disabled_active + host_stats.unreachable_and_disabled_passive> 0  %]
           <a title="[% host_stats.unreachable_and_disabled_active + host_stats.unreachable_and_disabled_passive %] Disabled" href="[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hoststatustypes => 8, hostprops => 16 }) %]">
-          <span class="las la-times-circle"></span>&nbsp;[% host_stats.unreachable_and_disabled_active + host_stats.unreachable_and_disabled_passive %]</a>
+          <span class="ti ti-circle-x"></span>&nbsp;[% host_stats.unreachable_and_disabled_active + host_stats.unreachable_and_disabled_passive %]</a>
         [% END %]
     [% END %]
   </div>
@@ -218,7 +218,7 @@ color: var(--badge-[% state %]-[% colorbg %]);
   [% state = 'pending' %]
    <div class="flex border mx-2" style="[% INCLUDE style_bordercolor %]">
     <div class="flex items-center p-5" style="[% INCLUDE style_fgcolor %]">
-      <i class="las la-hourglass la-3x" style="[% INCLUDE style_bgcolortext %]"></i>
+      <i class="ti ti-hourglass text-5xl" style="[% INCLUDE style_bgcolortext %]"></i>
     </div>
     [% pend = host_stats.pending_and_scheduled + host_stats.pending_and_disabled %]
       [% IF pend > 0 %]
@@ -230,14 +230,14 @@ color: var(--badge-[% state %]-[% colorbg %]);
 
   <div class="[% thisclass %] grow p-2" style="color: var(--badge-pending-[% colorfg %]); background-color: var(--badge-pending-[% colorbg %]); ">
     <a title="[% host_stats.pending   %] Pending" class="text-3xl font-bold block" href='[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hoststatustypes => 1 }) %]'>
-    <span class="las la-hourglass">[% host_stats.pending   %]</a>
+    <span class="ti ti-hourglass">[% host_stats.pending   %]</a>
     [% IF !empty && host_stats.pending_and_scheduled > 0 %]
       <a title="[% host_stats.pending_and_scheduled %] Scheduled" href="[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hoststatustypes => 1, hostprops => 1 }) %]">
-      <span class="las la-calendar"></span>&nbsp;[% host_stats.pending_and_scheduled %]</a>
+      <span class="ti ti-calendar"></span>&nbsp;[% host_stats.pending_and_scheduled %]</a>
     [% END %]
     [% IF !empty && host_stats.pending_and_disabled > 0 %]
       <a title="[% host_stats.pending_and_disabled %] Disabled" href="[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hoststatustypes => 1, hostprops => 16 }) %]">
-      <span class="las la-times-circle"></span>&nbsp;[% host_stats.pending_and_disabled %]</a>
+      <span class="ti ti-circle-x"></span>&nbsp;[% host_stats.pending_and_disabled %]</a>
     [% END %]
   </div>
   </div>
