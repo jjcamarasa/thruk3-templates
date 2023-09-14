@@ -14,7 +14,7 @@
     host_is_flapping              = hostprefix _ 'is_flapping'
     host_scheduled_downtime_depth = hostprefix _ 'scheduled_downtime_depth'
     peer_key                      = host.peer_key
-    passive_icon                  = 'ti ti-arrows-down-to-line'
+    passive_icon                  = 'ti ti-download'
     has_bp                        = has_business_process(host, hostprefix)
     custom_vars                   = get_custom_vars(c, host, hostprefix)
   %]
@@ -36,7 +36,7 @@
       [% IF host.$host_active_checks_enabled == 0   %]<i class="ti ti-x text-red-500 not-clickable text-2xl" title="Checks of this host have been disabled"></i>[% END %]
     [% END %]
     [% END %]
-    [% IF host.$host_is_flapping                  %]<i class="ti ti-shuffle clickable" title='This host is flapping between states' onclick="return(host_comments_popup('[% escape_js(host.$host_name) %]', '[% peer_key %]'))"></i>[% END %]
+    [% IF host.$host_is_flapping                  %]<i class="ti ti-arrows-shuffle clickable" title='This host is flapping between states' onclick="return(host_comments_popup('[% escape_js(host.$host_name) %]', '[% peer_key %]'))"></i>[% END %]
     [% IF host.$host_acknowledged                 %]<i class="ti ti-barrier-block clickable text-2xl text-amber-600" title="This host problem has been acknowledged" onclick="return(host_comments_popup('[% escape_js(host.$host_name) %]', '[% peer_key %]'))"></i>[% END %]
     [% IF host_comment_count > 0                  %]<i class="ti ti-comment clickable" title="This host has [% host_comment_count %] comment associated with it" onclick="return(host_comments_popup('[% escape_js(host.$host_name) %]', '[% peer_key %]'))"></i>[% END %]
     [% IF host.$host_scheduled_downtime_depth > 0 %]<i class="[% IF with_status %]has_downtime[% END %] ti ti-moon clickable" title="This host is currently in a period of scheduled downtime" onclick="return(host_downtimes_popup('[% escape_js(host.$host_name) %]', '[% peer_key %]'))"></i>[% END %]
@@ -49,7 +49,7 @@
     <div class="flex gap-px">
       [% menu = get_action_menu(c, custom_vars.THRUK_ACTION_MENU) %]
       [% IF menu.defined('err') && menu.err %]
-        <i class="ti ti-exclamationyellow" title="[% menu.err | html %]"></i>
+        <i class="ti ti-exclamation-circle yellow" title="[% menu.err | html %]"></i>
       [% ELSE %]
         <script>
         [% IF menu.defined('icons') %]action_images = [% json_encode(menu.icons) %];[% END %]
@@ -73,7 +73,7 @@
 [% BLOCK _status_service_attributes %]
   [%
     peer_key     = service.peer_key
-    passive_icon = 'ti ti-arrows-down-to-line'
+    passive_icon = 'ti ti-download'
     custom_vars  = get_custom_vars(c, service)
   %]
 
@@ -94,7 +94,7 @@
         [% ELSIF service.active_checks_enabled == 0   %][% IF passive_icon != "" %]<i class="[% passive_icon %] not-clickable" title='Active checks of the service have been disabled - only passive checks are being accepted'></i>[% END %][% END %]
       [% END %]
     [% END %]
-    [% IF service.is_flapping                  %]<i class="ti ti-shuffle clickable" title='This service is flapping between states' onclick="return(service_comments_popup('[% escape_js(service.host_name) %]', '[% escape_js(service.description) %]', '[% peer_key %]'))"></i>[% END %]
+    [% IF service.is_flapping                  %]<i class="ti ti-arrows-shuffle clickable" title='This service is flapping between states' onclick="return(service_comments_popup('[% escape_js(service.host_name) %]', '[% escape_js(service.description) %]', '[% peer_key %]'))"></i>[% END %]
     [% IF service.acknowledged                 %]<i class="ti ti-barrier-block clickable text-2xl text-amber-600" title="This service problem has been acknowledged" onclick="return(service_comments_popup('[% escape_js(service.host_name) %]', '[% escape_js(service.description) %]', '[% peer_key %]'))"></i>[% END %]
     [% IF service_comment_count > 0            %]<i class="ti ti-comment clickable" title="This service has [% service_comment_count %] comment associated with it" onclick="return(service_comments_popup('[% escape_js(service.host_name) %]', '[% escape_js(service.description) %]', '[% peer_key %]'))"></i>[% END %]
     [% IF service.scheduled_downtime_depth > 0 %]<i class="ti ti-moon clickable has_downtime" title="This service is currently in a period of scheduled downtime" onclick="return(service_downtimes_popup('[% escape_js(service.host_name) %]', '[% escape_js(service.description) %]', '[% peer_key %]'))"></i>[% END %]
@@ -106,7 +106,7 @@
     <div class="flex gap-px">
         [% menu = get_action_menu(c, custom_vars.THRUK_ACTION_MENU) %]
         [% IF menu.defined('err') && menu.err %]
-          <i class="ti ti-exclamationyellow" title="[% menu.err | html %]"></i>
+          <i class="ti ti-exclamation-circle yellow" title="[% menu.err | html %]"></i>
         [% ELSE %]
           <script>
           [% IF menu.defined('icons') %]action_images = [% json_encode(menu.icons) %];[% END %]
@@ -126,9 +126,6 @@
   </div>
 [% END %]
 
-
-
-
 [% BLOCK _perfdata_table %]
   [% IF perf_bar_mode != 'off' %]
     <div
@@ -144,8 +141,6 @@
   [% END %]
 [% END %]
 
-
-
 [% BLOCK _logs_line %]
 [% SET message = l.message.substr(13) %]
 [% SET has_type = 1 %]
@@ -158,31 +153,31 @@
 [% ELSIF l.type == 'SERVICE NOTIFICATION'         %][% SET pic = "ti ti-bell"   desc = "Service Notification" %]
 [% ELSIF l.type == 'HOST NOTIFICATION'            %][% SET pic = "ti ti-bell"   desc = "Host Notification" %]
 [% ELSIF l.type == 'SERVICE ALERT'                %]
-                            [%    IF l.state == 0 %][% SET pic = "ti ti-checkgreen"        desc = "Service Ok" %]
-                            [% ELSIF l.state == 1 %][% SET pic = "ti ti-exclamationyellow" desc = "Service Warning" %]
-                            [% ELSIF l.state == 2 %][% SET pic = "ti ti-exclamationred"    desc = "Service Critical" %]
-                            [% ELSIF l.state == 3 %][% SET pic = "ti ti-questionorange"    desc = "Service Unknown" %]
+                            [%    IF l.state == 0 %][% SET pic = "ti ti-check green"        desc = "Service Ok" %]
+                            [% ELSIF l.state == 1 %][% SET pic = "ti ti-exclamation-circle yellow" desc = "Service Warning" %]
+                            [% ELSIF l.state == 2 %][% SET pic = "ti ti-exclamation-circle red"    desc = "Service Critical" %]
+                            [% ELSIF l.state == 3 %][% SET pic = "ti ti-question orange"    desc = "Service Unknown" %]
                             [% END %]
 [% ELSIF l.type == 'HOST ALERT'                   %]
-                            [%    IF l.state == 0 %][% SET pic = "ti ti-checkgreen"      desc = "Host Up" %]
-                            [% ELSIF l.state == 1 %][% SET pic = "ti ti-exclamationred"  desc = "Host Down" %]
-                            [% ELSIF l.state == 2 %][% SET pic = "ti ti-exclamationred"  desc = "Host Unreachable" %]
+                            [%    IF l.state == 0 %][% SET pic = "ti ti-check green"      desc = "Host Up" %]
+                            [% ELSIF l.state == 1 %][% SET pic = "ti ti-exclamation-circle red"  desc = "Host Down" %]
+                            [% ELSIF l.state == 2 %][% SET pic = "ti ti-exclamation-circle red"  desc = "Host Unreachable" %]
                             [% END %]
 [% ELSIF l.type == 'SERVICE EVENT HANDLER'        %][% SET pic = "ti ti-rocket"              desc = "Service Event Handler" %]
 [% ELSIF l.type == 'HOST EVENT HANDLER'           %][% SET pic = "ti ti-rocket"              desc = "Host Event Handler" %]
-[% ELSIF l.type == 'EXTERNAL COMMAND'             %][% SET pic = "ti ti-hand-point-right"    desc = "External Command" %]
-[% ELSIF l.type == 'PASSIVE SERVICE CHECK'        %][% SET pic = "ti ti-arrows-down-to-line" desc = "Passive Service Check" %]
-[% ELSIF l.type == 'PASSIVE HOST CHECK'           %][% SET pic = "ti ti-arrows-down-to-line" desc = "Passive Host Check" %]
+[% ELSIF l.type == 'EXTERNAL COMMAND'             %][% SET pic = "ti ti-message"    desc = "External Command" %]
+[% ELSIF l.type == 'PASSIVE SERVICE CHECK'        %][% SET pic = "ti ti-download" desc = "Passive Service Check" %]
+[% ELSIF l.type == 'PASSIVE HOST CHECK'           %][% SET pic = "ti ti-download" desc = "Passive Host Check" %]
 
 [% ELSIF l.type == 'SERVICE FLAPPING ALERT'       %]
-          [%    IF l.message.match(';STARTED;')   %][% SET pic = "ti ti-shuffle"     desc = "Service started flapping" %]
-          [% ELSIF l.message.match(';STOPPED;')   %][% SET pic = "ti ti-shuffle"     desc = "Service stopped flapping" %]
-          [% ELSIF l.message.match(';DISABLED;')  %][% SET pic = "ti ti-shuffle"     desc = "Service flap detection disabled" %]
+          [%    IF l.message.match(';STARTED;')   %][% SET pic = "ti ti-arrows-shuffle"     desc = "Service started flapping" %]
+          [% ELSIF l.message.match(';STOPPED;')   %][% SET pic = "ti ti-arrows-shuffle"     desc = "Service stopped flapping" %]
+          [% ELSIF l.message.match(';DISABLED;')  %][% SET pic = "ti ti-arrows-shuffle"     desc = "Service flap detection disabled" %]
           [% END %]
 [% ELSIF l.type == 'HOST FLAPPING ALERT'          %]
-          [%    IF l.message.match(';STARTED;')   %][% SET pic = "ti ti-shuffle"     desc = "Host started flapping" %]
-          [% ELSIF l.message.match(';STOPPED;')   %][% SET pic = "ti ti-shuffle"     desc = "Host stopped flapping" %]
-          [% ELSIF l.message.match(';DISABLED;')  %][% SET pic = "ti ti-shuffle"     desc = "Host flap detection disabled" %]
+          [%    IF l.message.match(';STARTED;')   %][% SET pic = "ti ti-arrows-shuffle"     desc = "Host started flapping" %]
+          [% ELSIF l.message.match(';STOPPED;')   %][% SET pic = "ti ti-arrows-shuffle"     desc = "Host stopped flapping" %]
+          [% ELSIF l.message.match(';DISABLED;')  %][% SET pic = "ti ti-arrows-shuffle"     desc = "Host flap detection disabled" %]
           [% END %]
 [% ELSIF l.type == 'SERVICE DOWNTIME ALERT'       %]
          [%    IF l.message.match(';STARTED;')    %][% SET pic = "ti ti-moon"        desc = "Service entered a period of scheduled downtime" %][% SET info = "STARTED" %]

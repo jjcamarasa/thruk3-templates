@@ -33,7 +33,7 @@
             <input type='hidden' name='backend' value="[% com.peer_key %]">
             <input type="hidden" name="CSRFtoken" value="[% get_user_token(c) %]">
             <button class="iconOnly submit mx-auto">
-              <i class="ti ti-trash text-base" title='Delete This Comment'></i>
+              <i class="ti ti-trash hover-text-red text-base" title='Delete This Comment'></i>
             </button>
           </form>
         </td>

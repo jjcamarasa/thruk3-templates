@@ -54,7 +54,7 @@
           [% UNLESS command_disabled(c, '21') %]
             <div>
               <a class="button hover-red js-modal-command-link" href="cmd.cgi?cmd_typ=21&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
-                <i class="ti ti-trash mr-1"></i>Delete all
+                <i class="ti ti-trash hover-text-red mr-1"></i>Delete all
               </a>
             </div>
           [% END %]
@@ -85,7 +85,7 @@
         [% IF downtimes %]
           [% UNLESS command_disabled(c, '5') %]
             <a class="button hover-red js-modal-command-link" href="cmd.cgi?quick_command=5&amp;confirm=no&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]&amp;referer=[% as_url_arg(short_uri(c, {referer => 'undef'})) %]">
-              <i class="ti ti-trash mr-1"></i>Delete all
+              <i class="ti ti-trash hover-text-red mr-1"></i>Delete all
             </a>
           [% END %]
         [% END %]

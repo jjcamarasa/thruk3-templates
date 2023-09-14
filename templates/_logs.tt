@@ -1,0 +1,52 @@
+﻿[% PROCESS _blocks.tt %]
+
+<div class="flexrow flex-nowrap gap-1 my-2">
+  [% PROCESS _add_bookmark.tt style="detail" %]
+  [% PROCESS _show_link.tt style="detail" %]
+  [% PROCESS _excel_export.tt columns=[ 'Time', 'Site', 'Event', 'Event Detail', 'Hostname', 'Service Description', 'Info', 'Message' ] with_custom_vars=0 %]
+</div>
+
+<div class="card w-full min-w-[420px]">
+  <div class="mainTableHeader">
+    <div></div>
+    <div>
+      [% PROCESS _pager.tt %]
+    </div>
+    <div>
+      [% PROCESS _pager_per_page.tt %]
+    </div>
+  </div>
+
+  <div class="mainTable [% IF main_table_full %]fullsize[% END %] border-t-0" style="max-height: calc(100vh - 220px);">
+    [% SET last_hour = '' %]
+    [% FOREACH l = data %]
+      [% this_hour = format_date(l.time, '%Y-%m-%d  %H') _ ':00' %]
+      [% IF this_hour != last_hour %]
+        [% SET last_hour = this_hour %]
+
+        [% IF ! loop.first %]</div>[% END %]
+        <div class="sticky top-0 bgTable">
+          <div class='flex flex-nowrap'>
+            <div class="flex-grow mt-1.5"><hr class="w-full"></div>
+            <div class='w-40 mx-4 text-center font-semibold'>[% format_date(l.time, datetime_format_log) _ ':00' %]</div>
+            <div class="flex-grow mt-1.5"><hr class="w-full"></div>
+          </div>
+        </div>
+        <div class='py-0'>
+      [% END %]
+
+      [% PROCESS _logs_line %]
+      <div class="flex gap-2 py-1 px-2 hoverable">
+        <span class="w-4"><i class='[% pic %]' title='[% desc %]'></i></span>
+        <span class="whitespace-nowrap">[[% format_date(l.time, datetime_format) %]]</span>
+        [% IF showsites %]<span class="whitespace-nowrap">[[% l.peer_name %]]</span>[% END %]
+        <span class="truncate">[% IF escape_html_tags %][% escape_html(message) %][% ELSE %][% message %][% END %]</span>
+      </div>
+    [% END %]
+
+    [% IF data.size and data.size > 0 %]</div>[% END %]
+  </div>
+  <div class="mainTableFooter">
+    [% PROCESS _pager_total_items.tt %]
+  </div>
+</div>

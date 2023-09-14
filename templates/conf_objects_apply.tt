@@ -140,7 +140,7 @@
                   <td></td>
                   <td class="px-2">
                     <button class="submit w-full hover-red" onclick="if(confirm('really discard all unsaved changes?')) { send_form_in_background_and_reload(this, { discard: true }); return false; } else { return false; }">
-                      <i class="ti ti-trash-alt"></i>
+                      <i class="ti ti-trash"></i>
                       discard all unsaved changes
                     </button>
                   </td>

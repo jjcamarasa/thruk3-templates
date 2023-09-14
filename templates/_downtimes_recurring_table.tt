@@ -70,7 +70,7 @@
               <input type="hidden" name="nr" value="[% d.file | html %]">
               <input type="hidden" name="type" value="6">
               <input type="hidden" name="CSRFtoken" value="[% get_user_token(c) %]">
-              <a href="#" onclick="if(confirm('Do you really want to delete this downtime?')) { return send_form_in_background_and_reload(this, {recurring: 'remove'}) }; return false;"><i class="ti ti-trash text-sm" title='Delete recurring downtime'></i></a>
+              <a href="#" onclick="if(confirm('Do you really want to delete this downtime?')) { return send_form_in_background_and_reload(this, {recurring: 'remove'}) }; return false;"><i class="ti ti-trash hover-text-red text-sm" title='Delete recurring downtime'></i></a>
             </form>
           </div>
         </td>

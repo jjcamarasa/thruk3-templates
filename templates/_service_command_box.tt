@@ -60,7 +60,7 @@
             </a>
             [% ELSE %]
             <a class="js-modal-command-link" href="cmd.cgi?cmd_typ=34&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
-              <i class="ti ti-comment"></i>&nbsp;Acknowledge this problem
+              <i class="ti ti-message-exclamation"></i>&nbsp;Acknowledge this problem
             </a>
             [% END %]
           </div>

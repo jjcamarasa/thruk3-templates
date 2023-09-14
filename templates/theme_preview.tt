@@ -162,7 +162,7 @@
       <div><a class="flex" href="#"><i class="ti ti-thunderstorm"></i>ti ti-thunderstorm</a></div>
       <div><a class="flex" href="#"><i class="ti ti-square-x-filled text-red-600"></i>ti ti-x</a></div>
       <div><a class="flex" href="#"><i class="ti ti-circle-x"></i>ti ti-circle-x</a></div>
-      <div><a class="flex" href="#"><i class="ti ti-trash-alt"></i>ti ti-trash-alt</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-trash"></i>ti ti-trash</a></div>
       <div><a class="flex" href="#"><i class="ti ti-trowel"></i>ti ti-trowel</a></div>
       <div><a class="flex" href="#"><i class="ti ti-user"></i>ti ti-user</a></div>
       <div><a class="flex" href="#"><i class="ti ti-users"></i>ti ti-users</a></div>

@@ -206,7 +206,7 @@
                 <th class="align-top">Remove</th>
                 <td>
                   <div class="flexcol gap-1">
-                    <button class="w-fit hover-red" name="send" value="remove_user_profile" [% IF !profile_file_exists %] disabled[% END %]><i class="uil uil-trash-alt"></i>remove user profile data</button>
+                    <button class="w-fit hover-red" name="send" value="remove_user_profile" [% IF !profile_file_exists %] disabled[% END %]><i class="ti ti-trash"></i>remove user profile data</button>
                     <span>Location: [% profile_file %][% IF !profile_file_exists %]<i class="ml-3">(profile file does not exist)</i>[% END %]</span>
                   </div>
                 </td>

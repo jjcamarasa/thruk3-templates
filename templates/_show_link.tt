@@ -5,7 +5,9 @@
 <div class="card shadow-float absolute z-20 top-7 left-0" style="display: none;" id="show_link">
     <div class="head justify-between">
       <h3>Permanent link to this page</h3>
-      <button class="iconOnly btn-sm hover-red" onClick="toggleElement('show_link'); return false;"><i class="ti ti-square-x-filled text-red-600"></i></button>
+      <button class="iconOnly" onClick="toggleElement('show_link'); return false;">
+        <i class="ti ti-square-x-filled text-red-600"></i>
+      </button>
     </div>
     <div class="body">
       [% IF style != 'combined' %]
@@ -13,7 +15,9 @@
       [% END %]
       <div class="flexrow flex-nowrap gap-1">
         <input type="text" size="60" value="" id="url_input" onfocus="updateExportLink(this); this.select()" readonly>
-        <button class="iconOnly px-1 copy_button hover-lime" onclick="copyCode(event, 'url_input'); return false;"><i class="ti ti-copy" title="Copy to clipboard"></i></button>
+        <button class="iconOnly px-1 copy_button hover-green" onclick="copyCode(event, 'url_input'); return false;">
+          <i class="ti ti-copy" title="Copy to clipboard"></i>
+        </button>
       </div>
       [% IF style != 'combined' %]
         </form>
