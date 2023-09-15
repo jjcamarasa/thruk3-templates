@@ -19,7 +19,7 @@
       [% IF force_delete %]
         <tr>
           <td colspan=2>
-            [% PROCESS _button btn = {
+            [% PROCESS small_button btn = {
               skipform => 1,
               data     => { sub => 'objects', 'data.id' => object.get_id(), force => 1, action => "delete", CSRFtoken => get_user_token(c) },
               button   => { class => 'mx-auto my-5 hover-red', html => "<i class='ti ti-trash'></\i> Remove this " _ object.get_type().ucfirst _ " along with all selected references" },
@@ -121,7 +121,7 @@
           <tr>
             <td style="text-align:center" colspan=2>
               <br>
-              [% PROCESS _button btn = {
+              [% PROCESS small_button btn = {
                 form   => { action => 'conf.cgi', method => 'GET' },
                 data   => { sub => 'objects', 'data.id' => object.get_id() },
                 button => { class => '', text => "Continue editing " _ object.get_type().ucfirst },

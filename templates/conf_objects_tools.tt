@@ -29,12 +29,12 @@
                   <div><i class="ti ti-exclamation-mark small text-orange-600 mr-1"></i>found [% results.size %] possible improvements:</div>
                   <div class="w-40 flex justify-end">
                     [% IF toolobj.defined("fix_all_serial") && toolobj.defined("fix_all_serial") %]
-                      [% PROCESS _button btn = {
+                      [% PROCESS small_button btn = {
                         form   => { action => "#", style => "padding-left: 3px;" },
                         button => { class => 'w-28', onclick => "return conf_tool_cleanup(this, 'fix_all_serial')", html => "<i class='ti ti-hammer'><\/i>" _ toolobj.fixlink _ " all" },
                       }%]
                     [% ELSE %]
-                      [% PROCESS _button btn = {
+                      [% PROCESS small_button btn = {
                         form   => { action => "conf.cgi" },
                         data   => { sub => 'objects', tools => tool, cleanup => 1, ident => 'all' },
                         button => { class => 'w-28', onclick => "return conf_tool_cleanup(this, 'fix_all_serial')", html => "<i class='ti ti-hammer'><\/i>" _ toolobj.fixlink _ " all" },
@@ -58,7 +58,7 @@
                     <td>[% r.message %]</td>
                     <td>
                       <div class="flexrow gap-px flex-nowrap">
-                        [% PROCESS _button btn = {
+                        [% PROCESS small_button btn = {
                           form   => { action => "conf.cgi", style => "padding-left: 3px;" },
                           data   => { sub => 'objects', tools => tool, ignore => 1, ident => r.ident },
                           button => { class => 'w-20', onclick => "return conf_tool_cleanup(this, '', true)", html => "<i class='ti ti-eye-off'><\/i>ignore" },
@@ -66,7 +66,7 @@
                         [% IF r.id  && r.obj.file.readonly %]
                           file is read-only
                         [% ELSIF r.cleanable %]
-                          [% PROCESS _button btn = {
+                          [% PROCESS small_button btn = {
                             form   => { action => "conf.cgi" },
                             data   => { sub => 'objects', tools => tool, cleanup => 1, ident => r.ident },
                             button => { class => 'w-28 conf_cleanup_button_fix', onclick => "return conf_tool_cleanup(this, '')", html => "<i class='ti ti-hammer'><\/i>" _ toolobj.fixlink },

@@ -6848,11 +6848,21 @@ button.btn-primary:hover, .btn.btn-primary:hover {
     padding: 1.5rem;
 }
 
+.text-orange-600 {
+    color: var(--color-orange-600);
+}
+.text-orange-700 {
+    color: var(--color-orange-700);
+}
+.text-orange-800 {
+    color: var(--color-orange-800);
+}
+
 .text-neutral-600 {
     color: var(--color-neutral-600);
 }
 
-.text-neutral-600 {
+.text-neutral-800 {
     color: var(--color-neutral-800);
 }
 
