@@ -12,8 +12,8 @@ var objects_type        = "[% objects_type %]";
 <div class="card w-full h-full">
   <div class="head justify-between">
     <div class="buttongroup">
-      <button class="header-button" name="layout" id="layout_icons"[% IF 0 && tree_objects_layout == "icons" %] checked[% END %] title="show objects with icons"><i class="uil uil-picture"></i></button>
-      <button class="header-button" name="layout" id="layout_table"[% IF 0 && tree_objects_layout == "table" %] checked[% END %] title="show objects with details"><i class="uil uil-table"></i></button>
+      <button class="header-button" name="layout" id="layout_icons"[% IF 0 && tree_objects_layout == "icons" %] checked[% END %] title="show objects with icons"><i class="ti ti-photo"></i></button>
+      <button class="header-button" name="layout" id="layout_table"[% IF 0 && tree_objects_layout == "table" %] checked[% END %] title="show objects with details"><i class="ti ti-table"></i></button>
     </div>
     <input type="text" id="search_filter" onkeyup="filter_objects(this.id)" onchange="filter_objects(this.id)" placeholder="filter objects" class="deletable">
   </div>

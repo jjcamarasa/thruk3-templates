@@ -134,7 +134,7 @@
       <input type="text" class="obj_[% key %] obj_[% type | html %]_[% key %] w-full" name="obj.[% key %]" id="id_[% key %][% nr %]" value="[% IF obj_conf.defined(key) %][% value.join(', ') | html %][% END %]"[% IF defaults.$key.exists('link') %] onfocus="this.click()" onclick="ajax_search.init(this, '[% defaults.$key.link %]', {url:'[% url %]', striped:false, autosubmit:false, list: '\\s*[,!\+]+\\s*'[% IF key == "use" %], templates:'templates'[% END %][% IF has_wizard %],button_links:[{text: 'use list wizard', id:'id_[% key %]_wzd[% nr %]_btn' , icon:'fa-wand-magic-sparkles' }][% END %]})"[% END %]>
       [% IF has_wizard %]
         <button class="px-1" name="[% wzd_args | html %]" onclick="init_tool_list_wizard('[% id %]_btn', this.name); return false;" title="open list editor">
-          <i class="uil uil-sliders-v mx-0"></i>
+          <i class="ti ti-adjustments mx-0"></i>
         </button>
       [% END %]
     </div>

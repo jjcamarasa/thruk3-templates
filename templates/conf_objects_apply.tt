@@ -24,7 +24,7 @@
                 <tr>
                   <th class="px-2 align-top">Config Parse Errors</th>
                   <td class="align-top">
-                    <i class="ti ti-alert-circle-filled yellow text-2xl" title='there are parse errors'></i>
+                    <i class="ti ti-alert-circle-filled text-orange-600 text-2xl" title='there are parse errors'></i>
                   </td>
                   <td class="px-2">
                     <ul class="overflow-x-auto max-w-[60vw]">
@@ -43,7 +43,7 @@
                 </th>
                 <td>
                   [% IF needs_commit %]
-                    <i class="ti ti-alert-circle-filled yellow text-2xl" title='Config changes needs to be saved'></i>
+                    <i class="ti ti-alert-circle-filled text-orange-600 text-2xl" title='Config changes needs to be saved'></i>
                   [% END %]
                 </td>
                 <td class="px-2">
@@ -66,7 +66,7 @@
                 </th>
                 <td class="align-top">
                   [% IF needs_commit %]
-                    <i class="ti ti-alert-circle-filled yellow text-2xl" title='Config changes needs to be saved'></i>
+                    <i class="ti ti-alert-circle-filled text-orange-600 text-2xl" title='Config changes needs to be saved'></i>
                   [% END %]
                 </td>
                 <td class="px-2">
@@ -94,7 +94,7 @@
                 </th>
                 <td>
                   [% IF last_changed %]
-                    <i class='ti ti-alert-circle-filled yellow text-2xl' title='Core needs to be reloaded'></i>
+                    <i class='ti ti-alert-circle-filled text-orange-600 text-2xl' title='Core needs to be reloaded'></i>
                   [% END %]
                 </td>
                 <td class="px-2">
@@ -116,7 +116,7 @@
                 </th>
                 <td>
                   [% IF last_changed %]
-                    <i class='ti ti-alert-circle-filled yellow text-2xl' title='Core needs to be reloaded'></i>
+                    <i class='ti ti-alert-circle-filled text-orange-600 text-2xl' title='Core needs to be reloaded'></i>
                   [% END %]
                 </td>
                 <td class="px-2">

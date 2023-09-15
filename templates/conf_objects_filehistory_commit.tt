@@ -6,7 +6,7 @@
       <div class="w-44 text-right">
         [% IF next %]
           <a class="button header-button" href="conf.cgi?sub=objects&amp;action=history&id=[% next.id %]&dir=[% dir | uri %]">
-            <i class="uil uil-angle-double-left mr-1"></i>
+            <i class="ti ti-corner-down-left-double mr-1"></i>
             [% date_format(c, next.date) %]
           </a>
         [% END %]
@@ -16,7 +16,7 @@
         [% IF previous %]
           <a class="button header-button" href="conf.cgi?sub=objects&amp;action=history&id=[% previous.id %]&dir=[% dir | uri %]">
             [% date_format(c, previous.date) %]
-            <i class="uil uil-angle-double-right ml-1"></i>
+            <i class="ti ti-corner-down-right-double ml-1"></i>
           </a>
         [% END %]
       </div>

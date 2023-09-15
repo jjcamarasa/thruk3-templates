@@ -7,7 +7,7 @@
       [% IF type != "apply" %]
         <div class="flex flex-nowrap">
           <a href="conf.cgi?sub=objects&amp;action=new&amp;type=[% type | uri %]">
-            <i class="ti ti-plus"></i>
+            <i class="ti ti-plus mr-1"></i>
             Create a new [% type | html %]
           </a>
           [% IF type == "host" || type == "service" || type == "contact" %]
@@ -21,28 +21,28 @@
         <hr class="mt-0.5 pt-0.5">
         <div>
           <a href="status.cgi?style=[% IF type == "host" %]host[% END %]detail&dfl_s0_type=[% type | html %]&dfl_s0_op=%3D&dfl_s0_value=[% object.get_name() | html %]">
-            <i class="ti ti-search"></i>
+            <i class="ti ti-search mr-1"></i>
             Show live objects
           </a>
         </div>
         [% IF type == 'host' && !object.is_template() %]
         <div>
           <a href="conf.cgi?sub=objects&amp;action=listservices&amp;data.id=[% object.get_id() %]">
-            <i class="uil uil-bars"></i>
+            <i class="ti ti-menu-2 mr-1"></i>
             Show services for this host
           </a>
         </div>
         [% END %]
         <div>
           <a href="conf.cgi?sub=objects&amp;action=listref&amp;data.id=[% object.get_id() %]">
-            <i class="uil uil-arrows-turn-to-dots"></i>
+            <i class="ti ti-arrow-right-circle mr-1"></i>
             Show references
           </a>
         </div>
         [% IF has_history %]
         <div>
           <a href='conf.cgi?sub=objects&amp;action=history&data.id=[% object.get_id() %]'>
-            <i class="uil uil-code-commit"></i>
+            <i class="ti ti-arrow-down-circle mr-1"></i>
             Git Blame
           </a>
         </div>
@@ -55,7 +55,7 @@
             <input type='hidden' name='data.id' value="[% object.get_id() %]">
             <input type="hidden" name="CSRFtoken" value="[% get_user_token(c) %]">
             <a href="conf.cgi?sub=objects&amp;data.id=[% object.get_id() %]" onClick="jQuery(this).closest('FORM').submit(); return false;">
-              <i class="uil uil-clone"></i>
+              <i class="ti ti-copy mr-1"></i>
               Clone this [% type | html %]
             </a>
           </form>
@@ -68,7 +68,7 @@
             <input type='hidden' name='data.id' value="[% object.get_id() %]">
             <input type="hidden" name="CSRFtoken" value="[% get_user_token(c) %]">
             <a href="conf.cgi?sub=objects&amp;data.id=[% object.get_id() %]" onClick="jQuery(this).closest('FORM').submit(); return false;">
-              <i class="uil uil-circle-play"></i>
+              <i class="ti ti-player-play mr-1"></i>
               Enable this [% type | html %]
             </a>
           </form>
@@ -81,7 +81,7 @@
             <input type='hidden' name='data.id' value="[% object.get_id() %]">
             <input type="hidden" name="CSRFtoken" value="[% get_user_token(c) %]">
             <a href="conf.cgi?sub=objects&amp;data.id=[% object.get_id() %]" onClick="jQuery(this).closest('FORM').submit(); return false;">
-              <i class="uil uil-circle-pause"></i>
+              <i class="ti ti-player-pause mr-1"></i>
               Disable this [% type | html %] temporarily
             </a>
           </form>
@@ -94,7 +94,7 @@
             <input type='hidden' name='data.id' value="[% object.get_id() %]">
             <input type="hidden" name="CSRFtoken" value="[% get_user_token(c) %]">
             <a href="conf.cgi?sub=objects&amp;data.id=[% object.get_id() %]" onClick="jQuery(this).closest('FORM').submit(); return false;">
-              <i class="uil uil-trash"></i>
+              <i class="ti ti-trash mr-1"></i>
               Delete this [% type | html %]
             </a>
           </form>
@@ -106,21 +106,21 @@
             <input type='hidden' name='data.id' value="[% object.get_id() %]">
             <input type="hidden" name="CSRFtoken" value="[% get_user_token(c) %]">
             <a href="conf.cgi?sub=objects&amp;data.id=[% object.get_id() %]" onClick="jQuery(this).closest('FORM').submit(); return false;">
-              <i class="uil uil-reply-all"></i>
+              <i class="ti ti-corner-up-left-double mr-1"></i>
               Revert this [% type | html %]
             </a>
           </form>
         </div>
         <div>
           <a href="conf.cgi?sub=objects&amp;action=move&amp;data.id=[% object.get_id() %]">
-            <i class="ti ti-truck"></i>
+            <i class="ti ti-truck mr-1"></i>
             Move [% type | html %] to file
           </a>
         </div>
         [% IF type == 'contact' %]
         <div>
           <a href="conf.cgi?sub=users&amp;action=change&amp;data.username=[% object.get_name() | uri %]">
-            <i class="uil uil-user-pen"></i>
+            <i class="ti ti-user-edit mr-1"></i>
             Edit CGI Permissions
           </a>
         </div>
@@ -131,20 +131,20 @@
         [% END %]
         <div>
           <a href="conf.cgi?sub=objects&amp;action=browser[% IF file_link %]#[% file_link | uri %][% END %]">
-            <i class="ti ti-folder-open"></i>
+            <i class="ti ti-folder-open mr-1"></i>
             Browse filesystem
           </a>
         </div>
         <div>
           <a href="conf.cgi?sub=objects&amp;action=tree">
-            <i class="uil uil-folder-tree"></i>
+            <i class="ti ti-binary-tree mr-1"></i>
             Objects Tree
           </a>
         </div>
         [% IF has_history %]
         <div>
           <a href="conf.cgi?sub=objects&amp;action=history">
-            <i class="uil uil-clock-rotate-left"></i>
+            <i class="ti ti-arrow-back-up mr-1"></i>
             History
           </a>
         </div>

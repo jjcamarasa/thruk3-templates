@@ -28,7 +28,7 @@
           </div>
         </div>
         <div class="w-5 flex items-center">
-          <i class="uil uil-angle-right"></i>
+          <i class="ti ti-corner-down-right"></i>
         </div>
       </a>
     </div>

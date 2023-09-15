@@ -4,7 +4,7 @@
     <div class="head justify-between">
       <div class="w-20">
         <a class="button header-button" href='conf.cgi?sub=objects&amp;type=[% object.get_type() %]&amp;data.id=[% object.get_id %]'>
-          <i class="uil uil-angle-double-left"></i>Back
+          <i class="ti ti-corner-down-left-double"></i>Back
         </a>
       </div>
       <h3>Services for host [% object.get_name() %]</h3>

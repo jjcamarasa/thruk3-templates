@@ -9,7 +9,7 @@
     <div class="head justify-between">
       <div class="w-20">
         <a class="button header-button" href='conf.cgi?sub=objects&amp;type=[% object.get_type() %]&amp;data.id=[% object.get_id %]'>
-          <i class="uil uil-angle-double-left"></i>Back
+          <i class="ti ti-corner-down-left-double"></i>Back
         </a>
       </div>
       <h3>References for [% object.get_type() | ucfirst +%] [%+ object.get_name() %]</h3>
@@ -29,7 +29,7 @@
       [% END %]
       [% IF show_incoming %]
         <tr>
-          <th class='text-center pt-2 border-t borderDefault' colspan=2><h4><i class="uil uil-arrow-right-to-bracket mr-1"></i>Incoming references</h4></th>
+          <th class='text-center pt-2 border-t borderDefault' colspan=2><h4><i class="ti ti-arrow-bar-to-right-bar mr-1"></i>Incoming references</h4></th>
         </tr>
         [% FOREACH t = incoming.keys.sort %]
           <tr>
@@ -43,7 +43,7 @@
                     <input type="checkbox" name="ref" value="[% inc_ref.id %]" [% IF inc_ref.readonly %]disabled[% ELSE %]checked[% END %]>
                     <a href="#" onclick="jQuery(this).prev().click(); jQuery('input[name=none]').prop('checked', false); return false;">[% name | html %]</a>
                     <a href="conf.cgi?sub=objects&amp;data.id=[% inc_ref.id %]">
-                      <i class="uil uil-link small"></i>
+                      <i class="ti ti-link small"></i>
                     </a>
                     [% IF inc_ref.readonly %] <span class="textHINT"> (read-only)</span>[% END %]
                   </li>
@@ -82,7 +82,7 @@
       [% IF show_outgoing %]
         [% IF !force_delete %]
           <tr>
-            <th class="text-center pt-2 border-t borderDefault" colspan=2><h4><i class="uil uil-right-from-bracket mr-1"></i>Outgoing references</h4></th>
+            <th class="text-center pt-2 border-t borderDefault" colspan=2><h4><i class="ti ti-arrow-right-bar mr-1"></i>Outgoing references</h4></th>
           </tr>
           [% FOREACH t = outgoing.keys.sort %]
             <tr>
@@ -107,11 +107,11 @@
 
       [% IF other_refs.keys.size > 0 %]
         <tr>
-          <th class="text-center pt-2 border-t borderDefault" colspan=2><h4><i class="uil uil-arrow-turn-down mr-1"></i>Outside references</h4></th>
+          <th class="text-center pt-2 border-t borderDefault" colspan=2><h4><i class="ti ti-corner-right-down mr-1"></i>Outside references</h4></th>
         </tr>
         [% IF force_delete %]
           <tr>
-            <td colspan=2 class="text-center textHINT"><i class="uil uil-exclamationsmall yellow"></i> These references should be checked manually.</td>
+            <td colspan=2 class="text-center textHINT"><i class="ti ti-exclamation-mark small text-orange-600"></i> These references should be checked manually.</td>
           </tr>
         [% END %]
         [% IF show_renamed %]
@@ -137,7 +137,7 @@
             <td>
               <ul>
               [% FOREACH r = other_refs.$t %]
-                <li><a class="link" href="[% r.link %]" target="_blank"><i class="uil uil-external-link-alt text-sm"></i> [% r.name | html %] ([% r.details | html %])</a></li>
+                <li><a class="link" href="[% r.link %]" target="_blank"><i class="ti ti-external-link text-sm"></i> [% r.name | html %] ([% r.details | html %])</a></li>
               [% END %]
               </ul>
             </td>

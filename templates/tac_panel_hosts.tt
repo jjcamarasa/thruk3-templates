@@ -120,17 +120,17 @@ color: var(--badge-[% state %]-[% colorbg %]);
   [% downs = host_stats.down_and_unhandled + host_stats.down_and_scheduled + host_stats.down_and_ack + host_stats.down_and_disabled_active + host_stats.down_and_disabled_passive %]
   [% IF downs > 0 %]
     [% thisclass = "flex-col" %]
-    [% numberclass = "mt-2" %]
+
   [% ELSE %]
     [% thisclass = "flex items-center" %]
   [% END %]
 
   <div class="[% thisclass %] grow p-2" style="color: var(--badge-down-[% colorfg %]); background-color: var(--badge-down-[% colorbg %]); ">
-    <a class="text-3xl font-bold block" href='[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hoststatustypes => 4 }) %]'>
+    <a class="text-3xl font-bold block mt-2" href='[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hoststatustypes => 4 }) %]'>
     [% host_stats.down %] Down</a>
 
   [% IF downs > 0 %]
-    <div class="block text-xl">
+    <div class="block">
       [% IF !empty && host_stats.down_and_unhandled > 0 %]
         <a title="[% host_stats.down_and_unhandled %] Unhandled Problems" href="[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hoststatustypes => 4, hostprops => 10 }) %]">
         <span class="ti ti-help-circle"></span>&nbsp;[% host_stats.down_and_unhandled %]</a>
@@ -173,13 +173,12 @@ color: var(--badge-[% state %]-[% colorbg %]);
   [% unreach =  host_stats.unreachable_and_unhandled + host_stats.unreachable_and_scheduled + host_stats.unreachable_and_ack + host_stats.unreachable_and_disabled_active + host_stats.unreachable_and_disabled_passive %]
   [% IF unreach > 0 %]
     [% thisclass = "flex-col" %]
-    [% numberclass = "mt-2" %]
   [% ELSE %]
     [% thisclass = "flex items-center" %]
   [% END %]
 
   <div class="[% thisclass %] grow p-2" style="color: var(--badge-unreachable-[% colorfg %]); background-color: var(--badge-unreachable-[% colorbg %]); ">
-    <a title="[% host_stats.unreachable %] Unreachable" class="text-3xl font-bold block" href='[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hoststatustypes => 8 }) %]'>
+    <a title="[% host_stats.unreachable %] Unreachable" class="text-3xl font-bold block mt-2" href='[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hoststatustypes => 8 }) %]'>
     <span class="ti ti-unlink"></span>[% host_stats.unreachable %]</a>
 
     [% IF !empty && host_stats.unreachable_and_unhandled > 0 %]
@@ -222,14 +221,13 @@ color: var(--badge-[% state %]-[% colorbg %]);
     </div>
     [% pend = host_stats.pending_and_scheduled + host_stats.pending_and_disabled %]
       [% IF pend > 0 %]
-        [% thisclass = "flex-col" %]
-        [% numberclass = "mt-2" %]
+        [% thisclass = "flex-col" %]    
       [% ELSE %]
         [% thisclass = "flex items-center" %]
       [% END %]
 
   <div class="[% thisclass %] grow p-2" style="color: var(--badge-pending-[% colorfg %]); background-color: var(--badge-pending-[% colorbg %]); ">
-    <a title="[% host_stats.pending   %] Pending" class="text-3xl font-bold block" href='[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hoststatustypes => 1 }) %]'>
+    <a title="[% host_stats.pending   %] Pending" class="text-3xl font-bold block mt-2" href='[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hoststatustypes => 1 }) %]'>
     <span class="ti ti-hourglass">[% host_stats.pending   %]</a>
     [% IF !empty && host_stats.pending_and_scheduled > 0 %]
       <a title="[% host_stats.pending_and_scheduled %] Scheduled" href="[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hoststatustypes => 1, hostprops => 1 }) %]">

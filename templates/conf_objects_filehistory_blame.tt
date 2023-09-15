@@ -5,7 +5,7 @@
     <div class="head flexrow justify-between">
       <div class="w-20 text-right">
         <a class="button header-button" href="conf.cgi?sub=objects&amp;data.id=[% object.get_id() %]">
-          <i class="uil uil-angle-double-left mr-1"></i>
+          <i class="ti ti-corner-down-left-double mr-1"></i>
           back
         </a>
       </div>

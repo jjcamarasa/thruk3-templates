@@ -26,18 +26,18 @@
               [% ELSE %]
                 <div class="flexrow justify-between flex-nowrap whitespace-nowrap p-2">
                   <div class="w-40"></div>
-                  <div><i class="uil uil-exclamationsmall yellow mr-1"></i>found [% results.size %] possible improvements:</div>
+                  <div><i class="ti ti-exclamation-mark small text-orange-600 mr-1"></i>found [% results.size %] possible improvements:</div>
                   <div class="w-40 flex justify-end">
                     [% IF toolobj.defined("fix_all_serial") && toolobj.defined("fix_all_serial") %]
                       [% PROCESS _button btn = {
                         form   => { action => "#", style => "padding-left: 3px;" },
-                        button => { class => 'w-28', onclick => "return conf_tool_cleanup(this, 'fix_all_serial')", html => "<i class='uil uil-trowel'><\/i>" _ toolobj.fixlink _ " all" },
+                        button => { class => 'w-28', onclick => "return conf_tool_cleanup(this, 'fix_all_serial')", html => "<i class='ti ti-hammer'><\/i>" _ toolobj.fixlink _ " all" },
                       }%]
                     [% ELSE %]
                       [% PROCESS _button btn = {
                         form   => { action => "conf.cgi" },
                         data   => { sub => 'objects', tools => tool, cleanup => 1, ident => 'all' },
-                        button => { class => 'w-28', onclick => "return conf_tool_cleanup(this, 'fix_all_serial')", html => "<i class='uil uil-trowel'><\/i>" _ toolobj.fixlink _ " all" },
+                        button => { class => 'w-28', onclick => "return conf_tool_cleanup(this, 'fix_all_serial')", html => "<i class='ti ti-hammer'><\/i>" _ toolobj.fixlink _ " all" },
                       }%]
                     [% END %]
                   </div>
@@ -69,7 +69,7 @@
                           [% PROCESS _button btn = {
                             form   => { action => "conf.cgi" },
                             data   => { sub => 'objects', tools => tool, cleanup => 1, ident => r.ident },
-                            button => { class => 'w-28 conf_cleanup_button_fix', onclick => "return conf_tool_cleanup(this, '')", html => "<i class='uil uil-trowel'><\/i>" _ toolobj.fixlink },
+                            button => { class => 'w-28 conf_cleanup_button_fix', onclick => "return conf_tool_cleanup(this, '')", html => "<i class='ti ti-hammer'><\/i>" _ toolobj.fixlink },
                           }%]
                         [% END %]
                       </div>

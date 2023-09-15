@@ -25,10 +25,10 @@
   <div class="w-[200px] flexcol gap-0 borderDefault border-r">
     <div class="head justify-between">
       <a href="conf.cgi?sub=objects" class="button header-button rounded w-[70px]">
-        <i class="uil uil-angle-double-left"></i>Back
+        <i class="ti ti-corner-down-left-double"></i>Back
       </a>
       <div class="buttongroup">
-        <button class="header-button" name="expand" id="tool_collapse" title="collapse all folder"><i class="uil uil-folder-minus"></i></button>
+        <button class="header-button" name="expand" id="tool_collapse" title="collapse all folder"><i class="ti ti-folder-minus"></i></button>
         <button class="header-button" name="expand" id="tool_expand" title="expand all folder"><i class="ti ti-folder-open"></i></button>
       </div>
     </div>
