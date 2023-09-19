@@ -1,39 +1,48 @@
 ﻿[% SET message = get_message(c) %]
 [% IF message %]
-<div id="thruk_message">
-  <div>
-    <div class="w-5">
-      [% IF message.0 == 'fail_message' %]<i class="ti ti-exclamationyellow ml-2" title="Errors detected"></i>[% END %]
-    </div>
-    <div class="flex-grow text-center font-semibold whitespace-nowrap">
-      <span class="[% message.0 | html %]">[% message.1 %]</span>
-      [% IF message.2 %]
-        <div class="mt-1"><a class="link" href="#" onclick="showElement('message_details'); hideElement(this.parentNode); window.clearInterval(thruk_message_fade_timer); return false;">show details...</a></div>
+[% alert_type = 'primary' %]
+[% icon_type = 'info-circle' %]
+
+[% IF message.0 == 'fail_message' %]
+[% alert_type = 'danger' %]
+[% icon_type = 'exclamation-circle' %]
+[% END %]
+
+[% IF message.0 == 'success_message' %]
+[% alert_type = 'success' %]
+[% icon_type = 'circle-check' %]
+[% END %]
+
+[% IF message.0 == 'warn_message' %]
+[% alert_type = 'warning' %]
+[% icon_type = 'alert-triangle' %]
+[% END %]
+
+<div id="thruk_message" class="alert alert-[% alert_type %] alert-dismissible fade show text-center" role="alert">
+  <span class="[% message.0 | html %]">
+    <i class="ti ti-[% icon_type %] ml-1" title="[% alert_type %]"></i>
+    [% message.1 %]      
+  </span>
+      
+      [% IF message.2 %]   
+          <a class="alert-link" href="#" onclick="showElement('message_details'); hideElement(this.parentNode); window.clearInterval(thruk_message_fade_timer); return false;">show details...</a>
       [% END %]
-    </div>
-    <div class="w-5">
-      <button class="iconOnly medium" title="close this message" onclick="fade('thruk_message', 500);return false;"><i class="ti ti-square-x-filled text-red-600"></i></button>
-    </div>
-  </div>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick="fade('thruk_message', 500);return false;"></button>
 
   [% IF message.2 == 2 %]
     [% thruk_message_details = message.3 %]
   [% END %]
   [% IF message.2 %]
-    <div class="w-full flex justify-center">
       <pre class="[% message.0 | html %]" style="display:none;" id="message_details">
         [% FOREACH detail = thruk_message_details %]
         [% detail %]
         [% END %]
       </pre>
-    </div>
   [% END %]
 
   [% IF message.0 == 'success_message' && !message.0.match("js-no-auto-hide") %]
   <script>
-  <!--
-  thruk_message_fade_timer = window.setTimeout("fade('thruk_message')", 5000);
-  -->
+    thruk_message_fade_timer = window.setTimeout("fade('thruk_message')", 5000);
   </script>
   [% END %]
 </div>
