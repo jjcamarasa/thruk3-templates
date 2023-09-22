@@ -7,9 +7,9 @@
 
 [% infoBoxPreTitle = "$host.name" %]
 
-<div class="flexrow justify-between mb-2">
+<!--<div class="flexrow justify-between mb-2">
   [% PROCESS _infobox.tt %]  
-</div>
+</div>-->
 
 <div class="flex flex-row gap-2">
   <div class="flexcol order-2 max-w-[350px] gap-2">

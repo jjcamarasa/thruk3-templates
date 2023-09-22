@@ -19,14 +19,14 @@ END
 [% BLOCK parent_obj %]
   [% pObj = 0 %]
   [% IF parent.list.size == 1 %]
-    <a class="link" href="extinfo.cgi?type=1&host=[% parent | uri %]">
+    <a class="p-0 m-0" href="extinfo.cgi?type=1&host=[% parent | uri %]">
     [% pID = parent %]
     [% IF parent_nodes.defined(pID) %]
       [% pObj = parent_nodes.$pID %]
       [% state = hoststatetext(pObj) %]
     [% END %]
   [% ELSE %]
-    <a class="link" href="extinfo.cgi?type=2&host=[% parent.0 | uri %]&service=[% parent.1 | uri %]">
+    <a href="extinfo.cgi?type=2&host=[% parent.0 | uri %]&service=[% parent.1 | uri %]">
     [% pID = parent.0 _ ';' _ parent.1 %]
     [% IF parent_nodes.defined(pID) %]
       [% pObj = parent_nodes.$pID %]
@@ -44,11 +44,9 @@ END
     [% END %]
 
     [% IF color && pObj.state != 0 %]
-      <div class="badge [% state %] ">
-        [% name %]
-        [% IF pObj.acknowledged %]<i class="ti ti-barrier-block "></i>[% END %]
-        [% IF pObj.scheduled_downtime_depth %]<i class="ti ti-moon "></i>[% END %]
-      </div>
+      <!--<span class="badge [% state %]">-->
+        [% name %][% IF pObj.acknowledged %]<i class="ti ti-barrier-block"></i>[% END %][% IF pObj.scheduled_downtime_depth %]<i class="ti ti-moon"></i>[% END %]
+      <!--</span>-->
     [% ELSE %]
       [% name %]
     [% END %]
@@ -69,21 +67,35 @@ END
 </div>
 [% END %]
 
-[% IF obj.has_been_checked == 0 %]
-  [% current_status = "PENDING" %]
-  [% ELSIF obj.state == 0 %]
-    [% current_status = "UP" %]
-  [% ELSIF obj.state == 1 %]
-    [% current_status = "DOWN" %]
-  [% ELSIF obj.state == 2 %]
-    [% current_status = "UNREACHABLE" %]
+[% IF svc_name != "" %]
+  [% IF obj.has_been_checked == 0 %]
+	[% current_status = "PENDING" %]
+	[% ELSIF obj.state == 0 %]
+	  [% current_status = "OK" %]
+	[% ELSIF obj.state == 1 %]
+	  [% current_status = "WARNING" %]
+	[% ELSIF obj.state == 2 %]
+	  [% current_status = "CRITICAL" %]
+	[% ELSIF obj.state == 3 %]
+	  [% current_status = "UNKNOWN" %]
+  [% END %]
+[% ELSE %]
+  [% IF obj.has_been_checked == 0 %]
+	[% current_status = "PENDING" %]
+	[% ELSIF obj.state == 0 %]
+	  [% current_status = "UP" %]
+	[% ELSIF obj.state == 1 %]
+	  [% current_status = "DOWN" %]
+	[% ELSIF obj.state == 2 %]
+	  [% current_status = "UNREACHABLE" %]
+  [% END %]
 [% END %]
 
 [%
  host_color = [ 'ok', 'down', 'unreachable', 'unknown']
  state_color = [ 'ok', 'warning', 'critical', 'unknown', 'unreachable' ]
- host_icon = [ 'check', 'times', 'link-broken','help-circle' ]
- state_icon = [ 'circle-check', 'alert-triangle', 'circle-x', 'help-circle' ]
+ host_icon = [ 'check', 'server-off', 'share-off','help-circle' ]
+ state_icon = [ 'check', 'alert-triangle', 'circle-x', 'help-circle' ]
  colorfg = "fg"
  colorbg = "bg"
 %]
@@ -96,152 +108,75 @@ END
  [% colorbg = "fg" %]
 [% END %]
 
-<div class="flexrow">
- <div class="w-1/2 grow">
-  <div class="flex w-full border" style="border-color: var(--badge-[% state_color.${obj.state} %]-[% IF theme=="Dark"%][% colorbg %][% ELSE %][% colorfg %][% END %]);">
-    <div class="flex items-center p-5" style="background-color: var(--badge-[% state_color.${obj.state} %]-[% colorbg %]);border-right: 1px solid var(--badge-[% state_color.${obj.state} %]-[% IF theme=="Dark"%][% colorbg %][% ELSE %][% colorfg %][% END %]);">
-      <i class="ti ti-[% state_icon.${obj.state} %]" style="color: var(--badge-[% state_color.${obj.state} %]-[% colorfg %]); font-size: 5rem !important;height: inherit !important; width: inherit !important;"></i>
-    </div>
-    <div class="flex w-full p-2" style="background-color: var(--card-bg); border-color: var(--badge-[% state_color.${obj.state} %]-fg)">
-    <table>
-    [% IF type == "service" %]
-    <tr>
-      <td class="w-24 max-w-[120px] font-bold">Service</td>
-      <td>
-          [% IF service.icon_image_expanded %]
-          <!--
-            <img src='[% logo_path_prefix %][% service.icon_image_expanded %]'[% IF service.icon_image_alt %] alt="[% service.icon_image_alt | html %]" title="[% service.icon_image_alt | html %]"[% END %] style="line-height: inherit !important;">
-          -->
-          [% END %]
+[% IF obj.scheduled_downtime_depth > 0 %]
+  [% sched_dt = "<span class='badge WARNING'><i class='ti ti-moon' style='color: inherit;'></i>&nbsp;$type in maintenance</span>" %]
+[% END %]
+[% IF obj.acknowledged %]
+  [% ack_prob = "<span class='badge WARNING'><i class='ti ti-barrier-block' style='color: inherit;'></i>&nbsp;$type acknowledged</span>" %]
+[% END %]
 
-          [% IF use_service_description %]
-            [% obj.description | html %]
-          [% ELSE %]
-            [% obj.display_name | html %] ([% obj.description | html %])
-          [% END %]
-      </td>
-    </tr>
-    [% END %]
-    <tr>
-      <td class="max-w-[120px] w-24 font-bold">Host</td>
-      <td>
-        <!--
-        [% IF type == "host" %]
-          [% IF host.icon_image_expanded %]
-              <img src='[% logo_path_prefix %][% host.icon_image_expanded %]' alt="[% host.icon_image_alt | html %]" title="[% host.icon_image_alt | html %]" style="line-height: inherit !important;">
-          [% END %]
-        [% END %]
-        -->
-          [% IF svc_name != "" %]
-            [% PROCESS parent_obj color=1 parent=hst_name %]
-            [% IF obj.host_name != obj.host_display_name %]
-              <a class="link" href="extinfo.cgi?type=1&amp;host=[% obj.host_name | uri %]">[% obj.host_display_name | html %]</a>
-            [% END %]
-              <i class="ti ti-chevrons-right "></i>&nbsp;[% obj.host_address %]
-          [% ELSE %]
-            [% IF obj.name != obj.display_name %]            
-              <a class="link" href="extinfo.cgi?type=1&amp;host=[% obj.name | uri %]">[% obj.display_name | html %]</a>
-            [% ELSE %]
-              <a class="link" href="extinfo.cgi?type=1&amp;host=[% hst_name | uri %]">[% hst_name | html %]</a>              
-            [% END %]
-              <i class="ti ti-chevrons-right "></i>&nbsp;[% obj.address %]
-          [% END %]
-      </td>
-    </tr>
+[% IF type == 'host' %]
+  [% infoBoxPreTitle = "$host.name &nbsp;<span class='badge text-sm' title='IP address'><i class='ti ti-network'></i>&nbsp;$obj.address</span>" %]
+   [% IF obj.name != obj.alias %]
+    [% my_alias_tag = "<span class='badge text-sm' title='Alias'><i class='ti ti-tag'></i>&nbsp;$obj.alias</span>" %]
+    [% infoBoxPreTitle = "$infoBoxPreTitle $my_alias_tag" %]
+   [% END %]
+[% ELSE %]
+  [% IF use_service_description %]
+    [% my_svc_desc = service.description %]
+  [% ELSE %]
+    [% my_svc_desc = service.display_name %]
+  [% END %]
+  [% infoBoxPreTitle = "$my_svc_desc <i class='ti ti-chevrons-right text-sm'></i>&nbsp;<a class='link text-lg' href='extinfo.cgi?type=1&amp;host=$service.host_name'>$service.host_name</a>" %]
+[% END %]
+[% IF sched_dt %][% infoBoxPreTitle = "$infoBoxPreTitle $sched_dt" %][% END %]
+[% IF ack_prob %][% infoBoxPreTitle = "$infoBoxPreTitle $ack_prob" %][% END %]
+<div class="flexrow justify-between mb-2">
+  [% PROCESS _infobox.tt %]  
+</div>
 
-    [% IF type == "host" && obj.name != obj.alias %]
-    <tr>
-      <td class="font-bold">Alias</td>
-      <td>[% obj.alias | html %]</td>
-    </tr>
-    [% END %]
-
-    [% IF obj.depends.size > 0 %]
-    <tr>
-      <td class="font-bold"><a href="[% uri_with(c, { type => 'dtree' }) %]" class="link">Dependencies <i class="ti ti-share align-middle"></i></a></td>
-      <td class='whitespace-normal'>
-        [% FOREACH parent IN obj.depends.sort %][% IF !loop.first() %][% END %][% PROCESS parent_obj color=1 parent = parent %][% END %]
-      </td>
-    </tr>
-    [% END %]
+  [% IF obj.depends.size > 0 %]
+  <div class="flex w-full">
+    <span class="font-bold">
+      <i class="ti ti-git-fork"></i>&nbsp;<a href="[% uri_with(c, { type => 'dtree' }) %]" class="link">Dependencies</a>
+    </span>
+    <span class='whitespace-normal'>
+      [% FOREACH parent IN obj.depends.sort %][% IF !loop.first() %][% END %][% PROCESS parent_obj color=1 parent=parent %][% END %]
+    </span>
+  </div>
+  [% END %]
 
     [% IF obj.groups.size > 0 %]
-    <tr>
-      <td class="font-bold">Groups</td>
-      <td>
+    <div class="flex w-full">
+      <span class="font-bold pr-2"><i class="ti ti-stack-2"></i>&nbsp;Groups</span>
         [% FOREACH group IN obj.groups.sort %]
           [% IF !loop.first() %][% END %]
-        <span class="badge" style="color: var(--color-sky-600); background-color: var(--color-sky-200);">
-          <a class="link" href="status.cgi?[% type | html %]group=[% group | uri %]&amp;style=overview">[% group | html %]</a>
-        </span>
+          <span class="badge bg-sky-200 text-sky-600">
+            <a class="link" href="status.cgi?[% type | html %]group=[% group | uri %]&amp;style=overview">[% group | html %]</a>
+          </span>
         [% END %]
-      </td>
-    </tr>
+    </div>
     [% END %]
 
-    [% IF type == "host" %]
     [% IF obj.parents.size > 0 %]
-      <tr>
-        <td class="font-bold">
-          <a href="[% uri_with(c, { type => 'dtree' }) %]" class="link">Parents</a>
-        </td>
-        <td style="white-space: normal;">
+      <div class="flex w-full">
+        <span class="font-bold pr-2">
+          <i class="ti ti-git-fork"></i>&nbsp;<a href="[% uri_with(c, { type => 'dtree' }) %]" class="link">Parents</a>
+        </span>        
         [% FOREACH parent IN obj.parents.sort %]
-	<span class="badge my-1" style="color: var(--color-violet-600); background-color: var(--color-violet-200);">
-        [% PROCESS parent_obj color=1 parent=parent %]
-	</span>
-	[% END %]
-        </td>
-      </tr>
+          <span class="badge bg-violet-200 text-violet-600">
+            [% PROCESS parent_obj color=1 parent=parent %]
+          </span>
+        [% END %]        
+      </div>
     [% END %]
-    [% END %]
-
-    <tr>
-    <td class="font-bold">Status</td>
-    <td>
-      [% IF svc_name != "" %]
-        [% IF obj.has_been_checked == 0 %]<div class='badge PENDING'>PENDING</div>
-        [% ELSIF obj.state == 0         %]<div class='badge OK'>OK</div>
-        [% ELSIF obj.state == 1         %]<div class='badge WARNING'>WARNING</div>
-        [% ELSIF obj.state == 2         %]<div class='badge CRITICAL'>CRITICAL</div>
-        [% ELSIF obj.state == 3         %]<div class='badge UNKNOWN'>UNKNOWN</div>
-        [% END %]
-      [% ELSE %]
-        [% IF obj.has_been_checked == 0 %]<div class='badge PENDING'>PENDING</div>
-        [% ELSIF obj.state == 0         %]<div class='badge UP'>UP</div>
-        [% ELSIF obj.state == 1         %]<div class='badge DOWN'>DOWN</div>
-        [% ELSIF obj.state == 2         %]<div class='badge UNREACHABLE'>UNREACHABLE</div>
-        [% END %]
-      [% END %]
-      [% IF obj.scheduled_downtime_depth > 0 %]
-      <span class='badge WARNING px-2'>
-        <i class="ti ti-moon" style="color: inherit;"></i>&nbsp;[% type | html %] in maintenance
-      </span>
-      [% END %]
-      [% IF obj.acknowledged %]
-      <span class='badge WARNING px-2'>
-        <i class="ti ti-barrier-block" style="color: inherit;"></i>&nbsp;[% type | html %] acknowledged
-      </span>
-      [% END %]
-    </td>
-    </tr>
-    <tr>
-      <td class="font-bold">Duration</td>
-      <td class="inline-block">
-        [% IF obj.last_state_change %][% duration(date.now - obj.last_state_change) %][% ELSE %][% duration(date.now - program_start) %]+[% END %]
-      </td>
-    </tr>
-    </table>
-  </div>
-  </div> <!-- ficha status -->
- </div> <!-- meitat primera -->
-</div><!-- fila 1 -->
 
 <div class="flex flex-row gap-2">
- <div class="card w-1/3 grow h-full" style="border-color: var(--badge-[% state_color.${obj.state} %]-[% colorfg %]);">
-  <div class="head justify-between" style="background-color: var(--badge-[% state_color.${obj.state} %]-[% colorbg %]);border-color: var(--badge-[% state_color.${obj.state} %]-[% IF theme=="Dark"%][% colorbg %][% ELSE %][% colorfg %][% END %]);">
-	<div class="font-bold" style="color: var(--badge-[% state_color.${obj.state} %]-[% colorfg %]) !important;">
-	  <i class="ti ti-info-circle " style="color: inherit !important;"></i>&nbsp;Plugin Output
+ <div class="card w-1/2 h-full [% IF obj.perf_data.empty %] grow [% END %]" style="border-color: var(--badge-[% state_color.${obj.state} %]-[% colorfg %]);">
+  <div class="head justify-between" style="background-color: var(--badge-[% state_color.${obj.state} %]-[% colorbg %]);border-color: var(--badge-[% state_color.${obj.state} %]-[% IF theme=='Dark' %][% colorbg %][% ELSE %][% colorfg %][% END %]);">
+	<div style="color: var(--badge-[% state_color.${obj.state} %]-[% colorfg %]) !important;">
+	  <i class="ti ti-[% state_icon.${obj.state} %] text-lg" style="color: inherit !important;"></i>
+      &nbsp;[% type %] <i>[% IF type == "host" %][% hst_name %][% ELSE %][% obj.description %][% END %]</i> is <b>[% current_status %]</b>&nbsp;-&nbsp;<span class="inline-block">[% IF obj.last_state_change %][% duration(date.now - obj.last_state_change) %][% ELSE %][% duration(date.now - program_start) %]+[% END %]</span>
 	</div>
   </div>
 	<div class='detail_plugin_output whitespace-normal p-3'>
@@ -252,22 +187,20 @@ END
 		  [% END %]
 	</div>
   </div>
-  
-
 
 [% IF obj.perf_data %]
   [% tmp = split_perfdata(obj.perf_data) %]
   [% has_warn = tmp.2; has_crit = tmp.3; has_min = tmp.4; has_max = tmp.5; %]
   [% IF has_warn && has_crit %]
     [% IF has_min && has_max %]
-      [% card_size = "w-1/2 grow" %]
+      [% card_size = "w-1/2" %]
     [% ELSE %]
-      [% card_size = "w-1/3 grow" %]
+      [% card_size = "w-1/3" %]
     [% END %]
   [% ELSE %]
     [% card_size = "w-1/4" %]
   [% END %]
-  <div class="card [% card_size %]">
+  <div class="card w-1/4 grow">
     <div class="head justify-between">
     <div class="font-bold">
       <i class="ti ti-chart-histogram"></i>&nbsp;Performance Data
@@ -281,7 +214,7 @@ END
       </div>
     </span>
   </div>
-    <div class="p-3">
+    <div class="p-2">
       [% perf_svc=svc_name; IF perf_svc == ""; perf_svc='_HOST_'; END %]
         [% PROCESS _perfdata_human.tt
             state=obj.state
@@ -304,4 +237,4 @@ END
     }
   });
   -->
-  </script>
+ </script>

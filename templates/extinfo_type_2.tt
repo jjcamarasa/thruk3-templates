@@ -5,6 +5,7 @@
 
 [% SET peer_key = service.peer_key %]
 
+<!--
 [% IF use_service_description %]
   [% my_svc_desc = service.description %]
 [% ELSE %]
@@ -15,6 +16,7 @@
 <div class="flexrow justify-between mb-2">
   [% PROCESS _infobox.tt %]
 </div>
+-->
 
 <!--<div class="flexrow justify-between mb-2">  -->
 <div class="flex flex-row gap-2">
