@@ -31,7 +31,7 @@
     [% IF strict_passive_mode %]
       [% IF host.$host_check_type == 0 && host.$host_active_checks_enabled == 0 %]<i class="ti ti-x text-red-500 not-clickable text-2xl" title="Checks of this host have been disabled"></i>[% END %]
       [% IF host.$host_check_type == 1 && host.$host_accept_passive_checks == 0 %]<i class="ti ti-x text-red-500 not-clickable text-2xl" title="Checks of this host have been disabled"></i>[% END %]
-      [% IF host.$host_check_type == 1 && host.$host_accept_passive_checks == 1 && passive_icon != "" %]<i class="[% passive_icon %] not-clickable" title="Active checks of the host have been disabled - only passive checks are being accepted"></i>[% END %]
+      [% IF host.$host_check_type == 1 && host.$host_accept_passive_checks == 1 && passive_icon != "" %]<i class="[% passive_icon %] not-clickable text-2xl" title="Active checks of the host have been disabled - only passive checks are being accepted"></i>[% END %]
     [% ELSE %]
       [% IF host.$host_active_checks_enabled == 0   %]<i class="ti ti-x text-red-500 not-clickable text-2xl" title="Checks of this host have been disabled"></i>[% END %]
     [% END %]
@@ -91,7 +91,7 @@
         [% IF service.check_type == 1 && service.accept_passive_checks == 1 && passive_icon != "" %]<i class="[% passive_icon %] not-clickable" title='Active checks of the service have been disabled - only passive checks are being accepted'></i>[% END %]
       [% ELSE %]
         [% IF service.active_checks_enabled == 0 && service.accept_passive_checks == 0 %]<i class="ti ti-x text-red-500 not-clickable text-2xl" title="Checks of this service have been disabled"></i>
-        [% ELSIF service.active_checks_enabled == 0   %][% IF passive_icon != "" %]<i class="[% passive_icon %] not-clickable" title='Active checks of the service have been disabled - only passive checks are being accepted'></i>[% END %][% END %]
+        [% ELSIF service.active_checks_enabled == 0   %][% IF passive_icon != "" %]<i class="[% passive_icon %] not-clickable text-2xl" title='Active checks of the service have been disabled - only passive checks are being accepted'></i>[% END %][% END %]
       [% END %]
     [% END %]
     [% IF service.is_flapping                  %]<i class="ti ti-arrows-shuffle clickable" title='This service is flapping between states' onclick="return(service_comments_popup('[% escape_js(service.host_name) %]', '[% escape_js(service.description) %]', '[% peer_key %]'))"></i>[% END %]

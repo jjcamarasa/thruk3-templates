@@ -5,6 +5,15 @@
 [% authorized_for_read_only = 0 %][% IF c.check_user_roles('authorized_for_read_only') %][% authorized_for_read_only = 1 %][% END %]
 
 [% PROCESS _status_cmd_pane.tt %]
+[% IF custom_title == '' %]
+ [% custom_title = 'Host and Service Details' %]
+[% END %]
+[% infoBoxPreTitle = custom_title %]
+
+<div class="grid grid-cols-1">
+  [% PROCESS _infobox.tt %]
+</div>
+
 <div class="mb-5"[% IF hidetop == 1 %] style="visibility:hidden; display:none;"[% END %]>
   [% PROCESS _infobox.tt %]
 </div>
@@ -19,36 +28,38 @@
   <input type="hidden" name="title" id="title" value="[% custom_title | html %]">
 
   [% UNLESS minimal %]
-    <h1>
+    <!--<h1>
       [% IF custom_title != '' %][% custom_title | html %]
       [% ELSE %]Host and Service Details
       [% END %]
-    </h1>
+    </h1>-->
 
     <div class="flexrow sm:flex-nowrap my-2 gap-y-1">
       <div class="flex basis-1/3 self-end gap-1">
         <div class="btn-group">
         [% PROCESS _add_bookmark.tt style='combined' %]
         [% PROCESS _show_link.tt    style='combined' %]
-        [% PROCESS _json_export.tt %]
         [% hostcolumns=[ 'Hostname', 'Displayname:0', 'IP', 'Status', 'Alias:0', 'Parents:0', 'Groups:0', 'Acknowledged', 'Downtime', 'Notifications', 'Active Checks', 'Flapping', 'Last Check', 'Duration', 'Status Information', 'Extra Status Information' ] %]
         [% servicecolumns=[ 'Hostname', 'Hostdisplayname:0', 'IP', 'Host Alias:0', 'Host Parents:0', 'Host Groups:0', 'Host Acknowledged', 'Host Downtime', 'Host Notifications', 'Host Active Checks', 'Host Flapping', 'Service', 'Displayname:0', 'Status', 'Last Check', 'Duration', 'Attempt', 'Acknowledged', 'Downtime', 'Notifications', 'Active Checks', 'Flapping', 'Status Information', 'Extra Status Information' ] %]
         [% IF show_backends_in_table != 0 %][% hostcolumns.push('Site'); servicecolumns.push('Site') %][% END %]
         [% PROCESS _excel_export.tt hostcolumns=hostcolumns servicecolumns=servicecolumns columns='' with_custom_vars=1 %]
+        [% PROCESS _json_export.tt %]
         </div>
       </div>
       <div class="basis-1/3">
         [% UNLESS authorized_for_read_only %]
         <div class="hint flex gap-x-0.5 justify-center">
-          <button class="min-w-[100px]" onclick="pagetype='hostdetail';selectAllHosts(true,'hst_');return false;">Hosts</button>
-          <button class="min-w-[100px]" onclick="pagetype='hostdetail';selectAllHosts(false,'hst_');selectHostsByClass(['.DOWN','.UNREACHABLE']);return false;">Problems</button>
-          <button class="min-w-[100px]" onclick="pagetype='hostdetail';selectAllHosts(false,'hst_');selectHostsByClass(['.has_downtime']);return false;">In Downtime</button>
-          <button class="min-w-[100px]" onclick="pagetype='hostdetail';selectAllHosts(false,'hst_');return false;">Unselect all</button>
+	 <div class="btn-group">
+          <button class="btn btn-sm px-2" onclick="pagetype='hostdetail';selectAllHosts(true,'hst_');return false;">Hosts</button>
+          <button class="btn btn-sm px-2" onclick="pagetype='hostdetail';selectAllHosts(false,'hst_');selectHostsByClass(['.DOWN','.UNREACHABLE']);return false;">Problems</button>
+          <button class="btn btn-sm px-2" onclick="pagetype='hostdetail';selectAllHosts(false,'hst_');selectHostsByClass(['.has_downtime']);return false;">In Downtime</button>
+          <button class="btn btn-sm px-2" onclick="pagetype='hostdetail';selectAllHosts(false,'hst_');return false;">Unselect all</button>
+         </div>
         </div>
         [% END %]
       </div>
       <div class="basis-1/3 hidden sm:flex self-end justify-end relative">
-        <button class="round gray text-lg relative" onclick="toggleElement('show_table_info_hst', undefined, true); return false;" title="Toggle help">
+        <button class="btn btn-sm" onclick="toggleElement('show_table_info_hst', undefined, true); return false;" title="Toggle help">
           <i class="ti ti-question-mark"></i>
         </button>
         <div class="card shadow-float absolute z-20 top-7" style="visibility: hidden;" id="show_table_info_hst">
@@ -97,16 +108,18 @@
       <div class="basis-1/3">
         [% UNLESS authorized_for_read_only %]
           <div class="hint flex gap-x-0.5 justify-center">
-            <button class="sm:min-w-[100px]" onclick="pagetype='servicedetail';selectAllHosts(true,'svc_');return false;">Hosts</button>
-            <button class="sm:min-w-[100px]" onclick="pagetype='servicedetail';selectAllServices(true,'svc_');return false;">Services</button>
-            <button class="sm:min-w-[100px]" onclick="pagetype='servicedetail';selectAllHosts(false,'svc_');selectAllServices(false,'svc_');selectServicesByClass(['.CRITICAL','.WARNING','.UNKNOWN']);return false;">Problems</button>
-            <button class="sm:min-w-[100px]" onclick="pagetype='servicedetail';selectAllHosts(false,'svc_');selectAllServices(false,'svc_');selectHostsByClass(['.has_downtime']);selectServicesByClass(['.has_downtime']);return false;">In Downtime</button>
-            <button class="sm:min-w-[100px]" onclick="pagetype='servicedetail';selectAllHosts(false,'svc_');selectAllServices(false,'svc_');;return false;">Unselect all</button>
+	   <div class="btn-group">
+            <button class="btn btn-sm px-2" onclick="pagetype='servicedetail';selectAllHosts(true,'svc_');return false;">Hosts</button>
+            <button class="btn btn-sm px-2" onclick="pagetype='servicedetail';selectAllServices(true,'svc_');return false;">Services</button>
+            <button class="btn btn-sm px-2" onclick="pagetype='servicedetail';selectAllHosts(false,'svc_');selectAllServices(false,'svc_');selectServicesByClass(['.CRITICAL','.WARNING','.UNKNOWN']);return false;">Problems</button>
+            <button class="btn btn-sm px-2" onclick="pagetype='servicedetail';selectAllHosts(false,'svc_');selectAllServices(false,'svc_');selectHostsByClass(['.has_downtime']);selectServicesByClass(['.has_downtime']);return false;">In Downtime</button>
+            <button class="btn btn-sm px-2" onclick="pagetype='servicedetail';selectAllHosts(false,'svc_');selectAllServices(false,'svc_');;return false;">Unselect all</button>
+           </div>
           </div>
         [% END %]
       </div>
       <div class="basis-1/3 hidden sm:flex self-end justify-end relative">
-        <button class="round gray text-lg relative" onclick="toggleElement('show_table_info_svc', undefined, true); return false;" title="Toggle help">
+        <button class="btn btn-sm" onclick="toggleElement('show_table_info_svc', undefined, true); return false;" title="Toggle help">
           <i class="ti ti-question-mark"></i>
         </button>
         <div class="card shadow-float absolute z-20 top-7" style="visibility: hidden;" id="show_table_info_svc">

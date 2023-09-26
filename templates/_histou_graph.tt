@@ -51,7 +51,7 @@
 	[% kiosk_mode_url  = "$replace_url&kiosk=tv" %]
      <div class="font-bold">
       <a href="[% url_prefix %]#[% histou_url %]" title="Abrir grafica actual en marco">
-        <i class="ti ti-chart"></i>&nbsp;Performance Graph
+        <i class="ti ti-chart-area"></i>&nbsp;Performance Graph
       </a>
     </div>
      	

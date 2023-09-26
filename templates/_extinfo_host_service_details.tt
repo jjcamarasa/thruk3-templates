@@ -44,9 +44,7 @@ END
     [% END %]
 
     [% IF color && pObj.state != 0 %]
-      <!--<span class="badge [% state %]">-->
-        [% name %][% IF pObj.acknowledged %]<i class="ti ti-barrier-block"></i>[% END %][% IF pObj.scheduled_downtime_depth %]<i class="ti ti-moon"></i>[% END %]
-      <!--</span>-->
+      [% name %][% IF pObj.acknowledged %]<i class="ti ti-barrier-block"></i>[% END %][% IF pObj.scheduled_downtime_depth %]<i class="ti ti-moon"></i>[% END %]
     [% ELSE %]
       [% name %]
     [% END %]
@@ -176,7 +174,7 @@ END
   <div class="head justify-between" style="background-color: var(--badge-[% state_color.${obj.state} %]-[% colorbg %]);border-color: var(--badge-[% state_color.${obj.state} %]-[% IF theme=='Dark' %][% colorbg %][% ELSE %][% colorfg %][% END %]);">
 	<div style="color: var(--badge-[% state_color.${obj.state} %]-[% colorfg %]) !important;">
 	  <i class="ti ti-[% state_icon.${obj.state} %] text-lg" style="color: inherit !important;"></i>
-      &nbsp;[% type %] <i>[% IF type == "host" %][% hst_name %][% ELSE %][% obj.description %][% END %]</i> is <b>[% current_status %]</b>&nbsp;-&nbsp;<span class="inline-block">[% IF obj.last_state_change %][% duration(date.now - obj.last_state_change) %][% ELSE %][% duration(date.now - program_start) %]+[% END %]</span>
+      &nbsp;[% type|html %] <b>[% IF type == "host" %][% hst_name %][% ELSE %][% obj.description %][% END %]</b> is <b>[% current_status %]</b>&nbsp;-&nbsp;<span class="inline-block">[% IF obj.last_state_change %][% duration(date.now - obj.last_state_change, 6) %][% ELSE %][% duration(date.now - program_start, 6) %]+[% END %]</span>
 	</div>
   </div>
 	<div class='detail_plugin_output whitespace-normal p-3'>
