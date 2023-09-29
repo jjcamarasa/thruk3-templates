@@ -27,12 +27,11 @@
     </tr>
   </table>
 [% END %]
-
   <a href="[% uri_with(c, 'view_mode' => 'xls') %]" class="btn btn-sm" onclick="toggleElement('excel_export_columns', undefined, true); updateExcelPermanentLink(); return false;" id='excelexportlink' title="Export to Excel">
     <i class="ti ti-table"></i>
   </a>
-<div class="flex relative">
-  <div class="card shadow-float absolute z-20 top-7" style="display: none;" id="excel_export_columns">
+  <div class="flex relative">
+   <div class="card shadow-float absolute z-20 top-7" style="display: none;" id="excel_export_columns">
     <div class="head justify-between gap-2">
       <h3>Choose Columns to Export</h3>
       <button class="iconOnly btn-sm hover-green" name="update" id="accept_ht" onclick="document.getElementById('excel_form_btn').click(); return false;" title="update">
@@ -108,5 +107,6 @@
     [% IF style != 'combined' %]
       </form>
     [% END %]
+   </div>
   </div>
-</div>
+

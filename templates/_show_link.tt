@@ -2,7 +2,7 @@
   <i class="ti ti-link"></i>
 </button>
 <div class="flex relative">
-<div class="card shadow-float absolute z-20 top-7 left-0" style="display: none;" id="show_link">
+ <div class="card shadow-float absolute z-20 top-7 left-0" style="display: none;" id="show_link">
     <div class="head justify-between">
       <h3>Permanent link to this page</h3>
       <button class="iconOnly" onClick="toggleElement('show_link'); return false;">

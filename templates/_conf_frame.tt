@@ -1,6 +1,6 @@
 ﻿[% PROCESS _header.tt
-                      css=["plugins/${plugin_name}/conf.css","vendor/linedtextarea-e619e09/jquery-linedtextarea.css", "vendor/jstree-3.3.8/themes/default/style.min.css"]
-                      js=["plugins/${plugin_name}/conf.js", "vendor/jstree-3.3.8/jstree.min.js"]
+  css=["plugins/${plugin_name}/conf.css","vendor/linedtextarea-e619e09/jquery-linedtextarea.css", "vendor/jstree-3.3.8/themes/default/style.min.css"]
+  js=["plugins/${plugin_name}/conf.js", "vendor/jstree-3.3.8/jstree.min.js"]
 %]
 [% PROCESS _message.tt %]
 [% PROCESS _blocks.tt %]
@@ -24,9 +24,9 @@
   [% PROCESS _infobox.tt has_proc_info=0 %]
 </div>
 
-<div class="flex w-1/3">
-  <div class="flexcol w-full">
-    <form class="flex" method="GET" action="conf.cgi" id="obj_type_show_form">
+<div class="flexrow w-full">
+  <!--<div class="flexcol w-full">-->
+    <form class="block" method="GET" action="conf.cgi" id="obj_type_show_form">
     <label class="pr-2 pt-1" for="fname">Select config type</label>
     <select class="w-1/3" name='sub' onchange="document.getElementById('obj_type_show_form').submit()" class="w-full">
       <option value='all'[%    IF sub == 'all'   %] selected [% END %]>Overview</option>
@@ -46,25 +46,25 @@
       [% END %]
     </select>
     </form>
-  </div>
-</div>
-
-  <div class="card mx-auto mt-3 w-2/3">
-    <div class="body">
-      [% content %]
-    </div>
-
+  
   [% IF last_changed || needs_commit || show_save_reload %]
-    <div class="footer">
+    <div class="w-1/3"> <!-- this must be in top after select -->
       [% PROCESS small_button btn = {
         form   => { action => 'conf.cgi', class => 'mx-auto'},
         data   => { sub => 'objects', 'apply' => 'yes', save_and_reload => 'yes', CSRFtoken => get_user_token(c), },          
         button => { class => 'btn hover-green', title => "Apply all changes and reload core", onclick => "return save_reload_apply(this, '" _ show_save_reload _ "')", html => '<i class="ti ti-device-floppy "></i>Save &amp; Reload' },
       }%]
     </div>  
-    [% END %]
-  </div>
+  [% END %]
+  <!--</div>-->
 
+</div>
+  
+  <div class="mt-3"> <!-- this must be a row -->
+    <div class="mx-auto"> <!-- this must be a col-auto or set inside conf_frame-->
+      [% content %]
+    </div>
+  </div>
 
 <script>
 <!--

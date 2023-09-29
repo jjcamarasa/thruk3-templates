@@ -9,7 +9,7 @@
         <input type="hidden" name="[% par | html %]" value="[% value | html %]">
       [% END %]
     [% END %]
-    <select name="entries" onChange="this.form.submit()" class="w-36 text-sm border-0 font-medium pager-entries">
+    <select name="entries" onChange="this.form.submit()" class="text-sm pager-entries">
       [% FOR step = paging_steps %]
         [% IF step == "all" %]
           <option value="all"[%  IF pager.entries == "all" %] selected[% END %]>all on one page</option>

@@ -1,22 +1,22 @@
 ﻿[% WRAPPER _conf_frame.tt %]
 
-<!--<div class="card mt-5 mx-auto">-->
-  <div class="head">
+<div class="card w-1/2 mx-auto">
+  <div class="card-header">
     <h3>General Configuration</h3>
   </div>
-  <div class="body">
+  <div class="card-body">
     [% IF conf_config.exists('thruk') %]
-    <div>
+    <!--<div>-->
       <a class="link" href="conf.cgi?sub=thruk">
         <i class="ti ti-adjustments"></i>
-        <span class="inline-block w-1/4 font-semibold">Thruk Settings</span>
+        <span class="inline-block w-1/3 font-semibold">Thruk Settings</span>
         <span>Thruks settings from the thruk_local.conf</span>
       </a>
-    </div>
+    <!--</div>-->
     <div>
       <a class="link" href="conf.cgi?sub=backends">
         <i class="ti ti-share"></i>
-        <span class="inline-block w-1/4 font-semibold">Backends / Sites</span>
+        <span class="inline-block w-1/3 font-semibold">Backends / Sites</span>
         <span>Configure Backends Connections</span>
       </a>
     </div>
@@ -25,7 +25,7 @@
     <div>
       <a class="link" href="conf.cgi?sub=cgi">
         <i class="ti ti-lock-open"></i>
-        <span class="inline-block w-1/4 font-semibold">CGI &amp; Access</span>
+        <span class="inline-block w-1/3 font-semibold">CGI &amp; Access</span>
         <span>Change CGI and access settings from your cgi.cfg</span>
       </a>
     </div>
@@ -34,7 +34,7 @@
     <div>
       <a class="link" href="conf.cgi?sub=users">
         <i class="ti ti-users"></i>
-        <span class="inline-block w-1/4 font-semibold">User settings</span>
+        <span class="inline-block w-1/3 font-semibold">User settings</span>
         <span>User settings, passwords and permissions</span>
       </a>
     </div>
@@ -42,11 +42,11 @@
     <div>
       <a class="link" href="conf.cgi?sub=plugins">
         <i class="ti ti-puzzle"></i>
-        <span class="inline-block w-1/4 font-semibold">Plugins</span>
+        <span class="inline-block w-1/3 font-semibold">Plugins</span>
         <span>Plugin Manager for Thruk Addons</span>
       </a>
     </div>
-  </div>
+<!--  </div>-->
 <!--</div>-->
 
 
@@ -54,16 +54,15 @@
   <div class="head">
     <h3>Site Configuration</h3>
   </div>
-  <div class="body">
-    <div>
+    <div class="mt-2">
       [% IF has_obj_conf %]
         <a class="link" href="conf.cgi?sub=objects">
           <i class="ti ti-server"></i>
-          <span class="inline-block w-1/4 font-semibold">Object settings</span>
+          <span class="inline-block w-1/3 font-semibold">Object settings</span>
           <span>Host, service, timeperiods and notification settings</span>
         </a>
-      [% END %]
-      [% IF !has_obj_conf %]
+      [% ELSE %]
+      
       <br>
         <span class="textALERT">
           No object configuration enabled, see
@@ -73,7 +72,7 @@
         </span>
       [% END %]
     </div>
-  </div>
-<!--</div>-->
+</div>
+</div>
 
 [% END %]

@@ -114,9 +114,9 @@ END
 [% END %]
 
 [% IF type == 'host' %]
-  [% infoBoxPreTitle = "$host.name &nbsp;<span class='badge text-sm' title='IP address'><i class='ti ti-network'></i>&nbsp;$obj.address</span>" %]
+  [% infoBoxPreTitle = "$host.name &nbsp;<span class='badge' title='IP address'><i class='ti ti-network'></i>&nbsp;$obj.address</span>" %]
    [% IF obj.name != obj.alias %]
-    [% my_alias_tag = "<span class='badge text-sm' title='Alias'><i class='ti ti-tag'></i>&nbsp;$obj.alias</span>" %]
+    [% my_alias_tag = "<span class='badge' title='Alias'><i class='ti ti-tag'></i>&nbsp;$obj.alias</span>" %]
     [% infoBoxPreTitle = "$infoBoxPreTitle $my_alias_tag" %]
    [% END %]
 [% ELSE %]
@@ -134,7 +134,7 @@ END
 </div>
 
   [% IF obj.depends.size > 0 %]
-  <div class="flex w-full">
+  <div class="flex gap-x-1">
     <span class="font-bold">
       <i class="ti ti-git-fork"></i>&nbsp;<a href="[% uri_with(c, { type => 'dtree' }) %]" class="link">Dependencies</a>
     </span>
@@ -145,27 +145,31 @@ END
   [% END %]
 
     [% IF obj.groups.size > 0 %]
-    <div class="flex w-full">
-      <span class="font-bold pr-2"><i class="ti ti-stack-2"></i>&nbsp;Groups</span>
+    <div class="flex gap-x-1">
+      <div class="font-bold"><i class="ti ti-stack-2"></i>&nbsp;Groups</div>
+      <div class="flexrow gap-y-1 gap-x-1">
         [% FOREACH group IN obj.groups.sort %]
           [% IF !loop.first() %][% END %]
           <span class="badge bg-sky-200 text-sky-600">
             <a class="link" href="status.cgi?[% type | html %]group=[% group | uri %]&amp;style=overview">[% group | html %]</a>
           </span>
         [% END %]
+     </div>
     </div>
     [% END %]
 
     [% IF obj.parents.size > 0 %]
-      <div class="flex w-full">
-        <span class="font-bold pr-2">
+      <div class="flex gap-x-1">
+        <div class="font-bold">
           <i class="ti ti-git-fork"></i>&nbsp;<a href="[% uri_with(c, { type => 'dtree' }) %]" class="link">Parents</a>
-        </span>        
+        </div>        
+	<div class="flexrow gap-y-1 gap-x-1">
         [% FOREACH parent IN obj.parents.sort %]
           <span class="badge bg-violet-200 text-violet-600">
             [% PROCESS parent_obj color=1 parent=parent %]
           </span>
         [% END %]        
+       </div>
       </div>
     [% END %]
 
