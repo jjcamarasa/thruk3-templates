@@ -1,67 +1,63 @@
 ﻿[% WRAPPER _conf_frame.tt %]
 [% PROCESS _blocks.tt %]
-
-  <div class="flexcol mx-auto w-fit max-w-full mt-5">
-    <div class="card self-center overflow-hidden">
-      <div class="head p-0 justify-between">
+<!--  <div class="flexcol mx-auto w-fit max-w-full mt-5">
+    <div class="card self-center overflow-hidden">-->
+      <div class="card-header">
         [% PROCESS _conf_objects_menu.tt type="tools" %]
       </div>
-    </div>
-
-    <div class="flexrow flex-nowrap mx-auto min-w-full gap-0 justify-between">
-      <div class="basis-1/6 shrink"></div>
-      <div class="grow justify-center flex">
-
+    <!--</div>-->
+    <div class="card-body">
+      <div class="flex w-full gap-2">
+       <div class="w-3/4 flexcol">
         [% IF tool != "start" %]
-          <div class="card min-w-[800px]">
-            <div class="head flexcol gap-0 h-fit">
+          <div class="card">
+            <div class="card-header">
               <h3>[% toolobj.title %]</h3>
-              <div>[% toolobj.description %]</div>
+              <div class="text-muted">[% toolobj.description %]</div>
             </div>
-            <div>
+            <div class="card-body">
               [% IF results.size == 0 %]
-                <div class="body flex justify-center">
-                  <i class="ti ti-checksmall green mr-1"></i>everything ok
-                </div>
+              <p class="text-center">
+                  <i class="ti ti-circle-check text-green-500"></i>&nbsp;Everything <b>ok</b>
+              </p>
               [% ELSE %]
                 <div class="flexrow justify-between flex-nowrap whitespace-nowrap p-2">
-                  <div class="w-40"></div>
-                  <div><i class="ti ti-exclamation-mark small text-orange-600 mr-1"></i>found [% results.size %] possible improvements:</div>
-                  <div class="w-40 flex justify-end">
+                  <div><i class="ti ti-exclamation-circle text-orange-600"></i>&nbsp;found [% results.size %] possible improvements:</div>
+                  <div class="flex justify-end">
                     [% IF toolobj.defined("fix_all_serial") && toolobj.defined("fix_all_serial") %]
                       [% PROCESS small_button btn = {
-                        form   => { action => "#", style => "padding-left: 3px;" },
-                        button => { class => 'w-28', onclick => "return conf_tool_cleanup(this, 'fix_all_serial')", html => "<i class='ti ti-hammer'><\/i>" _ toolobj.fixlink _ " all" },
+                        form   => { action => "#" },
+                        button => { onclick => "return conf_tool_cleanup(this, 'fix_all_serial')", html => "<i class='ti ti-hammer'><\/i>" _ toolobj.fixlink _ " all" },
                       }%]
                     [% ELSE %]
                       [% PROCESS small_button btn = {
                         form   => { action => "conf.cgi" },
                         data   => { sub => 'objects', tools => tool, cleanup => 1, ident => 'all' },
-                        button => { class => 'w-28', onclick => "return conf_tool_cleanup(this, 'fix_all_serial')", html => "<i class='ti ti-hammer'><\/i>" _ toolobj.fixlink _ " all" },
+                        button => { onclick => "return conf_tool_cleanup(this, 'fix_all_serial')", html => "<i class='ti ti-hammer'><\/i>" _ toolobj.fixlink _ " all" },
                       }%]
                     [% END %]
                   </div>
                 </div>
-                <table class="rowhover cellspacing-x">
-                  <tr>
+                <div class="table-responsive">
+                <table class="table table-borderless table-sm">
+                  <thead>
                     <th>Type</th>
                     <th>Name</th>
                     <th>Source</th>
                     <th>Message</th>
                     <th>Action</th>
-                  </tr>
+                  </thead>
                   [% FOREACH r = results %]
                   <tr>
                     <td>[% r.type %]</td>
-                    <td class="w-full">[% IF r.id %]<a href="conf.cgi?sub=objects&amp;data.id=[% r.id %]">[% r.name %]</a>[% ELSE %][% r.name %][% END %]</td>
+                    <td>[% IF r.id %]<a href="conf.cgi?sub=objects&amp;data.id=[% r.id %]">[% r.name %]</a>[% ELSE %][% r.name %][% END %]</td>
                     <td>[% IF r.id %][% link_obj(r.obj) %][% END %]</td>
                     <td>[% r.message %]</td>
-                    <td>
-                      <div class="flexrow gap-px flex-nowrap">
+                    <td class="flex">
                         [% PROCESS small_button btn = {
-                          form   => { action => "conf.cgi", style => "padding-left: 3px;" },
+                          form   => { action => "conf.cgi", class => 'mx-auto pr-1' },
                           data   => { sub => 'objects', tools => tool, ignore => 1, ident => r.ident },
-                          button => { class => 'w-20', onclick => "return conf_tool_cleanup(this, '', true)", html => "<i class='ti ti-eye-off'><\/i>ignore" },
+                          button => { class=> 'btn-sm px-1',onclick => "return conf_tool_cleanup(this, '', true)", html => "<i class='ti ti-eye-off'><\/i>ignore" },
                         }%]
                         [% IF r.id  && r.obj.file.readonly %]
                           file is read-only
@@ -69,27 +65,27 @@
                           [% PROCESS small_button btn = {
                             form   => { action => "conf.cgi" },
                             data   => { sub => 'objects', tools => tool, cleanup => 1, ident => r.ident },
-                            button => { class => 'w-28 conf_cleanup_button_fix', onclick => "return conf_tool_cleanup(this, '')", html => "<i class='ti ti-hammer'><\/i>" _ toolobj.fixlink },
+                            button => { class => 'conf_cleanup_button_fix btn-sm px-1', onclick => "return conf_tool_cleanup(this, '')", html => "<i class='ti ti-hammer'><\/i>" _ toolobj.fixlink },
                           }%]
                         [% END %]
-                      </div>
                     </td>
                   </tr>
                   [% END %]
                 </table>
+                </div>
                 [% END %]
             </div>
-            <div class="footer justify-center" style="[% IF hidden == 0 %] display: none;[% END %]" id="hiding_entries">
+            <div class="card-footer justify-center" style="[% IF hidden == 0 %] display: none;[% END %]" id="hiding_entries">
               hiding [% hidden %] entries.
             </div>
           </div>
         [% END %]
 
       </div>
-      <div class="basis-1/6 max-w-[220px] flexcol flex-nowrap items-end ml-5">
+      <div class="flexcol w-1/4 items-end">
         [% PROCESS _conf_tools_menu.tt %]
       </div>
+     </div>
     </div>
-  </div>
-
+<!--  </div>-->
 [% END %]

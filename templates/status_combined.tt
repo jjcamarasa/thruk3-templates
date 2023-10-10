@@ -10,6 +10,18 @@
 [% END %]
 [% infoBoxPreTitle = custom_title %]
 
+[% BLOCK toolbar_tbl %]
+        <div class="btn-group">
+        [% PROCESS _add_bookmark.tt style='combined' %]
+        [% PROCESS _show_link.tt    style='combined' %]
+        [% hostcolumns=[ 'Hostname', 'Displayname:0', 'IP', 'Status', 'Alias:0', 'Parents:0', 'Groups:0', 'Acknowledged', 'Downtime', 'Notifications', 'Active Checks', 'Flapping', 'Last Check', 'Duration', 'Status Information', 'Extra Status Information' ] %]
+        [% servicecolumns=[ 'Hostname', 'Hostdisplayname:0', 'IP', 'Host Alias:0', 'Host Parents:0', 'Host Groups:0', 'Host Acknowledged', 'Host Downtime', 'Host Notifications', 'Host Active Checks', 'Host Flapping', 'Service', 'Displayname:0', 'Status', 'Last Check', 'Duration', 'Attempt', 'Acknowledged', 'Downtime', 'Notifications', 'Active Checks', 'Flapping', 'Status Information', 'Extra Status Information' ] %]
+        [% IF show_backends_in_table != 0 %][% hostcolumns.push('Site'); servicecolumns.push('Site') %][% END %]
+        [% PROCESS _excel_export.tt hostcolumns=hostcolumns servicecolumns=servicecolumns columns='' with_custom_vars=1 %]
+        [% PROCESS _json_export.tt %]
+        </div>
+[% END %]
+
 <div class="grid grid-cols-1">
   [% PROCESS _infobox.tt %]
 </div>
@@ -27,29 +39,16 @@
   <input type="hidden" name="hidetop" id="hidetop" value="[% hidetop | html %]">
   <input type="hidden" name="title" id="title" value="[% custom_title | html %]">
 
+[% IF hosts.size > 0 %]
   [% UNLESS minimal %]
-    <!--<h1>
-      [% IF custom_title != '' %][% custom_title | html %]
-      [% ELSE %]Host and Service Details
-      [% END %]
-    </h1>-->
-
-    <div class="flexrow sm:flex-nowrap my-2 gap-y-1">
+     <div class="flexrow sm:flex-nowrap my-2 gap-y-1">
       <div class="flex basis-1/3 self-end gap-1">
-        <div class="btn-group">
-        [% PROCESS _add_bookmark.tt style='combined' %]
-        [% PROCESS _show_link.tt    style='combined' %]
-        [% hostcolumns=[ 'Hostname', 'Displayname:0', 'IP', 'Status', 'Alias:0', 'Parents:0', 'Groups:0', 'Acknowledged', 'Downtime', 'Notifications', 'Active Checks', 'Flapping', 'Last Check', 'Duration', 'Status Information', 'Extra Status Information' ] %]
-        [% servicecolumns=[ 'Hostname', 'Hostdisplayname:0', 'IP', 'Host Alias:0', 'Host Parents:0', 'Host Groups:0', 'Host Acknowledged', 'Host Downtime', 'Host Notifications', 'Host Active Checks', 'Host Flapping', 'Service', 'Displayname:0', 'Status', 'Last Check', 'Duration', 'Attempt', 'Acknowledged', 'Downtime', 'Notifications', 'Active Checks', 'Flapping', 'Status Information', 'Extra Status Information' ] %]
-        [% IF show_backends_in_table != 0 %][% hostcolumns.push('Site'); servicecolumns.push('Site') %][% END %]
-        [% PROCESS _excel_export.tt hostcolumns=hostcolumns servicecolumns=servicecolumns columns='' with_custom_vars=1 %]
-        [% PROCESS _json_export.tt %]
-        </div>
+		[% INCLUDE toolbar_tbl %]
       </div>
       <div class="basis-1/3">
         [% UNLESS authorized_for_read_only %]
         <div class="hint flex gap-x-0.5 justify-center">
-	 <div class="btn-group">
+		  <div class="btn-group">
           <button class="btn btn-sm px-2" onclick="pagetype='hostdetail';selectAllHosts(true,'hst_');return false;">Hosts</button>
           <button class="btn btn-sm px-2" onclick="pagetype='hostdetail';selectAllHosts(false,'hst_');selectHostsByClass(['.DOWN','.UNREACHABLE']);return false;">Problems</button>
           <button class="btn btn-sm px-2" onclick="pagetype='hostdetail';selectAllHosts(false,'hst_');selectHostsByClass(['.has_downtime']);return false;">In Downtime</button>
@@ -100,11 +99,20 @@
       </div>
     </div>
   </div>
+[% ELSE %]
+<p class="text-2xl m-3 pt-3">
+ <span class="ti ti-info-circle-filled"></span>&nbsp;No hosts with unhandled problems.
+</p>
+[% END %] <!-- Table hosts -->
 
-
+[% IF services.size > 0 %]
   [% UNLESS minimal %]
     <div class="flexrow sm:flex-nowrap my-2 gap-y-1">
-      <div class="basis-1/3 hidden sm:flex"></div>
+      <div class="flex basis-1/3 self-end gap-1">
+        [% IF hosts.size == 0 %]
+          [% INCLUDE toolbar_tbl %]
+        [% END %]
+      </div>
       <div class="basis-1/3">
         [% UNLESS authorized_for_read_only %]
           <div class="hint flex gap-x-0.5 justify-center">
@@ -160,6 +168,14 @@
       </div>
     </div>
   </div>
+  
+[% ELSE %]
+<p class="text-2xl m-3 pt-3">
+ <span class="ti ti-info-circle-filled"></span>&nbsp;No services with unhandled problems.
+</p>
+[% END %] <!-- Table svcs -->
+  
+  
 </form>
 
 [% UNLESS authorized_for_read_only %]

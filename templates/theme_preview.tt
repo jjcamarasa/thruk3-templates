@@ -25,7 +25,7 @@
     <div class="actionbox" id="iconsBox">
       <!-- icons are updated automatically by running ./script/theme-icons-update.pl (do not change manually) -->
       <div><a class="flex" href="#"><i class="ti ti-align-center"></i>ti ti-align-center</a></div>
-      <div><a class="flex" href="#"><i class="ti ti-angle-right"></i>ti ti-angle-right</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-arrow-right"></i>ti ti-arrow-right</a></div>
       <div><a class="flex" href="#"><i class="ti ti-arrow-left"></i>ti ti-arrow-left</a></div>
       <div><a class="flex" href="#"><i class="ti ti-arrow-right"></i>ti ti-arrow-right</a></div>
       <div><a class="flex" href="#"><i class="ti ti-arrow-right-to-bracket"></i>ti ti-arrow-right-to-bracket</a></div>
@@ -107,9 +107,9 @@
       <div><a class="flex" href="#"><i class="ti ti-chevrons-right"></i>ti ti-chevrons-right</a></div>
       <div><a class="flex" href="#"><i class="ti ti-arrow-badge-up"></i>ti ti-arrow-badge-up</a></div>
       <div><a class="flex" href="#"><i class="ti ti-chevron-down"></i>ti ti-chevron-down</a></div>
-      <div><a class="flex" href="#"><i class="ti ti-angle-left"></i>ti ti-angle-left</a></div>
-      <div><a class="flex" href="#"><i class="ti ti-angle-right"></i>ti ti-angle-right</a></div>
-      <div><a class="flex" href="#"><i class="ti ti-angle-up"></i>ti ti-angle-up</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-arrow-left"></i>ti ti-arrow-left</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-arrow-right"></i>ti ti-arrow-right</a></div>
+      <div><a class="flex" href="#"><i class="ti ti-arrow-up"></i>ti ti-arrow-up</a></div>
       <div><a class="flex" href="#"><i class="ti ti-arrow-from-top"></i>ti ti-arrow-from-top</a></div>
       <div><a class="flex" href="#"><i class="ti ti-arrows-shrink-v"></i>ti ti-arrows-shrink-v</a></div>
       <div><a class="flex" href="#"><i class="ti ti-bolt"></i>ti ti-bolt</a></div>

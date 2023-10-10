@@ -47,7 +47,7 @@
     <span id="pnp_th3" class="tabs text-center w-[18%]" onclick="return set_png_img([% date.now -   540000 %], [% date.now %], this.id, pnp_source)">week</span>
     <span id="pnp_th4" class="tabs text-center w-[18%]" onclick="return set_png_img([% date.now -  2764800 %], [% date.now %], this.id, pnp_source)">month</span>
     <span id="pnp_th5" class="tabs text-center w-[18%]" onclick="return set_png_img([% date.now - 30067200 %], [% date.now %], this.id, pnp_source)">year</span>
-    <span class="tabs text-center w-12"    onclick="return move_png_img( 0.5)"><i class="ti ti-angle-up text-lg contents"></i></span>
+    <span class="tabs text-center w-12"    onclick="return move_png_img( 0.5)"><i class="ti ti-arrow-up text-lg contents"></i></span>
   </div>
   <div id="pnp_graph_pane" class="relative justify-center min-h-[100px]">
     <a href="[% url_prefix %]#[% pnp_url %]/graph?host=[% hst | uri %]&amp;srv=[% svc | uri %]&amp;theme=smoothness" class="w-full">

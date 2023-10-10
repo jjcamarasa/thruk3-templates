@@ -1,53 +1,54 @@
 ﻿[% IF action != "editor" %]
-  <div class="card overflow-hidden w-full">
-    <div class="head">
+  <div class="card w-full">
+    <div class="card-header p-2">
       <h3>Actions</h3>
     </div>
-    <div class="actionbox">
+    <div class="card-body">
       [% IF type != "apply" %]
-        <div class="flex flex-nowrap">
+        <div>
           <a href="conf.cgi?sub=objects&amp;action=new&amp;type=[% type | uri %]">
-            <i class="ti ti-plus mr-1"></i>
+            <i class="ti ti-plus"></i>&nbsp;
             Create a new [% type | html %]
-          </a>
+          </a>          
           [% IF type == "host" || type == "service" || type == "contact" %]
-            <a href="conf.cgi?sub=objects&amp;action=new&amp;type=[% type | uri %]&amp;template=1" class="ml-1.5">
+            <br>
+            <a href="conf.cgi?sub=objects&amp;action=new&amp;type=[% type | uri %]&amp;template=1" class="ml-3 px-3">
               (new template)
             </a>
           [% END %]
         </div>
       [% END %]
       [% IF show_object && object.get_id() != "new" %]
-        <hr class="mt-0.5 pt-0.5">
+        <hr class="m-2">
         <div>
           <a href="status.cgi?style=[% IF type == "host" %]host[% END %]detail&dfl_s0_type=[% type | html %]&dfl_s0_op=%3D&dfl_s0_value=[% object.get_name() | html %]">
-            <i class="ti ti-search mr-1"></i>
+            <i class="ti ti-search"></i>&nbsp;
             Show live objects
           </a>
         </div>
         [% IF type == 'host' && !object.is_template() %]
         <div>
           <a href="conf.cgi?sub=objects&amp;action=listservices&amp;data.id=[% object.get_id() %]">
-            <i class="ti ti-menu-2 mr-1"></i>
+            <i class="ti ti-menu-2"></i>&nbsp;
             Show services for this host
           </a>
         </div>
         [% END %]
         <div>
           <a href="conf.cgi?sub=objects&amp;action=listref&amp;data.id=[% object.get_id() %]">
-            <i class="ti ti-arrow-right-circle mr-1"></i>
+            <i class="ti ti-arrow-right-circle"></i>&nbsp;
             Show references
           </a>
         </div>
         [% IF has_history %]
         <div>
           <a href='conf.cgi?sub=objects&amp;action=history&data.id=[% object.get_id() %]'>
-            <i class="ti ti-arrow-down-circle mr-1"></i>
+            <i class="ti ti-arrow-down-circle"></i>&nbsp;
             Git Blame
           </a>
         </div>
       [% END %]
-        <hr class="mt-0.5 pt-0.5">
+        <hr class="m-2">
         <div>
           <form action='conf.cgi' method='POST'>
             <input type='hidden' name='sub' value='objects'>
@@ -55,7 +56,7 @@
             <input type='hidden' name='data.id' value="[% object.get_id() %]">
             <input type="hidden" name="CSRFtoken" value="[% get_user_token(c) %]">
             <a href="conf.cgi?sub=objects&amp;data.id=[% object.get_id() %]" onClick="jQuery(this).closest('FORM').submit(); return false;">
-              <i class="ti ti-copy mr-1"></i>
+              <i class="ti ti-copy"></i>&nbsp;
               Clone this [% type | html %]
             </a>
           </form>
@@ -68,7 +69,7 @@
             <input type='hidden' name='data.id' value="[% object.get_id() %]">
             <input type="hidden" name="CSRFtoken" value="[% get_user_token(c) %]">
             <a href="conf.cgi?sub=objects&amp;data.id=[% object.get_id() %]" onClick="jQuery(this).closest('FORM').submit(); return false;">
-              <i class="ti ti-player-play mr-1"></i>
+              <i class="ti ti-player-play"></i>&nbsp;
               Enable this [% type | html %]
             </a>
           </form>
@@ -81,7 +82,7 @@
             <input type='hidden' name='data.id' value="[% object.get_id() %]">
             <input type="hidden" name="CSRFtoken" value="[% get_user_token(c) %]">
             <a href="conf.cgi?sub=objects&amp;data.id=[% object.get_id() %]" onClick="jQuery(this).closest('FORM').submit(); return false;">
-              <i class="ti ti-player-pause mr-1"></i>
+              <i class="ti ti-player-pause"></i>&nbsp;
               Disable this [% type | html %] temporarily
             </a>
           </form>
@@ -94,7 +95,7 @@
             <input type='hidden' name='data.id' value="[% object.get_id() %]">
             <input type="hidden" name="CSRFtoken" value="[% get_user_token(c) %]">
             <a href="conf.cgi?sub=objects&amp;data.id=[% object.get_id() %]" onClick="jQuery(this).closest('FORM').submit(); return false;">
-              <i class="ti ti-trash mr-1"></i>
+              <i class="ti ti-trash"></i>&nbsp;
               Delete this [% type | html %]
             </a>
           </form>
@@ -106,45 +107,45 @@
             <input type='hidden' name='data.id' value="[% object.get_id() %]">
             <input type="hidden" name="CSRFtoken" value="[% get_user_token(c) %]">
             <a href="conf.cgi?sub=objects&amp;data.id=[% object.get_id() %]" onClick="jQuery(this).closest('FORM').submit(); return false;">
-              <i class="ti ti-corner-up-left-double mr-1"></i>
+              <i class="ti ti-corner-up-left-double"></i>&nbsp;
               Revert this [% type | html %]
             </a>
           </form>
         </div>
         <div>
           <a href="conf.cgi?sub=objects&amp;action=move&amp;data.id=[% object.get_id() %]">
-            <i class="ti ti-truck mr-1"></i>
+            <i class="ti ti-truck"></i>&nbsp;
             Move [% type | html %] to file
           </a>
         </div>
         [% IF type == 'contact' %]
         <div>
           <a href="conf.cgi?sub=users&amp;action=change&amp;data.username=[% object.get_name() | uri %]">
-            <i class="ti ti-user-edit mr-1"></i>
+            <i class="ti ti-user-edit"></i>&nbsp;
             Edit CGI Permissions
           </a>
         </div>
         [% END %]
       [% END %]
         [% IF type != "apply"|| show_object %]
-        <hr class="mt-0.5 pt-0.5">
+        <hr class="m-2">
         [% END %]
         <div>
           <a href="conf.cgi?sub=objects&amp;action=browser[% IF file_link %]#[% file_link | uri %][% END %]">
-            <i class="ti ti-folder-open mr-1"></i>
+            <i class="ti ti-folder-open"></i>&nbsp;
             Browse filesystem
           </a>
         </div>
         <div>
           <a href="conf.cgi?sub=objects&amp;action=tree">
-            <i class="ti ti-binary-tree mr-1"></i>
+            <i class="ti ti-binary-tree"></i>&nbsp;
             Objects Tree
           </a>
         </div>
         [% IF has_history %]
         <div>
           <a href="conf.cgi?sub=objects&amp;action=history">
-            <i class="ti ti-arrow-back-up mr-1"></i>
+            <i class="ti ti-arrow-back-up"></i>&nbsp;
             History
           </a>
         </div>

@@ -1,6 +1,5 @@
 ﻿[% WRAPPER _conf_frame.tt %]
-
-<div class="card w-1/2 mx-auto">
+<!--<div class="card w-1/2 mx-auto">-->
   <div class="card-header">
     <h3>General Configuration</h3>
   </div>
@@ -73,6 +72,5 @@
       [% END %]
     </div>
 </div>
-</div>
-
+<!--</div>-->
 [% END %]

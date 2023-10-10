@@ -144,7 +144,7 @@
         [% END %]
           [% IF !empty && service_stats.critical_on_down_host > 0  %]
             <a href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 16, hoststatustypes => 12 }) %]' title="[% service_stats.critical_on_down_host %] on Problem Hosts">
-              <span class="ti ti-server-connection"></span>[% service_stats.critical_on_down_host %]
+              <span class="ti ti-server-off"></span>[% service_stats.critical_on_down_host %]
             </a>
           [% END %]
           [% IF !empty && service_stats.critical_and_scheduled > 0 %]
@@ -205,7 +205,7 @@
         [% END %]
         [% IF !empty && service_stats.warning_on_down_host > 0 %]
           <a href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 4, hoststatustypes => 12 }) %]' title="[% service_stats.warning_on_down_host %] on Problem Hosts">
-            <span class="ti ti-server-connection"></span>[% service_stats.warning_on_down_host %]
+            <span class="ti ti-server-off"></span>[% service_stats.warning_on_down_host %]
           </a>
         [% END %]
         [% IF !empty && service_stats.warning_and_scheduled > 0 %]
@@ -269,7 +269,7 @@
         [% END %]
         [% IF !empty && service_stats.unknown_on_down_host > 0  %]
           <a href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 8, hoststatustypes => 12 }) %]' title="[% service_stats.unknown_on_down_host %] on Problem Hosts">
-            <span class="ti ti-server-connection"></span>[% service_stats.unknown_on_down_host %]
+            <span class="ti ti-server-off"></span>[% service_stats.unknown_on_down_host %]
           </a>
         [% END %]
         [% IF !empty && service_stats.unknown_and_scheduled > 0 %]

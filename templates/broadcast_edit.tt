@@ -190,7 +190,7 @@
             <tr>
               <td colspan=2>
                 <div class="flex justify-center">
-                  <button class="green">
+                  <button class="text-green-500">
                     [% IF broadcast.id != "new" %]Save[% ELSE%]Create[% END %] Broadcast
                   </button>
                 </div>

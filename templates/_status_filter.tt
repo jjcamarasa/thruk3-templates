@@ -87,7 +87,7 @@
         </div>
         <div class="clickable hoverable p-0 rounded-br-lg" onClick="new_filter('[% paneprefix %]filter_pane')" id="[% paneprefix %]new_filter_box_btn">
           <div class="flexcol gap-1 text-center pt-10">
-            <i class="ti ti-angle-right text-lg" title="add new filter"></i>
+            <i class="ti ti-arrow-right text-lg" title="add new filter"></i>
             <span>or</span>
           </div>
         </div>

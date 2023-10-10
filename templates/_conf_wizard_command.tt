@@ -48,7 +48,7 @@
     [% END %]
   </div>
   <div class="footer justify-center">
-    <button id="[% id %]_accept" class="green">
+    <button id="[% id %]_accept" class="text-green-500">
       <i class="ti ti-check"></i>
       accept
     </button>

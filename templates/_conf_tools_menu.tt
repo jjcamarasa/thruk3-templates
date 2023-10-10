@@ -1,38 +1,32 @@
-﻿<div class="card overflow-hidden w-full">
-  <div class="head">
-    <h3>Tools</h3>
+﻿[% FOREACH category = tools_by_category.keys.sort %]
+<div class="card w-full">
+  [% IF !loop.first %]
+  [% END %]
+  <div class="card-header p-2">
+	<h4>[% category %]</h4>
   </div>
-  <div class="actionbox">
-    [% FOREACH category = tools_by_category.keys.sort %]
-      [% IF !loop.first %]
-        <hr class="mt-1 pb-1">
-      [% END %]
-      <div>
-        <h4 class="ml-6">[% category %]</h4>
-      </div>
-      [% FOREACH name = tools_by_category.$category.keys.sort %]
-        [% t = tools.$name %]
-        <div class="[% IF name == tool %]active[% END %]">
-          <a class="flex" href="conf.cgi?sub=objects&amp;tools=[% name | uri %]">
-            <i class="ti ti-search"></i>
-            [% t.link | html %]
-          </a>
-        </div>
-      [% END %]
-    [% END %]
-  </div>
+	<div class="card-body p-2">
+	<p>
+		[% FOREACH name = tools_by_category.$category.keys.sort %]
+		  [% t = tools.$name %]
+			<a class="flex" href="conf.cgi?sub=objects&amp;tools=[% name | uri %]">
+			  <i class="ti ti-search"></i>&nbsp;
+			  [% t.link | html %]
+			</a>
+		[% END %]
+	</p>
+	</div>
 </div>
+[% END %]
 
-<div class="card overflow-hidden mt-5 w-full">
-  <div class="head">
-    <h3>Actions</h3>
+<div class="card w-full">
+  <div class="card-header p-3">
+    <h4>Actions</h4>
   </div>
-  <div class="actionbox">
-    <div>
+  <div class="card-body">
       <a class="flex" href="conf.cgi?sub=objects&amp;tools=reset_ignores&amp;oldtool=[% tool | uri %]">
-        <i class="ti ti-bolt"></i>
+        <i class="ti ti-bolt"></i>&nbsp;
         Reset Ignores
       </a>
-    </div>
   </div>
 </div>

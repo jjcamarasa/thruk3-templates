@@ -79,7 +79,7 @@
       <div class='flexrow flex-nowrap gap-x-2'>
         <label class="px-2">Name</label>
         <input type="text" name="name" class="w-40" required>
-        <button class="green" type="submit">
+        <button class="text-green-500" type="submit">
           <i class="ti ti-device-floppy"></i>
           Create
         </button>
