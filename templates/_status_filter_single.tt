@@ -18,7 +18,7 @@
           <div class="head h-8 flex-nowrap justify-between">
             <h4>Host Status Types</h4>
             <button class="iconOnly p-2" title="update hoststatus filter" onclick="toggleFilterPaneSelector(this.id, 'hoststatustypes'); return false;" id="[% filterprefix %]_accept_ht">
-              <i class="ti ti-checkgreen"></i>
+              <i class="ti ti ti-check text-green-500"></i>
             </button>
           </div>
           <table class="body mb-2 cellspacing-0.25">
@@ -54,7 +54,7 @@
           <div class="head h-8 flex-nowrap justify-between">
             <h4>Host Properties</h4>
             <button class="iconOnly p-2" title="update hostproperties filter" onclick="toggleFilterPaneSelector(this.id, 'hostprops'); return false;" id="[% filterprefix %]_accept_hp">
-              <i class="ti ti-checkgreen"></i>
+              <i class="ti ti ti-check text-green-500"></i>
             </button>
           </div>
           <table class="body mb-2 cellspacing-0.25">
@@ -150,7 +150,7 @@
           <div class="head h-8 flex-nowrap justify-between">
             <h4>Service Status Types</h4>
             <button class="iconOnly p-2" title="update service status types" onclick="toggleFilterPaneSelector(this.id, 'servicestatustypes'); return false;" id="[% filterprefix %]_accept_st">
-              <i class="ti ti-checkgreen"></i>
+              <i class="ti ti ti-check text-green-500"></i>
             </button>
           </div>
           <table class="body mb-2 cellspacing-0.25">
@@ -187,7 +187,7 @@
           <div class="head h-8 flex-nowrap justify-between">
             <h4>Service Properties</h4>
             <button class="iconOnly p-2" title="update service properties" onclick="toggleFilterPaneSelector(this.id, 'serviceprops'); return false;" id="[% filterprefix %]_accept_sp">
-              <i class="ti ti-checkgreen"></i>
+              <i class="ti ti ti-check text-green-500"></i>
             </button>
           </div>
           <table class="body mb-2 cellspacing-0.25">

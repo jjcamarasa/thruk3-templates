@@ -21,6 +21,21 @@
         [% PROCESS _json_export.tt %]
         </div>
 [% END %]
+[% BLOCK no_hosts %]
+<h3 class="m-2">
+  <span class="ti ti-device-desktop"></span>&nbsp;No hosts with unhandled problems.
+</h3>
+[% END %]
+[% BLOCK no_svcs %]
+<h3 class="m-2">
+  <span class="ti ti-settings-cog"></span>&nbsp;No services with unhandled problems.
+</h3>
+[% END %]
+
+[% IF hosts.size == 0 && services.size == 0 %]
+  [% infoBoxPreTitle = "$infoBoxPreTitle <span class='text-success text-sm'><i class='ti ti-chevrons-right text-sm'></i>&nbsp;No Unhandled Problems</span>" %]
+[% END %]
+
 
 <div class="grid grid-cols-1">
   [% PROCESS _infobox.tt %]
@@ -39,6 +54,9 @@
   <input type="hidden" name="hidetop" id="hidetop" value="[% hidetop | html %]">
   <input type="hidden" name="title" id="title" value="[% custom_title | html %]">
 
+[% IF hosts.size > 0 %]
+ <span class="ti ti-circle-check"></span>&nbsp;No hosts with unhandled problems.
+[% END %]
 [% IF hosts.size > 0 %]
   [% UNLESS minimal %]
      <div class="flexrow sm:flex-nowrap my-2 gap-y-1">
@@ -100,9 +118,7 @@
     </div>
   </div>
 [% ELSE %]
-<p class="text-2xl m-3 pt-3">
- <span class="ti ti-info-circle-filled"></span>&nbsp;No hosts with unhandled problems.
-</p>
+ [% INCLUDE no_hosts %]
 [% END %] <!-- Table hosts -->
 
 [% IF services.size > 0 %]
@@ -170,9 +186,7 @@
   </div>
   
 [% ELSE %]
-<p class="text-2xl m-3 pt-3">
- <span class="ti ti-info-circle-filled"></span>&nbsp;No services with unhandled problems.
-</p>
+[% INCLUDE no_svcs %]
 [% END %] <!-- Table svcs -->
   
   

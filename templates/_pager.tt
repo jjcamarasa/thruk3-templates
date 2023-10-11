@@ -1,20 +1,28 @@
-﻿<div>
-  <nav class="inline-flex -space-x-px h-7">
-    [% prev_page = pager.page - 1 %]
+﻿<ul class="pagination">
+  [% prev_page = pager.page - 1 %]
     [% IF prev_page <= 0 %]
       [% prev_page = 1 %]
+      [% extra_class = 'disabled' %]
     [% END %]
-    <a class="pager rounded-md inline-flex items-center font-medium justify-center px-1.5 min-w-[2rem]" href="[% uri_with(c, 'page' => prev_page) %]"><i class="ti ti-arrow-left text-lg contents"></i></a>
+    <li class="page-item [% extra_class %]">
+      <a class="page-link" href="[% uri_with(c, 'page' => prev_page) %]">
+        <i class="ti ti-chevron-left text-xl"></i>
+      </a>
+    </li>
     [% IF pager.total_pages <= 13 %]
       [% page  = 1 %]
       [% WHILE page <= pager.total_pages %]
         [% class = "" %]
         [% IF page == pager.page %]
-          [% class = " textActive2" %]
+          [% class = " active" %]
         [% ELSE %]
           [% class = " small-pager" %]
         [% END %]
-        <a class="pager rounded-md inline-flex items-center font-medium justify-center px-1.5 min-w-[2rem][% class %]" href="[% uri_with(c, 'page' => page) %]">[% page %]</a>
+        <li class="page-item [% class %]">
+          <a class="page-link" href="[% uri_with(c, 'page' => page) %]">
+            [% page %]
+          </a>
+        </li>
         [% page  = page + 1 %]
       [% END %]
     [% ELSE %]
@@ -23,53 +31,86 @@
         [% WHILE page < 10 %]
           [% class = "" %]
           [% IF page == pager.page %]
-            [% class = " textActive2" %]
+            [% class = " active" %]
           [% ELSE %]
             [% class = " small-pager" %]
           [% END %]
-          <a class="pager rounded-md inline-flex items-center font-medium justify-center px-1.5 min-w-[2rem][% class %]" href="[% uri_with(c, 'page' => page) %]">[% page %]</a>
+          <li class="page-item [% class %]">
+            <a class="page-link" href="[% uri_with(c, 'page' => page) %]">
+              [% page %]
+            </a>
+          </li>
           [% page  = page + 1 %]
         [% END %]
-        <a class="pager rounded-md inline-flex items-center font-medium justify-center px-1.5 min-w-[2rem] bg-transparent cursor-default small-pager">...</a>
-        <a class="pager rounded-md inline-flex items-center font-medium justify-center px-1.5 min-w-[2rem] small-pager" href="[% uri_with(c, 'page' => pager.total_pages) %]">[% pager.total_pages %]</a>
+        <li class="page-item">
+          <a class="page-link bg-transparent cursor-default small-pager">...</a>
+        </li>
+        <li class="page-item">        
+          <a class="page-link small-pager" href="[% uri_with(c, 'page' => pager.total_pages) %]">[% pager.total_pages %]</a>
+        </li>
       [% ELSIF pager.page > pager.total_pages - 8 %]
-        <a class="pager rounded-md inline-flex items-center font-medium justify-center px-1.5 min-w-[2rem] small-pager" href="[% uri_with(c, page => 1) %]">1</a>
-        <a class="pager rounded-md inline-flex items-center font-medium justify-center px-1.5 min-w-[2rem] bg-transparent cursor-default small-pager">...</a>
+        <li class="page-item">
+          <a class="page-link small-pager" href="[% uri_with(c, page => 1) %]">1</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link bg-transparent cursor-default small-pager">...</a>
+        </li>
         [% page  = pager.total_pages - 8 %]
         [% WHILE page <= pager.total_pages %]
           [% class = "" %]
           [% IF page == pager.page %]
-            [% class = " textActive2" %]
+            [% class = " active" %]
           [% ELSE %]
             [% class = " small-pager" %]
           [% END %]
-          <a class="pager rounded-md inline-flex items-center font-medium justify-center px-1.5 min-w-[2rem][% class %]" href="[% uri_with(c, 'page' => page) %]">[% page %]</a>
+          <li class="page-item [% class %]">
+          <a class="page-link" href="[% uri_with(c, 'page' => page) %]">
+            [% page %]
+          </a>
+          </li>
           [% page  = page + 1 %]
         [% END %]
       [% ELSE %]
-        <a class="pager rounded-md inline-flex items-center font-medium justify-center px-1.5 min-w-[2rem] small-pager" href="[% uri_with(c, page => 1) %]">1</a>
-        <a class="pager rounded-md inline-flex items-center font-medium justify-center px-1.5 min-w-[2rem] bg-transparent cursor-default small-pager">...</a>
+        <li class="page-item">
+          <a class="page-link small-pager" href="[% uri_with(c, page => 1) %]">1</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link bg-transparent cursor-default small-pager">...</a>
+        </li>
         [% page  = pager.page - 3 %]
         [% endpage = pager.page + 3 %]
         [% WHILE page <= endpage %]
           [% class = "" %]
           [% IF page == pager.page %]
-            [% class = " textActive2" %]
+            [% class = " active" %]
           [% ELSE %]
             [% class = " small-pager" %]
           [% END %]
-          <a class="pager rounded-md inline-flex items-center font-medium justify-center px-1.5 min-w-[2rem][% class %]" href="[% uri_with(c, 'page' => page) %]">[% page %]</a>
+          <li class="page-item [% class %]">
+            <a class="page-link" href="[% uri_with(c, 'page' => page) %]">
+              [% page %]
+            </a>
+          </li>
           [% page  = page + 1 %]
         [% END %]
-        <a class="pager rounded-md inline-flex items-center font-medium justify-center px-1.5 min-w-[2rem] bg-transparent cursor-default small-pager">...</a>
-        <a class="pager rounded-md inline-flex items-center font-medium justify-center px-1.5 min-w-[2rem] small-pager" href="[% uri_with(c, 'page' => pager.total_pages) %]">[% pager.total_pages %]</a>
+        <li class="page-item">
+          <a class="page-link bg-transparent cursor-default small-pager">...</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link small-pager" href="[% uri_with(c, 'page' => pager.total_pages) %]">
+            [% pager.total_pages %]
+          </a>
+        </li>
       [% END %]
     [% END %]
-
     [% next_page = pager.page + 1 %]
     [% IF next_page > pager.total_pages %]
       [% next_page = pager.total_pages %]
+      [% extra_class = 'disabled' %]
     [% END %]
-    <a class="pager rounded-md inline-flex items-center font-medium justify-center px-1.5 min-w-[2rem]" href="[% uri_with(c, 'page' => next_page) %]"><i class="ti ti-arrow-right text-lg contents"></i></a>
-  </nav>
-</div>
+    <li class="page-item [% extra_class %]">
+      <a class="page-link" href="[% uri_with(c, 'page' => next_page) %]">
+        <i class="ti ti-chevron-right text-xl"></i>
+      </a>
+    </li>
+    </ul>

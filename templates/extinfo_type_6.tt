@@ -32,7 +32,7 @@
           <div class="head justify-between">
             <h3>Display Filter</h3>
             <button class="iconOnly" type="submit" name="update" title="accept">
-              <i class="ti ti-checkgreen"></i>
+              <i class="ti ti ti-check text-green-500"></i>
             </button>
           </div>
           <div class="body">

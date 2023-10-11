@@ -36,7 +36,7 @@
             <input type='hidden' name='backend' value="[% host.peer_key %]">
             <input type='hidden' name='referer' value="[% short_uri(c, {referer => 'undef'}) %]">
             <input type="hidden" name="CSRFtoken" value="[% get_user_token(c) %]">
-            <a class="ml-1 button btn-sm hover-green" href="cmd.cgi?cmd_typ=96&amp;start_time=[% date.now %]&amp;host=[% host.name | uri %]&amp;force_check=1&amp;backend=[% host.peer_key %]&amp;referer=[% as_url_arg(short_uri(c, {referer => 'undef'})) %]" onClick="setBtnSpinner(this); jQuery(this).closest('FORM').submit(); return false;">Now
+            <a class="ml-1 btn btn-sm bg-green-lt" href="cmd.cgi?cmd_typ=96&amp;start_time=[% date.now %]&amp;host=[% host.name | uri %]&amp;force_check=1&amp;backend=[% host.peer_key %]&amp;referer=[% as_url_arg(short_uri(c, {referer => 'undef'})) %]" onClick="setBtnSpinner(this); jQuery(this).closest('FORM').submit(); return false;">Now
             </a>
           </form>
         </div>

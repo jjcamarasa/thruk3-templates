@@ -1,42 +1,49 @@
 ﻿[% WRAPPER _conf_frame.tt %]
 
 [% IF readonly %]
-<div class="card red alert top-center w-fit">
-  <div class="body textALERT"><b>Readonly:</b> Make sure the config file is writable!</div>
+<div class="card-header bg-danger-lt text-center">
+  <h4><b>Readonly:</b> Make sure the config file is writable!</h4>
 </div>
 [% END %]
 
-<div class="flexcol items-center h-[calc(100%_-_11rem)]">
-  <form action="conf.cgi" method="POST" onsubmit="multi_select_all(this); setFormBtnSpinner(this)" class="w-fit h-full">
+  <form action="conf.cgi" method="POST" onsubmit="multi_select_all(this); setFormBtnSpinner(this)" class="form">
     <input type="hidden" name="sub" value="[% sub | html %]">
     <input type="hidden" name="action" value="store">
     <input type="hidden" name="hex" value="[% hex %]">
     <input type="hidden" name="CSRFtoken" value="[% get_user_token(c) %]">
-    <div class="card w-full flexcol gap-0 flex-nowrap h-full min-h-[600px] overflow-hidden">
-      <div class="h-full overflow-scroll">
-        <table>
-          [% FOREACH cat = keys %]
-            <tr>
-              <td colspan=2 class="sticky top-0 z-10 bgCard [% IF ! loop.first %]pt-5[% END %]">
-                <h3 class="text-center borderDefault border-b">[% cat.0 %]</h3>
-              </td>
-            </tr>
+
+    <div class="card-body">
+        [% FOREACH cat = keys %]
+            <div class="card mb-3">
+              <div class="card-header py-2">
+                <h3 class="text-center">[% cat.0 %]</h3>
+              </div>
+
+              <div class="card-body">
             [% FOREACH key = cat.1 %]
               [% d = data.$key %]
-              <tr>
+              <div class="row py-1">
+                <label class="col-3 col-form-label-sm required">[% key %]</label>
+                <div class="col">
+                  <!--<input type="email" class="form-control" aria-describedby="emailHelp" placeholder="Enter email">-->
+                  <!--<small class="form-hint">We'll never share your email with anyone else.</small>-->
+                
+              
+              
+              <!--<tr>
                 <th class="px-2 align-top">[% key %]</th>
-                <td class="pr-2">
+                <td class="pr-2">-->
                   [% IF d.0 == 'BOOL' %]
-                    <input type="radio" name="data.[% key %]" value="0"[% IF d.1 == 0 %] checked[% END %]> No
-                    <input type="radio" name="data.[% key %]" value="1"[% IF d.1 == 1 %] checked[% END %]> Yes
+                    <input class="form-control" type="radio" name="data.[% key %]" value="1"[% IF d.1 == 1 %] checked[% END %]> Yes
+                    <input class="form-control" type="radio" name="data.[% key %]" value="0"[% IF d.1 == 0 %] checked[% END %]> No
                   [% ELSIF d.0 == 'STRING' %]
-                    <input type="text" name="data.[% key %]" value="[% d.1 | html %]" size=65>
+                    <input class="form-control w-2/3" type="text" name="data.[% key %]" value="[% d.1 | html %]">
                   [% ELSIF d.0 == 'INT' %]
-                    <input type="text" name="data.[% key %]" value="[% d.1 | html %]" size=65>
+                    <input class="form-control w-2/3" type="text" name="data.[% key %]" value="[% d.1 | html %]">
                   [% ELSIF d.0 == 'ARRAY' %]
-                    <input type="text" name="data.[% key %]" value="[% d.1.join(', ') | html %]" size=65>
+                    <input class="form-control w-2/3" type="text" name="data.[% key %]" value="[% d.1.join(', ') | html %]">
                   [% ELSIF d.0 == 'LIST' %]
-                    <select name="data.[% key %]">
+                    <select class="form-control w-1/3" name="data.[% key %]">
                         [% FOREACH opt = d.2 %]
                             <option value="[% opt.key | html %]"[% IF opt.key == d.1 %] selected[% END %]>[% opt.value %]</option>
                         [% END %]
@@ -82,20 +89,30 @@
                   [% ELSE %]
                     [% d.list.join(', ') %]
                   [% END %]
-                </td>
-              </tr>
+                    </div>
+                  </div>
+                <!--</td>
+              </tr>-->
             [% END %]
+              </div>
+            </div>
           [% END %]
-          <tr>
+          <!--<tr>
           </tr>
-        </table>
+        </table>-->
       </div>
-      <div class="footer justify-evenly" style="flex: 0 0 40px;">
-        <a class="button" style="width:90px" href="conf.cgi">cancel</a>
-        <button name="send" value="save" class="submit w-44 green"[% IF readonly %] disabled[% END %]><i class="ti ti-device-floppy"></i> save</button>
+      
+      <div class="card-footer text-center">
+        <div class="btn-group">
+          <a class="btn" href="conf.cgi">Cancel</a>
+          <button name="send" value="save" class="btn bg-green-lt submit [% IF readonly %] disabled[% END %]">
+            <i class="ti ti-device-floppy"></i>&nbsp;Save
+          </button>
+        </div>
       </div>
     </div>
+
   </form>
-</div>
+<!--</div>-->
 
 [% END %]
