@@ -1,19 +1,18 @@
-<div class="card w-full">
-  <div class="head">
-    <h3>View Actions</h3>
-  </div>
-  <div class="actionbox">
-    <div>
+<div class="card list-group list-group-sm list-group-flush list-group-hoverable">
+<div class="list-group-header">
+View Actions
+</div>  
+    <div class="list-group-item p-2">
         <a href="extinfo.cgi?type=1&amp;host=[% service.host_name | uri %]">
         <i class="ti ti-info-circle "></i>&nbsp;Host Information
         </a>
     </div>
-    <div>
+    <div class="list-group-item p-2">
         <a href="status.cgi?host=[% service.host_name | uri %]">
           <i class="ti ti-clipboard-text"></i>&nbsp;Host Status Detail
         </a>
     </div>
-    <div class="block">
+    <div class="list-group-item p-2">
         <a href="history.cgi?host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;nosystem=1&amp;backend=[% service.peer_key %]">
         <i class="ti ti-file "></i>&nbsp;Service Alert History</a>
 		<span class="navsectionsubtitle text-xs">
@@ -23,38 +22,38 @@
 			</a>
 		</span>			
         </div>
-    [% IF show_impacts_link %]<div>
+    [% IF show_impacts_link %]<div class="list-group-item p-2">
         <a href="shinken_status.cgi?style=bothtypes&amp;s0_type=impact&amp;s0_op=%3D&amp;s0_value=[% service.host_name | uri %]/[% service.description | uri %]&amp;title=Impacts of [% service.host_name | uri %]/[% service.description | uri %]"> 
         <i class="ti ti-git-merge "></i>&nbsp;Impacts For This Problem</a>
 	</div>
 	[% END %]
     
 	[% IF show_rootproblems_link %]
-	<div>
+	<div class="list-group-item p-2">
         <a href="shinken_status.cgi?style=bothtypes&amp;s0_type=rootproblem&amp;s0_op=%3D&amp;s0_value=[% service.host_name | uri %]/[% service.description | uri %]&amp;title=Root problem of [% service.host_name | uri %]/[% service.description | uri %]"> 
         <i class="ti ti-channel "></i>&nbsp;Root Problem For This Impact</a>
 	</div>
 	[% END %]
     
 	[% IF use_feature_trends %]
-	<div>
+	<div class="list-group-item p-2">
         <a href="trends.cgi?host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]"> 
         <i class="ti ti-chart-line "></i>&nbsp;Service Trends</a>
 	</div>
     [% END %]
     
-	<div>
+	<div class="list-group-item p-2">
         <a href="avail.cgi?host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;show_log_entries"> 
         <i class="ti ti-book "></i>&nbsp;Service Availability Report</a>
 	</div>
     
-	<div>
+	<div class="list-group-item p-2">
         <a href="notifications.cgi?host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]"> 
         <i class="ti ti-bell "></i>&nbsp;Service Notifications</a>
 	</div>
     
 	[% IF c.check_user_roles('authorized_for_configuration_information') %]
-    <div class="block">
+    <div class="list-group-item p-2">
 		<a href="config.cgi?type=services&amp;jump2=[% service.host_name | uri %]&amp;jump3=[% service.description | uri %]">
 			<i class="ti ti-edit  "></i>&nbsp;Service Configuration
         </a>
@@ -68,7 +67,7 @@
         </div>
     [% END %]
     
-	<div class="block">
+	<div class="list-group-item p-2">
         <a href="status.cgi?s0_op=%3D&amp;s0_type=service&amp;s0_value=[% service.description | uri %]"> 
 			<i class="ti ti-list"></i>&nbsp;All '<i>[% IF service.description.length > 7; service.description.substr(0, 7) | html %]...[% ELSE; service.description | html; END %]</i>' Services
 		</a>
@@ -78,5 +77,4 @@
 			</a>
 		</span>
     </div>
-  </div>    
 </div>

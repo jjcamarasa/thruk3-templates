@@ -1,18 +1,13 @@
 ﻿[% IF !empty && host_stats.outages > 0 %]
-<div class="card">
-    <div class="head">
-      <div class="font-bold">
-        <span class="ti ti-share "></span>&nbsp;Network Outages</div>
+<div class="col-3">
+  <div class="card">
+    <div class="card-header">
+        <span class="ti ti-share "></span>&nbsp;Network Outages
     </div>
-    <div class="body">
-   <table>
-     <tr>
-      <th class="p-0 hoverable"><a class="block w-full p-2" href='outages.cgi'>[% host_stats.outages %] Outages</a></th>
-     </tr>
-      <tr>
-      <td class="p-0 importantProblem h-8"><a class="block w-full p-2 itemblock" href='outages.cgi'>[% host_stats.outages %] Blocking Outages</a></td>
-      </tr>
-    </table>
-</div>
+    <div class="card-body text-center text-3xl">
+      <a class="block text-danger" href='outages.cgi'>[% host_stats.outages %] Outages</a>        
+      <a class="block w-full p-2 itemblock" href='outages.cgi'>[% host_stats.outages %] Blocking Outages</a>
+    </div>
+  </div>
 </div>
 [% END %]

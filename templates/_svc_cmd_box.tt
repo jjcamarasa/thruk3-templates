@@ -1,0 +1,49 @@
+[%
+ cmds_array = [    
+    { id => '5', name => 'Active checks' , svcprop => 'checks_enabled' },
+    { id => '39', name => 'Passive checks' , svcprop => 'accept_passive_checks' },
+    { id => '99', name => 'Obsessing', svcprop => 'obsess_over_service' },
+    { id => '22', name => 'Notifications', svcprop => 'notifications_enabled' },
+    { id => '45', name => 'Event Handler', svcprop => 'event_handler_enabled' },
+    { id => '59', name => 'Flap Detection', svcprop => 'flap_detection_enabled' }    
+ #   { id => '200', name => 'Launch event handler', svcprop => 'flap_detection_enabled' }    
+   ]
+%]
+[% BLOCK component_status %]
+[% cmdd = item.id %]
+[% cmde = item.id + 1 %]
+[% UNLESS command_disabled(c, '$cmdd') || command_disabled(c, '$cmde') %]
+	  [% IF service.${item.svcprop} %]
+		[% cmd_type = cmde %]
+		[% PROCESS command_enabled_css %]
+	  [% ELSE %]
+		[% cmd_type = cmdd %]
+		[% PROCESS command_disabled_css %]
+	  [% END %]
+	<div class="flex justify-content-between align-items-center">
+		<div class="mx-1">
+			<span class="text-[% statuscolor %]">
+				<i class="ti ti-[% status %]"></i>
+			</span>&nbsp;[% item.name %]
+		</div>
+		<div class="w-1/4">
+			<a class="js-modal-command-link btn btn-sm w-full [% btn_hov %]" href="cmd.cgi?cmd_typ=[% cmd_type %]&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
+			[% btn_text %]
+			</a>
+		</div>
+	</div>
+[% END %]
+[% END %]
+
+[% IF c.check_cmd_permissions('service', service.description, service.host_name) %]
+<div class="card list-group list-group-sm list-group-flush list-group-hoverable">
+ <div class="list-group-header">
+	Service Commands
+ </div>  
+	[% FOREACH item IN cmds_array %]
+	<div class="list-group-item p-1">
+		[% INCLUDE component_status item %]
+	</div>
+	[% END %]
+ </div>
+[% END %]

@@ -107,11 +107,11 @@
       [% END %]
       </div>
       <div class="card-footer text-center">
-        <a class="link" href="https://www.thruk.org/" target="_blank">
+        <a class="link-muted" href="https://www.thruk.org/" target="_blank">
           v[% thrukversion %]
         </a>
         [% IF c.config.extra_version %]
-          <a class="link" href='[% c.config.extra_version_link %]' target='_blank'>[% c.config.extra_version %]</a>
+          <a class="link-muted" href='[% c.config.extra_version_link %]' target='_blank'>[% c.config.extra_version %]</a>
         [% END %]
       </div>
     </div>

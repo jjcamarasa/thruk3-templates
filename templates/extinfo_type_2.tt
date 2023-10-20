@@ -21,7 +21,7 @@
 <!--<div class="flexrow justify-between mb-2">  -->
 <div class="flex flex-row gap-2">
 
-  <div class="flexcol order-1 gap-2 grow">
+  <div class="flexcol order-1 gap-2 grow p-2">
     [% PROCESS _extinfo_host_service_details.tt obj=service %]
 
   <div class="flexrow gap-2">
@@ -40,8 +40,8 @@
     [% PROCESS extinfo_extra.tt %]
 
 [% IF comments.size > 0 %]
-<div class="card w-full">
-  <div class="head justify-between">
+<div class="card">
+  <div class="card-header justify-between">
     <h3>Service Comments</h3>
     [% IF c.check_cmd_permissions('service', service.description, service.host_name) %]
       <div class="flex gap-1">
@@ -73,8 +73,8 @@
 [% END %]
 
 [% IF downtimes.size != 0 || recurring_downtimes.size != 0 %]
-<div class="card w-full mt-5">
-  <div class="head justify-between">
+<div class="card mt-5 p-2">
+  <div class="card-header justify-between">
     <h3>Service Downtimes</h3>
     [% IF c.check_cmd_permissions('service', service.description, service.host_name) %]
       <div class="flex gap-1">
@@ -113,9 +113,9 @@
 [% END %]
 </div><!-- main col -->
 
-  <div class="flexcol order-2 max-w-[350px] gap-2">
+  <div class="flexcol order-2 max-w-[350px] p-1">
     [% PROCESS service_view_panel.tt %]
-	
+   
 	[% PROCESS _service_command_box.tt %]
 
     [% IF matching_backends.size > 1 %]
@@ -159,7 +159,7 @@
   
   [% IF service.notes_expanded %]
   <div class="card w-full mt-5">
-    <div class="head">
+    <div class="card-header">
       <h3>Notes</h3>
     </div>
     <div class="body">
@@ -167,12 +167,14 @@
     </div>
   </div>
   [% END %]  
-  </div><!-- col2 lateral menus -->  
+  </div><!-- col2 lateral menus --> 
 </div>
 
 [% IF show_full_commandline == 2 || ( show_full_commandline == 1 && c.check_user_roles('authorized_for_configuration_information') ) %]
-  <div class="card mt-5 w-full">
-    <div class="head justify-between">
+  <!--<div class="flex flex-row m-3">-->
+  <div class="flexrow mt-2 p-2">
+  <div class="card">
+    <div class="card-header justify-between">
       <h3>Configuration Information</h3>
       <div class="flex gap-x-1">
         [% IF use_feature_configtool && c.check_user_roles('authorized_for_system_commands') && backends_with_obj_config.$peer_key %]
@@ -185,6 +187,7 @@
     <div>
       [% PROCESS _extinfo_command_line.tt %]
     </div>
+  </div>
   </div>
 [% END %]
 

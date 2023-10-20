@@ -49,44 +49,43 @@
           [% END %]
           </ul>
         </div>
-        <!--<div class="card-body flexrow flex-nowrap gap-1 justify-between h-fit">-->
-        <div class="card-body flexrow h-fit">
-          <div class="w-40 sub_1">
+        <div class="card-body p-2">
+          <div class="flexrow mb-2">
             [% IF referer %]
-              <a class="button" href="[% referer %]">back</a>
+              <div class="px-2 sub_1">
+                  <a class="btn btn-sm" href="[% referer %]">back</a>
+              </div>
             [% END %]
-          </div>
           <div class="grow justify-center text-center">
-            <h3 class="p-0 m-0">
+            <h3 class="p-1 m-0">
               [% IF object.defined('file') %]
                 [% type | ucfirst %][% IF object.conf.defined('register') && object.conf.register == 0 %]&nbsp;Template[% END %]:
                 [%+ object.get_long_name('&nbsp;') %]
-                [% IF object.disabled %]<span class="textHINT">(disabled)</span>[% END %]
+                [% IF object.disabled %]<span class="text-muted">(disabled)</span>[% END %]
               [% ELSE %]
-                new [% type | html %]
+                Creating new [% type | html %] ...
               [% END %]
             </h3>
             <div style="[% IF subcat != 'config' && subcat != 'comp' %]display:none;[% END %] font-weight:normal; font-size:smaller;" class="sub_1 sub_3 sub_4">
               [% IF object.defined('file') %]
                 [% object.file.display %] [% IF object.line > 0 %] line [% object.line %][% END %]
-                [% IF object.file.readonly %] <span class="textHINT">(read-only)</span>[% END %]
-                [% IF file_locked %]<br><a class="textHINT" href="[% uri_with(c, unlock => 1) %]">File is currently locked by [% file_locked.user %]. Edit Anyway? (Last changed: [% date_format(c, file_locked.time) %])</a>[% END %]
+                [% IF object.file.readonly %] <span class="text-muted">(read-only)</span>[% END %]
+                [% IF file_locked %]<br><a class="text-muted" href="[% uri_with(c, unlock => 1) %]">File is currently locked by [% file_locked.user %]. Edit Anyway? (Last changed: [% date_format(c, file_locked.time) %])</a>[% END %]
               [% ELSE %]
-                <div style="[% IF subcat != 'config' %]display:none;[% END %]" class="flexrow flex-nowrap gap-1 justify-center items-center sub_1">
-                  <span>save to:</span>
-                  <input type="text" class="w-96 deletable" placeholder="enter filename" name="data.file" id="fileselect" value="[% new_file | html %]" onclick="ajax_search.init(this, 'file', { striped:false, autosubmit:false, templates:false, data:data, emptymsg:'file will be created'})">
+                <div style="[% IF subcat != 'config' %]display:none;[% END %]" class="flexrow flex-nowrap gap-1 justify-center items-center sub_1 p-2 mb-2">
+                  <div class="input-group">
+                  <span class="input-group-text">
+                    <i class="ti ti-file-download text-xl"></i>save to file
+                  </span>                  
+                  <input type="text" class="form-control" placeholder="enter filename" name="data.file" id="fileselect" value="[% new_file | html %]" onclick="ajax_search.init(this, 'file', { striped:false, autosubmit:false, templates:false, data:data, emptymsg:'file will be created'})">
+                  </div>
                 </div>
               [% END %]
             </div>
           </div>
-          <div class="w-40 flexrow justify-end sub_1">
-            [% IF ! readonly %]
-            <button class="hover-green" title="Apply changes to this object">Apply</button>
-            [% END %]
-          </div>
         </div>
 
-        <div style="[% IF subcat != 'config' %]display:none[% END %]" class="sub_1">
+        <div style="[% IF subcat != 'config' %]display:none[% END %]" class="sub_1">        
           [% IF readonly %]
             [% PROCESS _conf_object_view.tt obj = object conf = "obj" %]
           [% ELSE %]
@@ -94,27 +93,17 @@
             [% PROCESS _conf_object_edit.tt obj = object %]
           [% END %]
         </div>
-
+        <!-- templates tab -->
         <div style="[% IF subcat != 'templates' %]display:none[% END %]" class="sub_2">
           [% IF used_templates.size > 0 %]
-            <table class="cellspacing-x">
+          
               [% FOREACH key = used_templates %]
-                <tr>
+          <div class="card">
+                <div class="card-header text-center">
                   [% SET objs = c.obj_db.get_objects_by_name(type, key, 1) %]
                   [% SET obj_id = "new" %]
-                  <td colspan="2" class="pl-2 text-center">
-                    [% IF objs.size > 0 %]
-                      [% objs.0.file.display %] line [% objs.0.line %]
-                      [% IF objs.0.file.readonly %]<span class="textHINT">(read-only)</span>[% END %]
-                      [% SET obj_id = objs.0.get_id() %]
-                    [% ELSE %]
-                      object does not exist
-                    [% END %]
-                  </td>
-                </tr>
-                <tr>
-                  <td class="pl-2 align-top font-bold">
-                    <a class="link" href="conf.cgi?sub=objects&amp;type=[% type | uri %]&amp;data.id=[% obj_id %]&amp;data.name=[% key | uri %]">
+
+                    <a class="card-title" href="conf.cgi?sub=objects&amp;type=[% type | uri %]&amp;data.id=[% obj_id %]&amp;data.name=[% key | uri %]">
                       [% IF objs.size > 0 && objs.0.file.readonly %]
                         <i class="ti ti-eye" title='View Template'></i>
                       [% ELSE %]
@@ -122,29 +111,32 @@
                       [% END %]
                       [% key | html %]
                     </a>
-                  </td>
-                  <td class="pr-2">
+                </div>
+                <div class="card-body p-0">
                     [% IF objs.size > 0 %]
                       [% PROCESS _conf_object_view.tt obj = objs.0 conf = "obj" %]
                     [% ELSE %]
                       Template does not exist
                     [% END %]
-                  </td>
-                </tr>
-                [% UNLESS loop.last %]
-                  <tr>
-                    <td colspan="2">
-                      <hr style="[% IF subcat != 'templates' %]display:none[% END %]" class="mt-1 pb-1 sub_2">
-                    </td>
-                  </tr>
-                [% END %]
-              [% END %]
-              </table>
+                </div>
+                <div class="card-footer">
+                    [% IF objs.size > 0 %]
+                      [% objs.0.file.display %] line [% objs.0.line %]
+                      [% IF objs.0.file.readonly %]
+                        <span class="text-muted">(read-only)</span>
+                      [% END %]
+                      [% SET obj_id = objs.0.get_id() %]
+                    [% ELSE %]
+                      <span class="text-danger"> object does not exist</span>
+                    [% END %]
+                  </div>
+              </div>
+              [% END %]         
           [% ELSE %]
-            <div class="text-center textHINT">This object does not use templates</div>
+            <div class="text-center text-info p-2">This object does not use templates</div>
           [% END %]
         </div>
-
+        <!-- tab computed -->
         <div style="[% IF subcat != 'comp' %]display:none[% END %]" class="sub_3">
           [% SET duplicate_keys = {} %]
           [% PROCESS _conf_object_view.tt obj = object conf = "computed" %]
@@ -153,7 +145,7 @@
         [% IF has_auth_section %]
           <div style="[% IF subcat != 'auth' %]display:none[% END %]" class="sub_4">
             <input type="hidden" name="hex" value="[% hex %]">
-            <table class="body w-fit cellspacing-x mx-auto mt-2">
+            <table class="body w-fit cellspacing-x mx-auto">
               <thead>
                 <tr>
                   <th colspan=2 ><h3>Roles (cgi.cfg)</h3></th>
@@ -173,12 +165,13 @@
             </table>
           </div>
         [% END %]
+        </div>
 
         [% IF ! readonly %]
           <div style="[% IF subcat != 'config' %]display:none[% END %]" class="card-footer text-center sub_1 sub_4">
             <div class="btn-group">
               [% IF object.get_id() != 'new' && ! bare %]
-              <input type="submit" name="send" value="raw edit" class="btn sub_1">
+                <input type="submit" name="send" value="raw edit" class="btn sub_1">
               [% END %]
               <button class="btn hover-green" title="Apply changes to this object">Apply</button>
             </div>

@@ -49,3 +49,23 @@ button-default border-t border-b border-r border-l px-4 py-2 focus:z-10 focus:te
 [% BLOCK button_alone %]
 button-default rounded-lg border px-4 py-2 focus:z-10 focus:text-blue-700 focus:ring-2 focus:ring-blue-700
 [% END %]
+
+
+[% BLOCK command_enabled_css %]
+[% 
+  status = 'check text-xl'
+  statuscolor = 'success'
+  btn_hov = 'hover-red'
+  btn_text = 'Disable'
+  btn_text_alt = 'Enable'
+%]
+[% END %]
+[% BLOCK command_disabled_css %]
+[% 
+  status = 'x text-xl'
+  statuscolor = 'danger'
+  btn_hov = 'hover-green'
+  btn_text = 'Enable'
+  btn_text_alt = 'Disable'
+%]
+[% END %]

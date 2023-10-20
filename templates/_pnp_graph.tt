@@ -31,7 +31,9 @@
 
 <div class="card w-full">
   <div class="head justify-between">
-    <h3>Performance Graph</h3>
+    <div class="font-bold">      
+        <i class="ti ti-chart-area"></i>&nbsp;Performance Graph      
+    </div>
     <div class='pnpSelector'>
       <form action="#">
         <select onchange="pnp_source=this.value; set_png_img();" id="pnp_source_select" style="display: none;">
@@ -41,13 +43,13 @@
   </div>
 
   <div class="head px-0 clickable">
-    <span	class="tabs text-center w-12"    onclick="return move_png_img(-0.5)"><i class="ti ti-chevron-down text-lg contents"></i></span>
+    <span	class="tabs text-center w-12"    onclick="return move_png_img(-0.5)"><i class="ti ti-arrow-left text-lg contents"></i></span>
     <span id="pnp_th1" class="tabs text-center w-[18%]" onclick="return set_png_img([% date.now -    14400 %], [% date.now %], this.id, pnp_source)">4 hours</span>
     <span id="pnp_th2" class="tabs text-center w-[18%]" onclick="return set_png_img([% date.now -    90000 %], [% date.now %], this.id, pnp_source)">day</span>
     <span id="pnp_th3" class="tabs text-center w-[18%]" onclick="return set_png_img([% date.now -   540000 %], [% date.now %], this.id, pnp_source)">week</span>
     <span id="pnp_th4" class="tabs text-center w-[18%]" onclick="return set_png_img([% date.now -  2764800 %], [% date.now %], this.id, pnp_source)">month</span>
     <span id="pnp_th5" class="tabs text-center w-[18%]" onclick="return set_png_img([% date.now - 30067200 %], [% date.now %], this.id, pnp_source)">year</span>
-    <span class="tabs text-center w-12"    onclick="return move_png_img( 0.5)"><i class="ti ti-arrow-up text-lg contents"></i></span>
+    <span class="tabs text-center w-12"    onclick="return move_png_img( 0.5)"><i class="ti ti-arrow-right text-lg contents"></i></span>
   </div>
   <div id="pnp_graph_pane" class="relative justify-center min-h-[100px]">
     <a href="[% url_prefix %]#[% pnp_url %]/graph?host=[% hst | uri %]&amp;srv=[% svc | uri %]&amp;theme=smoothness" class="w-full">

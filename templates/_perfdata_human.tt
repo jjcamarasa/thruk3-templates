@@ -40,7 +40,7 @@
     [% END %]
     </tbody>
   </table>
-  <div id="perfdata_raw" style="display:none;">
+  <div class="p-2" id="perfdata_raw" style="display:none;">
     [% perfdata = orig_perfdata %]
     [% PROCESS _perfdata_table add_link="1" %]
     [% orig_perfdata | html %]

@@ -1,11 +1,11 @@
-<div class="card">
-  <div>
-    <table class="striped">
-    <thead class="text-bold">
-      <th class="w-24 p-2"><span class="ti ti-adjustments"></span>&nbsp;Features</th>
-      <th class="text-center">Status</th>
-      <th class="text-center">Services</th>
-      <th class="text-center">Hosts</th>
+<div class="col-auto">
+    <table class="table table-sm table-striped bg-light border-1 h-full">
+    <thead>
+        <th class="p-2"><span class="ti ti-adjustments"></span>&nbsp;Features</th>
+        <th class="p-2">Status</th>
+        <th class="p-2">Services</th>
+        <th class="p-2">Hosts</th>
+      
     </thead>
     <tr>
       <td class="font-bold pl-2">Active Checks</td>
@@ -28,7 +28,7 @@
         </td>
       
       [% IF pi.keys.size > 0 && pi.execute_service_checks == 0 %]
-      <td colspan='2' class='pl-2'>
+      <td colspan='2' class='text-center'>
         <a class="text-disabled" href='extinfo.cgi?type=0'>Feature disabled</a>
       </td>
       [% ELSE %]              
@@ -97,7 +97,7 @@
         </a>
         </td>
         [% IF pi.keys.size > 0 && pi.accept_passive_service_checks == 0 %]
-          <td colspan='2' class='pl-2'>
+          <td colspan='2' class='text-center'>
             <a class="text-disabled" href='extinfo.cgi?type=0'>Feature disabled</a>
           </td>
         [% ELSE %]
@@ -139,7 +139,7 @@
         </a>
         </td>
         [% IF pi.keys.size > 0 && pi.enable_notifications == 0 %]
-        <td colspan='2' class='pl-2'>
+        <td colspan='2' class='text-center'>
           <a class="text-disabled" href='extinfo.cgi?type=0'>Feature disabled</a>
         </td>
         [% ELSE %]
@@ -184,7 +184,7 @@
         </a>
         </td>
         [% IF pi.keys.size > 0 && pi.enable_event_handlers == 0 %]
-        <td colspan='2' class='pl-2'>
+        <td colspan='2' class='text-center'>
           <a class="text-disabled" href='extinfo.cgi?type=0'>Feature disabled</a>
         </td>        
         [% ELSE %]
@@ -228,7 +228,7 @@
         </td>
         
         [% IF pi.keys.size > 0 && pi.enable_flap_detection == 0 %]          
-          <td colspan='2' class='pl-1'>
+          <td colspan='2' class='text-center'>
             <a class="text-disabled" href='extinfo.cgi?type=0'>Feature disabled</a>
           </td>
         [% ELSE %]
@@ -259,5 +259,4 @@
         [% END %]
     </tr>
     </table>
-  </div>
 </div>

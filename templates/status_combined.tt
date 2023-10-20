@@ -55,9 +55,6 @@
   <input type="hidden" name="title" id="title" value="[% custom_title | html %]">
 
 [% IF hosts.size > 0 %]
- <span class="ti ti-circle-check"></span>&nbsp;No hosts with unhandled problems.
-[% END %]
-[% IF hosts.size > 0 %]
   [% UNLESS minimal %]
      <div class="flexrow sm:flex-nowrap my-2 gap-y-1">
       <div class="flex basis-1/3 self-end gap-1">

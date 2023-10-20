@@ -1,5 +1,5 @@
 ﻿[% PROCESS _conf_object_row.tt %]
-<table class="body rowhover">
+<table class="body rowhover bg-success">
   [% IF conf == "computed" %]
     [% tmp      = obj.get_computed_config(c.obj_db) %]
     [% keys     = tmp.0 %]

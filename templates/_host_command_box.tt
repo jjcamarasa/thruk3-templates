@@ -18,8 +18,8 @@
 [% UNLESS c.check_cmd_permissions('host', host.name) %]
   [% ELSE %]
     <div class="card w-full">
-      <div class="head">
-        <h3>Host Actions</h3>
+      <div class="list-group-header">
+        Host Actions
       </div>
     <div class="actionbox">
       [% UNLESS command_disabled(c, 96) %]
@@ -138,13 +138,26 @@
 [% END %]
 
 [% IF c.check_cmd_permissions('host', host.name) %]
-<div class="card w-full">
-  <div class="head">
-    <h3>Host Commands</h3>
-  </div>
-  <div class="my-2 px-1">
-  <table class="w-full">
 
+[%
+ cmds_array = [    
+    { id => '28', name => 'Service Notifications' , hstprop => 'checks_enabled' },
+    { id => '39', name => 'Passive checks' , hstprop => 'accept_passive_checks' },
+    { id => '99', name => 'Obsessing', hstprop => 'obsess_over_service' },
+    { id => '22', name => 'Notifications', hstprop => 'notifications_enabled' },
+    { id => '45', name => 'Event Handler', hstprop => 'event_handler_enabled' },
+    { id => '59', name => 'Flap Detection', hstprop => 'flap_detection_enabled' }    
+ #   { id => '200', name => 'Launch event handler', hstprop => 'flap_detection_enabled' }    
+   ]
+%]
+
+
+<div class="card w-full">
+  <div class="list-group-header">
+    Host Commands
+  </div>
+  <div class="list-group-item p-1">
+  <table class="w-full">
   [% UNLESS command_disabled(c, '29') || command_disabled(c, '28') %]
   <tr>
       <td>Service Notifications</td>

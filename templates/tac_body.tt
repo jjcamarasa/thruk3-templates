@@ -34,9 +34,17 @@
   </div>
  </div>-->
 
- <div class="flexrow mt-auto mb-0 w-full gap-2">
-  [% PROCESS tac_panel_netoutage.tt %]
-  [% PROCESS tac_panel_monit_features.tt %]
-  [% PROCESS tac_panel_monitperf.tt %]
+ <div class="bootstrap-wrapper mt-auto mb-0 w-full gap-2">
+  <div class="row">
+   <div class="col-auto">
+    <div class="row">      
+    [% PROCESS tac_panel_netoutage.tt %]
+    [% PROCESS tac_panel_monit_features.tt %]
+    </div>
+   </div>
+   <div class="col-6">
+    [% PROCESS tac_panel_monitperf.tt %]
+   </div>
+  </div>
  </div>
 </div>

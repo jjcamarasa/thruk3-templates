@@ -67,24 +67,22 @@
             [% END %]
             
 			<div class="btn-group">
-			  <button class="btn" title="reload page" id="refresh_button" onClick="refresh_button()">
+			  <button class="btn text-xl" title="reload page" id="refresh_button" onClick="refresh_button()">
 				<i class="ti ti-refresh"></i>
 			  </button>
 			  [% IF !show_error_reports %]
 			  <span class="w-fit" id="bug_report" style="display: none;">
-				<button class="btn" id="bug_report-btnEl">
+				<button class="btn text-xl" id="bug_report-btnEl">
 				  <i class="ti ti-bug"></i>
 				</button>
 			  </div>
 			  [% END %]
 			  [% IF c.user_exists %]
-				<button class="btn"  title="user preferences" onClick="toggleElementRemote('pref_pane', '_header_prefs', true); return false;">
+				<button class="btn text-xl" title="user preferences" onClick="toggleElementRemote('pref_pane', '_header_prefs', true); return false;">
 				  <i class="ti ti-settings"></i>
 				</button>
 				[% IF cookie_auth && show_logout_button %]                    
-				  <!--<form action="[% IF c.config.logout_link; c.config.logout_link; ELSE %][% url_prefix %]cgi-bin/login.cgi?logout[% END %]" method='POST' target='_top' style="display: initial;">					
-				  </form>-->
-                  <a class="btn hover-red" title="sign out" href="[% IF c.config.logout_link; c.config.logout_link; ELSE %][% url_prefix %]cgi-bin/login.cgi?logout[% END %]">
+                  <a class="btn hover-red text-xl" title="sign out" href="[% IF c.config.logout_link; c.config.logout_link; ELSE %][% url_prefix %]cgi-bin/login.cgi?logout[% END %]">
 					  <i class="ti ti-logout"></i>
 					</a>
                     
@@ -99,4 +97,4 @@
         </div>
       </header>
     [% END %]
-<main class="relative [% IF !iframed %]p-5 scrollauto[% END %] overflow-y-auto flex-grow">
+<main class="relative [% IF !iframed %]scrollauto[% END %] overflow-y-auto flex-grow p-2">
