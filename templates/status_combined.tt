@@ -22,14 +22,14 @@
         </div>
 [% END %]
 [% BLOCK no_hosts %]
-<h3 class="m-2">
+<div class="text-muted text-xl m-2">
   <span class="ti ti-device-desktop"></span>&nbsp;No hosts with unhandled problems.
-</h3>
+</div>
 [% END %]
 [% BLOCK no_svcs %]
-<h3 class="m-2">
+<div class="text-muted text-xl m-2">
   <span class="ti ti-settings-cog"></span>&nbsp;No services with unhandled problems.
-</h3>
+</div>
 [% END %]
 
 [% IF hosts.size == 0 && services.size == 0 %]

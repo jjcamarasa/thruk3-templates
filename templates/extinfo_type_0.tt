@@ -39,7 +39,7 @@
   </div>
 
   <div class="card w-fit overflow-hidden">
-    <div class="head">
+    <div class="card-header">
       <h3>Process Commands</h3>
     </div>
     [% IF ! c.check_cmd_permissions('system') %]

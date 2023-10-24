@@ -12,7 +12,7 @@
     <input type="hidden" name="sub" value="users">
     <input type="hidden" name="action" value="change">
     <div class="card w-full min-w-[400px]">
-      <div class="head">
+      <div class="card-header">
         <h3>select user to change</h3>
       </div>
       <table class="body cellspacing-y">
@@ -44,7 +44,7 @@
       <input type="hidden" name="data.username" value="[% user_name | html %]">
       <input type="hidden" name="CSRFtoken" value="[% get_user_token(c) %]">
       <div class="card">
-        <div class="head">
+        <div class="card-header">
           <h3>Editing: [% user_name | html %]</h3>
         </div>
         <div class="body flexrow flex-nowrap">

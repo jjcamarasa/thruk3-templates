@@ -38,7 +38,7 @@
 
 	[% IF host.notes_expanded %]
 	  <div class="card w-full mt-5">
-		<div class="head">
+		<div class="card-header">
 		  <h3>Notes</h3>
 		</div>
 		<div class="body">

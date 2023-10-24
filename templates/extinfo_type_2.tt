@@ -41,7 +41,7 @@
 
 [% IF comments.size > 0 %]
 <div class="card">
-  <div class="card-header justify-between">
+  <div class="card-header flex justify-between">
     <h3>Service Comments</h3>
     [% IF c.check_cmd_permissions('service', service.description, service.host_name) %]
       <div class="flex gap-1">
@@ -63,18 +63,16 @@
         [% END %]
       </div>
     [% END %]
-  </div>
-  <div>
+  </div>  
     [% IF comments.size > 0 %]
       [% PROCESS _comments_table.tt comments = comments type='service' names=0 sortprefix='_cmt' %]
-    [% END %]
-  </div>
+    [% END %]  
 </div>
 [% END %]
 
 [% IF downtimes.size != 0 || recurring_downtimes.size != 0 %]
 <div class="card mt-5 p-2">
-  <div class="card-header justify-between">
+  <div class="card-header flex justify-between">
     <h3>Service Downtimes</h3>
     [% IF c.check_cmd_permissions('service', service.description, service.host_name) %]
       <div class="flex gap-1">
@@ -174,7 +172,7 @@
   <!--<div class="flex flex-row m-3">-->
   <div class="flexrow mt-2 p-2">
   <div class="card">
-    <div class="card-header justify-between">
+    <div class="card-header flex justify-between">
       <h3>Configuration Information</h3>
       <div class="flex gap-x-1">
         [% IF use_feature_configtool && c.check_user_roles('authorized_for_system_commands') && backends_with_obj_config.$peer_key %]

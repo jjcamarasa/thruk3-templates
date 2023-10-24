@@ -34,23 +34,37 @@
     </div>
   [% END %]
 
-  <h1 class="mt-2">
-    [% IF hostgroup == 'all' %]Service Overview For All Host Groups
-    [% ELSIF hostgroup != '' %]Service Overview For Host Group '[% hostgroup | html %]'
-    [% ELSIF servicegroup == 'all' %]Service Overview For All Service Groups
-    [% ELSIF servicegroup != '' %]Service Overview For Service Group '[% servicegroup | html %]'
-    [% ELSE %]Service Overview
-    [% END %]
-  </h1>
+  [% IF hostgroup == 'all' %]
+      [% infoBoxPreTitle = "Service Overview For All Host Groups" %]
+    [% ELSIF hostgroup != '' %]
+      [% infoBoxPreTitle = "Service Overview For Host Group '$hostgroup'" %]
+    [% ELSIF servicegroup == 'all' %]
+      [% infoBoxPreTitle = "Service Overview For All Service Groups" %]
+    [% ELSIF servicegroup != '' %]
+      [% infoBoxPreTitle = "Service Overview For Service Group '$servicegroup'" %]
+    [% ELSE %]
+      [% infoBoxPreTitle = "Service Overview" %]
+  [% END %]
 
-  <div class="my-2 flex gap-1">
-    [% PROCESS _add_bookmark.tt %]
-    [% PROCESS _show_link.tt %]
+ [% IF data.size == 0 %]
+  [% ibpt = infoBoxPreTitle %]
+  [% infoBoxPreTitle = "$infoBoxPreTitle <span class='text-sm'><i class='ti ti-chevrons-right text-sm'></i>&nbsp;No Items to Display</span>" %]
+ [% END %]
+  <div class="mb-5">
+    [% PROCESS _infobox.tt %]
   </div>
+  
+  [% IF data.size > 0%]
+    <div class="btn-group">
+      [% PROCESS _add_bookmark.tt %]
+      [% PROCESS _show_link.tt %]
+    </div>
 
-  <div class="card w-full min-w-[420px]">
-    <div class="mainTableHeader">
-      <div>
+<div class="flex my-2 gap-y-1">
+  <div class="card w-full">
+   <div class="card-header mainTableHeader">
+    <!--<div class="mainTableHeader">-->
+      <div class="justify-between">
         <div class="flex flex-nowrap gap-x-1 items-center">
           [% PROCESS _status_column_select.tt colprefix="ovr" columns_name="overview" %]
           [% PROCESS _status_filter.tt %]
@@ -62,8 +76,9 @@
       <div>
         [% PROCESS _pager_per_page.tt %]
       </div>
-    </div>
-
+    <!--</div>-->
+   </div>
+   
     <div class="mainTable [% IF main_table_full %]fullsize[% END %]">
       <div class="flex">
       [% FOR g IN data %]
@@ -175,21 +190,26 @@
     </div>
 
   </div>
-
-    <script>
-      <!--
-        if(!window.default_columns) { default_columns = {}; }
-        default_columns["[% paneprefix %]"] = "[% default_overview_columns %]";
-        jQuery(document).ready(function() {
-          [% IF has_columns %]
-          updateStatusColumns("[% paneprefix %]", false);
-          [% END %]
-          [% IF c.req.parameters.defined("autoShow") %]
-          initStatusTableColumnSorting('[% paneprefix %]', 'mainTable');
-          toggleElement("[% escape_html(c.req.parameters.autoShow) %]", undefined, true);
-          [% END %]
-        });
-      -->
-      </script>
+</div>
+  [% ELSE %]
+  <div class="text-muted text-xl m-2">
+    <i class="ti ti-info-circle"></i>&nbsp;No Items to display in <b>[% ibpt %]</b>
+  </div>
+ [% END %]
+  <script>
+	<!--
+	  if(!window.default_columns) { default_columns = {}; }
+	  default_columns["[% paneprefix %]"] = "[% default_overview_columns %]";
+	  jQuery(document).ready(function() {
+		[% IF has_columns %]
+		updateStatusColumns("[% paneprefix %]", false);
+		[% END %]
+		[% IF c.req.parameters.defined("autoShow") %]
+		initStatusTableColumnSorting('[% paneprefix %]', 'mainTable');
+		toggleElement("[% escape_html(c.req.parameters.autoShow) %]", undefined, true);
+		[% END %]
+	  });
+	-->
+	</script>
 
 [% PROCESS _footer.tt %]

@@ -1,5 +1,5 @@
 ﻿<div class="card min-w-[420px] overflow-hidden">
-      <div class="head">
+      <div class="card-header">
         <h3><a href='extinfo.cgi?type=4'>Network Health</a></h3>
       </div>
  <div class="body">

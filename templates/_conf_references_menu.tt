@@ -1,6 +1,6 @@
 ﻿[% IF has_refs && action != "editor" %]
 <div class="w-full">
-  <!--<div class="head">
+  <!--<div class="card-header">
     <h3>References</h3>
   </div>-->
     [% IF incoming.keys.size > 0 %]

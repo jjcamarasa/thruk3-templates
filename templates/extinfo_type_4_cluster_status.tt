@@ -15,7 +15,7 @@
 <h1 class="mt-5">Cluster Status</h1>
 
 <div class="card mt-2 mb-4 mx-auto">
-  <div class="head">
+  <div class="card-header">
     <h3>Thruk Nodes</h3>
   </div>
 

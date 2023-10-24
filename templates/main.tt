@@ -93,7 +93,7 @@
   <div class="my-card">
     <div class="mini-grid">
       <div class="card w-auto">
-        <div class="head">
+        <div class="card-header">
           <h3>Total Hosts</h3>
         </div>
         <div class="flex justify-center h-[75px]">
@@ -104,7 +104,7 @@
       </div>
 
       <div class="card w-auto">
-        <div class="head">
+        <div class="card-header">
           <h3>Total Services</h3>
         </div>
         <div class="flex justify-center h-[75px]">
@@ -117,7 +117,7 @@
 
     <div class="mini-grid mt-5">
       <div class="card w-auto">
-        <div class="head">
+        <div class="card-header">
           <h3>Total Backends</h3>
         </div>
         <div class="flex justify-center h-[75px]">
@@ -128,7 +128,7 @@
       </div>
 
       <div class="card w-auto">
-        <div class="head">
+        <div class="card-header">
           <h3>Total Contacts</h3>
         </div>
         <div class="flex justify-center h-[75px]">
@@ -142,7 +142,7 @@
 
   <div class="my-card">
     <div class="card w-auto min-h-[250px]">
-      <div class="head">
+      <div class="card-header">
         <h3><a href="status.cgi?hostgroup=all&style=hostdetail" class="link">Hosts</a></h3>
       </div>
       <div id="hosts-gaugeChart">
@@ -152,7 +152,7 @@
 
   <div class="my-card">
     <div class="card w-auto min-h-[250px]">
-      <div class="head">
+      <div class="card-header">
         <h3><a href="status.cgi" class="link">Services</a></h3>
       </div>
       <div id="services-gaugeChart">
@@ -163,7 +163,7 @@
   [% IF backend_stats.available > 1 %]
     <div class="my-card">
       <div class="card w-auto min-h-[250px]">
-        <div class="head">
+        <div class="card-header">
           <h3>Available Backends</h3>
         </div>
         <div id="backends-gaugeChart">
@@ -173,7 +173,7 @@
     [% IF backend_stats.enabled - backend_stats.down > 1 %]
     <div class="my-card">
       <div class="card w-auto min-h-[250px]">
-        <div class="head">
+        <div class="card-header">
           <h3>Hosts per Backend</h3>
         </div>
         <div id="hostloc-pieChart">
@@ -185,7 +185,7 @@
 
   <div class="my-card">
     <div class="card w-auto h-full min-h-[250px]">
-      <div class="head">
+      <div class="card-header">
         <h3><a href="status.cgi?style=hostoverview" class="link">Top 5 Hostgroups</a></h3>
       </div>
       <div id="hostgroups-barChart"></div>
@@ -194,7 +194,7 @@
 
   <div class="my-card">
     <div class="card w-auto min-h-[250px]">
-      <div class="head">
+      <div class="card-header">
         <h3><a class="link" href="notifications.cgi">Notifications</a></h3>
         [% IF notifications_age && notifications_age > 30 %]<div class="ml-4 textHINTsoft" title="last update: [% date_format(c, date.now - notifications_age) %]">updated [% duration(notifications_age, 6) %] ago</div>[% END %]
       </div>
@@ -209,7 +209,7 @@
 <div class="flex flex-wrap gap-4 mt-4">
   <div class="my-card min-w-[370px]">
     <div class="card w-auto h-full overflow-hidden">
-      <div class="head">
+      <div class="card-header">
         <h3><a href="status.cgi?hostgroup=all&style=hostdetail&hoststatustypes=12&hostprops=42" class="link">Unhandled Host Problems</a></h3>
       </div>
       <div class="overflow-x-auto">
@@ -244,7 +244,7 @@
 
   <div class="my-card min-w-[370px]">
     <div class="card w-auto h-full overflow-hidden">
-      <div class="head">
+      <div class="card-header">
         <h3><a class="link" href="status.cgi?host=all&type=detail&hostprops=10&hoststatustypes=3&serviceprops=42&servicestatustypes=28">Unhandled Service Problems</a></h3>
       </div>
       <div class="overflow-x-auto">

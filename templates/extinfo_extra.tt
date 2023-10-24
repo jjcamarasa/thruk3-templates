@@ -1,7 +1,7 @@
 <div class="flexrow gap-2">
 
   <div class="card grow h-full">
-    <div class="head">
+    <div class="card-header">
       <div class="font-bold">
         <i class="ti ti-info-circle "></i>&nbsp;Check Information
       </div>
@@ -26,7 +26,7 @@
 	</div>
 
   <div class="card grow h-full">
-    <div class="head">
+    <div class="card-header">
       <div class="font-bold">
         <i class="ti ti-clock "></i>&nbsp;Last Check Time <span class="badge [% IF theme=="Dark" %]WARNING[% ELSE %]INFO[% END %]">[% last_check(c, obj.last_check) %]<span>
       </div>
@@ -86,7 +86,7 @@
 	</div>
 
   <div class="card h-full">
-    <div class="head">
+    <div class="card-header">
       <div class="font-bold">
         <i class="ti ti-bolt "></i>&nbsp;Statistics
       </div>
@@ -116,7 +116,7 @@
    </div>
   
   <div class="card h-full">
-    <div class="head">
+    <div class="card-header">
       <div class="font-bold">
         <i class="ti ti-circle-plus "></i>&nbsp;Extra [% type | html %] information
       </div>
@@ -208,7 +208,7 @@
 
 [% IF show_contacts && c.check_user_roles('authorized_for_configuration_information') && obj.contacts.size > 0 %]
 <div class="card w-1/5 h-full">
-    <div class="head">
+    <div class="card-header">
       <div class="font-bold">
 	  [% IF obj.contacts.size > 1 %][% plural = 's' %][% ELSE %][% plural = '' %][% END %]
         <span class="ti ti-users"></span>&nbsp;[% obj.contacts.size %] contact[% plural %]

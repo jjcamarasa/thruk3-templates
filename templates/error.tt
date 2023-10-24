@@ -16,7 +16,7 @@
 
 [% IF errorDetails %]
   <div class='card text-left w-fit mx-auto mt-2'>
-    <div class="head">
+    <div class="card-header">
       <h3>Details</h3>
     </div>
     <div class="body whitespace-pre font-mono">[% nice_stacktrace(escape_html(dump2str(errorDetails, 0, 0))) %]</div>
@@ -51,7 +51,7 @@
   [% DEFAULT errorDebugInfo = [] %]
   [% IF errorDebugInfo.list.size > 0 %]
     <div class='card w-fit min-w-[400px] mx-auto mt-2'>
-      <div class="head">
+      <div class="card-header">
         <h3>Details</h3>
       </div>
       <div class="body">
@@ -72,7 +72,7 @@
 :error-->
 [% ELSE %]
   <div class="card mt-2 mx-auto w-fit" style="display: none;" id="error_report_card">
-    <div class="head">
+    <div class="card-header">
       <h3>Bug Report Preview</h3>
     </div>
     <div class="body">

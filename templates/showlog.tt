@@ -33,7 +33,7 @@
 
     <div class="flex">
       <div class="card min-w-[400px]">
-        <div class="head">
+        <div class="card-header">
           <h3>Options</h3>
         </div>
         <div class="body flexrow flex-nowrap gap-2">

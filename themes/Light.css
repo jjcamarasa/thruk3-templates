@@ -1864,9 +1864,9 @@ select {
   display: inline-flex !important
 }
 
-.\!table, .table {
+/*.\!table, .table {
   display: table !important
-}
+}*/
 
 .table-cell {
   display: table-cell !important
@@ -3675,31 +3675,7 @@ a.badge {
 .badge-pill {
   border-radius: 100rem;
 }
-/*
-@media screen and (max-width:785px) {
-  a.pager.small-pager {
-    display: none !important
-  }
-}
 
-.pager {
-  color: var(--text-pager)
-}
-
-.pager:hover {
-  background-color: var(--hover-bg)
-}
-
-.display-filter, .pager-entries {
-  background-color: var(--button-pager-bg);
-  color: var(--text-pager)
-}
-
-.display-filter:hover, .pager-entries:hover {
-  background-color: var(--button-pager-bg-hover);
-  color: var(--text-pager-hover)
-}
-*/
 .tooltiptext {
   visibility: hidden;
   width: auto;
@@ -7869,6 +7845,7 @@ Card list group
 .table-borderless > :not(caption) > * > * {
   border-bottom-width: 0;
 }
+
 .table-borderless > :not(:first-child) {
   border-top-width: 0;
 }
@@ -9080,4 +9057,41 @@ Card list group
 
 .border-3 {
   border-width: 3px !important;
+}
+
+/**
+Card table
+ */
+.card-table {
+  margin-bottom: 0 !important;
+}
+.card-table tr td:first-child,
+.card-table tr th:first-child {
+  padding-left: 1.25rem;
+  border-left: 0;
+}
+.card-table tr td:last-child,
+.card-table tr th:last-child {
+  padding-right: 1.25rem;
+  border-right: 0;  
+}
+.card-table thead tr:first-child,
+.card-table tbody tr:first-child,
+.card-table tfoot tr:first-child {
+  border-top: 0;
+}
+.card-table thead tr:first-child td,
+.card-table thead tr:first-child th,
+.card-table tbody tr:first-child td,
+.card-table tbody tr:first-child th,
+.card-table tfoot tr:first-child td,
+.card-table tfoot tr:first-child th {
+  border-top: 0;
+}
+.card-body + .card-table {
+  border-top: var(--tblr-border-width) var(--tblr-border-style) var(--tblr-table-border-color);
+}
+
+.card-table tbody tr:last-child td {
+  border-bottom: 0 !important;
 }

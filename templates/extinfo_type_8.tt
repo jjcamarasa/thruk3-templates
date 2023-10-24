@@ -44,7 +44,7 @@
 
   [% IF servicegroup.notes %]
     <div class="card w-fit">
-      <div class="head"><h3>Notes</h3></div>
+      <div class="card-header"><h3>Notes</h3></div>
       <div class="body w-fit">
       [% servicegroup.notes | html %]
       </div>
@@ -52,7 +52,7 @@
   [% END %]
 
   <div class="card mt-5 min-w-[350px] overflow-hidden">
-    <div class="head">
+    <div class="card-header">
       <h3>Servicegroup Commands</h3>
     </div>
     <div class="actionbox">
