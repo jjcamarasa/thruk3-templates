@@ -3,6 +3,8 @@
   [% histou_url = histou_url.replace('light','dark') %]
 [% END %]
 [% histou_frame_url = histou_url.replace('/dashboard/', '/dashboard-solo/') %]
+[% PROCESS css_blocks.tt %]
+
 <script>
   var histou_url        = "[% histou_url %]";
   var histou_frame_url  = "[% histou_frame_url %]";
@@ -44,7 +46,7 @@
 </script>
 
 <div class="card w-full">
-  <div class="head justify-between">
+  <div class="card-header justify-between">
 	[% action_url = proxifiy_url(c, service, get_action_url(c, 2, 1, service.action_url_expanded, service)) %]
 	[% replace_url = action_url.replace('d-solo','d') %]
 	
@@ -63,18 +65,22 @@
     </div>
   </div>
 
-  <div class="head px-0 clickable justify-between">
-    <span                 class="tabs text-center w-12"    onclick="return move_histou_img(-0.5)"><i class="ti ti-arrow-left text-lg contents"></i></span>
+[% INCLUDE graph_tabs graph_type='histou' %]
+
+  <!--<div class="head px-0 clickable justify-between">
+    <span class="tabs text-center w-12"    onclick="return move_histou_img(-0.5)"><i class="ti ti-arrow-left text-lg contents"></i></span>
     <span id="histou_th1" class="tabs text-center w-[18%]" onclick="return set_histou_img([% date.now -    14400 %], [% date.now %], this.id, histou_source)">4 hours</span>
     <span id="histou_th2" class="tabs text-center w-[18%]" onclick="return set_histou_img([% date.now -    90000 %], [% date.now %], this.id, histou_source)">day</span>
     <span id="histou_th3" class="tabs text-center w-[18%]" onclick="return set_histou_img([% date.now -   540000 %], [% date.now %], this.id, histou_source)">week</span>
     <span id="histou_th4" class="tabs text-center w-[18%]" onclick="return set_histou_img([% date.now -  2764800 %], [% date.now %], this.id, histou_source)">month</span>
     <span id="histou_th5" class="tabs text-center w-[18%]" onclick="return set_histou_img([% date.now - 30067200 %], [% date.now %], this.id, histou_source)">year</span>
-    <span                 class="tabs text-center w-12"    onclick="return move_histou_img( 0.5)"><i class="ti ti-arrow-right text-lg contents"></i></span>
-  </div>
+    <span class="tabs text-center w-12"    onclick="return move_histou_img( 0.5)"><i class="ti ti-arrow-right text-lg contents"></i></span>
+  </div>-->
   <div class="h-[262px] relative justify-center">
     <div id="histou_graph_pane" class="relative w-full h-full overflow-hidden">
-      <div id="pnpwaitimg" class="absolute top-10 left-1/2 transform -translate-x-1/2" title="waiting"><div class="spinner w-12 h-12"></div></div>
+      <div id="pnpwaitimg" class="absolute top-10 left-1/2 transform -translate-x-1/2" title="waiting">
+        <div class="spinner w-12 h-12"></div>
+      </div>
       <iframe id="histou_iframe" src="[% histou_frame_url %]" class="w-full h-[270px] p-0 m-0 mx-auto"></iframe>
     </div>
   </div>
