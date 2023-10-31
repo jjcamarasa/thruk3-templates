@@ -67,16 +67,7 @@
 
 [% INCLUDE graph_tabs graph_type='histou' %]
 
-  <!--<div class="head px-0 clickable justify-between">
-    <span class="tabs text-center w-12"    onclick="return move_histou_img(-0.5)"><i class="ti ti-arrow-left text-lg contents"></i></span>
-    <span id="histou_th1" class="tabs text-center w-[18%]" onclick="return set_histou_img([% date.now -    14400 %], [% date.now %], this.id, histou_source)">4 hours</span>
-    <span id="histou_th2" class="tabs text-center w-[18%]" onclick="return set_histou_img([% date.now -    90000 %], [% date.now %], this.id, histou_source)">day</span>
-    <span id="histou_th3" class="tabs text-center w-[18%]" onclick="return set_histou_img([% date.now -   540000 %], [% date.now %], this.id, histou_source)">week</span>
-    <span id="histou_th4" class="tabs text-center w-[18%]" onclick="return set_histou_img([% date.now -  2764800 %], [% date.now %], this.id, histou_source)">month</span>
-    <span id="histou_th5" class="tabs text-center w-[18%]" onclick="return set_histou_img([% date.now - 30067200 %], [% date.now %], this.id, histou_source)">year</span>
-    <span class="tabs text-center w-12"    onclick="return move_histou_img( 0.5)"><i class="ti ti-arrow-right text-lg contents"></i></span>
-  </div>-->
-  <div class="h-[262px] relative justify-center">
+  <div id="pnp_graph_pane" class="card-body p-1">
     <div id="histou_graph_pane" class="relative w-full h-full overflow-hidden">
       <div id="pnpwaitimg" class="absolute top-10 left-1/2 transform -translate-x-1/2" title="waiting">
         <div class="spinner w-12 h-12"></div>

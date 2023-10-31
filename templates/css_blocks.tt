@@ -73,44 +73,31 @@ button-default rounded-lg border px-4 py-2 focus:z-10 focus:text-blue-700 focus:
 [% BLOCK graph_tabs %]
 
 <ul class="nav nav-tabs nav-fill nav-justify pt-3" data-bs-toggle="tabs" role="tablist">
- <li class="nav-item" style='max-width: fit-content;'>
+ <li class="nav-item mx-1" style='max-width: fit-content;'>
       <a class="nav-link" href='#' onclick="return move_[% graph_type %]_img(-0.5)">
          <i class="ti ti-arrow-left text-lg"></i>
       </a>
  </li> 
-  <li id="[% graph_type %]_th1" class="nav-item nav-link" onclick="return set_[% graph_type %]_img([% date.now - 14400 %], [% date.now %], this.id, [% graph_type %]_source)">
+  <li id="[% graph_type %]_th1" class="nav-item nav-link mx-2" onclick="return set_[% graph_type %]_img([% date.now - 14400 %], [% date.now %], this.id, [% graph_type %]_source)">
     <a href='#' >4 hours</a>
   </li>
-  <li id="[% graph_type %]_th2" class="nav-item nav-link" onclick="return set_[% graph_type %]_img([% date.now - 90000 %], [% date.now %], this.id, [% graph_type %]_source)">
+  <li id="[% graph_type %]_th2" class="nav-item nav-link mx-2" onclick="return set_[% graph_type %]_img([% date.now - 90000 %], [% date.now %], this.id, [% graph_type %]_source)">
     <a href='#'>day</a>
   </li>
-  <li id="[% graph_type %]_th3" class="nav-item nav-link" onclick="return set_[% graph_type %]_img([% date.now - 540000 %], [% date.now %], this.id, [% graph_type %]_source)">
+  <li id="[% graph_type %]_th3" class="nav-item nav-link mx-2" onclick="return set_[% graph_type %]_img([% date.now - 540000 %], [% date.now %], this.id, [% graph_type %]_source)">
     <a href='#'>week</a>
   </li>
-  <li id="[% graph_type %]_th4" class="nav-item nav-link" onclick="return set_[% graph_type %]_img([% date.now - 2764800 %], [% date.now %], this.id, [% graph_type %]_source)">
+  <li id="[% graph_type %]_th4" class="nav-item nav-link mx-2" onclick="return set_[% graph_type %]_img([% date.now - 2764800 %], [% date.now %], this.id, [% graph_type %]_source)">
     <a href='#'>month</a>
   </li>
-  <li id="[% graph_type %]_th5" class="nav-item nav-link" onclick="return set_[% graph_type %]_img([% date.now - 30067200 %], [% date.now %], this.id, [% graph_type %]_source)">
+  <li id="[% graph_type %]_th5" class="nav-item nav-link mx-2" onclick="return set_[% graph_type %]_img([% date.now - 30067200 %], [% date.now %], this.id, [% graph_type %]_source)">
     <a href='#'>year</a>
   </li>
-  <li class="nav-item" style='max-width: fit-content;'>
+  <li class="nav-item mx-1" style='max-width: fit-content;'>
      <a class="nav-link" href='#' onclick="return move_[% graph_type %]_img( 0.5)">
 		<i class="ti ti-arrow-right text-lg"></i>
 	</a>
  </li>
 </ul>
 
-<!--<div class="head px-0 clickable">
-    <span class="tabs text-center w-12" onclick="return move_[% graph_type %]_img(-0.5)">
-		<i class="ti ti-arrow-left text-lg contents"></i>
-	</span>
-    <span id="[% graph_type %]_th1" class="tabs text-center w-[18%]" onclick="return set_[% graph_type %]_img([% date.now -    14400 %], [% date.now %], this.id, [% graph_type %]_source)">4 hours</span>
-    <span id="[% graph_type %]_th2" class="tabs text-center w-[18%]" onclick="return set_[% graph_type %]_img([% date.now -    90000 %], [% date.now %], this.id, [% graph_type %]_source)">day</span>
-    <span id="[% graph_type %]_th3" class="tabs text-center w-[18%]" onclick="return set_[% graph_type %]_img([% date.now -   540000 %], [% date.now %], this.id, [% graph_type %]_source)">week</span>
-    <span id="[% graph_type %]_th4" class="tabs text-center w-[18%]" onclick="return set_[% graph_type %]_img([% date.now -  2764800 %], [% date.now %], this.id, [% graph_type %]_source)">month</span>
-    <span id="[% graph_type %]_th5" class="tabs text-center w-[18%]" onclick="return set_[% graph_type %]_img([% date.now - 30067200 %], [% date.now %], this.id, [% graph_type %]_source)">year</span>
-    <span class="tabs text-center w-12" onclick="return move_[% graph_type %]_img( 0.5)">
-		<i class="ti ti-arrow-right text-lg contents"></i>
-	</span>
-</div>-->
 [% END %]

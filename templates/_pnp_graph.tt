@@ -45,17 +45,7 @@
   </div>
 
 [% INCLUDE graph_tabs graph_type='pnp' %]
-  <!--<div class="head px-0 clickable">
-    <span	class="tabs text-center w-12"    onclick="return move_png_img(-0.5)"><i class="ti ti-arrow-left text-lg contents"></i></span>
-    <span id="pnp_th1" class="tabs text-center w-[18%]" onclick="return set_png_img([% date.now -    14400 %], [% date.now %], this.id, pnp_source)">4 hours</span>
-    <span id="pnp_th2" class="tabs text-center w-[18%]" onclick="return set_png_img([% date.now -    90000 %], [% date.now %], this.id, pnp_source)">day</span>
-    <span id="pnp_th3" class="tabs text-center w-[18%]" onclick="return set_png_img([% date.now -   540000 %], [% date.now %], this.id, pnp_source)">week</span>
-    <span id="pnp_th4" class="tabs text-center w-[18%]" onclick="return set_png_img([% date.now -  2764800 %], [% date.now %], this.id, pnp_source)">month</span>
-    <span id="pnp_th5" class="tabs text-center w-[18%]" onclick="return set_png_img([% date.now - 30067200 %], [% date.now %], this.id, pnp_source)">year</span>
-    <span class="tabs text-center w-12"    onclick="return move_png_img( 0.5)"><i class="ti ti-arrow-right text-lg contents"></i></span>
-  </div>-->
-  <!--<div id="pnp_graph_pane" class="relative justify-center min-h-[100px]">-->
-  <div id="pnp_graph_pane" class="card-body p-0">
+  <div id="pnp_graph_pane" class="card-body p-1">
     <a href="[% url_prefix %]#[% pnp_url %]/graph?host=[% hst | uri %]&amp;srv=[% svc | uri %]&amp;theme=smoothness" class="w-full">
       <div id="pnpwaitimg" class="absolute top-10 left-1/2 transform -translate-x-1/2" title="waiting"><div class="spinner w-12 h-12"></div></div>
       <img id="pnpimg" src="[% pnp_url %]/image?host=[% hst | uri %]&srv=[% svc | uri %]&view=1&graph_width=550" alt="pnp graph" class="mx-auto">
