@@ -8,18 +8,22 @@
   </li>
 [% END %]
 
-<li class="nav-item nav-container">
-  <a class="nav-link [% IF type =='hostdependency' || type == 'servicedependency' %] active[% END %]" href="conf.cgi?sub=objects&amp;type=hostdependency">Dependency</a>
-  <div class="navitem">
-    <div><a href="conf.cgi?sub=objects&amp;type=hostdependency">Host Dependency</a></div>
-    <div><a href="conf.cgi?sub=objects&amp;type=servicedependency">Service Dependency</a></div>
+<li class="nav-item dropdown">
+  <a class="nav-link dropdown-toggle" href="conf.cgi?sub=objects&amp;type=hostdependency" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="true" >
+  <span class="nav-link-title">Dependency</span>
+  </a>
+  <div class="dropdown-menu" data-bs-popper="static">
+    <a class="dropdown-item" href="conf.cgi?sub=objects&amp;type=hostdependency">Host Dependency</a>
+    <a class="dropdown-item" href="conf.cgi?sub=objects&amp;type=servicedependency">Service Dependency</a>
   </div>
 </li>
-<li class="nav-item nav-container">
-  <a class="nav-link [% IF type =='hostescalation' || type == 'serviceescalation' %] active[% END %]" href="conf.cgi?sub=objects&amp;type=hostescalation">Escalation</a>
-  <div class="navitem">
-    <div><a href="conf.cgi?sub=objects&amp;type=hostescalation">Host Escalation</a></div>
-    <div><a href="conf.cgi?sub=objects&amp;type=serviceescalation">Service Escalation</a></div>
+<li class="nav-item dropdown">
+  <a class="nav-link dropdown-toggle" href="conf.cgi?sub=objects&amp;type=hostescalation" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="true" >
+  <span class="nav-link-title">Escalation</span>
+  </a>
+  <div class="dropdown-menu" data-bs-popper="static">
+    <a class="dropdown-item" href="conf.cgi?sub=objects&amp;type=hostescalation">Host Escalation</a>
+    <a class="dropdown-item" href="conf.cgi?sub=objects&amp;type=serviceescalation">Service Escalation</a>
   </div>
 </li>
 [% IF coretype == 'shinken' %]

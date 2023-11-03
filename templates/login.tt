@@ -50,10 +50,10 @@
     [% PROCESS _message.tt %]
 
   <div class="w-1/3">
-    <div class="card w-2/3 h-fit loginmask mx-auto">
+    <div class="card w-2/3 h-fit loginmask mx-auto">	
     <div class="card-body">
      <a href="[% c.config.home_link %]" target="_blank">
-        <img src="[% url_prefix %]themes/[% theme %]/images/logo_thruk.png" alt="Thruk" title="Thruk" class="block mx-auto w-1/4 h-auto">
+        <img src="[% url_prefix %]themes/[% theme %]/images/logo_thruk.png" alt="Thruk" title="Thruk" class="flex mx-auto w-1/4 h-auto mt-5">
      </a>
       [% IF c.config.basic_auth_enabled %]
         <form method="POST" action="login.cgi" onsubmit="setFormBtnSpinner(this)" class="w-2/3 mx-auto pt-5 mt-5">
