@@ -23,9 +23,11 @@
           [% PROCESS _table_search_field.tt ids=["procInfoTable"] %]
         [% END %]
         [% IF list_mode == "list" %]
-        <a class="button round" title="Details View" href="[% uri_with(c, 'list' => 'details') %]"><i class="ti ti-dialpad"></i></a>
+        <a class="button round" title="Details View" href="[% uri_with(c, 'list' => 'details') %]">
+          <i class="ti ti-dialpad"></i></a>
         [% ELSE %]
-        <a class="button round" title="List View" href="[% uri_with(c, 'list' => 'list') %]"><i class="ti ti-list-ul"></i></a>
+        <a class="button round" title="List View" href="[% uri_with(c, 'list' => 'list') %]">
+          <i class="ti ti-list-ul"></i></a>
         [% END %]
       </div>
     </div>

@@ -18,7 +18,6 @@
 </div>
 -->
 
-<!--<div class="flexrow justify-between mb-2">  -->
 <div class="flex flex-row gap-2">
 
   <div class="flexcol order-1 gap-2 grow p-2">
@@ -111,9 +110,8 @@
 [% END %]
 </div><!-- main col -->
 
-  <div class="flexcol order-2 max-w-[350px] p-1">
+  <div class="flexcol order-2 max-w-[350px] w-[200px] gap-1 h-full">
     [% PROCESS service_view_panel.tt %]
-   
 	[% PROCESS _service_command_box.tt %]
 
     [% IF matching_backends.size > 1 %]

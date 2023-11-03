@@ -1,4 +1,5 @@
-﻿<ul class="pagination">
+﻿[% IF pager.total_pages > 1 %]
+<ul class="pagination">
   [% prev_page = pager.page - 1 %]
     [% IF prev_page <= 0 %]
       [% prev_page = 1 %]
@@ -113,4 +114,5 @@
         <i class="ti ti-chevron-right text-xl"></i>
       </a>
     </li>
-    </ul>
+</ul>
+[% END %]

@@ -12,7 +12,7 @@
 </div>-->
 
 <div class="flex flex-row gap-2">
-  <div class="flexcol order-2 max-w-[350px] gap-2">
+  <div class="flexcol order-2 max-w-[350px] w-[200px] gap-1 h-full">
 	  [% PROCESS host_view_panel.tt %]
 	  [% PROCESS _host_command_box.tt %]
 	  
