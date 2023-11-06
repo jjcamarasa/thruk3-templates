@@ -12,42 +12,6 @@
 </div>-->
 
 <div class="flex flex-row gap-2">
-  <div class="flexcol order-2 max-w-[350px] w-[200px] gap-1 h-full">
-	  [% PROCESS host_view_panel.tt %]
-	  [% PROCESS _host_command_box.tt %]
-	  
-	  [% IF matching_backends.size > 1 %]
-		<div class="card mt-5 min-w-[350px] p-3">
-		  <form action="extinfo.cgi" method="GET">
-			<input type="hidden" name="type" value="1">
-			<input type="hidden" name="host" value="[% host.name | html %]">
-			<div class="flexrow gap-1 items-center">
-			  <span>This host is ambiguous:</span>
-			  <select name="backend">
-				[% FOREACH b IN matching_backends %]
-				  <option value="[% b | html %]"[% IF b == backend %] selected[% END %]>[% peer_name(b) %]</option>
-				[% END %]
-			  </select>
-			  <input type="submit" name="go" value="go">
-			</div>
-		  </form>
-		</div>
-	  [% END %]
-
-	  [% PROCESS _customvar_box.tt %]
-
-	[% IF host.notes_expanded %]
-	  <div class="card w-full mt-5">
-		<div class="card-header">
-		  <h3>Notes</h3>
-		</div>
-		<div class="body">
-		  [% host.notes_expanded %]
-		</div>
-	  </div>
-	[% END %]
-  </div>
-
  <div class="flexcol order-1 grow gap-2">
   [% PROCESS _extinfo_host_service_details.tt obj=host %]
 
@@ -146,6 +110,42 @@
 </div>
 [% END %]
 </div><!-- main col info -->
+ <div class="flexcol order-2 max-w-[350px] min-w-[200px] gap-1 h-full">
+	  [% PROCESS host_view_panel.tt %]
+	  [% PROCESS _host_command_box.tt %]
+	  
+	  [% IF matching_backends.size > 1 %]
+		<div class="card mt-5 min-w-[350px] p-3">
+		  <form action="extinfo.cgi" method="GET">
+			<input type="hidden" name="type" value="1">
+			<input type="hidden" name="host" value="[% host.name | html %]">
+			<div class="flexrow gap-1 items-center">
+			  <span>This host is ambiguous:</span>
+			  <select name="backend">
+				[% FOREACH b IN matching_backends %]
+				  <option value="[% b | html %]"[% IF b == backend %] selected[% END %]>[% peer_name(b) %]</option>
+				[% END %]
+			  </select>
+			  <input type="submit" name="go" value="go">
+			</div>
+		  </form>
+		</div>
+	  [% END %]
+
+	  [% PROCESS _customvar_box.tt %]
+
+	[% IF host.notes_expanded %]
+	  <div class="card w-full mt-5">
+		<div class="card-header">
+		  <h3>Notes</h3>
+		</div>
+		<div class="body">
+		  [% host.notes_expanded %]
+		</div>
+	  </div>
+	[% END %]
+  </div>
+
 </div>
 
 [% IF show_full_commandline == 2 || ( show_full_commandline == 1 && c.check_user_roles('authorized_for_configuration_information') ) %]

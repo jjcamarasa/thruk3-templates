@@ -110,7 +110,7 @@
 [% END %]
 </div><!-- main col -->
 
-  <div class="flexcol order-2 max-w-[350px] w-[200px] gap-1 h-full">
+  <div class="flexcol order-2 max-w-[350px] min-w-[200px] gap-1 h-full">
     [% PROCESS service_view_panel.tt %]
 	[% PROCESS _service_command_box.tt %]
 

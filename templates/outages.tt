@@ -1,10 +1,14 @@
 ﻿[% USE date %]
 [% PROCESS _header.tt %]
+ [% infoBoxTitle = "<i class='ti ti-cloud-network'></i> $infoBoxTitle" %]
+[% IF outages.size == 0 %]
+ [% infoBoxTitle = "$infoBoxTitle <span class='text-success text-sm'><i class='ti ti-chevrons-right text-sm'></i>&nbsp;No Blocking Outages</span>" %]
+[% END %]
 
-  [% PROCESS _infobox.tt %]
+[% PROCESS _infobox.tt %]
 
-  <h1 class="mt-5">Blocking Outages</h1>
-
+[% IF outages.size > 0 %]
+ <h1 class="mt-5">Blocking Outages</h1>
   <div class="card min-w-[420px] w-full mt-2 overflow-hidden">
     <div class="mainTable [% IF main_table_full %]fullsize[% END %] border-t-0">
       <table class="mainTable striped">
@@ -70,5 +74,5 @@
       </div>
     </div>
   </div>
-
+[% END %]
 [% PROCESS _footer.tt %]
