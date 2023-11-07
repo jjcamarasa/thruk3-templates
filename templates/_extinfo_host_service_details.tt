@@ -216,7 +216,7 @@ END
       </div>
     </span>
   </div>
-    <div class="p-2">
+    <div class="p-0">
       [% perf_svc=svc_name; IF perf_svc == ""; perf_svc='_HOST_'; END %]
         [% PROCESS _perfdata_human.tt
             state=obj.state

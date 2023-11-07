@@ -1,39 +1,37 @@
 ﻿[% PROCESS _blocks.tt %]
-
 [% orig_perfdata = perfdata %]
 [% tmp = split_perfdata(perfdata) %]
 [% IF tmp.size > 0 && tmp.0.size > 0 %]
   [% splited = tmp.0; has_parents = tmp.1; has_warn = tmp.2; has_crit = tmp.3; has_min = tmp.4; has_max = tmp.5; %]  
   [% last_parent = '' %]
-  [% classBorderLess = 'style="border-top: 0 !important; border-bottom: 0 !important;"' %]
-  <table id="perfdata_human" class="cellspacing rowhover" >
-  <thead style="background-color: var(--color-slate-700) !important; color: #fff !important;">
-    <tr style="background-color: var(--color-slate-700) !important; color: var(--color-slate-100) !important;">
+  <table id="perfdata_human" class="table table-sm table-striped" >
+  <thead>
+    <tr>
       [% IF has_parents %]<th></th>[% END %]
-      <th class="p-2" style="color: var(--color-slate-100) !important;">Name</th>
-      <th class="p-2" style="color: var(--color-slate-100) !important;">Value</th>
-      [% IF has_warn %]<th class="p-2" style="color: var(--color-slate-100) !important;">Warning</th>[% END %]
-      [% IF has_crit %]<th class="p-2" style="color: var(--color-slate-100) !important;">Critical</th>[% END %]
-      [% IF has_min  %]<th class="p-2" style="color: var(--color-slate-100) !important;">Minimum</th>[% END %]
-      [% IF has_max  %]<th class="p-2" style="color: var(--color-slate-100) !important;">Maximum</th>[% END %]
+      <th>Name</th>
+      <th>Value</th>
+      [% IF has_warn %]<th>Warning</th>[% END %]
+      [% IF has_crit %]<th>Critical</th>[% END %]
+      [% IF has_min  %]<th>Minimum</th>[% END %]
+      [% IF has_max  %]<th>Maximum</th>[% END %]
       <th></th>
     </tr>
     </thead>
     <tbody>
     [% FOREACH p = splited %]
-    <tr class="border-b">
+    <tr class="text-center">
       [% IF !has_parents || last_parent != p.parent %]
       [% END %]
       [% IF has_parents %]
-      <td class="text-up">[% IF last_parent != p.parent %][% p.parent %][% last_parent = p.parent %][% ELSE %][% END %]</td>
+      <td>[% IF last_parent != p.parent %][% p.parent %][% last_parent = p.parent %][% ELSE %][% END %]</td>
       [% END %]
-      <td class="text-down">[% p.name | html %]</td>
-      <td class="text-up">[% format_number(p.value) %][% p.unit | html %]</td>
+      <td>[% p.name | html %]</td>
+      <td>[% format_number(p.value) %][% p.unit | html %]</td>
       [% IF has_warn %]<td>[% format_number(p.warn) %]</td>[% END %]
       [% IF has_crit %]<td>[% format_number(p.crit) %]</td>[% END %]
       [% IF has_min  %]<td>[% format_number(p.min) %]</td>[% END %]
       [% IF has_max  %]<td>[% format_number(p.max) %]</td>[% END %]
-      <td class="py-0">
+      <td>
         [% PROCESS _perfdata_table add_link="1" perfdata=p.orig state=4 %]
       </td>
     </tr>

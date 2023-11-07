@@ -50,7 +50,6 @@ button-default border-t border-b border-r border-l px-4 py-2 focus:z-10 focus:te
 button-default rounded-lg border px-4 py-2 focus:z-10 focus:text-blue-700 focus:ring-2 focus:ring-blue-700
 [% END %]
 
-
 [% BLOCK command_enabled_css %]
 [% 
   status = 'check text-xl'
