@@ -26,7 +26,7 @@
       <input type="text" class="deletable w-full" name="newfile" id="fileselect" onclick="ajax_search.init(this, 'file', {striped:false, autosubmit:false, templates:false, data:data})" placeholder="select new location">
     </div>
     <div class="footer justify-center">
-      <input type="submit" name="move" value="move" style="width:90px" class="text-green-500">
+      <input type="submit" name="move" value="move" style="width:90px" class="text-success">
     </div>
   </div>
 </form>

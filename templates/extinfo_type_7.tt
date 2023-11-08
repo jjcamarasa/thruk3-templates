@@ -96,7 +96,7 @@
                 [% ELSE %]
                   [% UNLESS command_disabled(c, '5') %]
                   <a href="cmd.cgi?cmd_typ=5&amp;host=[% q.host_name | uri %]&amp;service=[% q.description | uri %]">
-                    <i class="ti ti ti-check text-green-500" title="Enable Active Checks Of This Service"></i>
+                    <i class="ti ti ti-check text-success" title="Enable Active Checks Of This Service"></i>
                   </a>
                   [% END %]
                 [% END %]
@@ -115,7 +115,7 @@
                 [% ELSE %]
                   [% UNLESS command_disabled(c, '47') %]
                   <a href="cmd.cgi?cmd_typ=47&amp;host=[% q.name | uri %]">
-                    <i class="ti ti ti-check text-green-500" title="Enable Active Checks Of This Host"></i>
+                    <i class="ti ti ti-check text-success" title="Enable Active Checks Of This Host"></i>
                   </a>
                   [% END %]
                 [% END %]

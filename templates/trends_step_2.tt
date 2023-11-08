@@ -28,7 +28,7 @@
       </table>
     </div>
     <div class="footer justify-center">
-      <input class="text-green-500" type='submit' value='Continue to Step 3'>
+      <input class="text-success" type='submit' value='Continue to Step 3'>
     </div>
   </form>
 </div>

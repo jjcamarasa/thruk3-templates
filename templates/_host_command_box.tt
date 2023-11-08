@@ -137,11 +137,24 @@
   </div>
 [% END %]
 
+[% IF c.check_cmd_permissions('host', host.name) %]
+[%
+ cmds_array = [    
+    { id => '47', name => 'Active checks' , hstprop => 'checks_enabled' }
+    #{ id => '39', name => 'Passive checks' , hstprop => 'accept_passive_checks' },
+    #{ id => '99', name => 'Obsessing', hstprop => 'obsess_over_service' },
+    #{ id => '22', name => 'Notifications', hstprop => 'notifications_enabled' },
+    #{ id => '45', name => 'Event Handler', hstprop => 'event_handler_enabled' },
+    #{ id => '59', name => 'Flap Detection', hstprop => 'flap_detection_enabled' }    
+ #   { id => '200', name => 'Launch event handler', hstprop => 'flap_detection_enabled' }    
+   ]
+%]
+
 [% BLOCK component_status %]
 [% cmdd = item.id %]
 [% cmde = item.id + 1 %]
 [% UNLESS command_disabled(c, '$cmdd') || command_disabled(c, '$cmde') %]
-	  [% IF service.${item.hstprop} %]
+	  [% IF host.${item.hstprop} %]
 		[% cmd_type = cmde %]
 		[% PROCESS command_enabled_css %]
 	  [% ELSE %]
@@ -164,18 +177,7 @@
 [% END %]
 [% END %]
 
-[% IF c.check_cmd_permissions('host', host.name) %]
-[%
- cmds_array = [    
-    { id => '48', name => 'Active checks' , hstprop => 'checks_enabled' },
-    #{ id => '39', name => 'Passive checks' , hstprop => 'accept_passive_checks' },
-    #{ id => '99', name => 'Obsessing', hstprop => 'obsess_over_service' },
-    #{ id => '22', name => 'Notifications', hstprop => 'notifications_enabled' },
-    #{ id => '45', name => 'Event Handler', hstprop => 'event_handler_enabled' },
-    #{ id => '59', name => 'Flap Detection', hstprop => 'flap_detection_enabled' }    
- #   { id => '200', name => 'Launch event handler', hstprop => 'flap_detection_enabled' }    
-   ]
-%]
+
 
 <div class="card list-group list-group-sm list-group-flush list-group-hoverable">
   <div class="list-group-header">
@@ -231,11 +233,11 @@
     </div>
   </div>
   
-  [% FOREACH item IN cmds_array %]
+  [% #FOREACH item IN cmds_array %]
 	<div class="list-group-item p-1">
-		[% INCLUDE component_status item %]
+		[% #INCLUDE component_status item %]
 	</div>
-  [% END %]
+  [% #END %]
   
   <div>
   <table class="w-full">  

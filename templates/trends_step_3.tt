@@ -100,7 +100,7 @@
       </table>
     </div>
     <div class="footer justify-center">
-      <input class="text-green-500" type='submit' value='Create Report'>
+      <input class="text-success" type='submit' value='Create Report'>
     </div>
   </form>
 </div>

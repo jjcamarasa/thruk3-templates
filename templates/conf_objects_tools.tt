@@ -18,7 +18,7 @@
             <div class="card-body">
               [% IF results.size == 0 %]
               <p class="text-center">
-                  <i class="ti ti-circle-check text-green-500"></i>&nbsp;Everything <b>ok</b>
+                  <i class="ti ti-circle-check text-success"></i>&nbsp;Everything <b>ok</b>
               </p>
               [% ELSE %]
                 <div class="flexrow justify-between flex-nowrap whitespace-nowrap p-2">

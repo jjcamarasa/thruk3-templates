@@ -32,7 +32,7 @@
   <td>
     <div class="hidden spinner testimg_c_[% x %]_[% loop.index %]" title="checking connection"></div>
     <i class="ti ti-exclamation-circle text-lg text-yellow-500 hidden testimg_e_[% x %]_[% loop.index %]"></i>
-    <i class="ti ti-circle-check text-lg text-green-500 hidden testimg_o_[% x %]_[% loop.index %]"></i>
+    <i class="ti ti-circle-check text-lg text-success hidden testimg_o_[% x %]_[% loop.index %]"></i>
   </td>
 </tr>
 [% END %]

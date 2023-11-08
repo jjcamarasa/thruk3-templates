@@ -86,7 +86,7 @@
           [% END %]
         </table>
         <div class="footer justify-center">
-          <button class="text-green-500" onclick="closeModalWindow(); return false;">continue</button>
+          <button class="text-success" onclick="closeModalWindow(); return false;">continue</button>
         </div>
       </div>
     </td>
