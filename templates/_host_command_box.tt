@@ -140,13 +140,12 @@
 [% IF c.check_cmd_permissions('host', host.name) %]
 [%
  cmds_array = [    
-    { id => '47', name => 'Active checks' , hstprop => 'checks_enabled' }
-    #{ id => '39', name => 'Passive checks' , hstprop => 'accept_passive_checks' },
-    #{ id => '99', name => 'Obsessing', hstprop => 'obsess_over_service' },
-    #{ id => '22', name => 'Notifications', hstprop => 'notifications_enabled' },
-    #{ id => '45', name => 'Event Handler', hstprop => 'event_handler_enabled' },
-    #{ id => '59', name => 'Flap Detection', hstprop => 'flap_detection_enabled' }    
- #   { id => '200', name => 'Launch event handler', hstprop => 'flap_detection_enabled' }    
+    { id => '47', name => 'Active checks' , hstprop => 'checks_enabled' },
+    { id => '92', name => 'Passive checks' , hstprop => 'accept_passive_checks' },
+    { id => '101', name => 'Obsessing', hstprop => 'obsess_over_host' },
+    { id => '24', name => 'Notifications', hstprop => 'notifications_enabled' },
+    { id => '43', name => 'Event Handler', hstprop => 'event_handler_enabled' },
+    { id => '57', name => 'Flap Detection', hstprop => 'flap_detection_enabled' }    
    ]
 %]
 
@@ -168,8 +167,7 @@
 			</span>&nbsp;[% item.name %]
 		</div>
 		<div class="w-1/4">
-			<a class="js-modal-command-link btn btn-sm w-full [% btn_hov %]" href="cmd.cgi?cmd_typ=[% cmd_type %]&amp;host=[% host.name | uri    %]&amp;backend=[% host.peer_key %]">
-            <!--href="cmd.cgi?cmd_typ=[% cmd_type %]&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">-->            
+			<a class="js-modal-command-link btn btn-sm w-full [% btn_hov %]" href="cmd.cgi?cmd_typ=[% cmd_type %]&amp;host=[% host.name | uri    %]&amp;backend=[% host.peer_key %]">            
 			[% btn_text %]
 			</a>
 		</div>
@@ -233,17 +231,16 @@
     </div>
   </div>
   
-  [% #FOREACH item IN cmds_array %]
+  [% FOREACH item IN cmds_array %]
 	<div class="list-group-item p-1">
-		[% #INCLUDE component_status item %]
+		[% INCLUDE component_status item %]
 	</div>
-  [% #END %]
+  [% END %]
   
-  <div>
-  <table class="w-full">  
-
+  <!--<div>
+  <table class="w-full">  -->
     [% UNLESS command_disabled(c, '47') || command_disabled(c, '48') %]
-    <tr>
+    <!--<tr>
         [% IF host.checks_enabled %]
           [% cmd_type = 48 %]
           [% PROCESS command_enabled %]
@@ -259,7 +256,7 @@
             [% btn_text %]
       </a>
     </td>
-      </tr>
+      </tr>-->
     [% END %]
 
     [% UNLESS command_disabled(c, '92') || command_disabled(c, '93') %]
@@ -270,7 +267,7 @@
           [% cmd_type = 92 %]
           [% PROCESS command_disabled %]
         [% END %]
-      <tr>
+      <!--<tr>
         <td>
             <i class="ti ti-[% status %] text-[% statuscolor %]"></i>&nbsp;Passive Checks</td>
         </td>
@@ -279,7 +276,7 @@
             [% btn_text %]
           </a>
         </td>        
-      </tr>
+      </tr>-->
     [% END %]
 
     [% UNLESS command_disabled(c, '101') || command_disabled(c, '102') %]
@@ -290,7 +287,7 @@
           [% cmd_type = 101 %]
           [% PROCESS command_disabled %]
         [% END %]
-      <tr>
+      <!--<tr>
         <td>
             <i class="ti ti-[% status %] text-[% statuscolor %]"></i>&nbsp;Obsessing
         </td>
@@ -299,7 +296,7 @@
             [% btn_text %]
           </a>
         </td>        
-      </tr>
+      </tr>-->
     [% END %]
 
     [% UNLESS command_disabled(c, '24') || command_disabled(c, '25') %]
@@ -310,7 +307,7 @@
           [% cmd_type = 24 %]
           [% PROCESS command_disabled %]
         [% END %]
-      <tr>
+      <!--<tr>
         <td>
             <i class="ti ti-[% status %] text-[% statuscolor %]"></i>&nbsp;Notifications
         </td>
@@ -319,7 +316,7 @@
             [% btn_text %]
           </a>
         </td>        
-      </tr>
+      </tr>-->
     [% END %]
 
     [% UNLESS command_disabled(c, '43') || command_disabled(c, '44') %]
@@ -330,7 +327,7 @@
           [% cmd_type = 43 %]
           [% PROCESS command_disabled %]
         [% END %]
-      <tr>
+      <!--<tr>
       <td>
         <i class="ti ti-[% status %] text-[% statuscolor %]"></i>&nbsp;Event Handler
       </td>
@@ -339,7 +336,7 @@
             [% btn_text %]
           </a>
         </td>
-      </tr>
+      </tr>-->
     [% END %]
 
     [% UNLESS command_disabled(c, '57') || command_disabled(c, '58') %]
@@ -350,7 +347,7 @@
           [% cmd_type = 57 %]
           [% PROCESS command_disabled %]
         [% END %]
-      <tr>
+      <!--<tr>
         <td>
             <i class="ti ti-[% status %] text-[% statuscolor %]"></i>&nbsp;Flap Detection
         </td>
@@ -359,9 +356,9 @@
             [% btn_text %]
           </a>
         </td>        
-      </tr>
+      </tr>-->
     [% END %]
-    </table>
-  </div>
+<!--    </table>
+  </div>-->
 </div>
 [% END %]
