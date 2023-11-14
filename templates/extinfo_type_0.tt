@@ -49,7 +49,7 @@
     [% ELSE %]
       <div class="actionbox">
         [% IF !command_disabled(c, '14') %]
-        <div><a class="js-modal-command-link" href='cmd.cgi?cmd_typ=14'><i class="ti ti-power text-red-500red"></i>Shutdown the Backend process</a></div>
+        <div><a class="js-modal-command-link" href='cmd.cgi?cmd_typ=14'><i class="ti ti-power text-dangerred"></i>Shutdown the Backend process</a></div>
         [% END %]
         [% IF !command_disabled(c, '13') %]
         <div><a class="js-modal-command-link" href='cmd.cgi?cmd_typ=13'><i class="ti ti-refresh round"></i>Restart the Backend process</a></div>
@@ -57,7 +57,7 @@
 
         [% IF pi.keys.size > 0 && pi.enable_notifications != 0 %]
           [% IF !command_disabled(c, '11') %]
-          <div><a class="js-modal-command-link" href='cmd.cgi?cmd_typ=11'><i class="ti ti-x text-red-600"></i>Disable notifications</a></div>
+          <div><a class="js-modal-command-link" href='cmd.cgi?cmd_typ=11'><i class="ti ti-x text-danger"></i>Disable notifications</a></div>
           [% END %]
         [% END %]
         [% IF pi.keys.size == 0 || pi.enable_notifications != 1 %]
@@ -68,7 +68,7 @@
 
         [% IF pi.keys.size > 0 && pi.execute_service_checks != 0 %]
           [% IF !command_disabled(c, '36') %]
-          <div><a class="js-modal-command-link" href='cmd.cgi?cmd_typ=36'><i class="ti ti-x text-red-600"></i>Stop executing service checks</a></div>
+          <div><a class="js-modal-command-link" href='cmd.cgi?cmd_typ=36'><i class="ti ti-x text-danger"></i>Stop executing service checks</a></div>
           [% END %]
         [% END %]
         [% IF pi.keys.size == 0 || pi.execute_service_checks != 1 %]
@@ -79,7 +79,7 @@
 
         [% IF pi.keys.size > 0 && pi.accept_passive_service_checks != 0 %]
           [% IF !command_disabled(c, '38') %]
-          <div><a class="js-modal-command-link" href='cmd.cgi?cmd_typ=38'><i class="ti ti-x text-red-600"></i>Stop accepting passive service checks</a></div>
+          <div><a class="js-modal-command-link" href='cmd.cgi?cmd_typ=38'><i class="ti ti-x text-danger"></i>Stop accepting passive service checks</a></div>
           [% END %]
         [% END %]
         [% IF pi.keys.size == 0 || pi.accept_passive_service_checks != 1 %]
@@ -90,7 +90,7 @@
 
         [% IF pi.keys.size > 0 && pi.execute_host_checks != 0 %]
           [% IF !command_disabled(c, '89') %]
-          <div><a class="js-modal-command-link" href='cmd.cgi?cmd_typ=89'><i class="ti ti-x text-red-600"></i>Stop executing host checks</a></div>
+          <div><a class="js-modal-command-link" href='cmd.cgi?cmd_typ=89'><i class="ti ti-x text-danger"></i>Stop executing host checks</a></div>
           [% END %]
         [% END %]
         [% IF pi.keys.size == 0 || pi.execute_host_checks != 1 %]
@@ -101,7 +101,7 @@
 
         [% IF pi.keys.size > 0 && pi.accept_passive_host_checks != 0 %]
           [% IF !command_disabled(c, '91') %]
-          <div><a class="js-modal-command-link" href='cmd.cgi?cmd_typ=91'><i class="ti ti-x text-red-600"></i>Stop accepting passive host checks</a></div>
+          <div><a class="js-modal-command-link" href='cmd.cgi?cmd_typ=91'><i class="ti ti-x text-danger"></i>Stop accepting passive host checks</a></div>
           [% END %]
         [% END %]
         [% IF pi.keys.size == 0 || pi.accept_passive_host_checks != 1 %]
@@ -112,7 +112,7 @@
 
         [% IF pi.keys.size > 0 && pi.enable_event_handlers != 0 %]
           [% IF !command_disabled(c, '42') %]
-          <div><a class="js-modal-command-link" href='cmd.cgi?cmd_typ=42'><i class="ti ti-x text-red-600"></i>Disable event handlers</a></div>
+          <div><a class="js-modal-command-link" href='cmd.cgi?cmd_typ=42'><i class="ti ti-x text-danger"></i>Disable event handlers</a></div>
           [% END %]
         [% END %]
         [% IF pi.keys.size == 0 || pi.enable_event_handlers != 1 %]
@@ -123,7 +123,7 @@
 
         [% IF pi.keys.size > 0 && pi.obsess_over_services != 0 %]
           [% IF !command_disabled(c, '50') %]
-          <div><a class="js-modal-command-link" href='cmd.cgi?cmd_typ=50'><i class="ti ti-x text-red-600"></i>Stop obsessing over services</a></div>
+          <div><a class="js-modal-command-link" href='cmd.cgi?cmd_typ=50'><i class="ti ti-x text-danger"></i>Stop obsessing over services</a></div>
           [% END %]
         [% END %]
         [% IF pi.keys.size == 0 || pi.obsess_over_services != 1 %]
@@ -134,7 +134,7 @@
 
         [% IF pi.keys.size > 0 && pi.obsess_over_hosts != 0 %]
           [% IF !command_disabled(c, '95') %]
-          <div><a class="js-modal-command-link" href='cmd.cgi?cmd_typ=95'><i class="ti ti-x text-red-600"></i>Stop obsessing over hosts</a></div>
+          <div><a class="js-modal-command-link" href='cmd.cgi?cmd_typ=95'><i class="ti ti-x text-danger"></i>Stop obsessing over hosts</a></div>
           [% END %]
         [% END %]
         [% IF pi.keys.size == 0 || pi.obsess_over_hosts != 1 %]
@@ -145,7 +145,7 @@
 
         [% IF pi.keys.size > 0 && pi.enable_flap_detection != 0 %]
           [% IF !command_disabled(c, '62') %]
-          <div><a class="js-modal-command-link" href='cmd.cgi?cmd_typ=62'><i class="ti ti-x text-red-600"></i>Disable flap detection</a></div>
+          <div><a class="js-modal-command-link" href='cmd.cgi?cmd_typ=62'><i class="ti ti-x text-danger"></i>Disable flap detection</a></div>
           [% END %]
         [% END %]
         [% IF pi.keys.size == 0 || pi.enable_flap_detection != 1 %]
@@ -156,7 +156,7 @@
 
         [% IF pi.keys.size > 0 && pi.process_performance_data != 0 %]
           [% IF !command_disabled(c, '83') %]
-          <div><a class="js-modal-command-link" href='cmd.cgi?cmd_typ=83'><i class="ti ti-x text-red-600"></i>Disable performance data</a></div>
+          <div><a class="js-modal-command-link" href='cmd.cgi?cmd_typ=83'><i class="ti ti-x text-danger"></i>Disable performance data</a></div>
           [% END %]
         [% END %]
         [% IF pi.keys.size == 0 || pi.process_performance_data != 1 %]

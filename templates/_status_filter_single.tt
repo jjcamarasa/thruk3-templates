@@ -41,7 +41,7 @@
           </table>
         </div>
         <button class="iconOnly p-2 hoverable" id="[% filterprefix %]_btn_del_search" onClick="deleteSearchPane(this.id); return false;" title="remove this filter"[% IF loop.index == 0 %] style="display: none;"[% END %]>
-          <i class="ti ti-square-x-filled text-red-600"></i>
+          <i class="ti ti-square-x-filled text-danger"></i>
         </button>
       </td>
     </tr>
@@ -338,7 +338,7 @@
 
         <td class='w-fit px-1 js-remove-filter-row' onclick="delete_filter_row(this); [% onchange %] return false;">
           <button class="iconOnly hoverable w-6 h-6" title="remove this filter attribute">
-            <i class="ti ti-square-x-filled text-red-600"></i>
+            <i class="ti ti-square-x-filled text-danger"></i>
           </button>
           <script>
           <!--

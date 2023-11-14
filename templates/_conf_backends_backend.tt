@@ -6,7 +6,7 @@
   </td>
   <td class="px-2">
     <button class="iconOnly" title="remove connection" onclick="[% IF x == 0 %]conf_sites_add_hide();[% ELSE %]delete_site_row(this);[% END %]return false;">
-      <i class="ti ti-circle-x  hover:text-red-500"></i>
+      <i class="ti ti-circle-x  hover:text-danger"></i>
     </button>
   </td>
 </tr>

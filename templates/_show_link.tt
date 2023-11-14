@@ -6,7 +6,7 @@
     <div class="head justify-between">
       <h3>Permanent link to this page</h3>
       <button class="iconOnly" onClick="toggleElement('show_link'); return false;">
-        <i class="ti ti-square-x-filled text-red-600"></i>
+        <i class="ti ti-square-x-filled text-danger"></i>
       </button>
     </div>
     <div class="body">

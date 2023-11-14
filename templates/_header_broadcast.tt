@@ -9,13 +9,13 @@
         <div class="js-next     text-center grow hoverable clickable"[% IF broadcasts.size == 1 %] style="visibility: hidden;"[% END %] onclick="broadcast_show_list(1);"><i class="ti ti-arrow-right"></i></div>
       </div>
       [% IF c.user_exists %]
-        <a class="button iconOnly medium hoverable p-1" href="#" onclick="broadcast_dismiss(); return(false);"><i class="ti ti-square-x-filled text-red-600"></i></a>
+        <a class="button iconOnly medium hoverable p-1" href="#" onclick="broadcast_dismiss(); return(false);"><i class="ti ti-square-x-filled text-danger"></i></a>
       [% END %]
     </div>
     [% END %]
     <div class="body">
       [% IF c.user_exists && broadcasts.size == 1 %]
-        <a class="button iconOnly medium hoverable block" style="float: right; clear: both;" href="#" onclick="broadcast_dismiss(); return(false);"><i class="ti ti-square-x-filled text-red-600"></i></a>
+        <a class="button iconOnly medium hoverable block" style="float: right; clear: both;" href="#" onclick="broadcast_dismiss(); return(false);"><i class="ti ti-square-x-filled text-danger"></i></a>
       [% END %]
       <div class="w-full">
         [% FOREACH n = broadcasts %]

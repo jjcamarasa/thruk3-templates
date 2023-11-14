@@ -2,7 +2,7 @@
 <div class="card z-50 fixed right-0 top-[50px] mt-0 w-full md:w-[500px] rounded-t-none rounded-r-none" style="display: none;" id="cmd_pane">
   <div class="card-header">
     <h3>Quick Commands</h3>
-    <button class="iconOnly medium absolute right-2 top-2" onClick="selectAllHosts(false,'dfl_');selectAllServices(false,'dfl_');selectAllHosts(false,'svc_');selectAllServices(false,'svc_');selectAllHosts(false,'hst_');return false;"><i class="ti ti-square-x-filled text-red-600"></i></button>
+    <button class="iconOnly medium absolute right-2 top-2" onClick="selectAllHosts(false,'dfl_');selectAllServices(false,'dfl_');selectAllHosts(false,'svc_');selectAllServices(false,'svc_');selectAllHosts(false,'hst_');return false;"><i class="ti ti-square-x-filled text-danger"></i></button>
   </div>
   <div class="body">
     <form action="cmd.cgi" method="POST" id="quick_cmd_form" onsubmit="setFormBtnSpinner(this)">
@@ -73,17 +73,17 @@
               [% IF c.config.cmd_quick_status.active_checks %]
                 <hr class="pt-px mb-px">
                 <div><a onclick="selectCommand(8); return false;" class="flex" href="#"><i class="ti ti-check"></i> Enable Active Checks</a></div>
-                <div><a onclick="selectCommand(9); return false;" class="flex hover-red-text" href="#"><i class="ti ti-square-x-filled text-red-600"></i> Disable Active Checks</a></div>
+                <div><a onclick="selectCommand(9); return false;" class="flex hover-red-text" href="#"><i class="ti ti-square-x-filled text-danger"></i> Disable Active Checks</a></div>
               [% END %]
               [% IF c.config.cmd_quick_status.notifications %]
                 <hr class="pt-px mb-px">
                 <div><a onclick="selectCommand(10); return false;" class="flex" href="#"><i class="ti ti-check"></i> Enable Notifications</a></div>
-                <div><a onclick="selectCommand(11); return false;" class="flex hover-red-text" href="#"><i class="ti ti-square-x-filled text-red-600"></i> Disable Notifications</a></div>
+                <div><a onclick="selectCommand(11); return false;" class="flex hover-red-text" href="#"><i class="ti ti-square-x-filled text-danger"></i> Disable Notifications</a></div>
               [% END %]
               [% IF c.config.cmd_quick_status.eventhandler %]
                 <hr class="pt-px mb-px">
                 <div><a onclick="selectCommand(15); return false;" class="flex" href="#"><i class="ti ti-check"></i> Enable Eventhandler</a></div>
-                <div><a onclick="selectCommand(16); return false;" class="flex hover-red-text" href="#"><i class="ti ti-square-x-filled text-red-600"></i> Disable Eventhandler</a></div>
+                <div><a onclick="selectCommand(16); return false;" class="flex hover-red-text" href="#"><i class="ti ti-square-x-filled text-danger"></i> Disable Eventhandler</a></div>
               [% END %]
               [% IF c.config.cmd_quick_status.submit_result %]
                 <hr class="pt-px mb-px">

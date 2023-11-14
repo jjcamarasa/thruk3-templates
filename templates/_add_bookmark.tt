@@ -6,7 +6,7 @@
     <div class="head p-0">
       <span class="tabs text-sm active" id="sub_2" onclick="set_sub(2)">Add New</span>
       <span class="tabs text-sm" id="sub_1" onclick="set_sub(1)">Manage Bookmarks</span>
-      <button class="iconOnly medium absolute right-2 top-2" onClick="toggleElement('add_bookmark'); return false;"><i class="ti ti-square-x-filled text-red-600"></i></button>
+      <button class="iconOnly medium absolute right-2 top-2" onClick="toggleElement('add_bookmark'); return false;"><i class="ti ti-square-x-filled text-danger"></i></button>
     </div>
 
     <div>

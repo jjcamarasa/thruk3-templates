@@ -2,7 +2,7 @@
   <div class="head justify-between">
     <h3>[% IF modal %][% request %][% ELSE %]Command Options[% END %]</h3>
     [% IF modal %]
-    <button class="iconOnly medium" onClick="closeModalWindow(); return false;"><i class="ti ti-square-x-filled text-red-500"></i></button>
+    <button class="iconOnly medium" onClick="closeModalWindow(); return false;"><i class="ti ti-square-x-filled text-danger"></i></button>
     [% END %]
   </div>
   <div class="body">

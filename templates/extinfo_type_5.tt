@@ -108,7 +108,7 @@
       [% UNLESS command_disabled(c, '68') %]
         <div>
           <a class="flex js-modal-command-link" href="cmd.cgi?cmd_typ=68&amp;hostgroup=[% hostgroup.name | uri %]">
-            <i class="ti ti-x text-red-600"></i>Disable active checks of all services in this hostgroup
+            <i class="ti ti-x text-danger"></i>Disable active checks of all services in this hostgroup
           </a>
         </div>
       [% END %]

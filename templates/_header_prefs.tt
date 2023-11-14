@@ -1,7 +1,7 @@
 ﻿<div class="head justify-between">
   <h3>Settings<span>&nbsp-&nbsp<a class="link" href="[% url_prefix %]cgi-bin/user.cgi">[% remote_user %]</a></span>
   </h3>
-  <button class="iconOnly medium" onClick="toggleElement('pref_pane'); return false;"><i class="ti ti-square-x-filled text-red-600"></i></button>
+  <button class="iconOnly medium" onClick="toggleElement('pref_pane'); return false;"><i class="ti ti-square-x-filled text-danger"></i></button>
 </div>
 <table class="table-fixed cellspacing">      
   <tr>
