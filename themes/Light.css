@@ -1082,6 +1082,9 @@ select {
   --tblr-form-invalid-color: #d63939;
   --tblr-form-invalid-border-color: #d63939;
   /* Global Variables */
+  --tblr-danger: #d63939;
+  --tblr-danger-rgb: 214, 57, 57;
+  --tblr-danger-fg: var(--tblr-light);
   --tblr-danger-lt: #fbebeb;
   --tblr-danger-lt-rgb: 251, 235, 235;
   --tblr-green-lt: #eaf7ec;

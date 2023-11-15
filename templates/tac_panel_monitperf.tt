@@ -1,104 +1,43 @@
-﻿<div class="row">
-<div class="col-6">
- <!--<div class="border-1">-->
-          <table class="table table-sm bg-light h-full border-1">
-          <thead>
-          <tr>
-            <th class="p-2" colspan=4 ><span class="ti ti-gauge"></span>&nbsp;Performance</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr>          
-            <td class="font-bold px-2">Metric (seconds)</td>
-            <td class="text-center px-2">Min.</th>
-            <td class="text-center px-2">Max.</th>
-            <td class="text-center px-2">Avg.</th>
-          </tr>
-            <tr>
-              <td class="font-bold  pl-2"><a href='extinfo.cgi?type=4'>Service Check Execution Time</a></td>
-              <td class="text-center"><a href='extinfo.cgi?type=4'>[% sprintf('%.2f',stats.services_execution_time_min) %]</td>
-              <td class="text-center">[% sprintf('%.2f',stats.services_execution_time_max) %]</td>
-              <td class="text-center">[% sprintf('%.3f',stats.services_execution_time_avg) %]</a></td>
-            </tr>
-            <tr>
-              <td class="font-bold  pl-2"><a href='extinfo.cgi?type=4'>Service Check Latency</a></td>
-              <td class="text-center"><a href='extinfo.cgi?type=4'>[% sprintf('%.2f',stats.services_latency_min) %]</td>
-              <td class="text-center">[% sprintf('%.2f',stats.services_latency_max) %]</td>
-              <td class="text-center">[% sprintf('%.3f',stats.services_latency_avg) %]</a></td>
-            </tr>
-            <tr>
-              <td class="font-bold  pl-2"><a href='extinfo.cgi?type=4'>Host Check Execution Time</a></td>
-              <td class="text-center"><a href='extinfo.cgi?type=4'>[% sprintf('%.2f',stats.hosts_execution_time_min) %]</td>
-              <td class="text-center">[% sprintf('%.2f',stats.hosts_execution_time_max) %]</td>
-              <td class="text-center">[% sprintf('%.3f',stats.hosts_execution_time_avg) %]</a></td>
-            </tr>
-            <tr>
-              <td class="font-bold  pl-2"><a href='extinfo.cgi?type=4'>Host Check Latency</a></td>
-              <td class="text-center"><a href='extinfo.cgi?type=4'>[% sprintf('%.2f',stats.hosts_latency_min) %]</td>
-              <td class="text-center">[% sprintf('%.2f',stats.hosts_latency_max) %]</td>
-              <td class="text-center">[% sprintf('%.3f',stats.hosts_latency_avg) %]</a></td>
-            </tr>            
-            </tbody>
-            </table>            
- <!--</div>-->
-</div>
-
-<div class="col-6">
- <div class="row">
-  <div class="col-auto">
-	<div class="card mb-2">
-	  <div class="card-header text-center p-2">
-		<span class="ti ti-device-desktop "></span>&nbsp;Active Hosts
-	  </div>
-	  <div class="card-body text-center text-3xl">
-		<a href='[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hostprops => 131072 }) %]'>
-		[% host_stats.total_active %]
-		</a>
-	  </div>
-	</div>
-
-	<div class="card">
-	  <div class="card-header text-center p-2">
-		<span class="ti ti-settings"></span>&nbsp;Active Services
-	  </div>
-	  <div class="card-body text-center text-3xl">
-		<a href='[% uri_with(c, { _page => "status.cgi", style => "detail", serviceprops => 131072 }) %]'>
-		[% service_stats.total_active %]
-		</a>
-	  </div>
-	</div>
-  </div>
-
-[% IF host_stats.total_passive > 0 || service_stats.total_passive > 0 %]
-<div class="col-auto">
-  [% IF host_stats.total_passive > 0 %]
-  <div class="card mb-2">
-    <div class="card-header text-center p-2">
-      <span class="ti ti-device-desktop "></span>&nbsp;Passive Hosts
-    </div>
-    <div class="card-body text-center text-3xl">
-      <a href='[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hostprops => 65536 }) %]'>
-      [% host_stats.total_passive %]
-      </a>
-    </div>
-  </div>
-  [% END %]
-  
-  [% IF service_stats.total_passive > 0 %]
-  <div class="card">
-    <div class="card-header text-center p-2">
-      <span class="ti ti-settings"></span>&nbsp;Passive Services
-    </div>
-  <div class="card-body text-center text-3xl">
-    <a href='[% uri_with(c, { _page => "status.cgi", style => "detail", serviceprops => 65536 }) %]'>
-    [% service_stats.total_passive %]
-    </a>
-    </div>
-    </div>
-  </div>
-  [% END %]
-</div>
-[% END %]
-  </div>
- </div>
-</div>
+﻿<!--<div class="row">
+<div class="col-6">-->
+<table class="table table-sm bg-light h-full border-1">
+<thead>
+<tr>
+	<th class="p-2" colspan=4 ><span class="ti ti-gauge"></span>&nbsp;Performance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<td class="font-bold px-2">Metric (seconds)</td>
+	<td class="text-center px-2">Min.</th>
+	<td class="text-center px-2">Max.</th>
+	<td class="text-center px-2">Avg.</th>
+</tr>
+	<tr>
+	<td class="font-boldpl-2"><a href='extinfo.cgi?type=4'>Service Check Execution Time</a></td>
+	<td class="text-center"><a href='extinfo.cgi?type=4'>[% sprintf('%.2f',stats.services_execution_time_min) %]</td>
+	<td class="text-center">[% sprintf('%.2f',stats.services_execution_time_max) %]</td>
+	<td class="text-center">[% sprintf('%.3f',stats.services_execution_time_avg) %]</a></td>
+	</tr>
+	<tr>
+	<td class="font-boldpl-2"><a href='extinfo.cgi?type=4'>Service Check Latency</a></td>
+	<td class="text-center"><a href='extinfo.cgi?type=4'>[% sprintf('%.2f',stats.services_latency_min) %]</td>
+	<td class="text-center">[% sprintf('%.2f',stats.services_latency_max) %]</td>
+	<td class="text-center">[% sprintf('%.3f',stats.services_latency_avg) %]</a></td>
+	</tr>
+	<tr>
+	<td class="font-boldpl-2"><a href='extinfo.cgi?type=4'>Host Check Execution Time</a></td>
+	<td class="text-center"><a href='extinfo.cgi?type=4'>[% sprintf('%.2f',stats.hosts_execution_time_min) %]</td>
+	<td class="text-center">[% sprintf('%.2f',stats.hosts_execution_time_max) %]</td>
+	<td class="text-center">[% sprintf('%.3f',stats.hosts_execution_time_avg) %]</a></td>
+	</tr>
+	<tr>
+	<td class="font-boldpl-2"><a href='extinfo.cgi?type=4'>Host Check Latency</a></td>
+	<td class="text-center"><a href='extinfo.cgi?type=4'>[% sprintf('%.2f',stats.hosts_latency_min) %]</td>
+	<td class="text-center">[% sprintf('%.2f',stats.hosts_latency_max) %]</td>
+	<td class="text-center">[% sprintf('%.3f',stats.hosts_latency_avg) %]</a></td>
+	</tr>
+	</tbody>
+	</table> 
+<!--	</div>
+</div>-->

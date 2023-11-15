@@ -202,7 +202,6 @@
 [% END %]
 [% END %]
 
-
 [% BLOCK small_button %]
   [% UNLESS btn.defined('skipform') && btn.skipform %]
   <form [% IF !btn.form.defined("method") %]method="POST"[% END %][% FOREACH k = btn.form.keys %] [% k | html %]="[% btn.form.$k | html %]"[% END %]>

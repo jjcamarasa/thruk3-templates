@@ -1,0 +1,53 @@
+  <div class="col">
+	<div class="card mb-2">
+	  <div class="card-header text-center p-1">
+		<span class="ti ti-device-desktop "></span>&nbsp;Active Hosts
+	  </div>
+	  <div class="card-body text-center text-3xl">
+		<a href='[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hostprops => 131072 }) %]'>
+		[% host_stats.total_active %]
+		</a>
+	  </div>
+	</div>
+
+	<div class="card">
+	  <div class="card-header text-center p-1">
+		<span class="ti ti-settings"></span>&nbsp;Active Services
+	  </div>
+	  <div class="card-body text-center text-3xl">
+		<a href='[% uri_with(c, { _page => "status.cgi", style => "detail", serviceprops => 131072 }) %]'>
+		[% service_stats.total_active %]
+		</a>
+	  </div>
+	</div>
+  </div>
+
+[% IF host_stats.total_passive > 0 || service_stats.total_passive > 0 %]
+<div class="col">
+  [% IF host_stats.total_passive > 0 %]
+  <div class="card mb-2">
+	<div class="card-header text-center p-1">
+	  <span class="ti ti-device-desktop "></span>&nbsp;Passive Hosts
+	</div>
+	<div class="card-body text-center text-3xl">
+	  <a href='[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hostprops => 65536 }) %]'>
+	  [% host_stats.total_passive %]
+	  </a>
+	</div>
+  </div>
+  [% END %]
+  
+  [% IF service_stats.total_passive > 0 %]
+  <div class="card">
+	<div class="card-header text-center p-1">
+	  <span class="ti ti-settings"></span>&nbsp;Passive Svcs
+	</div>
+  <div class="card-body text-center text-3xl">
+	<a href='[% uri_with(c, { _page => "status.cgi", style => "detail", serviceprops => 65536 }) %]'>
+	[% service_stats.total_passive %]
+	</a>
+	</div>
+  </div>
+  [% END %]
+</div>
+[% END %]
