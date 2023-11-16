@@ -1,4 +1,4 @@
-/* 10/10/2023 */
+/* 16/11/2023 */
 /*! tailwindcss v3.2.7 | MIT License | https://tailwindcss.com*/
 /* classes to review and delete
 pager rounded-md inline-flex items-center font-medium justify-center px-1.5
@@ -887,10 +887,10 @@ select {
   --dashboard-series-1: var(--color-sky-600);
   --dashboard-series-2: var(--color-orange-500);
   --dashboard-series-3: var(--color-purple-600);
-  --color-primary-bg: var(--color-sky-600);
+  --color-primary-bg: #295491;
   --color-primary-fg: var(--color-white);
-  --color-primary-hover-bg: var(--color-sky-400);
-  --color-primary-border: var(--color-sky-600);
+  --color-primary-hover-bg: var(--color-sky-500);
+  --color-primary-border: var(--color-primary-bg);
   --text-color-base: var(--color-stone-800);
   /* alert options tabler.css */
   --color-warning-fg: var(--alert-yellow-fg);
@@ -7624,6 +7624,15 @@ button.btn-primary:hover, .btn.btn-primary:hover {
 
 .card-group > .card {
   margin-bottom: var(--tblr-card-group-margin);
+}
+
+.card-danger {
+  --tblr-bg-opacity: 1;
+  --tblr-text-opacity: 1;
+  color: rgba(var(--tblr-danger-rgb), var(--tblr-text-opacity)) !important;
+  background-color: rgba(var(--tblr-danger-lt-rgb), var(--tblr-bg-opacity)) !important;
+  border-color: var(--tblr-danger-rgb) !important;
+  border-radius: 5px;
 }
 /**
 Form label

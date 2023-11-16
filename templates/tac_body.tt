@@ -15,14 +15,12 @@
  
  <!--<div class="flexrow gap-2">-->
 <div class="bootstrap-wrapper w-full gap-2"> 
- <div class="row">
-  <div class="row col">
-    [% PROCESS tac_panel_hs.tt %]
-  </div>
-  <div class="col-5">
+ <div class="row">  
+    [% PROCESS tac_panel_netoutage.tt %]  
+  <div class="col">
     [% PROCESS tac_panel_hosts.tt %]
   </div>
-  <div class="col-5">
+  <div class="col">
     [% PROCESS tac_panel_services.tt %]
   </div>
  </div>
@@ -30,12 +28,9 @@
  <!--</div>-->
 
  <div class="bootstrap-wrapper mt-auto mb-0 w-full gap-2">
-  <div class="row">
-    [% PROCESS tac_panel_netoutage.tt %]
+  <div class="row">    
    <div class="col-auto">
-    <!--<div class="row">-->
     [% PROCESS tac_panel_monit_features.tt %]
-    <!--</div>-->
    </div>
    <div class="col-auto">
     [% PROCESS tac_panel_monitperf.tt %]

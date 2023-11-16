@@ -1,4 +1,4 @@
-  <div class="col">
+<!--  <div class="col">
 	<div class="card mb-2">
 	  <div class="card-header text-center p-1">
 		<span class="ti ti-device-desktop "></span>&nbsp;Active Hosts
@@ -21,7 +21,7 @@
 	  </div>
 	</div>
   </div>
-
+-->
 [% IF host_stats.total_passive > 0 || service_stats.total_passive > 0 %]
 <div class="col">
   [% IF host_stats.total_passive > 0 %]

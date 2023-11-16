@@ -1,18 +1,16 @@
-﻿<!--<div class="row">
-<div class="col-6">-->
-<table class="table table-sm bg-light h-full border-1">
-<thead>
-<tr>
+﻿<table class="table table-sm bg-light h-full border-1">
+ <thead>
+  <tr>
 	<th class="p-2" colspan=4 ><span class="ti ti-gauge"></span>&nbsp;Performance</th>
-</tr>
-</thead>
-<tbody>
-<tr>
+  </tr>
+ </thead>
+ <tbody>
+ <tr>
 	<td class="font-bold px-2">Metric (seconds)</td>
 	<td class="text-center px-2">Min.</th>
 	<td class="text-center px-2">Max.</th>
 	<td class="text-center px-2">Avg.</th>
-</tr>
+ </tr>
 	<tr>
 	<td class="font-boldpl-2"><a href='extinfo.cgi?type=4'>Service Check Execution Time</a></td>
 	<td class="text-center"><a href='extinfo.cgi?type=4'>[% sprintf('%.2f',stats.services_execution_time_min) %]</td>
@@ -38,6 +36,4 @@
 	<td class="text-center">[% sprintf('%.3f',stats.hosts_latency_avg) %]</a></td>
 	</tr>
 	</tbody>
-	</table> 
-<!--	</div>
-</div>-->
+</table> 

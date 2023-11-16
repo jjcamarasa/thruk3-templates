@@ -40,21 +40,35 @@ color: var(--badge-[% state %]-[% colorbg %]);
 
 <div class="card h-full">
   <div class="card-header text-xl">
-    <div class="text-xl font-bold"><span class="pl-1"><span class="ti ti-settings-cog text-2xl"></span></span>&nbsp;[% host_stats.total %]&nbsp;Hosts</div>
+    <div class="text-xl font-bold">	
+	  <span class="ti ti-settings-cog text-2xl"></span>&nbsp;[% host_stats.total %]&nbsp;Hosts
+	  <span class="text-sm text-muted mx-2">
+        <a href='[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hostprops => 131072 }) %]'>
+          <i class="ti ti-corner-left-up"></i>[% host_stats.total_active %] active
+        </a>
+        [% IF host_stats.total_passive > 0 %]
+        <a href='[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hostprops => 65536 }) %]'>
+          <i class="ti ti-corner-left-down"></i>[% host_stats.total_passive %] passive
+        </a>
+        [% END %]
+	  </span>
+	
+	</div>
   </div>
    [% state='ok' %]
-  <div class="flexcol mt-4 mb-4 mx-4">
-   <div class="flex border mx-2" style="[% INCLUDE style_bordercolor %]">
+  <div class="flex-col mt-4 mb-4 mx-4">
+  [% hoks = host_stats.up_and_scheduled + host_stats.up_and_disabled_active + host_stats.up_and_disabled_active + host_stats.up_and_disabled_passive %]
+  [% IF host_stats.up > 0 %]  
+  <div class="flex border mx-2" style="[% INCLUDE style_bordercolor %]">
     <div class="flex items-center p-5" style="[% INCLUDE style_fgcolor %]">
 	<span class="ti ti-circle-check text-5xl" style="[% INCLUDE style_bgcolortext %]"></span>
     </div>
-  [% hoks = host_stats.up_and_scheduled + host_stats.up_and_disabled_active + host_stats.up_and_disabled_active + host_stats.up_and_disabled_passive %]
-  [% IF hoks > 0 %]
+  
   <div class="flex-col grow p-2" style="[% INCLUDE style_cardcolor %]">
     <div class="flexrow items-end grow">
-  [% ELSE %]
-      <div class="flexrow items-center grow p-2" style="[% INCLUDE style_cardcolor %]">
-  [% END %]
+  [%# ELSE %]
+      <!--<div class="flexrow items-center grow p-2" style="[% INCLUDE style_cardcolor %]">-->
+  [%# END %]
     <a class="text-3xl font-bold block" href='[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hoststatustypes => 2 }) %]'>
     [% host_stats.up %]&nbsp;Up
     </a>
@@ -87,8 +101,7 @@ color: var(--badge-[% state %]-[% colorbg %]);
         <div style="width:[% host_perc %]%; background-color: var(--badge-[% host_health_cls %]-[% colorfg %]) !important;"></div>
       </div>
     </div>
-
-    [% IF hoks > 0 %]
+    [%# IF hoks > 0 %]
       </div>
     <div class="block">
       [% IF !empty && host_stats.up_and_scheduled > 0 %]
@@ -107,9 +120,9 @@ color: var(--badge-[% state %]-[% colorbg %]);
         [% END %]
       [% END %]
     </div>
-    [% END %]
     </div>
   </div>
+    [% END %]
 
   [% IF host_stats.down > 0 %]
   [% state = 'down' %]&nbsp;

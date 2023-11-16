@@ -41,7 +41,17 @@
 <div class="card h-full">
   <div class="card-header">
     <div class="text-xl font-bold">
-      <span class="pl-1"><span class="ti ti-settings-cog text-2xl"></span></span>&nbsp;[% service_stats.total %]&nbsp;Services
+      <span class="ti ti-settings-cog text-2xl"></span>&nbsp;[% service_stats.total %]&nbsp;Services
+      <span class="text-sm text-muted mx-2">
+        <a href='[% uri_with(c, { _page => "status.cgi", style => "detail", serviceprops => 131072 }) %]'>
+          <i class="ti ti-corner-left-up"></i>[% service_stats.total_active %] active
+        </a>
+        [% IF service_stats.total_passive > 0 %]
+        <a href='[% uri_with(c, { _page => "status.cgi", style => "detail", serviceprops => 65536 }) %]'>
+          <i class="ti ti-corner-left-down"></i>[% service_stats.total_passive %] passive
+        </a>
+        [% END %]
+	  </span>
 </div>
   </div>
   [% state='ok' %]
@@ -147,34 +157,34 @@
         [% END %]
           [% IF !empty && service_stats.critical_on_down_host > 0  %]
             <a href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 16, hoststatustypes => 12 }) %]' title="[% service_stats.critical_on_down_host %]&nbsp;on Problem Hosts">
-              <span class="ti ti-server-off"></span>[% service_stats.critical_on_down_host %]&nbsp;Problem Hosts
+              <span class="ti ti-server-off"></span>[% service_stats.critical_on_down_host %]
             </a>
           [% END %]
           [% IF !empty && service_stats.critical_and_scheduled > 0 %]
             <a href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 16, serviceprops => 1 }) %]' title="[% service_stats.critical_and_scheduled %]&nbsp;Scheduled">
-              <span class="ti ti-calendar"></span>[% service_stats.critical_and_scheduled %]&nbsp;Scheduled
+              <span class="ti ti-calendar"></span>[% service_stats.critical_and_scheduled %]
             </a>
           [% END %]
           [% IF !empty && service_stats.critical_and_ack > 0 %]
             <a href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 16, serviceprops => 4 }) %]' title="[% service_stats.critical_and_ack %]&nbsp;Acknowledged">
-              <span class="ti ti-barrier-block"></span>[% service_stats.critical_and_ack %]&nbsp;Acknowledged
+              <span class="ti ti-barrier-block"></span>[% service_stats.critical_and_ack %]
             </a>
           [% END %]
           [% IF strict_passive_mode %]
             [% IF !empty && service_stats.critical_and_disabled_active > 0  %]
               <a href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 16, serviceprops => 131088 }) %]' title="[% service_stats.critical_and_disabled_active %]&nbsp;Disabled">
-                <span class="ti ti-circle-x"></span>[% service_stats.critical_and_disabled_active %]&nbsp;Disabled
+                <span class="ti ti-circle-x"></span>[% service_stats.critical_and_disabled_active %]
               </a>
             [% END %]
             [% IF !empty && service_stats.critical_and_disabled_passive > 0  %]
               <a href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 16, serviceprops => 65552 }) %]' title="[% service_stats.critical_and_disabled_passive %]&nbsp;Passive">
-                <span class="ti ti-upload"></span>[% service_stats.critical_and_disabled_passive %]&nbsp;Passive
+                <span class="ti ti-upload"></span>[% service_stats.critical_and_disabled_passive %]
               </a>
             [% END %]
           [% ELSE %]
             [% IF !empty && service_stats.critical_and_disabled_active + service_stats.critical_and_disabled_passive > 0  %]
               <a href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 16, serviceprops => 16 }) %]' title="[% service_stats.critical_and_disabled_active + service_stats.critical_and_disabled_passive %]&nbsp;Disabled">
-                <span class="ti ti-circle-x"></span>[% service_stats.critical_and_disabled_active + service_stats.critical_and_disabled_passive %]&nbsp;Disabled
+                <span class="ti ti-circle-x"></span>[% service_stats.critical_and_disabled_active + service_stats.critical_and_disabled_passive %]
               </a>
             [% END %]
           [% END %]

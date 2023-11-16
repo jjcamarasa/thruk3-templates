@@ -1,6 +1,6 @@
 ﻿[% IF !empty && host_stats.outages > 0 %]
 <div class="col-3">
-  <div class="card bg-danger text-danger-fg">
+  <div class="card card-danger">
     <div class="card-body text-center">
     <h4 class="card-title">
         <span class="ti ti-share "></span>&nbsp;Network Outages
