@@ -1,10 +1,7 @@
 ﻿[% PROCESS _header.tt %]
 [% PROCESS _message.tt %]
-
 [% PROCESS _infobox.tt %]
-
 <h1 class="mt-5">User Profile</h1>
-
 [% IF new_private_key %]
 <div id="new_key_alert" class="alert alert-info alert-dismissible fade show text-center rounded">
  <span class="success_message">

@@ -80,7 +80,7 @@
 			  [% IF c.user_exists %]
 				<button class="btn text-xl" title="user preferences" onClick="toggleElementRemote('pref_pane', '_header_prefs', true); return false;">
 				  <i class="ti ti-settings"></i>
-				</button>
+				</button>								
 				[% IF cookie_auth && show_logout_button %]                    
                   <a class="btn hover-red text-xl" title="sign out" href="[% IF c.config.logout_link; c.config.logout_link; ELSE %][% url_prefix %]cgi-bin/login.cgi?logout[% END %]">
 					  <i class="ti ti-logout"></i>
@@ -92,7 +92,7 @@
           </div>
           
           [% IF c.user_exists %]
-            <div id="pref_pane" class="card z-50 shadow-float fixed left-0 md:left-auto md:right-0 top-[50px] mt-0 min-h-[150px] w-full md:w-[500px] rounded-t-none rounded-r-none" style="display: none;"></div>
+            <div id="pref_pane" class="z-50 fixed top-15 right-15 min-w-[350px]" style="display: none;"></div>
           [% END %]
         </div>
       </header>
