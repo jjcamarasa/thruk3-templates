@@ -4651,11 +4651,11 @@ DIV.accordion>DIV.active {
   display: block
 }
 
-TABLE {
+/*TABLE {
   width: 100%;
   table-layout: auto;
   border-collapse: collapse
-}
+}*/
 
 TABLE.cellborder>TBODY>TR>TD, TABLE.cellborder>TBODY>TR>TH {
   border-color: var(--border);
@@ -9447,4 +9447,51 @@ Card table
 
 li.nav-item.dropdown:hover div.dropdown-menu {
   display: block;
+}
+
+.fst-italic {
+  font-style: italic !important;
+}
+
+.text-start {
+  text-align: left !important;
+}
+
+.text-end {
+  text-align: right !important;
+}
+
+.row-cols-auto > * {
+  flex: 0 0 auto;
+  width: auto;
+}
+
+.row-cols-1 > * {
+  flex: 0 0 auto;
+  width: 100%;
+}
+
+.row-cols-2 > * {
+  flex: 0 0 auto;
+  width: 50%;
+}
+
+.row-cols-3 > * {
+  flex: 0 0 auto;
+  width: 33.3333333333%;
+}
+
+.row-cols-4 > * {
+  flex: 0 0 auto;
+  width: 25%;
+}
+
+.row-cols-5 > * {
+  flex: 0 0 auto;
+  width: 20%;
+}
+
+.row-cols-6 > * {
+  flex: 0 0 auto;
+  width: 16.6666666667%;
 }
