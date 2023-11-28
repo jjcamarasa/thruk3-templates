@@ -1201,7 +1201,12 @@ select {
   --tblr-spacer-7: 5rem;
   --tblr-spacer-8: 8rem;
   --tblr-spacer: 1rem;
+  --tblr-code-color: var(--tblr-gray-600);
+  --tblr-highlight-bg: #fdeccc;
+  --tblr-border-width: 1px;
+  --tblr-border-style: solid;
   --tblr-border-color: #dadfe5;
+  --tblr-border-color-translucent: rgba(4, 32, 69, 0.14);
   --tblr-page-padding: var(--tblr-spacer-3);
   --tblr-page-padding-y: var(--tblr-spacer-4);
   --tblr-font-weight-light: 300;
@@ -8941,6 +8946,10 @@ form-check {
 
 .border-tabler {
   border-color: #0054a6 !important;
+}
+
+.border-muted {
+  border-color: #667382 !important;
 }
 
 .bg-white {
