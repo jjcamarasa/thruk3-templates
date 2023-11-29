@@ -2,61 +2,62 @@
 [% PROCESS _header.tt %]
 [% PROCESS _message.tt %]
 [% PROCESS _sounds.tt %]
+[% PROCESS _blocks.tt %]
 [% authorized_for_read_only = 0 %][% IF c.check_user_roles('authorized_for_read_only') %][% authorized_for_read_only = 1 %][% END %]
 
 [% PROCESS _status_cmd_pane.tt %]
 [% UNLESS minimal %]
 
   [% WRAPPER _status_totals_header.tt %]
-    <div class="card overflow-hidden">
-      <div class="actionbox less-padding">
         [% IF hostgroup %]
-        <div><a href="status.cgi?hostgroup=all&amp;style=detail">View Service Status Detail For All Host Groups</a></div>
-        <div><a href="status.cgi?hostgroup=[% hostgroup | uri %]&amp;style=hostdetail">View Host Status Detail For This Host Group</a></div>
-        <div><a href="status.cgi?hostgroup=[% hostgroup | uri %]&amp;style=overview">View Status Overview For This Host Group</a></div>
-        <div><a href="status.cgi?hostgroup=[% hostgroup | uri %]&amp;style=summary">View Status Summary For This Host Group</a></div>
-        <div><a href="status.cgi?hostgroup=[% hostgroup | uri %]&amp;style=grid">View Status Grid For This Host Group</a></div>
+        <a class="dropdown-item" href="status.cgi?hostgroup=all&amp;style=detail">View Service Status Detail For All Host Groups</a>
+        <a class="dropdown-item" href="status.cgi?hostgroup=[% hostgroup | uri %]&amp;style=hostdetail">View Host Status Detail For This Host Group</a>
+        <a class="dropdown-item" href="status.cgi?hostgroup=[% hostgroup | uri %]&amp;style=overview">View Status Overview For This Host Group</a>
+        <a class="dropdown-item" href="status.cgi?hostgroup=[% hostgroup | uri %]&amp;style=summary">View Status Summary For This Host Group</a>
+        <a class="dropdown-item" href="status.cgi?hostgroup=[% hostgroup | uri %]&amp;style=grid">View Status Grid For This Host Group</a>
         [% ELSIF servicegroup %]
-        <div><a href="status.cgi?servicegroup=[% servicegroup | uri %]&amp;style=overview">View Status Overview For This Service Group</a></div>
-        <div><a href="status.cgi?servicegroup=[% servicegroup | uri %]&amp;style=summary">View Status Summary For This Service Group</a></div>
-        <div><a href="status.cgi?servicegroup=[% servicegroup | uri %]&amp;style=grid">View Service Status Grid For This Service Group</a></div>
-        <div><a href="status.cgi?servicegroup=all&amp;style=detail">View Service Status Detail For All Service Groups</a></div>
+        <a class="dropdown-item" href="status.cgi?servicegroup=[% servicegroup | uri %]&amp;style=overview">View Status Overview For This Service Group</a>
+        <a class="dropdown-item" href="status.cgi?servicegroup=[% servicegroup | uri %]&amp;style=summary">View Status Summary For This Service Group</a>
+        <a class="dropdown-item" href="status.cgi?servicegroup=[% servicegroup | uri %]&amp;style=grid">View Service Status Grid For This Service Group</a>
+        <a class="dropdown-item" href="status.cgi?servicegroup=all&amp;style=detail">View Service Status Detail For All Service Groups</a>
         [% ELSIF host == 'all' %]
-        <div><a href="history.cgi?host=all&amp;nosystem=1">View History For all hosts</a></div>
-        <div><a href="notifications.cgi?host=all">View Notifications For All Hosts</a></div>
-        <div><a href="status.cgi?hostgroup=all&amp;style=hostdetail">View Host Status Detail For All Hosts</a></div>
+        <a class="dropdown-item" href="history.cgi?host=all&amp;nosystem=1">View History For all hosts</a>
+        <a class="dropdown-item" href="notifications.cgi?host=all">View Notifications For All Hosts</a>
+        <a class="dropdown-item" href="status.cgi?hostgroup=all&amp;style=hostdetail">View Host Status Detail For All Hosts</a>
         [% ELSIF host != '' %]
-        <div><a href="history.cgi?host=[% host | uri %]&amp;nosystem=1">View History For This Host</a></div>
-        <div><a href="notifications.cgi?host=[% host | uri %]">View Notifications For This Host</a></div>
-        <div><a href="status.cgi?host=all">View Service Status Detail For All Hosts</a></div>
+        <a class="dropdown-item" href="history.cgi?host=[% host | uri %]&amp;nosystem=1">View History For This Host</a>
+        <a class="dropdown-item" href="notifications.cgi?host=[% host | uri %]">View Notifications For This Host</a>
+        <a class="dropdown-item" href="status.cgi?host=all">View Service Status Detail For All Hosts</a>
         [% ELSE %]
-        <div><a href="status.cgi?hostgroup=all&amp;style=detail">View Service Status Detail For All Host Groups</a></div>
-        <div><a href="status.cgi?hostgroup=all&amp;style=overview">View Status Overview For All Host Groups</a></div>
-        <div><a href="status.cgi?hostgroup=all&amp;style=summary">View Status Summary For All Host Groups</a></div>
-        <div><a href="status.cgi?hostgroup=all&amp;style=grid">View Status Grid For All Host Groups</a></div>
+          [% INCLUDE view_all_hg_02 %]
+          [% INCLUDE view_all_hg %]
         [% END %]
-      </div>
-    </div>
   [% END %]
 
   <div class="flex flex-row mt-2">
-    <div class="basis-1/3">
-
-    </div>
-    <div class="basis-1/3">
-      <h1>
-        [% IF custom_title != '' %][% custom_title %]
-        [% ELSIF hostgroup != '' %]Service Status Details For Host Group '[% hostgroup | html %]'
-        [% ELSIF servicegroup %] Service Status Details For Service Group '[% servicegroup | html %]'
-        [% ELSIF host == 'all' %]Service Status Details For All Hosts
-        [% ELSIF host != '' %]Service Status Details For Host '[% host | html %]'
-        [% ELSE %]Service Status Details
+        [% IF custom_title != '' %]
+          [% infoBoxPreTitle = custom_title %]
+        [% ELSIF hostgroup != '' %]
+          [% infoBoxPreTitle = "Service Status Details For Host Group '$hostgroup'" %]
+        [% ELSIF servicegroup %] 
+          [% infoBoxPreTitle = "Service Status Details For Service Group '$servicegroup'" %]
+        [% ELSIF host == 'all' %]
+          [% infoBoxPreTitle = "Service Status Details For All Hosts" %]
+        [% ELSIF host != '' %]
+          [% infoBoxPreTitle = "Service Status Details For Host '$host'" %]
+        [% ELSE %]
+          [% infoBoxPreTitle = "Service Status Details" %]
         [% END %]
-      </h1>
-    </div>
-    <div class="basis-1/3 flex justify-end">
-      [% PROCESS _customvar_box.tt %]
-    </div>
+
+  </div>
+
+ [% IF data.size == 0 %]
+  [% ibpt = infoBoxPreTitle %]
+  [% infoBoxPreTitle = "$infoBoxPreTitle <span class='text-sm'><i class='ti ti-chevrons-right text-sm'></i>&nbsp;No Items to Display</span>" %]
+ [% END %]
+  <div class="p-3">
+    [% PROCESS _infobox.tt %]
+    [% PROCESS _customvar_box.tt %]
   </div>
 
   <div class="flexrow sm:flex-nowrap my-2 gap-y-1">
@@ -100,7 +101,7 @@
   </div>
 [% END %]
 
-<div class="card w-full min-w-[420px]">
+<div class="card w-full">
   <div class="mainTableHeader">
     <div>
       <div class="flex flex-nowrap items-center">

@@ -216,3 +216,18 @@
   </button>
   [% UNLESS btn.defined('skipform') && btn.skipform %]</form>[% END %]
 [% END %]
+
+[% BLOCK view_all_hg %]
+ <a class="dropdown-item" href="status.cgi?hostgroup=all&amp;style=detail">View Service Status Detail For All Host Groups</a>
+ <a class="dropdown-item" href="status.cgi?hostgroup=all&amp;style=summary">View Status Summary For All Host Groups</a>
+ <a class="dropdown-item" href="status.cgi?hostgroup=all&amp;style=grid">View Status Grid For All Host Groups</a>
+[% END %]
+
+[% BLOCK view_all_hg_02 %]
+ <a class="dropdown-item" href="status.cgi?hostgroup=all&amp;style=overview">View Status Overview For All Host Groups</a>
+[% END %]
+
+[% BLOCK view_all_hg_01 %]
+ <a class="dropdown-item" href="status.cgi?hostgroup=all&amp;style=hostdetail">View Host Status Detail For All Host Groups</a>
+[% END %]
+

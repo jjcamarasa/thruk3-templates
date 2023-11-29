@@ -7,8 +7,8 @@
     </a>
   </header>
 
-  <div class="navsectionlinks sticky scrollauto overflow-x-hidden overflow-y-auto grow">
-    <ul class="p-0 pt-0">
+  <div class="navsectionlinks sticky scrollauto overflow-x-hidden overflow-y-auto grow">  
+    <ul class="navbar-menu">
       [% FOREACH section = navigation %]
       [% cookie_section_name = section.name.replace(' ', '_') | lower %]
         <li>
@@ -73,17 +73,14 @@
       [% END %]
     </ul>
   </div>
-
-  <div class="h-8 flex-shrink-0 mt-auto w-full m-0 hidden lg:block collapse-btn">
-    <div class="flexrow flex-nowrap gap-0">
-      <button class="iconOnly w-full py-0 px-1.5 pl-[15px] m-0 h-8 block text-down hoverable js-menu-collapse" title="toggle collapsed side navigation.">
-        <i class="ti ti-arrow-badge-left text-sm contents" title="collapse navigation"></i>
+  
+  <div class="flex mt-auto w-full mb-0 collapse-btn">        
+      <button class="iconOnly w-full py-0 px-1.5 pl-[15px] m-0 block text-down hoverable js-menu-collapse" title="toggle collapsed side navigation.">
+        <i class="ti ti-arrow-badge-left contents" title="collapse navigation"></i>
       </button>
-      <button class="iconOnly w-full py-0 px-1.5 pl-[15px] m-0 h-8 block hoverable btn-nav-hide js-menu-hide" title="toggle hover side navigation.">
-        <i class="ti ti-arrow-badge-up text-sm contents" title="hide navigation"></i>
+      <button class="iconOnly w-full py-0 px-1.5 pl-[15px] m-0 block hoverable btn-nav-hide js-menu-hide" title="toggle hover side navigation.">
+        <i class="ti ti-arrow-badge-up contents" title="hide navigation"></i>
       </button>
-    </div>
   </div>
 </div>
-
 [% PROCESS _ajax_search.tt %]

@@ -41,7 +41,7 @@ color: var(--badge-[% state %]-[% colorbg %]);
 <div class="card h-full">
   <div class="card-header text-xl">
     <div class="text-xl font-bold">	
-	  <span class="ti ti-settings-cog text-2xl"></span>&nbsp;[% host_stats.total %]&nbsp;Hosts
+	  <span class="ti ti-device-desktop text-2xl"></span>&nbsp;[% host_stats.total %]&nbsp;Hosts
 	  <span class="text-sm text-muted mx-2">
         <a href='[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hostprops => 131072 }) %]'>
           <i class="ti ti-corner-left-up"></i>[% host_stats.total_active %] active

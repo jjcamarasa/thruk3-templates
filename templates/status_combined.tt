@@ -11,16 +11,17 @@
 [% infoBoxPreTitle = custom_title %]
 
 [% BLOCK toolbar_tbl %]
-        <div class="btn-group">
-        [% PROCESS _add_bookmark.tt style='combined' %]
-        [% PROCESS _show_link.tt    style='combined' %]
-        [% hostcolumns=[ 'Hostname', 'Displayname:0', 'IP', 'Status', 'Alias:0', 'Parents:0', 'Groups:0', 'Acknowledged', 'Downtime', 'Notifications', 'Active Checks', 'Flapping', 'Last Check', 'Duration', 'Status Information', 'Extra Status Information' ] %]
-        [% servicecolumns=[ 'Hostname', 'Hostdisplayname:0', 'IP', 'Host Alias:0', 'Host Parents:0', 'Host Groups:0', 'Host Acknowledged', 'Host Downtime', 'Host Notifications', 'Host Active Checks', 'Host Flapping', 'Service', 'Displayname:0', 'Status', 'Last Check', 'Duration', 'Attempt', 'Acknowledged', 'Downtime', 'Notifications', 'Active Checks', 'Flapping', 'Status Information', 'Extra Status Information' ] %]
-        [% IF show_backends_in_table != 0 %][% hostcolumns.push('Site'); servicecolumns.push('Site') %][% END %]
-        [% PROCESS _excel_export.tt hostcolumns=hostcolumns servicecolumns=servicecolumns columns='' with_custom_vars=1 %]
-        [% PROCESS _json_export.tt %]
-        </div>
+ <div class="btn-group">
+  [% PROCESS _add_bookmark.tt style='combined' %]
+  [% PROCESS _show_link.tt    style='combined' %]
+  [% hostcolumns=[ 'Hostname', 'Displayname:0', 'IP', 'Status', 'Alias:0', 'Parents:0', 'Groups:0', 'Acknowledged', 'Downtime', 'Notifications', 'Active Checks', 'Flapping', 'Last Check', 'Duration', 'Status Information', 'Extra Status Information' ] %]
+  [% servicecolumns=[ 'Hostname', 'Hostdisplayname:0', 'IP', 'Host Alias:0', 'Host Parents:0', 'Host Groups:0', 'Host Acknowledged', 'Host Downtime', 'Host Notifications', 'Host Active Checks', 'Host Flapping', 'Service', 'Displayname:0', 'Status', 'Last Check', 'Duration', 'Attempt', 'Acknowledged', 'Downtime', 'Notifications', 'Active Checks', 'Flapping', 'Status Information', 'Extra Status Information' ] %]
+  [% IF show_backends_in_table != 0 %][% hostcolumns.push('Site'); servicecolumns.push('Site') %][% END %]
+  [% PROCESS _excel_export.tt hostcolumns=hostcolumns servicecolumns=servicecolumns columns='' with_custom_vars=1 %]
+  [% PROCESS _json_export.tt %]
+</div>
 [% END %]
+
 [% BLOCK no_hosts %]
 <div class="text-muted text-xl m-2">
   <span class="ti ti-device-desktop"></span>&nbsp;No hosts with unhandled problems.
@@ -36,16 +37,9 @@
   [% infoBoxPreTitle = "$infoBoxPreTitle <span class='text-success text-sm'><i class='ti ti-chevrons-right text-sm'></i>&nbsp;No Unhandled Problems</span>" %]
 [% END %]
 
+ [% PROCESS _infobox.tt %]
 
-<div class="grid grid-cols-1">
-  [% PROCESS _infobox.tt %]
-</div>
-
-<div class="mb-5"[% IF hidetop == 1 %] style="visibility:hidden; display:none;"[% END %]>
-  [% PROCESS _infobox.tt %]
-</div>
-
-<form action="status.cgi" method="GET" id="[% paneprefix %]filterForm" onsubmit="return(remove_empty_form_params(this))">
+<form class="p-2" action="status.cgi" method="GET" id="[% paneprefix %]filterForm" onsubmit="return(remove_empty_form_params(this))">
   [%# make sure IE can submit form by pressing enter #%]
   <input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;"/>
   <input type="hidden" name="style" value="[% style | html %]">
@@ -185,8 +179,6 @@
 [% ELSE %]
 [% INCLUDE no_svcs %]
 [% END %] <!-- Table svcs -->
-  
-  
 </form>
 
 [% UNLESS authorized_for_read_only %]

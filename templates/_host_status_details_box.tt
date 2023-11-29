@@ -1,0 +1,54 @@
+﻿<table class="table p-0 m-0 border-1">
+<tr>
+<th class="bg-dark-lt"><i class="ti ti-server"></i>&nbsp;Host Status Totals</th>
+  <td class="bg-white">
+  [% IF !has_error && host_stats.up + host_stats.down + host_stats.unreachable + host_stats.pending %]
+	[% host_stats.up + host_stats.down + host_stats.unreachable + host_stats.pending %]
+  [% ELSE %]
+  0
+  [% END %]
+  &nbsp;hosts
+  </td>
+  
+  [% IF !has_error && host_stats.down + host_stats.unreachable > 0 %]
+  <td class="bg-warning-lt">
+	<a href='[% uri_with(c, page => 'undef', hoststatustypes => 12) %]'>
+	[% host_stats.down + host_stats.unreachable %]&nbsp;problem[% IF host_stats.down + host_stats.unreachable > 1 %]s[% END %]
+	</a>
+  </td>
+  [% END %]
+  
+  [% IF !has_error && host_stats.up %]
+  <td class='bg-success-lt'>
+	<a href="[% uri_with(c, page => 'undef', hoststatustypes => 2) %]">
+	  [% host_stats.up %]&nbsp;up
+	</a>
+  </td>
+  [% END %]
+  
+  [% IF !has_error && host_stats.down %]
+  <td class='bg-dark-lt'>
+	<a href="[% uri_with(c, page => 'undef', hoststatustypes => 4) %]">
+	[% host_stats.down %]&nbsp;down
+	</a>
+  </td>
+  [% END %]
+  
+  [% IF !has_error && host_stats.unreachable %]
+  <td class="bg-purple-lt">
+	<a href='[% uri_with(c, page => 'undef', hoststatustypes => 8) %]'>
+	[% host_stats.unreachable %]&nbsp;unreach.
+	</a>
+  </td>
+  [% END %]
+  
+  [% IF !has_error && host_stats.pending %]
+  <td class='bg-muted-lt'>
+	<a href='[% uri_with(c, page => 'undef', hoststatustypes => 1) %]'>
+	[% host_stats.pending %]&nbsp;pending
+	</a>		
+  </td>
+  [% END %]
+</tr>
+</table>
+<!--</div>-->

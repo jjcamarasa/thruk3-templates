@@ -97,4 +97,4 @@
         </div>
       </header>
     [% END %]
-<main class="relative [% IF !iframed %]scrollauto[% END %] overflow-y-auto flex-grow p-2">
+<main class="relative [% IF !iframed %]scrollauto[% END %] overflow-y-auto flex-grow">

@@ -1,21 +1,17 @@
 ﻿[% infoBoxPreTitle = "System Health Summary" %]
 
-<div class="flexcol h-full">
-  <div class="flexcol">
-    [% PROCESS _infobox.tt %]
-    <div class="flexrow w-fit gap-2 flex-nowrap">
-      <div class="btn-group">
-        <div class="btn btn-sm">
-          [% PROCESS _status_filter.tt small_button = 1 %]
-        </div>
-      [% PROCESS _json_export.tt %]    
+<div class="h-full p-2">
+  [% PROCESS _infobox.tt %]  
+  <div class="row col-1 mb-2">   
+    <div class="btn-group">
+      <div class="btn btn-sm">
+        [% PROCESS _status_filter.tt small_button = 1 %]
       </div>
+      [% PROCESS _json_export.tt %]    
     </div>
   </div>
- 
- <!--<div class="flexrow gap-2">-->
-<div class="bootstrap-wrapper w-full gap-2"> 
- <div class="row">  
+  
+ <div class="row col">  
     [% PROCESS tac_panel_netoutage.tt %]  
   <div class="col">
     [% PROCESS tac_panel_hosts.tt %]
@@ -24,17 +20,13 @@
     [% PROCESS tac_panel_services.tt %]
   </div>
  </div>
-</div>
- <!--</div>-->
-
- <div class="bootstrap-wrapper mt-auto mb-0 w-full gap-2">
-  <div class="row">    
-   <div class="col-auto">
+ 
+ <div class="fixed row bottom-0">
+  <div class="col-auto">
     [% PROCESS tac_panel_monit_features.tt %]
-   </div>
-   <div class="col-auto">
-    [% PROCESS tac_panel_monitperf.tt %]
-   </div>
   </div>
- </div>
+  <div class="col-auto">
+    [% PROCESS tac_panel_monitperf.tt %]
+  </div>
+  </div>
 </div>

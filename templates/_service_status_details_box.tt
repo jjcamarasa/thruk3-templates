@@ -1,0 +1,75 @@
+﻿[% SET hoststatustypes = 15 IF ! hoststatustypes %]
+<table class="table p-0 m-0 border-1">
+  <tr>
+  [% totalProblems  = 0 %]
+    [% totalUnhandled = 0 %]
+    [% total          = 0 %]
+    [% IF !has_error %]
+    [% totalProblems  = service_stats.warning + service_stats.critical + service_stats.unknown %]
+    [% totalUnhandled = service_stats.warning_and_unhandled + service_stats.critical_and_unhandled + service_stats.unknown_and_unhandled %]
+    [% total          = service_stats.ok + totalProblems + service_stats.pending %]
+    [% END %]
+    <th class="bg-dark-lt"><i class="ti ti-settings-cog"></i>&nbsp;Service Status Totals</th>
+    <td>
+      <a href="[% uri_with(c, style => 'detail', page => 'undef', servicestatustypes => 32, hoststatustypes => hoststatustypes) %]">
+      [% total %]&nbsp;services
+      </a>
+    </td>
+    
+  [% IF !has_error && totalProblems > 0 %]
+    <td class="bg-warning-lt">
+      <a href='[% uri_with(c, style => 'detail', page => 'undef', servicestatustypes => 28, serviceprops => '', hostprops => '', hoststatustypes => '') %]'>
+        [% totalProblems %]&nbsp;problem[% IF !has_error && totalProblems > 0 %]s[% END %]
+      </a>
+    </td>
+    [% END %]
+    [% IF !has_error && totalUnhandled > 0 %]
+    <td class="bg-cyan-lt">
+      <a href='[% uri_with(c, style => 'detail', page => 'undef', servicestatustypes => 28, serviceprops => 10, hostprops => 10, hoststatustypes => 3) %]'>
+        [% totalUnhandled %]&nbsp;unhandled
+      </a>
+    </td>
+    [% END %]
+  
+  
+  [% IF !has_error && service_stats.ok %]
+    <td class="bg-success-lt">
+      <a href="[% uri_with(c, style => 'detail', page => 'undef', servicestatustypes => 2, hoststatustypes => hoststatustypes) %]">
+        [% service_stats.ok %]&nbsp;ok
+      </a>
+    </td>
+  [% END %]
+  
+  [% IF !has_error && service_stats.warning %]
+    <td class="bg-yellow-lt">
+      <a href="[% uri_with(c, style => 'detail', page => 'undef', servicestatustypes => 4, hoststatustypes => hoststatustypes) %]">
+        [% service_stats.warning %]&nbsp;warning
+      </a>
+    </td>
+    [% END %]
+    
+    [% IF !has_error && service_stats.unknown %]
+    <td class="bg-purple-lt">
+      <a href="[% uri_with(c, style => 'detail', page => 'undef', servicestatustypes => 8, hoststatustypes => hoststatustypes) %]">
+        [% service_stats.unknown %]&nbsp;unknown
+      </a>
+    </td>
+    [% END %]
+    
+  [% IF !has_error && service_stats.critical %]
+    <td class='bg-danger-lt'>
+      <a href="[% uri_with(c, style => 'detail', page => 'undef', servicestatustypes => 16,  hoststatustypes => hoststatustypes) %]">
+      [% service_stats.critical %]&nbsp;critical
+      </a>
+    </td>
+  [% END %]
+
+    [% IF !has_error && service_stats.pending %]
+      <td class='bg-muted-lt'>
+        <a href="[% uri_with(c, style => 'detail', page => 'undef', servicestatustypes => 1,   hoststatustypes => hoststatustypes) %]">
+          [% service_stats.pending %]&nbsp;pending
+        </a>
+      </td>
+    [% END %]
+  </tr>
+</table>
