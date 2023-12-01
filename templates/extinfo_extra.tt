@@ -195,7 +195,7 @@
   </div>
 
 [% IF show_contacts && c.check_user_roles('authorized_for_configuration_information') && obj.contacts.size > 0 %]
- <div class="card p-0 col-auto">
+ <div class="card p-0 col-2">
     <div class="card-header">
       <span class="card-title">
 	  [% IF obj.contacts.size > 1 %][% plural = 's' %][% ELSE %][% plural = '' %][% END %]
