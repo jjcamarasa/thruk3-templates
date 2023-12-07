@@ -1,4 +1,3 @@
-<!--<div class="flexrow gap-2 bg-warning">-->
 <div class="bootstrap-wrapper px-2">
   <div class="row gap-1">
   <div class="card p-0 col-auto">
@@ -123,7 +122,8 @@
 		</table>
 	  </div>
 	</div>
-	
+
+[% IF obj.flap_detection_enabled || obj.scheduled_downtime_depth > 0 || backends && backends.size > 1 || show_modified_attributes && obj.modified_attributes_list.size > 0 %]	
   <div class="card p-0 col-auto">
     <div class="card-header">
       <span class="card-title">
@@ -145,7 +145,8 @@
               </td>
             </tr>
             [% END %]
-            [% IF obj.scheduled_downtime_depth > 0 %]
+            
+			[% IF obj.scheduled_downtime_depth > 0 %]
             <tr>
             <td class="font-bold">Downtime</td>
             <td>
@@ -194,8 +195,10 @@
     </div>
   </div>
 
+[% END %]
+
 [% IF show_contacts && c.check_user_roles('authorized_for_configuration_information') && obj.contacts.size > 0 %]
- <div class="card p-0 col-2">
+ <div class="card p-0 col-[% IF obj.contacts.size > 6 %]2[% ELSE %]1[% END %]">
     <div class="card-header">
       <span class="card-title">
 	  [% IF obj.contacts.size > 1 %][% plural = 's' %][% ELSE %][% plural = '' %][% END %]

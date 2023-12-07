@@ -2,8 +2,8 @@
 
 <div class="h-full p-2">
   [% PROCESS _infobox.tt %]  
-  <div class="row col-1 mb-2">   
-    <div class="btn-group">
+  <div class="row mb-2">   
+    <div class="btn-group w-fit">
       <div class="btn btn-sm">
         [% PROCESS _status_filter.tt small_button = 1 %]
       </div>
@@ -19,14 +19,22 @@
   <div class="col">
     [% PROCESS tac_panel_services.tt %]
   </div>
+  <div class="col-auto">
+    <div class="col-auto">
+      [% PROCESS tac_panel_monit_features.tt %]
+    </div>
+    <div class="col-auto">
+      [% PROCESS tac_panel_monitperf.tt %]
+    </div>
+  </div>
  </div>
  
- <div class="fixed row bottom-0">
+ <!--<div class="fixed bottom-0 row">
   <div class="col-auto">
-    [% PROCESS tac_panel_monit_features.tt %]
+    [% #PROCESS tac_panel_monit_features.tt %]
   </div>
   <div class="col-auto">
-    [% PROCESS tac_panel_monitperf.tt %]
+    [% #PROCESS tac_panel_monitperf.tt %]
   </div>
-  </div>
+  </div>-->
 </div>

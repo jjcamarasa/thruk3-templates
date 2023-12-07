@@ -80,7 +80,10 @@
 			  [% IF c.user_exists %]
 				<button class="btn text-xl" title="user preferences" onClick="toggleElementRemote('pref_pane', '_header_prefs', true); return false;">
 				  <i class="ti ti-settings"></i>
-				</button>								
+				</button>
+				<a class="btn" title="Change color mode" href='#'>
+					<i class="ti ti-moon"></i>
+				</a>
 				[% IF cookie_auth && show_logout_button %]                    
                   <a class="btn hover-red text-xl" title="sign out" href="[% IF c.config.logout_link; c.config.logout_link; ELSE %][% url_prefix %]cgi-bin/login.cgi?logout[% END %]">
 					  <i class="ti ti-logout"></i>

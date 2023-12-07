@@ -1,11 +1,10 @@
 <div class="col-auto">
-    <table class="table table-sm table-striped bg-light border-1 h-full">
+    <table class="table table-sm table-striped bg-light border-1">
     <thead>
         <th class="p-2"><span class="ti ti-adjustments"></span>&nbsp;Features</th>
         <th class="p-2">Status</th>
         <th class="p-2">Services</th>
-        <th class="p-2">Hosts</th>
-      
+        <th class="p-2">Hosts</th>      
     </thead>
     <tr>
       <td class="font-bold pl-2">Active Checks</td>
@@ -208,9 +207,8 @@
             </td>
         [% END %]
     </tr>
-
     <tr>
-        <td class="font-bold pl-2">Flap Detection</td>
+        <td class="font-bold pl-2 w-fit">Flap Detection</td>
         <td class="text-center">            
         [% IF pi.keys.size == 0 || pi.enable_flap_detection == 1 %]
           [% color = "enabled" %]
@@ -232,30 +230,30 @@
             <a class="text-disabled" href='extinfo.cgi?type=0'>Feature disabled</a>
           </td>
         [% ELSE %]
-            <div class="w-1/2">
+            <td class="text-center">
             [% IF empty || service_stats.flapping_disabled == 0 %]
-              <span class="font-bold" style="color: var(--color-slate-500);">Services</span><span class="text-enabled"> All Enabled</span>
+              <span class="text-enabled"> All Enabled</span>
             [% ELSE %]
-              <a class="text-disabled" href='[% uri_with(c, { _page => "status.cgi", style => "detail", serviceprops => 512 }) %]'><span class="font-bold" style="color: var(--color-slate-500);">Services</span> [% service_stats.flapping_disabled %] Disabled</a>
+              <a class="text-disabled" href='[% uri_with(c, { _page => "status.cgi", style => "detail", serviceprops => 512 }) %]'>[% service_stats.flapping_disabled %] Disabled</a>
             [% END %]
             [% IF !empty && service_stats.flapping > 0 %]
-              <a class="text-disabled" href='[% uri_with(c, { _page => "status.cgi", style => "detail", serviceprops => 1024 }) %]'><span class="font-bold" style="color: var(--color-slate-500);">Services</span> [% service_stats.flapping %] Flapping</a>
+              <a class="text-disabled" href='[% uri_with(c, { _page => "status.cgi", style => "detail", serviceprops => 1024 }) %]'>[% service_stats.flapping %] Flapping</a>
             [% ELSE %]
-              <span class="text-enabled">(No Services Flapping)</span>
+              <br><span class="text-enabled">No Flapping</span>
             [% END %]
-            </div>
-            <div class="w-1/2">
+            </td>
+            <td class="text-center">
             [% IF empty || host_stats.flapping_disabled == 0 %]
               <span class="font-bold" style="color: var(--color-slate-500);">Hosts</span><span class="text-enabled"> All Enabled</span>
             [% ELSE %]
-              <a class="text-disabled" href='[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hostprops => 256 }) %]'><span class="font-bold" style="color: var(--color-slate-500);">Hosts</span> [% host_stats.flapping_disabled %] Disabled</a>
+              <a class="text-disabled" href='[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hostprops => 256 }) %]'>[% host_stats.flapping_disabled %] Disabled</a>
             [% END %]
             [% IF host_stats.flapping %]
-              <a class="text-disabled" href='[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hostprops => 1024 }) %]'><span class="font-bold" style="color: var(--color-slate-500);">Hosts</span> [% host_stats.flapping %] Flapping</a>
+              <a class="text-disabled" href='[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hostprops => 1024 }) %]'>[% host_stats.flapping %] Flapping</a>
             [% ELSE %]
-              <span class="text-enabled ml-2">(No Hosts Flapping)</span>
+              <br><span class="text-enabled ml-2">No Flapping</span>
             [% END %]
-            </div>
+            </td>
         [% END %]
     </tr>
     </table>
