@@ -54,14 +54,15 @@
 
           <div class="flexrow w-fit gap-2 flex-nowrap main-header-button">
             [% IF c.user_exists %]
-              <div class="flex items-center">
+              <div class="flex items-center"> 
                 <form method="GET" action="[% url_prefix %]cgi-bin/status.cgi">
-                  <fieldset>
+                  <!--<fieldset>-->
                     <input type='hidden' name='s0_op' value='~' />
                     <input type='hidden' name='s0_type' value='search' />
                     <input type='hidden' name='add_default_service_filter' value='1' />
-                    <input type='search' name='s0_value' class="deletable autosubmit headersearch js-autoexpand" id="header-search" placeholder="search..." />
-                  </fieldset>
+                    <!--<input type='search' name='s0_value' class="deletable autosubmit headersearch js-autoexpand" id="header-search" placeholder="search..." />-->
+                    <input type='search' name='s0_value' class="form-control form-control-sm autosubmit" id="header-search" placeholder="Search…" />
+                  <!--</fieldset>-->
                 </form>
               </div>
             [% END %]

@@ -92,7 +92,8 @@
           [% END %]
           <div class='border-t border-b'>
             [% start_with = 4 %]
-            <table class='status statusgroups [% paneprefix %]_table statusTable mainTable striped' [% IF has_columns %] style="visibility: hidden;"[% END %] data-base-column-length="[% start_with %]">
+            <!--<table class='status statusgroups [% paneprefix %]_table statusTable table table-sm table-hover' [% IF has_columns %] style="visibility: hidden;"[% END %] data-base-column-length="[% start_with %]">-->
+            <table class='status statusgroups [% paneprefix %]_table statusTable table table-sm table-striped' [% IF has_columns %] style="visibility: hidden;"[% END %] data-base-column-length="[% start_with %]">
               <thead>
                 <tr onmouseover="initStatusTableColumnSorting('[% paneprefix %]', 'mainTable'); jQuery('#[% paneprefix %]_btn_columns_hover').show()">
                   <th class='status col_name'>Host</th>
@@ -124,13 +125,13 @@
                       </div>
                     </td>
                     [% IF h.has_been_checked == 0 %]
-                    <td class='PENDING text-center'>PENDING</td>
+                    <td class='bg-dark-lt text-center'>PENDING</td>
                     [% ELSIF h.state == 0 %]
-                    <td class='UP text-center'>UP</td>
+                    <td class='bg-success-lt text-center'>UP</td>
                     [% ELSIF h.state == 1 %]
-                    <td class='DOWN text-center'>DOWN</td>
+                    <td class='bg-danger-lt text-center'>DOWN</td>
                     [% ELSIF h.state == 2 %]
-                    <td class='UNREACHABLE text-center'>UNREACHABLE</td>
+                    <td class='bg-cyan-lt text-center'>UNREACHABLE</td>
                     [% END %]
                     <td class="p-0">
                       [% SET total_hosts = h.ok + h.warning + h.unknown + h.critical + h.pending %]

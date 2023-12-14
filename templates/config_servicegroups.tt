@@ -2,7 +2,7 @@
    dataTitle = 'Service Groups'
 %]
 
-<table class='mainTable striped sticky-2d' id="configtable">
+<table class='table table-sm table-hover sticky-2d' id="configtable">
   <thead>
     <tr>
       <th class="!shadow-as-border-bottom"></th>

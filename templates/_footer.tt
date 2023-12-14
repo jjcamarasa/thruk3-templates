@@ -1,0 +1,11 @@
+﻿   </div><!-- class page-body -->
+  </div><!-- class page-wrapper -->
+</div> <!-- class page -->
+<footer>
+  <!-- Produced by Thruk (http://www.thruk.org). Copyright (c) 2009-present Thruk Developer Team. -->
+  [% IF ssi_footer; ssi_footer | evaltt; END %]
+</footer>
+  </div>
+  </div>
+ </body>
+</html>

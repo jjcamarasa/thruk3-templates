@@ -1,4 +1,4 @@
-﻿<table class='mainTable striped' id="downtimes_table">
+﻿<table class='table table-sm table-hover' id="downtimes_table">
   <thead title="click to sort">
     <tr>
       [% IF names %]

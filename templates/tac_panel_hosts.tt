@@ -1,46 +1,14 @@
 ﻿[%
- colorfg = "fg"
- colorbg = "bg"
-
- state2color => {
-  ok        => 'green',
-  critical  => 'red',
-  warning   => 'yellow',
-  pending   => 'gray',
-  unknown   => 'orange'
+state2color => {
+  ok    => 'success',
+  down  => 'danger',
+  unreachable   => 'warning'
 }
 %]
-[% IF theme == "Dark" %]
- [%
-  colorfg = "bg"
-  colorbg = "fg"
-  %]
-[% END %]
-
-[% BLOCK style_cardcolor %]
-  [% IF theme == "Dark" %]
-    color: var(--badge-[% state %]-[% colorfg %]); background-color: var(--color-[% state2color.$state %]-100);
-  [% ELSE %]
-    color: var(--badge-[% state %]-[% colorfg %]); background-color: var(--badge-[% state %]-[% colorbg %]);
-  [% END %]
-[% END %]
-
-[% BLOCK style_bordercolor %]
-border-color: var(--badge-[% state %]-[% colorfg %]);
-[% END %]
-[% BLOCK style_bgcolor %]
-background-color: var(--badge-[% state %]-[% colorbg %]);
-[% END %]
-[% BLOCK style_fgcolor %]
-background-color: var(--badge-[% state %]-[% colorfg %]);
-[% END %]
-[% BLOCK style_bgcolortext %]
-color: var(--badge-[% state %]-[% colorbg %]);
-[% END %]
 
 <div class="card h-full">
   <div class="card-header text-xl">
-    <div class="text-xl font-bold">	
+    <div class="text-xl font-bold">
 	  <span class="ti ti-device-desktop text-2xl"></span>&nbsp;[% host_stats.total %]&nbsp;Hosts
 	  <span class="text-sm text-muted mx-2">
         <a href='[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hostprops => 131072 }) %]'>
@@ -52,23 +20,19 @@ color: var(--badge-[% state %]-[% colorbg %]);
         </a>
         [% END %]
 	  </span>
-	
 	</div>
   </div>
-   [% state='ok' %]
-  <div class="flex-col mt-4 mb-4 mx-4">
+  [% state='ok' %]
   [% hoks = host_stats.up_and_scheduled + host_stats.up_and_disabled_active + host_stats.up_and_disabled_active + host_stats.up_and_disabled_passive %]
-  [% IF host_stats.up > 0 %]  
-  <div class="flex border mx-2" style="[% INCLUDE style_bordercolor %]">
-    <div class="flex items-center p-5" style="[% INCLUDE style_fgcolor %]">
-	<span class="ti ti-circle-check text-5xl" style="[% INCLUDE style_bgcolortext %]"></span>
+  <div class="card-body">
+  [% IF host_stats.up > 0 %]
+  <div class="flex mx-2 my-2 border border-[% state2color.$state %]">
+    <div class="flex items-center p-5 bg-[% state2color.$state %] text-[% state2color.$state %]-fg">
+	<span class="ti ti-circle-check text-5xl"></span>
     </div>
-  
-  <div class="flex-col grow p-2" style="[% INCLUDE style_cardcolor %]">
+
+  <div class="flex-col grow p-2 bg-[% state2color.$state %]-lt">
     <div class="flexrow items-end grow">
-  [%# ELSE %]
-      <!--<div class="flexrow items-center grow p-2" style="[% INCLUDE style_cardcolor %]">-->
-  [%# END %]
     <a class="text-3xl font-bold block" href='[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hoststatustypes => 2 }) %]'>
     [% host_stats.up %]&nbsp;Up
     </a>
@@ -98,7 +62,7 @@ color: var(--badge-[% state %]-[% colorbg %]);
         <span class="ti ti-heart"></span>&nbsp;[% host_health %]%
       </div>
       <div class="bar">
-        <div style="width:[% host_perc %]%; background-color: var(--badge-[% host_health_cls %]-[% colorfg %]) !important;"></div>
+        <div class="bg-[% state2color.$state %]" style="width:[% host_perc %]%;"></div>
       </div>
     </div>
     [%# IF hoks > 0 %]
@@ -122,23 +86,21 @@ color: var(--badge-[% state %]-[% colorbg %]);
     </div>
     </div>
   </div>
-    [% END %]
+  [% END %]
 
   [% IF host_stats.down > 0 %]
-  [% state = 'down' %]&nbsp;
-   <div class="flex border mx-2" style="[% INCLUDE style_bordercolor %]">
-    <div class="flex items-center p-5" style="[% INCLUDE style_fgcolor %]">
-    <i class="ti ti-circle-x text-5xl" style="[% INCLUDE style_bgcolortext %]"></i>
+  [% state = 'down' %]
+  <div class="flex mx-2 my-2 border border-[% state2color.$state %]">
+    <div class="flex items-center p-5 bg-[% state2color.$state %] text-[% state2color.$state %]-fg">
+    <i class="ti ti-circle-x text-5xl"></i>
   </div>
   [% downs = host_stats.down_and_unhandled + host_stats.down_and_scheduled + host_stats.down_and_ack + host_stats.down_and_disabled_active + host_stats.down_and_disabled_passive %]
   [% IF downs > 0 %]
     [% thisclass = "flex-col" %]
-
   [% ELSE %]
     [% thisclass = "flex items-center" %]
   [% END %]
-
-  <div class="[% thisclass %] grow p-2" style="color: var(--badge-down-[% colorfg %]); background-color: var(--badge-down-[% colorbg %]); ">
+  <div class="[% thisclass %] grow p-2 bg-[% state2color.$state %]-lt">
     <a class="text-3xl font-bold block mt-2" href='[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hoststatustypes => 4 }) %]'>
     [% host_stats.down %]&nbsp;Down</a>
 
@@ -180,9 +142,9 @@ color: var(--badge-[% state %]-[% colorbg %]);
 
   [% IF host_stats.unreachable > 0 %]
   [% state = 'unreachable' %]
-   <div class="flex border mx-2" style="[% INCLUDE style_bordercolor %]">
-    <div class="flex items-center p-5" style="[% INCLUDE style_fgcolor %]">
-    <i class="ti ti-unlink text-5xl" style="[% INCLUDE style_bgcolortext %]"></i>
+   <div class="flex mx-2 my-2 border border-[% state2color.$state %]">
+    <div class="flex items-center p-5 bg-[% state2color.$state %] text-[% state2color.$state %]-fg">
+    <i class="ti ti-unlink text-5xl"></i>
   </div>
   [% unreach =  host_stats.unreachable_and_unhandled + host_stats.unreachable_and_scheduled + host_stats.unreachable_and_ack + host_stats.unreachable_and_disabled_active + host_stats.unreachable_and_disabled_passive %]
   [% IF unreach > 0 %]
@@ -191,7 +153,7 @@ color: var(--badge-[% state %]-[% colorbg %]);
     [% thisclass = "flex items-center" %]
   [% END %]
 
-  <div class="[% thisclass %] grow p-2" style="color: var(--badge-unreachable-[% colorfg %]); background-color: var(--badge-unreachable-[% colorbg %]); ">
+  <div class="[% thisclass %] grow p-2 bg-[% state2color.$state %]-lt">
     <a title="[% host_stats.unreachable %]&nbsp;Unreachable" class="text-3xl font-bold block mt-2" href='[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hoststatustypes => 8 }) %]'>
     [% host_stats.unreachable %]&nbsp;Unreachable
     </a>
@@ -230,19 +192,19 @@ color: var(--badge-[% state %]-[% colorbg %]);
 
   [% IF host_stats.pending > 0 %]
   [% state = 'pending' %]
-   <div class="flex border mx-2" style="[% INCLUDE style_bordercolor %]">
-    <div class="flex items-center p-5" style="[% INCLUDE style_fgcolor %]">
-      <i class="ti ti-hourglass text-5xl" style="[% INCLUDE style_bgcolortext %]"></i>
+   <div class="flex mx-2 my-2 border border-[% state2color.$state %]">
+    <div class="flex items-center p-5 bg-[% state2color.$state %] text-[% state2color.$state %]-fg">
+      <i class="ti ti-hourglass text-5xl"></i>
     </div>
     [% pend = host_stats.pending_and_scheduled + host_stats.pending_and_disabled %]
       [% IF pend > 0 %]
-        [% thisclass = "flex-col" %]&nbsp;   
+        [% thisclass = "flex-col" %]&nbsp;
       [% ELSE %]
         [% thisclass = "flex items-center" %]
       [% END %]
 
-  <div class="[% thisclass %] grow p-2" style="color: var(--badge-pending-[% colorfg %]); background-color: var(--badge-pending-[% colorbg %]); ">
-    <a title="[% host_stats.pending   %]&nbsp;Pending" class="text-3xl font-bold block mt-2" href='[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hoststatustypes => 1 }) %]'>
+  <div class="[% thisclass %] grow p-2 bg-[% state2color.$state %]-lt">
+    <a title="[% host_stats.pending %]&nbsp;Pending" class="text-3xl font-bold block mt-2" href='[% uri_with(c, { _page => "status.cgi", style => "hostdetail", hoststatustypes => 1 }) %]'>
     [% host_stats.pending %]&nbsp;Pending
     </a>
     [% IF !empty && host_stats.pending_and_scheduled > 0 %]

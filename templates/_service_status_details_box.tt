@@ -1,5 +1,5 @@
 ﻿[% SET hoststatustypes = 15 IF ! hoststatustypes %]
-<table class="table p-0 m-0 border-1">
+<table class="table border">
   <tr>
   [% totalProblems  = 0 %]
     [% totalUnhandled = 0 %]

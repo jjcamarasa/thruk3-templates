@@ -30,7 +30,7 @@
   </div>
 
   <div class="mainTable [% IF main_table_full %]fullsize[% END %]">
-    <table class="mainTable striped">
+    <table class="table table-sm table-hover">
       <thead title="click to sort">
         <tr>
           <th>

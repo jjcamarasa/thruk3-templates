@@ -1,0 +1,35 @@
+[% BLOCK panel_icono %]
+<div class="bg-white border border-gray-200">
+<a class="max-w-sm" href="[% panel_link %]">
+<div class="text-center p-2">      
+ <h2 class="text-slate-400 text-xl uppercase font-bold">
+  [% panel_title %]
+  </h2>
+</div>
+
+<div class="flex items-center relative">
+ <div class="border-t border-gray-200 z-20 w-full"></div>
+ <div class="absolute z-30 ml-5 inline-block bg-white"> 
+  <span class="text-slate-500">
+  <div class="h-8 w-8 fill-slate-500">
+   <i class="fa fa-[% panel_icon %] fa-2xl"></i>
+  </span>
+ </div>
+ </div>
+</div>
+
+ <div class="p-5 text-3xl text-center" style='font-weight:bold;'>
+  [% panel_info %]
+ </div>
+</a>
+</div>
+[% END %]
+
+[% BLOCK tabrow %]
+<tr>
+[% FOREACH item IN tdlist %]
+  <td>[% item %]<td>
+[% END %]
+</tr>
+[% END %]
+

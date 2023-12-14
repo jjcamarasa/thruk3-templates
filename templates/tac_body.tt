@@ -20,21 +20,12 @@
     [% PROCESS tac_panel_services.tt %]
   </div>
   <div class="col-auto">
-    <div class="col-auto">
+    <div class="col-auto card mb-2">
       [% PROCESS tac_panel_monit_features.tt %]
     </div>
-    <div class="col-auto">
+    <div class="col-auto card mt-2">
       [% PROCESS tac_panel_monitperf.tt %]
     </div>
   </div>
  </div>
- 
- <!--<div class="fixed bottom-0 row">
-  <div class="col-auto">
-    [% #PROCESS tac_panel_monit_features.tt %]
-  </div>
-  <div class="col-auto">
-    [% #PROCESS tac_panel_monitperf.tt %]
-  </div>
-  </div>-->
 </div>

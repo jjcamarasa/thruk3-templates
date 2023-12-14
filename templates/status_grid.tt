@@ -80,7 +80,7 @@
               [% END %]
           </div>
           <div class="border-t">
-            <table class="status statusgroups [% paneprefix %]_table statusTable mainTable striped">
+            <table class="status statusgroups [% paneprefix %]_table statusTable table table-sm table-hover">
               <thead>
                 <tr onmouseover="initStatusTableColumnSorting('[% paneprefix %]', 'mainTable'); jQuery('#[% paneprefix %]_btn_columns_hover').show()">
                   <th class='status col_name'>Host</th>

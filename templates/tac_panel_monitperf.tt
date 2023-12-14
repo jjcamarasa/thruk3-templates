@@ -1,4 +1,4 @@
-﻿<table class="table table-sm bg-light border-1">
+﻿<table class="table table-sm table-striped table-card">
  <thead>
   <tr>
 	<th class="p-2" colspan=4 ><span class="ti ti-gauge"></span>&nbsp;Performance</th>

@@ -1,0 +1,29 @@
+[% IF !empty && host_stats.outages > 0 %]
+[% thisValue = 'red-lt' %]
+[% ELSE %]
+[% thisValue = 'lime-lt' %]
+[% END %]
+<div class="relative flex flex-col min-w-0 rounded break-words border bg-white border-1 border-gray-300 card-sm">
+    <div class="flex-auto p-6">
+        <div class="flex flex-wrap  items-center">
+        <div class="col-auto">
+            <span class="bg-[% thisValue %] text-white avatar">
+            <i class="fas fa-network-wired"></i>
+            </span>
+        </div>
+        <div class="relative flex-grow max-w-full flex-1 px-4">
+            <div class="fw-bold">
+            [% IF host_stats.outages == 0 %]
+            Sin
+            [% ELSE %]
+            [% host_stats.outages %]
+            [% END %]
+            interrupciones de servicio
+            </div>
+            <div class="text-gray-700 fst-italic">
+            [% host_stats.outages %] caidas detectadas
+            </div>
+        </div>
+        </div>
+    </div>
+</div>

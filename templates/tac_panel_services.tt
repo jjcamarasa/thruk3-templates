@@ -1,42 +1,12 @@
 ﻿[%
- colorfg = "fg"
- colorbg = "bg" 
-
- state2color => { 
-  ok        => 'green', 
-  critical  => 'red',
+ state2color => {
+  ok        => 'success',
+  critical  => 'danger',
   warning   => 'yellow',
   pending   => 'gray',
-  unknown   => 'orange'
+  unknown   => 'purple'
 }
 %]
-[% IF theme == "Dark" %]
- [% 
-  colorfg = "bg"
-  colorbg = "fg"
-  %]
-[% END %]
-
-[% BLOCK style_cardcolor %]
-  [% IF theme == "Dark" %]
-    color: var(--badge-[% state %]-[% colorfg %]); background-color: var(--color-[% state2color.$state %]-100);
-  [% ELSE %]
-    color: var(--badge-[% state %]-[% colorfg %]); background-color: var(--badge-[% state %]-[% colorbg %]);
-  [% END %]
-[% END %]
-
-[% BLOCK style_bordercolor %]
- border-color: var(--badge-[% state %]-[% colorfg %]);
-[% END %]
-[% BLOCK style_bgcolor %]
-  background-color: var(--badge-[% state %]-[% colorbg %]);
-  [% END %]
-[% BLOCK style_fgcolor %]
-  background-color: var(--badge-[% state %]-[% colorfg %]);
-[% END %]
-[% BLOCK style_bgcolortext %]
- color: var(--badge-[% state %]-[% colorbg %]);
-[% END %]
 
 <div class="card h-full">
   <div class="card-header">
@@ -52,23 +22,19 @@
         </a>
         [% END %]
 	  </span>
-</div>
+    </div>
   </div>
   [% state='ok' %]
-  <div class="flexcol mt-4 mb-4 mx-4">    
-    <div class="flex border mx-2" style="[% INCLUDE style_bordercolor %]">
-      <div class="flex items-center p-5" style="[% INCLUDE style_fgcolor %]">
-        <span class="ti ti-circle-check text-5xl" style="[% INCLUDE style_bgcolortext %]"></span>
+  <div class="card-body">
+    <div class="flex mx-2 my-2 border border-[% state2color.$state %]">
+      <div class="flex items-center p-5 bg-[% state2color.$state %] text-[% state2color.$state %]-fg">
+        <span class="ti ti-circle-check text-5xl"></span>
       </div>
-      [% oks = service_stats.ok_and_disabled_active + service_stats.ok_and_disabled_passive %]
-      [% IF oks > 0 %]
-      <div class="flex-col grow p-2" style="[% INCLUDE style_cardcolor %]">
-        <div class="flexrow items-end grow">
-          [% ELSE %]
-          <div class="flexrow items-center grow p-2 font-bold" style="[% INCLUDE style_cardcolor %]">
-      [% END %]
+      [% oks = service_stats.ok_and_disabled_active + service_stats.ok_and_disabled_passive %]      
+      <div class="flex-col grow p-2 bg-[% state2color.$state %]-lt">
+        <div class="flexrow items-end grow">                
           <a class="text-3xl font-bold block" href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 2 })  %]'>
-          [% service_stats.ok %]&nbsp;OK
+          [% service_stats.ok %]&nbsp;Ok
           </a>
           <!-- PROGRESS BAR -->
           <div class="progressbar w-1/3 grow pt-3 pr-3">
@@ -80,7 +46,7 @@
 
             [% service_health = sprintf('%i', service_health) %]
             [% service_perc   = service_health %]
-          
+
           [% IF service_health >= 90 %]
             [% service_health_cls = 'ok' %]
           [% ELSIF service_health >= 75 %]
@@ -98,42 +64,39 @@
             <span class="ti ti-heart"></span>&nbsp;[% service_health %]%
           </div>
             <div class="bar">
-              <div style="width:[% service_perc %]%; background-color: var(--badge-[% service_health_cls %]-[% colorfg %]) !important;"></div>
+              <div class="bg-[% state2color.$state %]" style="width:[% service_perc %]%;"></div>
             </div>
-          </div>
-          [% IF oks > 0 %]
+          </div>          
         </div>
 
-          <div class="block">
-              [% IF !empty && service_stats.ok_and_scheduled > 0 %]
-                <a class="block" href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 2, serviceprops => 1 }) %]' title="[% service_stats.ok_and_scheduled %]&nbsp;Scheduled">
-                  <span class="ti ti-calendar"></span>[% service_stats.ok_and_scheduled %]
-                </a>
-                [% END %]
-              [% IF strict_passive_mode %]
-                [% IF !empty && service_stats.ok_and_disabled_active > 0  %]
-                <a class="block" href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 2, serviceprops => 131088 }) %]' title="[% service_stats.ok_and_disabled_active %]&nbsp;Disabled">
-                  <span class="ti ti-circle-x"></span>[% service_stats.ok_and_disabled_active %]
-                </a>
-                [% END %]
-              [% ELSE %]
-                [% IF !empty && service_stats.ok_and_disabled_active + service_stats.ok_and_disabled_passive > 0  %]
-                <a class="block" href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 2, serviceprops => 16 }) %]' title="[% service_stats.ok_and_disabled_active + service_stats.ok_and_disabled_passive %]&nbsp;Disabled">
-                  <span class="ti ti-circle-x"></span>[% service_stats.ok_and_disabled_active + service_stats.ok_and_disabled_passive %]
-                </a>
-                [% END %]
-              [% END %]
-          </div>
-          [% END %]
-
+		<div class="block">
+			[% IF !empty && service_stats.ok_and_scheduled > 0 %]
+			  <a class="block" href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 2, serviceprops => 1 }) %]' title="[% service_stats.ok_and_scheduled %]&nbsp;Scheduled">
+				<span class="ti ti-calendar"></span>[% service_stats.ok_and_scheduled %]
+			  </a>
+			[% END %]
+			[% IF strict_passive_mode %]
+			  [% IF !empty && service_stats.ok_and_disabled_active > 0  %]
+			  <a class="block" href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 2, serviceprops => 131088 }) %]' title="[% service_stats.ok_and_disabled_active %]&nbsp;Disabled">
+				<span class="ti ti-circle-x"></span>[% service_stats.ok_and_disabled_active %]
+			  </a>
+			  [% END %]
+			[% ELSE %]
+			  [% IF !empty && service_stats.ok_and_disabled_active + service_stats.ok_and_disabled_passive > 0  %]
+			  <a class="block" href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 2, serviceprops => 16 }) %]' title="[% service_stats.ok_and_disabled_active + service_stats.ok_and_disabled_passive %]&nbsp;Disabled">
+				<span class="ti ti-circle-x"></span>[% service_stats.ok_and_disabled_active + service_stats.ok_and_disabled_passive %]
+			  </a>
+			  [% END %]
+			[% END %]
+		</div>
       </div>
     </div>
 
     [% IF service_stats.critical > 0 %]
     [% state = 'critical' %]
-    <div class="flex border mx-2" style="[% INCLUDE style_bordercolor state='critical' %]">
-      <div class="flex items-center p-5" style="[% INCLUDE style_fgcolor %]">
-        <span class="ti ti-alert-triangle text-5xl" style="[% INCLUDE style_bgcolortext %]"></span>
+    <div class="flex mx-2 my-2 border border-[% state2color.$state %]">
+      <div class="flex items-center p-5 bg-[% state2color.$state %] text-[% state2color.$state %]-fg">
+        <span class="ti ti-alert-triangle text-5xl"></span>
       </div>
 
       [% crits = service_stats.critical_and_unhandled + service_stats.critical_on_down_host + service_stats.critical_and_scheduled + service_stats.critical_and_ack %]
@@ -143,11 +106,11 @@
         [% thisclass = "flex items-center" %]
       [% END %]
 
-      <div class="[% thisclass %] grow p-2" style="[% INCLUDE style_cardcolor %]">
+      <div class="[% thisclass %] grow p-2 bg-[% state2color.$state %]-lt">
         <a class="text-3xl block mt-2 font-bold" href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 16 }) %]'>
           [% service_stats.critical %]&nbsp;Critical
         </a>
-        
+
         [% IF crits > 0 %]
         <div class="block">
         [% IF !empty && service_stats.critical_and_unhandled > 0 %]
@@ -196,9 +159,9 @@
 
     [% IF service_stats.warning > 0 %]
     [% state = 'warning' %]
-    <div class="flex border mx-2" style="[% INCLUDE style_bordercolor state='warning' %]">
-      <div class="flex items-center p-5" style="[% INCLUDE style_fgcolor %]">
-        <span class="ti ti-alert-circle text-5xl" style="color: var(--badge-warning-[% colorbg %]);"></span>
+    <div class="flex mx-2 my-2 border border-[% state2color.$state %]">
+      <div class="flex items-center p-5 bg-[% state2color.$state %] text-[% state2color.$state %]-fg">
+        <span class="ti ti-alert-circle text-5xl"></span>
       </div>
       [% warns = service_stats.warning_and_unhandled + service_stats.warning_on_down_host + service_stats.warning_and_scheduled + service_stats.warning_and_ack %]
       [% IF warns > 0 %]
@@ -206,7 +169,7 @@
       [% ELSE %]
         [% thisclass = "flex items-center" %]
       [% END %]
-      <div class="[% thisclass %] grow p-2" style="[% INCLUDE style_cardcolor %]">
+      <div class="[% thisclass %] grow p-2 bg-[% state2color.$state %]-lt">
         <a class="text-3xl block mt-2 font-bold" href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 4 })  %]'>
         [% service_stats.warning  %]&nbsp;Warning</a>
 
@@ -259,9 +222,9 @@
 
     [% IF service_stats.unknown > 0 %]
     [% state = 'unknown' %]
-    <div class="flex border mx-2" style="[% INCLUDE style_bordercolor %]">
-      <div class="flex items-center p-5" style="[% INCLUDE style_fgcolor %]">
-        <span class="ti ti-help-circle text-5xl" style="color: var(--badge-unknown-[% colorbg %]);"></span>
+    <div class="flex mx-2 my-2 border border-[% state2color.$state %]">
+      <div class="flex items-center p-5 bg-[% state2color.$state %] text-[% state2color.$state %]-fg">
+        <span class="ti ti-help-circle text-5xl"></span>
       </div>
       [% unkn = service_stats.unknown_and_unhandled + service_stats.unknown_on_down_host + service_stats.unknown_and_scheduled + service_stats.unknown_and_ack %]
       [% IF unkn > 0 %]
@@ -269,8 +232,8 @@
       [% ELSE %]
         [% thisclass = "flex items-center" %]
       [% END %]
-      <div class="[% thisclass %] grow p-2 font-bold" style="[% INCLUDE style_cardcolor %]">
-          <a title="[% service_stats.unknown  %]&nbsp;Unknown" class="text-3xl block mt-2" href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 8 })  %]'>
+      <div class="[% thisclass %] grow p-2 bg-[% state2color.$state %]-lt">
+          <a title="[% service_stats.unknown %]&nbsp;Unknown" class="text-3xl block mt-2 font-bold" href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 8 })  %]'>
           [% service_stats.unknown  %]&nbsp;Unknown
 		  </a>
 
@@ -322,9 +285,9 @@
 
     [% IF service_stats.pending > 0 %]
     [% state = 'pending' %]
-    <div class="flex border mx-2" style="[% INCLUDE style_bordercolor %]">
-      <div class="flex items-center p-5" style="[% INCLUDE style_fgcolor %]">
-        <span class="ti ti-hourglass text-5xl" style="color: var(--badge-pending-[% colorbg %]);"></span>
+    <div class="flex mx-2 my-2 border border-[% state2color.$state %]">
+      <div class="flex items-center p-5 bg-[% state2color.$state %] text-[% state2color.$state %]-fg">
+        <span class="ti ti-hourglass text-5xl border border-[% state2color.$state %]"></span>
       </div>
       [% pend = service_stats.pending_and_unhandled + service_stats.pending_and_disabled %]
       [% IF pend > 0 %]
@@ -332,26 +295,27 @@
       [% ELSE %]
         [% thisclass = "flex items-center" %]
       [% END %]
-      <div class="[% thisclass %] grow p-2" style="[% INCLUDE style_cardcolor %]">
+      <div class="[% thisclass %] grow p-2 bg-[% state2color.$state %]-lt">
           <a class="text-3xl block mt-2 font-bold" href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 1 })  %]' title="[% service_stats.pending  %]&nbsp;Pending">
             [% service_stats.pending  %]&nbsp;Pending
           </a>
         [% IF pend > 0 %]
-        <div class="block">
-        [% IF !empty && service_stats.pending_and_scheduled > 0 %]
-          <a href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 1, serviceprops => 1 }) %]' title="[% service_stats.pending_and_scheduled %]&nbsp;Scheduled">
-            <span class="ti ti-calendar"></span>[% service_stats.pending_and_scheduled %]
-          </a>
-        [% END %]
-        [% IF !empty && service_stats.pending_and_disabled > 0  %]
-          <a href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 1, serviceprops => 16 }) %]' title="[% service_stats.pending_and_disabled %]&nbsp;Disabled">
-            <span class="ti ti-circle-x"></span>[% service_stats.pending_and_disabled %]
-          </a>
-        [% END %]
-        </div>
+		  <div class="block">
+		  [% IF !empty && service_stats.pending_and_scheduled > 0 %]
+			<a href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 1, serviceprops => 1 }) %]' title="[% service_stats.pending_and_scheduled %]&nbsp;Scheduled">
+			  <span class="ti ti-calendar"></span>[% service_stats.pending_and_scheduled %]
+			</a>
+		  [% END %]
+		  [% IF !empty && service_stats.pending_and_disabled > 0  %]
+			<a href='[% uri_with(c, { _page => "status.cgi", style => "detail", servicestatustypes => 1, serviceprops => 16 }) %]' title="[% service_stats.pending_and_disabled %]&nbsp;Disabled">
+			  <span class="ti ti-circle-x"></span>[% service_stats.pending_and_disabled %]
+			</a>
+		  [% END %]
+		  </div>
         [% END %]
       </div>
     </div>
     [% END %]
   </div>
- </div>
+</div>
+

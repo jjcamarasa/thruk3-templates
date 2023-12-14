@@ -1,0 +1,97 @@
+﻿[% USE date %]
+[% histou_frame_url = histou_url.replace('/dashboard/', '/dashboard-solo/') %]
+<script>
+  var histou_url        = "[% histou_url %]";
+  var histou_frame_url  = "[% histou_frame_url %]";
+  var histou_source     = [% histou_source %];
+  var random            = Number(Math.random() * 100000).toFixed(0);
+
+  /* try to fetch sources */
+  var source_url = histou_url.replace(/\/grafana\/dashboard\/script\/histou\.js\?/, '/histou/index.php?_='+random+'&');
+  jQuery.ajax({
+    url: source_url,
+    type: 'POST',
+    xhrFields: {
+      withCredentials: true
+    },
+    success: function(data) {
+      data = data.replace(/^[\s\S]*<br>\{/, '{');
+      data = data.replace(/<br><\/pre>$/, '');
+      data = data.replace(/\n/g, '');
+      eval('data = '+data+";");
+      var sources    = [];
+      var has_graphs = false;
+      jQuery('#histou_source_select').find('option').remove();
+      jQuery(data.rows).each(function(i, row) {
+          jQuery(row.panels).each(function(j, panel) {
+            var title = panel.title;
+            title = title.replace('[% escape_js(hst) %] ', '');
+            title = title.replace('[% escape_js(svc) %] ', '');
+            jQuery('#histou_source_select').append('<option value="'+panel.id+'"'+(panel.id==histou_source ? ' selected' : '')+'>'+title+'<\/option>');
+            has_graphs = true;
+          });
+      });
+      /* only useful for multiple sources */
+      if(has_graphs) {
+        jQuery('#histou_source_select').show();
+      }
+    },
+    error: ajax_xhr_error_logonly
+  });
+</script>
+<div class="card w-full max-w-[800px] mx-auto overflow-hidden">
+  <div class="head justify-between">
+	[% action_url = proxifiy_url(c, service, get_action_url(c, 2, 1, service.action_url_expanded, service)) %]
+	[% replace_url = action_url.replace('d-solo','d') %]
+	[% kiosk_mode_url  = "$replace_url&kiosk=tv" %]
+    	<h3>
+    	 <a href="[% url_prefix %]#[% histou_url %]" class="text-dark">
+    	  Performance Graph
+	 </a>
+	</h3>
+    <div class='pnpSelector'>
+      <form action="#">
+        <select onchange="histou_source=this.value; set_histou_img();" id="histou_source_select" style="display: none;">
+        </select>
+      </form>
+    </div>
+  </div>
+
+  <div class="head px-0 clickable">
+    <span                 class="tabs text-center w-12"    onclick="return move_histou_img(-0.5)"><i class="uil uil-angle-left text-lg contents"></i></span>
+    <span id="histou_th1" class="tabs text-center w-[18%]" onclick="return set_histou_img([% date.now -    14400 %], [% date.now %], this.id, histou_source)">4 hours</span>
+    <span id="histou_th2" class="tabs text-center w-[18%]" onclick="return set_histou_img([% date.now -    90000 %], [% date.now %], this.id, histou_source)">day</span>
+    <span id="histou_th3" class="tabs text-center w-[18%]" onclick="return set_histou_img([% date.now -   540000 %], [% date.now %], this.id, histou_source)">week</span>
+    <span id="histou_th4" class="tabs text-center w-[18%]" onclick="return set_histou_img([% date.now -  2764800 %], [% date.now %], this.id, histou_source)">month</span>
+    <span id="histou_th5" class="tabs text-center w-[18%]" onclick="return set_histou_img([% date.now - 30067200 %], [% date.now %], this.id, histou_source)">year</span>
+    <span                 class="tabs text-center w-12"    onclick="return move_histou_img( 0.5)"><i class="uil uil-angle-right text-lg contents"></i></span>
+  </div>
+  <div class="h-[262px] relative justify-center">
+    <div id="histou_graph_pane" class="relative w-full h-full overflow-hidden">
+      <div id="pnpwaitimg" class="absolute top-10 left-1/2 transform -translate-x-1/2" title="waiting"><div class="spinner w-12 h-12"></div></div>
+      <iframe id="histou_iframe" src="[% histou_frame_url %]" class="w-full h-[270px] p-0 m-0 mx-auto"></iframe>
+    </div>
+  </div>
+</div>
+
+<script>
+  var histou_id     = 'histou_th2';
+  var histou_start  = [% date.now - 90000 %];
+  var histou_end    = [% date.now %];
+  if(window.location.hash != '#') {
+    var values = window.location.hash.split("/");
+    if(values[0]) {
+      histou_id = values[0].replace(/^#/, '');
+    }
+    if(values[1]) {
+      histou_start = values[1];
+    }
+    if(values[2]) {
+      histou_end = values[2];
+    }
+    if(values[3] != undefined) {
+      histou_source = values[3];
+    }
+  }
+  set_histou_img(histou_start, histou_end, histou_id, histou_source);
+</script>

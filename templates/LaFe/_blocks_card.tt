@@ -1,0 +1,20 @@
+[% BLOCK _card_basic %]
+<div class="p-2">
+  <div class="relative flex flex-col min-w-0 break-words border border-slate-300 bg-white border-1">
+    <div class="py-2 px-5 mb-0 border-b text-gray-900">
+      <h3 class="mb-2 text-lg font-semibold">
+        [% card_title %]
+      </h3>
+    </div>
+   <div class="flex-auto p-5">
+        [% card_body %]
+   </div>
+  </div>
+</div>
+[% END %]
+
+[% BLOCK _def_pair %]
+<dt class="text-sm font-medium text-gray-500">[% dt_text %]</dt>
+<dd class="mt-1 text-sm text-gray-900">[% dd_text %]</dd>
+[% END %]
+
