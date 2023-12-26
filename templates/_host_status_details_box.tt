@@ -1,6 +1,6 @@
-﻿<table class="table border">
+﻿<table class="table table-sm border my-0">
 <tr>
-<th class="bg-dark-lt"><i class="ti ti-server"></i>&nbsp;Host Status Totals</th>
+<th class="bg-blue text-light"><i class="ti ti-server"></i>&nbsp;Host Status Totals</th>
   <td class="bg-white">
   [% IF !has_error && host_stats.up + host_stats.down + host_stats.unreachable + host_stats.pending %]
 	[% host_stats.up + host_stats.down + host_stats.unreachable + host_stats.pending %]
@@ -27,7 +27,7 @@
   [% END %]
   
   [% IF !has_error && host_stats.down %]
-  <td class='bg-dark-lt'>
+  <td class='bg-danger text-light'>
 	<a href="[% uri_with(c, page => 'undef', hoststatustypes => 4) %]">
 	[% host_stats.down %]&nbsp;down
 	</a>

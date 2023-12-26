@@ -26,7 +26,8 @@
           <a class="dropdown-item" href='status.cgi?hostgroup=all&amp;style=grid'>View Status Grid For All Host Groups</a>
         [% END %]
   [% END %]
-  
+
+<div class="container">  
   [% IF custom_title != '' %]
     [% custom_title %]
   [% ELSIF hostgroup == 'all' %]
@@ -37,9 +38,7 @@
     [% infoBoxPreTitle = "Host Status Details" %]
   [% END %]
   
- <div class="p-3">
   [% PROCESS _infobox.tt %]
- </div>
 
   <div class="flexrow sm:flex-nowrap my-2 gap-y-1">
     <div class="flex basis-1/3 self-end gap-1">
@@ -105,6 +104,7 @@
     [% PROCESS _pager_total_items.tt %]
   </div>
 </div>
+</div> <!-- page container -->
 
 [% UNLESS authorized_for_read_only %]
 <script>

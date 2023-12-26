@@ -1,5 +1,5 @@
 ﻿[% SET hoststatustypes = 15 IF ! hoststatustypes %]
-<table class="table border">
+<table class="table table-sm border my-0">
   <tr>
   [% totalProblems  = 0 %]
     [% totalUnhandled = 0 %]
@@ -9,7 +9,7 @@
     [% totalUnhandled = service_stats.warning_and_unhandled + service_stats.critical_and_unhandled + service_stats.unknown_and_unhandled %]
     [% total          = service_stats.ok + totalProblems + service_stats.pending %]
     [% END %]
-    <th class="bg-dark-lt"><i class="ti ti-settings-cog"></i>&nbsp;Service Status Totals</th>
+    <th class="bg-blue text-light"><i class="ti ti-settings-cog"></i>&nbsp;Service Status Totals</th>
     <td>
       <a href="[% uri_with(c, style => 'detail', page => 'undef', servicestatustypes => 32, hoststatustypes => hoststatustypes) %]">
       [% total %]&nbsp;services
