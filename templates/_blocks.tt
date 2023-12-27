@@ -129,7 +129,7 @@
 [% BLOCK _perfdata_table %]
   [% IF perf_bar_mode != 'off' %]
     <div
-      class="js-perf-bar w-[75px] h-5 relative"
+      class="js-perf-bar"
       data-add-link="[% add_link | html %]"
       data-state="[% state %]"
       data-perfdata="[% escape_html(perfdata) %]"

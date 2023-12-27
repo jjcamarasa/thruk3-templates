@@ -1,5 +1,5 @@
 /*! tailwindcss v3.2.7 | MIT License | https://tailwindcss.com*/
-/* 26/12/2023 */
+/* 27/12/2023 */
 /* TABLER CSS */
 /* Tabler v1.0.0-beta20 (https://tabler.io)
 */
@@ -294,6 +294,89 @@ h6, .h6 {
   font-size: 0.625rem;
 }
 
+p {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+abbr[title] {
+  -webkit-text-decoration: underline dotted;
+          text-decoration: underline dotted;
+  cursor: help;
+  -webkit-text-decoration-skip-ink: none;
+          text-decoration-skip-ink: none;
+}
+
+address {
+  margin-bottom: 1rem;
+  font-style: normal;
+  line-height: inherit;
+}
+
+ol,
+ul {
+  padding-left: 2rem;
+}
+
+ol,
+ul,
+dl {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+ol ol,
+ul ul,
+ol ul,
+ul ol {
+  margin-bottom: 0;
+}
+
+dt {
+  font-weight: 600;
+}
+
+dd {
+  margin-bottom: 0.5rem;
+  margin-left: 0;
+}
+
+blockquote {
+  margin: 0 0 1rem;
+}
+
+b,
+strong {
+  font-weight: bolder;
+}
+
+small, .small {
+  font-size: 85.714285%;
+}
+
+mark, .mark {
+  padding: 0.1875em;
+  background-color: var(--tblr-highlight-bg);
+}
+
+sub,
+sup {
+  position: relative;
+  font-size: 0.75em;
+  line-height: 0;
+  vertical-align: baseline;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+sup {
+  top: -0.5em;
+}
+
+/* LAST 387 */
+
 table {
   caption-side: bottom;
   border-collapse: collapse;
@@ -303,56 +386,6 @@ table {
 /* TABLER CSS */
 
 /*
-::backdrop {
-  --tw-border-spacing-x: 0;
-  --tw-border-spacing-y: 0;
-  --tw-translate-x: 0;
-  --tw-translate-y: 0;
-  --tw-rotate: 0;
-  --tw-skew-x: 0;
-  --tw-skew-y: 0;
-  --tw-scale-x: 1;
-  --tw-scale-y: 1;
-  --tw-pan-x: ;
-  --tw-pan-y: ;
-  --tw-pinch-zoom: ;
-  --tw-scroll-snap-strictness: proximity;
-  --tw-gradient-from-position: ;
-  --tw-gradient-via-position: ;
-  --tw-gradient-to-position: ;
-  --tw-ordinal: ;
-  --tw-slashed-zero: ;
-  --tw-numeric-figure: ;
-  --tw-numeric-spacing: ;
-  --tw-numeric-fraction: ;
-  --tw-ring-inset: ;
-  --tw-ring-offset-width: 0px;
-  --tw-ring-offset-color: #fff;
-  --tw-ring-color: rgb(59 130 246 / 0.5);
-  --tw-ring-offset-shadow: 0 0 #0000;
-  --tw-ring-shadow: 0 0 #0000;
-  --tw-shadow: 0 0 #0000;
-  --tw-shadow-colored: 0 0 #0000;
-  --tw-blur: ;
-  --tw-brightness: ;
-  --tw-contrast: ;
-  --tw-grayscale: ;
-  --tw-hue-rotate: ;
-  --tw-invert: ;
-  --tw-saturate: ;
-  --tw-sepia: ;
-  --tw-drop-shadow: ;
-  --tw-backdrop-blur: ;
-  --tw-backdrop-brightness: ;
-  --tw-backdrop-contrast: ;
-  --tw-backdrop-grayscale: ;
-  --tw-backdrop-hue-rotate: ;
-  --tw-backdrop-invert: ;
-  --tw-backdrop-opacity: ;
-  --tw-backdrop-saturate: ;
-  --tw-backdrop-sepia:
-}
-
 *, ::backdrop, :after, :before {
   --tw-border-spacing-x: 0;
   --tw-border-spacing-y: 0;
@@ -813,6 +846,9 @@ html {
   --tblr-box-shadow-card: 0 0 4px rgba(var(--tblr-body-color-rgb), 0.04);
   --tblr-box-shadow-card-hover: rgba(var(--tblr-body-color-rgb), 0.16) 0 2px 16px 0;
   --tblr-box-shadow-dropdown: 0 16px 24px 2px rgba(0, 0, 0, 0.07), 0 6px 30px 5px rgba(0, 0, 0, 0.06), 0 8px 10px -5px rgba(0, 0, 0, 0.1);
+  /* EXTRA VARS for Thruk */
+  --tblr-text-secondary: var(--tblr-secondary-bg);
+  --tblr-text-secondary-rgb: var(--tblr-secondary-bg-rgb);
 }
 /* **************** */
 /*   MIXED COLORS   */
@@ -824,7 +860,7 @@ hr {
   color: inherit;
   border-top-width: 1px
 }
-*/
+
 abbr:where([title]) {
   -webkit-text-decoration: underline dotted;
   text-decoration: underline dotted
@@ -834,12 +870,12 @@ h1, h2, h3, h4, h5, h6 {
   font-size: inherit;
   font-weight: inherit
 }
-
+*/
 a {
   color: inherit;
   text-decoration: inherit
 }
-
+/*
 b, strong {
   font-weight: bolder
 }
@@ -871,7 +907,7 @@ sup {
 select {
   text-transform: none
 }
-
+*/
 :-moz-focusring {
   outline: auto
 }
@@ -1490,23 +1526,6 @@ select {
   --tblr-shadow-card: 0 0 4px rgba(var(--tblr-body-color-rgb), 0.04);
   --tblr-bg-surface-tertiary: var(--color-gray-50);
   /*--tblr-primary: #0054a6;
-  --tblr-primary-rgb: 0, 84, 166;
-  --tblr-primary-fg: var(--tblr-light);
-  --tblr-primary-darken: #004c95;
-  --tblr-primary-lt: #e6eef6;
-  --tblr-primary-lt-rgb: 230, 238, 246;
-  --tblr-secondary: #667382;
-  --tblr-secondary-rgb: 102, 115, 130;
-  --tblr-secondary-fg: var(--tblr-light);
-  --tblr-secondary-darken: #5c6875;
-  --tblr-secondary-lt: #f0f1f3;
-  --tblr-secondary-lt-rgb: 240, 241, 243;
-  --tblr-success: #2fb344;
-  --tblr-success-rgb: 47, 179, 68;
-  --tblr-success-fg: var(--tblr-light);
-  --tblr-success-darken: #2aa13d;
-  --tblr-success-lt: #eaf7ec;
-  --tblr-success-lt-rgb: 234, 247, 236;*/
   --tblr-info: #4299e1;
   --tblr-info-rgb: 66, 153, 225;
   --tblr-info-fg: var(--tblr-light);
@@ -1531,7 +1550,7 @@ select {
   --tblr-light-darken: #e3e4e5;
   --tblr-light-lt: white;
   --tblr-light-lt-rgb: 255, 255, 255;
-  --tblr-dark: #182433;
+  --tblr-dark: #182433;*/
   --tblr-dark-rgb: 24, 36, 51;
   --tblr-dark-fg: var(--tblr-light);
   --tblr-dark-darken: #16202e;
