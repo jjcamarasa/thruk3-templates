@@ -1,6 +1,5 @@
 ﻿[% IF bare %][% wrapper="_conf_bare.tt" %][% ELSE %][% wrapper="_conf_objects_frame.tt" %][% END %]
 [% WRAPPER $wrapper %]
-
   [% IF show_object %]
     [% UNLESS object.defined('file') %]
       <script>

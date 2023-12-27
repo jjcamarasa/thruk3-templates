@@ -100,7 +100,7 @@
             <td class="font-bold">Check Period</td>
             <td>
               [% IF obj.in_check_period %]
-                <span class='badge bg-success-lt'>YES</span>
+                <span class='badge bg-green-lt'>YES</span>
               [% ELSE %]
                 <span class='badge bg-danger-lt'>NO</span>
               [% END %]
@@ -111,7 +111,7 @@
             <td class="font-bold">Notification Period</td>
             <td>
               [% IF obj.in_notification_period %]
-                <span class='badge bg-success-lt'>YES</span>
+                <span class='badge bg-green-lt'>YES</span>
               [% ELSE %]
                 <span class='badge bg-danger-lt'>NO</span>
               [% END %]
@@ -139,7 +139,7 @@
               [% IF obj.is_flapping %]
                 <span class='badge bg-danger-lt'>FLAPPING</span>
               [% ELSE %]
-                <span class='badge bg-success-lt'>NO</span>
+                <span class='badge bg-green-lt'>NO</span>
                 [% IF obj.percent_state_change > 0 %]([% FILTER format('%.2f') %][% obj.percent_state_change %][% END %]% state change)[% END %]
               [% END %]
               </td>

@@ -127,7 +127,7 @@
                     [% IF h.has_been_checked == 0 %]
                     <td class='bg-dark-lt text-center'>PENDING</td>
                     [% ELSIF h.state == 0 %]
-                    <td class='bg-success-lt text-center'>UP</td>
+                    <td class='bg-green-lt text-center'>UP</td>
                     [% ELSIF h.state == 1 %]
                     <td class='bg-danger-lt text-center'>DOWN</td>
                     [% ELSIF h.state == 2 %]

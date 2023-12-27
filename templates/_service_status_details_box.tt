@@ -9,7 +9,7 @@
     [% totalUnhandled = service_stats.warning_and_unhandled + service_stats.critical_and_unhandled + service_stats.unknown_and_unhandled %]
     [% total          = service_stats.ok + totalProblems + service_stats.pending %]
     [% END %]
-    <th class="bg-blue text-light"><i class="ti ti-settings-cog"></i>&nbsp;Service Status Totals</th>
+    <th class="bg-dark-lt"><i class="ti ti-settings-cog"></i>&nbsp;Service Status Totals</th>
     <td>
       <a href="[% uri_with(c, style => 'detail', page => 'undef', servicestatustypes => 32, hoststatustypes => hoststatustypes) %]">
       [% total %]&nbsp;services
@@ -33,7 +33,7 @@
   
   
   [% IF !has_error && service_stats.ok %]
-    <td class="bg-success-lt">
+    <td class="bg-green-lt">
       <a href="[% uri_with(c, style => 'detail', page => 'undef', servicestatustypes => 2, hoststatustypes => hoststatustypes) %]">
         [% service_stats.ok %]&nbsp;ok
       </a>

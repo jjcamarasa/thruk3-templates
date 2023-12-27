@@ -3,7 +3,7 @@
     [% PROCESS _conf_objects_menu.tt %]
   </div>
   <div class="card-body">
-  <div class="flex w-full gap-2">
+  <div class="flex w-full gap-1">
     <div class="w-3/4 flexcol">
       <form action="conf.cgi" method="GET" onsubmit="return(setFormBtnSpinner(this))">
         <input type="hidden" name="sub" value="objects">    
@@ -11,7 +11,7 @@
             <!--<div class="body flexrow gap-1 flex-nowrap">-->
               <input type="hidden" name="type" value="[% type | html %]">
               <div class="input-group">
-              <input class="form-control" type="text" name="data.name" id="data.name" value="[% IF show_secondary_select %][% data_name | html %][% END %]"
+              <input class="form-control form-control-sm" type="text" name="data.name" id="data.name" value="[% IF show_secondary_select %][% data_name | html %][% END %]"
                 onclick="ajax_search.init(this, '[% type | html %]', {url:'conf.cgi?action=json&amp;long=1&amp;type=[% type | html %]', templates:'both', add_prefix:true})" placeholder="select [% type | html %] to change..." >
               <button type="submit" name="send" class="btn">show</button>
               </div>
@@ -23,17 +23,15 @@
               </div>
             [% END %]
           [% END %]
-      </form>
+      </form>	  
       [% content %]
+
     </div>
 <!-- Actions menu must be on right side-->      
-    <!--<div class="basis-1/6 flexcol flex-nowrap items-end">-->
     <div class="flexcol w-1/4 items-end">
       [% PROCESS _conf_action_menu.tt %]
       [% PROCESS _conf_references_menu.tt %]
     </div>
     </div>
   </div>
-<!--</div>-->
-
 [% END %]
