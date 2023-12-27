@@ -203,19 +203,19 @@ END
     [% card_size = "w-1/4" %]
   [% END %]
   <div class="card w-1/4 grow">
-    <div class="head justify-between">
-    <div class="font-bold">
-      <i class="ti ti-chart-histogram"></i>&nbsp;Performance Data
-    </div>
-    <span>
-      <div class="link hoverable rounded clickable font-normal" id="raw_perf_switch" onclick="showElement('perfdata_raw'); hideElement('perfdata_human'); hideElement('raw_perf_switch'); showElement('human_perf_switch');">
-        <i class="ti ti-align-left " title="Show raw data"></i>
-      </div>
-      <div class="link hoverable rounded clickable font-normal" style="display: none;" id="human_perf_switch" onclick="hideElement('perfdata_raw'); showElement('perfdata_human'); hideElement('human_perf_switch'); showElement('raw_perf_switch');">
-        <i class="ti ti-eye " title="Show human data"></i>
-      </div>
-    </span>
-  </div>
+    <div class="card-header d-flex justify-content-between">
+	  <div class="font-bold">
+		<i class="ti ti-chart-histogram"></i>&nbsp;Performance Data
+	  </div>
+	  <div>
+		<span class="link hoverable rounded clickable font-normal" id="raw_perf_switch" onclick="showElement('perfdata_raw'); hideElement('perfdata_human'); hideElement('raw_perf_switch'); showElement('human_perf_switch');">
+		  <i class="ti ti-align-left " title="Show raw data"></i>
+		</span>
+		<span class="link hoverable rounded clickable font-normal" style="display: none;" id="human_perf_switch" onclick="hideElement('perfdata_raw'); showElement('perfdata_human'); hideElement('human_perf_switch'); showElement('raw_perf_switch');">
+		  <i class="ti ti-eye " title="Show human data"></i>
+		</span>
+	  </div>
+	</div>
     <div class="p-0">
       [% perf_svc=svc_name; IF perf_svc == ""; perf_svc='_HOST_'; END %]
         [% PROCESS _perfdata_human.tt

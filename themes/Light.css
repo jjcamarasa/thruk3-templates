@@ -433,6 +433,51 @@ html {
   margin-right: auto;
   margin-left: auto;
 }
+/* line 8000 */
+
+.d-inline {
+  display: inline !important;
+}
+
+.d-inline-block {
+  display: inline-block !important;
+}
+
+.d-block {
+  display: block !important;
+}
+
+.d-grid {
+  display: grid !important;
+}
+
+.d-inline-grid {
+  display: inline-grid !important;
+}
+
+.d-table {
+  display: table !important;
+}
+
+.d-table-row {
+  display: table-row !important;
+}
+
+.d-table-cell {
+  display: table-cell !important;
+}
+
+.d-flex {
+  display: flex !important;
+}
+
+.d-inline-flex {
+  display: inline-flex !important;
+}
+
+.d-none {
+  display: none !important;
+}
 :root,
 :host,
 [data-bs-theme=light] {
@@ -8904,7 +8949,8 @@ Card list group
   --tblr-table-border-color: var(--tblr-border-color-translucent);
   --tblr-table-accent-bg: transparent;
   --tblr-table-striped-color: inherit;
-  --tblr-table-striped-bg: var(--tblr-bg-surface-tertiary);
+  /*--tblr-table-striped-bg: var(--tblr-bg-surface-tertiary);*/
+  --tblr-table-striped-bg: var(--tblr-blue-lt);
   --tblr-table-active-color: inherit;
   --tblr-table-active-bg: rgba(0, 0, 0, 0.1);
   --tblr-table-hover-color: inherit;

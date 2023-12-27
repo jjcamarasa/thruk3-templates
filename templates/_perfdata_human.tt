@@ -4,7 +4,7 @@
 [% IF tmp.size > 0 && tmp.0.size > 0 %]
   [% splited = tmp.0; has_parents = tmp.1; has_warn = tmp.2; has_crit = tmp.3; has_min = tmp.4; has_max = tmp.5; %]  
   [% last_parent = '' %]
-  <table id="perfdata_human" class="table table-sm table-striped" >
+  <table id="perfdata_human" class="table table-sm table-striped table-hover align-middle" >
   <thead>
     <tr>
       [% IF has_parents %]<th></th>[% END %]
