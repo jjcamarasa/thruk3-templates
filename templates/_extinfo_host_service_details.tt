@@ -90,8 +90,10 @@ END
 [% END %]
 
 [%
- host_color = [ 'ok', 'down', 'unreachable', 'unknown']
- state_color = [ 'ok', 'warning', 'critical', 'unknown', 'unreachable' ]
+ #host_color = [ 'ok', 'down', 'unreachable', 'unknown']
+ host_color = [ 'green', 'red', 'warning', 'purple']
+ #state_color = [ 'ok', 'warning', 'critical', 'unknown', 'unreachable' ]
+ state_color = [ 'green', 'yellow', 'red', 'purple', 'info' ]
  host_icon = [ 'check', 'server-off', 'share-off','help-circle' ]
  state_icon = [ 'check', 'alert-triangle', 'circle-x', 'help-circle' ]
  colorfg = "fg"
@@ -101,10 +103,7 @@ END
   [% state_color = host_color %]
   [% state_icon = host_icon %]
 [% END %]
-[% IF theme == "Darki" %]
- [% colorfg = "bg" %]
- [% colorbg = "fg" %]
-[% END %]
+
 
 [% IF obj.scheduled_downtime_depth > 0 %]
   [% sched_dt = "<span class='badge WARNING'><i class='ti ti-moon' style='color: inherit;'></i>&nbsp;$type in maintenance</span>" %]
@@ -174,9 +173,9 @@ END
     [% END %]
 
 <div class="flex flex-row gap-2">
- <div class="card w-1/2 h-full [% IF obj.perf_data.empty %] grow [% END %]" style="border-color: var(--badge-[% state_color.${obj.state} %]-[% colorfg %]);">
-  <div class="head justify-between" style="background-color: var(--badge-[% state_color.${obj.state} %]-[% colorbg %]);border-color: var(--badge-[% state_color.${obj.state} %]-[% IF theme=='Dark' %][% colorbg %][% ELSE %][% colorfg %][% END %]);">
-	<div style="color: var(--badge-[% state_color.${obj.state} %]-[% colorfg %]) !important;">
+ <div class="card w-1/2 h-full [% IF obj.perf_data.empty %] grow [% END %] border-[% state_color.${obj.state} %]">  
+  <div class="card-header bg-[% state_color.${obj.state} %]-lt text-[% state_color.${obj.state} %] border-[% state_color.${obj.state} %]">
+	<div>
 	  <i class="ti ti-[% state_icon.${obj.state} %] text-lg" style="color: inherit !important;"></i>
       &nbsp;[% type|html %] <b>[% IF type == "host" %][% hst_name %][% ELSE %][% obj.description %][% END %]</b> is <b>[% current_status %]</b>&nbsp;-&nbsp;<span class="inline-block">[% IF obj.last_state_change %][% duration(date.now - obj.last_state_change, 6) %][% ELSE %][% duration(date.now - program_start, 6) %]+[% END %]</span>
 	</div>

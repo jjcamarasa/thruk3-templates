@@ -14,7 +14,7 @@
       [% IF has_crit %]<th>Critical</th>[% END %]
       [% IF has_min  %]<th>Minimum</th>[% END %]
       [% IF has_max  %]<th>Maximum</th>[% END %]
-      <th></th>
+      <th>Graph</th>
     </tr>
     </thead>
     <tbody>
@@ -25,8 +25,8 @@
       [% IF has_parents %]
       <td>[% IF last_parent != p.parent %][% p.parent %][% last_parent = p.parent %][% ELSE %][% END %]</td>
       [% END %]
-      <td>[% p.name | html %]</td>
-      <td>[% format_number(p.value) %][% p.unit | html %]</td>
+      <td class="text-left pl-2">[% p.name | html %]</td>
+      <td>[% format_number(p.value) %][% p.unit | html %]</td>      
       [% IF has_warn %]<td>[% format_number(p.warn) %]</td>[% END %]
       [% IF has_crit %]<td>[% format_number(p.crit) %]</td>[% END %]
       [% IF has_min  %]<td>[% format_number(p.min) %]</td>[% END %]
@@ -40,8 +40,8 @@
   </table>
   <div class="p-2" id="perfdata_raw" style="display:none;">
     [% perfdata = orig_perfdata %]
-    [% PROCESS _perfdata_table add_link="1" %]
     [% orig_perfdata | html %]
+    [% PROCESS _perfdata_table add_link="1" %]
   </div>
 [% ELSE %]
   <script>

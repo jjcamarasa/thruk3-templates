@@ -1,5 +1,5 @@
 /*! tailwindcss v3.2.7 | MIT License | https://tailwindcss.com*/
-/* 27/12/2023 */
+/* 28/12/2023 */
 /* TABLER CSS */
 /* Tabler v1.0.0-beta20 (https://tabler.io)
 */
@@ -375,67 +375,30 @@ sup {
   top: -0.5em;
 }
 
-/* LAST 387 */
+a {
+  color: rgba(var(--tblr-link-color-rgb), var(--tblr-link-opacity, 1));
+  text-decoration: none;
+}
+a:hover {
+  --tblr-link-color-rgb: var(--tblr-link-hover-color-rgb);
+  text-decoration: underline;
+}
+
+a:not([href]):not([class]), a:not([href]):not([class]):hover {
+  color: inherit;
+  text-decoration: none;
+}
+/* LAST 401*/
 
 table {
   caption-side: bottom;
   border-collapse: collapse;
 }
 
-
 /* TABLER CSS */
-
-/*
-*, ::backdrop, :after, :before {
-  --tw-border-spacing-x: 0;
-  --tw-border-spacing-y: 0;
-  --tw-translate-x: 0;
-  --tw-translate-y: 0;
-  --tw-rotate: 0;
-  --tw-skew-x: 0;
-  --tw-skew-y: 0;
-  --tw-scale-x: 1;
-  --tw-scale-y: 1;
-  --tw-pan-x: ;
-  --tw-pan-y: ;
-  --tw-pinch-zoom: ;
-  --tw-scroll-snap-strictness: proximity;
-  --tw-ordinal: ;
-  --tw-slashed-zero: ;
-  --tw-numeric-figure: ;
-  --tw-numeric-spacing: ;
-  --tw-numeric-fraction: ;
-  --tw-ring-inset: ;
-  --tw-ring-offset-width: 0px;
-  --tw-ring-offset-color: #fff;
-  --tw-ring-color: #3b82f680;
-  --tw-ring-offset-shadow: 0 0 #0000;
-  --tw-ring-shadow: 0 0 #0000;
-  --tw-shadow: 0 0 #0000;
-  --tw-shadow-colored: 0 0 #0000;
-  --tw-blur: ;
-  --tw-brightness: ;
-  --tw-contrast: ;
-  --tw-grayscale: ;
-  --tw-hue-rotate: ;
-  --tw-invert: ;
-  --tw-saturate: ;
-  --tw-sepia: ;
-  --tw-drop-shadow: ;
-  --tw-backdrop-blur: ;
-  --tw-backdrop-brightness: ;
-  --tw-backdrop-contrast: ;
-  --tw-backdrop-grayscale: ;
-  --tw-backdrop-hue-rotate: ;
-  --tw-backdrop-invert: ;
-  --tw-backdrop-opacity: ;
-  --tw-backdrop-saturate: ;
-  --tw-backdrop-sepia:
-}
-*/
-/* **************** */
-  /* NO TOCAR */
-/* **************** */
+/* *************************** */
+/* DO NOT TOUCH - EXTRA DATA */
+/* *************************** */
 html {
   line-height: 1.3;
   -webkit-text-size-adjust: 100%;
@@ -446,9 +409,9 @@ html {
   font-feature-settings: normal;
   font-size: 12px;
 }
-/* **************** */
-/*    NO TOCAR      */
-/* **************** */
+/* *************************** */
+/* DO NOT TOUCH - EXTRA DATA */
+/* *************************** */
 /* From Latest tabler.css */
 /* Line 700 */
 .container,
@@ -876,37 +839,7 @@ a {
   text-decoration: inherit
 }
 /*
-b, strong {
-  font-weight: bolder
-}
 
-code, kbd, pre, samp {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
-  font-size: 1em
-}
-
-small {
-  font-size: 80%
-}
-
-sub, sup {
-  font-size: 75%;
-  line-height: 0;
-  position: relative;
-  vertical-align: initial
-}
-
-sub {
-  bottom: -.25em
-}
-
-sup {
-  top: -.5em
-}
-
-select {
-  text-transform: none
-}
 */
 :-moz-focusring {
   outline: auto
@@ -1067,8 +1000,6 @@ select {
 [type=checkbox]:checked, [type=radio]:checked {
   border-color: #0000;
   background-color: currentColor;
-  /*background-size: 100% 100%;*/
- /* background-position: 50%;*/
   background-repeat: no-repeat
 }
 
@@ -1411,10 +1342,9 @@ select {
   --text-pager-hover: var(--color-gray-500);
   --button-pager-bg: var(--color-gray-100);
   --button-pager-bg-hover: var(--color-gray-200);
-  --badge-fg: initial;
+  --badge-fg: initial;  
   --badge-bg: var(--color-gray-200);
   --badge-ok-bg: var(--color-emerald-100);
-  --tblr-success-rgb: var(--color-emerald-500);
   --badge-warning-bg: var(--color-yellow-100);
   --badge-warning-fg: var(--color-yellow-600);
   --badge-critical-bg: var(--color-red-100);
@@ -1525,32 +1455,7 @@ select {
   /*--tblr-border-radius: 0px;*/
   --tblr-shadow-card: 0 0 4px rgba(var(--tblr-body-color-rgb), 0.04);
   --tblr-bg-surface-tertiary: var(--color-gray-50);
-  /*--tblr-primary: #0054a6;
-  --tblr-info: #4299e1;
-  --tblr-info-rgb: 66, 153, 225;
-  --tblr-info-fg: var(--tblr-light);
-  --tblr-info-darken: #3b8acb;
-  --tblr-info-lt: #ecf5fc;
-  --tblr-info-lt-rgb: 236, 245, 252;
-  --tblr-warning: #f76707;
-  --tblr-warning-rgb: 247, 103, 7;
-  --tblr-warning-fg: var(--tblr-light);
-  --tblr-warning-darken: #de5d06;
-  --tblr-warning-lt: #fef0e6;
-  --tblr-warning-lt-rgb: 254, 240, 230;
-  --tblr-danger: #d63939;
-  --tblr-danger-rgb: 214, 57, 57;
-  --tblr-danger-fg: var(--tblr-light);
-  --tblr-danger-darken: #c13333;
-  --tblr-danger-lt: #fbebeb;
-  --tblr-danger-lt-rgb: 251, 235, 235;
-  --tblr-light: #fcfdfe;
-  --tblr-light-rgb: 252, 253, 254;
-  --tblr-light-fg: var(--tblr-dark);
-  --tblr-light-darken: #e3e4e5;
-  --tblr-light-lt: white;
-  --tblr-light-lt-rgb: 255, 255, 255;
-  --tblr-dark: #182433;*/
+  /*
   --tblr-dark-rgb: 24, 36, 51;
   --tblr-dark-fg: var(--tblr-light);
   --tblr-dark-darken: #16202e;
@@ -1562,7 +1467,7 @@ select {
   --tblr-muted-darken: #5c6875;
   --tblr-muted-lt: #f0f1f3;
   --tblr-muted-lt-rgb: 240, 241, 243;
-  /*--tblr-blue: #0054a6;
+  --tblr-blue: #0054a6;
   --tblr-blue-rgb: 0, 84, 166;
   --tblr-blue-fg: var(--tblr-light);
   --tblr-blue-darken: #004c95;
@@ -8969,7 +8874,7 @@ Card list group
   --tblr-table-accent-bg: transparent;
   --tblr-table-striped-color: inherit;
   /*--tblr-table-striped-bg: var(--tblr-bg-surface-tertiary);*/
-  --tblr-table-striped-bg: var(--tblr-blue-lt);
+  --tblr-table-striped-bg: var(--tblr-secondary-lt);
   --tblr-table-active-color: inherit;
   --tblr-table-active-bg: rgba(0, 0, 0, 0.1);
   --tblr-table-hover-color: inherit;
@@ -9736,6 +9641,13 @@ form-check {
 .bg-red {
   --tblr-bg-opacity: 1;
   background-color: rgba(var(--tblr-red-rgb), var(--tblr-bg-opacity)) !important;
+}
+
+.bg-red-lt {
+  --tblr-bg-opacity: 1;
+  --tblr-text-opacity: 1;
+  color: rgba(var(--tblr-red-rgb), var(--tblr-text-opacity)) !important;
+  background-color: rgba(var(--tblr-red-lt-rgb), var(--tblr-bg-opacity)) !important;
 }
 
 .bg-orange {
@@ -10994,6 +10906,11 @@ body[data-bs-theme=dark] .navbar[data-bs-theme=light] {
 .border-warning {
   --tblr-border-opacity: 1;
   border-color: rgba(var(--tblr-warning-rgb), var(--tblr-border-opacity)) !important;
+}
+
+.border-warning-lt {
+  --tblr-border-opacity: 1;
+  border-color: rgba(var(--tblr-warning-lt-rgb), var(--tblr-border-opacity)) !important;
 }
 
 .border-danger {

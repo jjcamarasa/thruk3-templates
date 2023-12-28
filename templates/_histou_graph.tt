@@ -67,12 +67,13 @@
 
 [% INCLUDE graph_tabs graph_type='histou' %]
 
-  <div id="pnp_graph_pane" class="card-body p-1">
+  <div id="pnp_graph_pane" class="card-body p-0">
     <div id="histou_graph_pane" class="relative w-full h-full overflow-hidden">
       <div id="pnpwaitimg" class="absolute top-10 left-1/2 transform -translate-x-1/2" title="waiting">
         <div class="spinner w-12 h-12"></div>
       </div>
-      <iframe id="histou_iframe" src="[% histou_frame_url %]" class="w-full h-[270px] p-0 m-0 mx-auto"></iframe>
+ <iframe id="histou_iframe" src="[% histou_frame_url %]" class="w-full h-[270px] p-0 m-0 mx-auto border-none">
+ </iframe>
     </div>
   </div>
 </div>
