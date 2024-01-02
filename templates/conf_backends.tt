@@ -6,22 +6,22 @@
 </div>
 [% END %]
 
-<form action="conf.cgi" method="POST">
+<form class="card" action="conf.cgi" method="POST">
   <input type="hidden" name="sub" value="backends">
   [%# make sure IE can submit form by pressing enter #%]
   <input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;"/>
   <input type="hidden" name="action" value="save">
   <input type="hidden" name="CSRFtoken" value="[% get_user_token(c) %]">
 
-    <div class="head justify-between">
-      <h3>Backends Configuration</h3>
-      <button colspan=3 class="bg-green-500 hover:bg-green-700 font-bold py-2 px-4 rounded text-green-100 hover:text-white clickable hoverable text-center" onclick="conf_sites_add(); return false;">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h2 class="font-bold text-muted">Backends Configuration</h2>
+      <button class="btn btn-default" onclick="conf_sites_add(); return false;">
         <i class="ti ti-circle-plus"></i>&nbsp;New connection
       </button>
     </div>
-    <div class="body">
-    <span class="textHINT block text-center">Note: some options are not accessible here for security reasons.</span>    
-    <table class="m-2">
+    <div class="card-body">
+    <p class="bg-yellow-lt border text-center p-3 m-2">Note: some options are not accessible here for security reasons.</p>
+    <table class="table table-sm table-borderless">
       [% x = 0 %]
       [% FOREACH b = conf_sites %]
         [% x = x + 1 %]
@@ -32,7 +32,7 @@
     </table>
     </div>
     
-    <div class="footer m-0 p-0">
+    <div class="card-footer text-center">
       <button class="btn btn-primary" [% IF readonly %]disabled[% ELSE %]onclick="setBtnSpinner(this);"[% END %]>
         <i class="ti ti-device-floppy"></i>Save Changes
       </button>

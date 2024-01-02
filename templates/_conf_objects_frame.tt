@@ -1,11 +1,12 @@
 ﻿[% WRAPPER _conf_frame.tt %]
+<div class="card">
   <div class="card-header">
     [% PROCESS _conf_objects_menu.tt %]
   </div>
-  <div class="card-body">
-  <div class="flex w-full gap-1">
-    <div class="w-3/4 flexcol">
-      <form action="conf.cgi" method="GET" onsubmit="return(setFormBtnSpinner(this))">
+  <!--<div class="card-body">-->
+  <div class="row p-3 mt-2">
+    <div class="col">
+      <form class="mb-2" action="conf.cgi" method="GET" onsubmit="return(setFormBtnSpinner(this))">      
         <input type="hidden" name="sub" value="objects">    
           [% IF type %]
             <!--<div class="body flexrow gap-1 flex-nowrap">-->
@@ -23,15 +24,15 @@
               </div>
             [% END %]
           [% END %]
-      </form>	  
+      </form>
       [% content %]
-
     </div>
 <!-- Actions menu must be on right side-->      
-    <div class="flexcol w-1/4 items-end">
+    <div class="col-2">
       [% PROCESS _conf_action_menu.tt %]
       [% PROCESS _conf_references_menu.tt %]
     </div>
-    </div>
+  <!--  </div>-->
   </div>
+</div>
 [% END %]

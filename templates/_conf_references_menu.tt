@@ -1,48 +1,32 @@
 ﻿[% IF has_refs && action != "editor" %]
-<div class="w-full">
-  <!--<div class="card-header">
-    <h3>References</h3>
-  </div>-->
-    [% IF incoming.keys.size > 0 %]
-  <div class="card">
-    <div class="card-header p-2"><h3>Incoming references</h3></div>
-    <div class="card-body">
-      <ul>
+ [% IF incoming.keys.size > 0 %]
+ <div class="card mt-1 list-group list-group-sm list-group list-group-sm list-group-flush list-group-hoverable">
+  <div class="list-group-header">Incoming references</div>
       [% FOREACH t = incoming.keys.sort %]
         [% FOREACH name = incoming.$t.keys.sort %]
           [% inc_ref = incoming.$t.$name %]
-          <li>
-            <a class="flexrow flex-nowrap gap-1 justify-between link" href="conf.cgi?sub=objects&amp;data.id=[% inc_ref.id %]">
+            <a class="list-group-item-action p-2" href="conf.cgi?sub=objects&amp;data.id=[% inc_ref.id %]">
               <span class="truncate max-w-[175px]">[% name | html %]</span>
               <span class="text-xs">([% t | html %])</span>
             </a>
-          </li>
         [% END %]
       [% END %]
-      </ul>
-    </div>
   </div>
-    [% END %]
+ [% END %]
   
   [% IF outgoing.keys.size > 0 %]
-  <div class="card mt-1"> 
-    <div class="card-header p-2"><h3>Outgoing references</h3></div>
-      <div class="card-body">
-      <ul>
+  <div class="card mt-1 list-group list-group-sm list-group list-group-sm list-group-flush list-group-hoverable">
+    <div class="list-group-header">Outgoing references</div>
       [% FOREACH t = outgoing.keys.sort %]
         [% FOREACH name = outgoing.$t.keys.sort %]
           [% oid = outgoing.$t.$name %]
-          <li>
-            <a class="flexrow flex-nowrap gap-1 justify-between link" href="conf.cgi?sub=objects&amp;type=[% t | uri %]&amp;data.name=[% name | uri %]">
+            <a class="list-group-item-action p-2" href="conf.cgi?sub=objects&amp;type=[% t | uri %]&amp;data.name=[% name | uri %]">
               <span class="truncate max-w-[175px]">[% name | html %]</span>
               <span class="text-xs">([% t | html %])</span>
             </a>
-          </li>
         [% END %]
       [% END %]
-      </ul>
-    [% END %]
-    </div>
-  </div>
-</div>
+  </div>  
+  [% END %]
+  
 [% END %]

@@ -1,85 +1,79 @@
-﻿<tr class="backend_conf_[% x %] m-1">
-  <th class="p-2">Name</th>
-  <td>
-    <input type="hidden" name="id[% x %]" value="[% b.id %]">
-    <input type="text" name="name[% x %]" value="[% b.name | html %]" class="w-full" placeholder="connection name">
-  </td>
-  <td class="px-2">
-    <button class="iconOnly" title="remove connection" onclick="[% IF x == 0 %]conf_sites_add_hide();[% ELSE %]delete_site_row(this);[% END %]return false;">
-      <i class="ti ti-circle-x  hover:text-danger"></i>
+﻿<div class="row align-items-center backend_conf_[% x %] m-3">
+  <label class="col form-label font-bold">Name</label>
+  <div class="col-9 input-group">
+    <input class="form-control form-control-sm" type="text" name="name[% x %]" value="[% b.name | html %]" placeholder="connection name">
+    <button class='btn hover-red' title="remove connection" onclick="[% IF x == 0 %]conf_sites_add_hide();[% ELSE %]delete_site_row(this);[% END %]return false;">
+    <i class="ti ti-x"></i>
     </button>
-  </td>
-</tr>
-<tr class="backend_conf_[% x %]">
-  <th class="p-2">Type</th>
-  <td>
-    <select name="type[% x %]" id="sel_type[% x %]" class="w-full" onchange="check_backends_config(this)">
+  </div>
+</div>
+<div class="row align-items-center backend_conf_[% x %] m-3">
+  <label class="col form-label font-bold">Type</label>
+  <div class="col-9 input-group">
+    <select class="form-control form-control-sm form-select" name="type[% x %]" id="sel_type[% x %]" onchange="check_backends_config(this)">
       <option value="livestatus"[% IF b.type == 'livestatus' %] selected[% END %]>livestatus</option>
       <option value="http"[% IF       b.type == 'http'       %] selected[% END %]>http</option>
       <option value="configonly"[% IF b.type == 'configonly' %] selected[% END %]>config only</option>
     </select>
-  </td>
-</tr>
+  </div>
+</div>
 [% FOREACH addr IN b.addr.list %]
-<tr class="backend_conf_[% x %] backend_connection">
-  <th class="px-2 align-top">Connection</th>
-  <td>
-    <div class="flexrow gap-x-1 w-full flex-nowrap">
-      <input type="text" name="peer[% x %]" value="[% addr | html %]" class="grow peer_[% x %]_[% loop.index %]" placeholder="server:6557 or socket">
-      <input type="button" name="test[% x %]" class="bg-gray-300 hover:bg-gray-400 rounded-lg border border-gray-400 px-2 py-0 text-sm" value="test" onclick="conf_test_connection(this, '[% x %]_[% loop.index %]')">
+<div class="row align-items-center backend_conf_[% x %] backend_connection m-3">
+  <label class="col form-label font-bold">Connection</label>
+    <div class="col-9 input-group">
+      <input type="text" name="peer[% x %]" value="[% addr | html %]" class="form-control form-control-sm peer_[% x %]_[% loop.index %]" placeholder="server:6557 or socket">
+      <input type="button" name="test[% x %]" class="btn btn-primary" value="test" onclick="conf_test_connection(this, '[% x %]_[% loop.index %]')">
     </div>
-  </td>
-  <td>
     <div class="hidden spinner testimg_c_[% x %]_[% loop.index %]" title="checking connection"></div>
     <i class="ti ti-exclamation-circle text-lg text-yellow-500 hidden testimg_e_[% x %]_[% loop.index %]"></i>
     <i class="ti ti-circle-check text-lg text-success hidden testimg_o_[% x %]_[% loop.index %]"></i>
-  </td>
-</tr>
+</div>
 [% END %]
-<tr class="backend_conf_[% x %] backend_auth">
-  <th class="p-2">Auth-Key</th>
-  <td>
+<div class="row align-items-center backend_conf_[% x %] backend_auth m-3">
+  <label class="col form-label font-bold">Auth-Key</label>
     <div class="flexrow gap-px w-full flex-nowrap items-center">
       <input type="text" name="auth[% x %]" value="[% b.auth | html %]" class="w-full" placeholder="authkey">
       <a href="#" onclick="overcard({ 'bodyCls': 'p-2', 'body': 'The authorization key is used to authorize http requests.<br>It must be provided from the remote host and can be either:<br><ul><li>an api key (<a href=&quot;http://thruk.org/documentation/rest.html#_api-key&quot; target=&quot;_blank&quot; class=&quot;link&quot;>read more in the docs <i class=&quot;ti ti--external-link-alt text-sm&quot;></i></a>)<\/li><li>the key from /var/lib/thruk/secret.key<\/li><li> the key from ~/var/thruk/secret.key (for OMD)<\/li><\/ul>', 'caption': 'Authorization Key', 'width': 600 }); return false;">
         <i class="ti ti-circle-question" id="authinfoimg[% x %]" title="help"></i>
       </a>
     </div>
-  </td>
-</tr>
-<tr class="backend_conf_[% x %] backend_proxy">
-  <th class="p-2">Proxy</th>
-  <td>
+</div>
+<div class="row align-items-center backend_conf_[% x %] backend_proxy m-3">
+  <label class="col form-label font-bold">Proxy</label>
     <input type="text" name="proxy[% x %]" value="[% b.proxy | html %]" class="w-full" placeholder="http://proxyhost:proxyport">
-  </td>
-</tr>
-<tr class="backend_conf_[% x %] backend_remote_name">
-  <th class="p-2">Remote Name</th>
-  <td>
+</div>
+<div class="row align-items-center backend_conf_[% x %] backend_remote_name m-3">
+  <label class="col form-label font-bold">Remote Name</label>
     <input type="text" name="remote_name[% x %]" value="[% b.remote_name | html %]" class="w-full" placeholder="name of remote peer">
-  </td>
-</tr>
-<tr class="backend_conf_[% x %] backend_hidden">
-  <th class="p-2">Hidden</th>
-  <td>
-    <div class="radiogroup">
-      <input type="radio" name="hidden[% x %]" id="hidden[% x %]_0" value="0"[% IF b.hidden == 0 %] checked[% END %]><label for="hidden[% x %]_0">No</label>
-      <input type="radio" name="hidden[% x %]" id="hidden[% x %]_1" value="1"[% IF b.hidden == 1 %] checked[% END %]><label for="hidden[% x %]_1">Yes</label>
+</div>
+<div class="row align-items-center backend_conf_[% x %] backend_hidden m-3">
+  <label class="col form-label font-bold">Hidden</label>
+    <div class="col-8">
+        <label class="form-check form-check-inline pr-3" for="hidden[% x %]_0">
+         <input class="form-check-input" type="radio" name="hidden[% x %]" id="hidden[% x %]_0" value="0"[% IF b.hidden == 0 %] checked[% END %]>
+         <span class="form-check-label">No</span>
+        </label>
+
+        <label class="form-check form-check-inline ml-3" for="hidden[% x %]_1">
+          <input class="form-check-input" type="radio" name="hidden[% x %]" id="hidden[% x %]_1" value="1"[% IF b.hidden == 1 %] checked[% END %]>
+          <span class="form-check-label">Yes</span>
+        </label>
     </div>
-  </td>
-</tr>
-<tr class="backend_conf_[% x %]">
-  <th class="p-2">Section</th>
-  <td>
-    <input type="text" name="section[% x %]" value="[% b.section | html %]" class="w-full" placeholder="group sites by sections">
-  </td>
-</tr>
-<tr class="backend_conf_[% x %]">
-  <th class="p-2">Source</th>
-  <td>
-    [% IF b.file != "" %][% b.file %]:[% b.lineno %][% ELSE %][% conf_file %][% END %]
-  </td>
-</tr>
+  <!--<label class="form-check form-check-inline">
+  <input class="form-check-input" type="radio" name="radios-inline" checked="">
+  <span class="form-check-label">Option 1</span>
+  </label>-->
+</div>
+<div class="row align-items-center backend_conf_[% x %] m-3">
+  <label class="col form-label font-bold">Section</label>
+  <input class="col-9 form-control form-control-sm" type="text" name="section[% x %]" value="[% b.section | html %]" placeholder="group sites by sections">
+</div>
+<div class="row align-items-center backend_conf_[% x %] m-3">
+  <label class="col form-label font-bold">Source</label>    
+  <input type="text" class="col-9 form-control form-control-sm" placeholder="Disabled..." value="[% IF b.file != "" %][% b.file %]:[% b.lineno %][% ELSE %][% conf_file %][% END %]" disabled="">
+</div>
 [% IF x > 1 %]
-<tr class="backend_conf_[% x %]"><td colspan=3><hr class="pb-2 mt-2"></td></tr>
+<div class="row align-items-center backend_conf_[% x %] m-3">
+  <hr class="pb-2 mt-2">
+</div>
 [% END %]

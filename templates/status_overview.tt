@@ -26,8 +26,6 @@
           [% INCLUDE view_all_hg_01 %]
           [% INCLUDE view_all_hg %]          
         [% END %]
-      <!--</div>
-    </div>-->
   [% END %]
 
   [% IF hostgroup == 'all' %]
@@ -76,21 +74,27 @@
    </div>
    
     <div class="mainTable [% IF main_table_full %]fullsize[% END %]">
+      <!--<div class="flex">-->
       <div class="flex">
       [% FOR g IN data %]
-        <div class="basis-1/3[% IF !loop.first %] border-l[% END %]">
+        <!--<div class="basis-1/3[% IF !loop.first %] border-l[% END %]">-->
+        <div class="col-4">
+        <div class="card">
+          <div class="card-header d-flex justify-content-between">
           [% IF substyle == 'host' %]
-          <h3 class="p-2">
-            <a class="link" href="status.cgi?hostgroup=[% g.name | uri %]&amp;style=detail">[% g.alias | html %] ([% g.name | html %])</a>
-            <a class="dropdown-item" href="extinfo.cgi?type=5&amp;hostgroup=[% g.name | uri %]"><i class="ti ti-adjustments"></i></a>
-          </h3>
+            <a class="link font-bold" href="status.cgi?hostgroup=[% g.name | uri %]&amp;style=detail">[% g.alias | html %] ([% g.name | html %])</a>
+            <a class="icon" href="extinfo.cgi?type=5&amp;hostgroup=[% g.name | uri %]">
+              <i class="ti ti-adjustments"></i>
+            </a>
           [% ELSIF substyle == 'service' %]
-          <h3 class="p-2">
-            <a class="dropdown-item" href="status.cgi?servicegroup=[% g.name | uri %]&amp;style=detail">[% g.alias | html %] ([% g.name | html %])</a>
-            <a class="dropdown-item" href="extinfo.cgi?type=8&amp;servicegroup=[% g.name | uri %]"><i class="ti ti-adjustments"></i></a>
-          </h3>
+            <a class="dropdown-item font-bold" href="status.cgi?servicegroup=[% g.name | uri %]&amp;style=detail">[% g.alias | html %] ([% g.name | html %])</a>
+            <a class="icon" href="extinfo.cgi?type=8&amp;servicegroup=[% g.name | uri %]">
+              <i class="ti ti-adjustments"></i>
+            </a>
           [% END %]
-          <div class='border-t border-b'>
+          </div>
+          <div class="card-table">        
+          <!--<div class='border-t border-b'>-->
             [% start_with = 4 %]
             <!--<table class='status statusgroups [% paneprefix %]_table statusTable table table-sm table-hover' [% IF has_columns %] style="visibility: hidden;"[% END %] data-base-column-length="[% start_with %]">-->
             <table class='status statusgroups [% paneprefix %]_table statusTable table table-sm table-striped' [% IF has_columns %] style="visibility: hidden;"[% END %] data-base-column-length="[% start_with %]">
@@ -118,8 +122,10 @@
                           <a class="dropdown-item" href="status.cgi?host=[% host_name | uri %]&amp;style=detail" title="[% h.address | html %]">[% _host(h) | html %]</a>
                         </div>
                         [% IF h.icon_image_expanded %]
-                          <div class="flex pl-1.5">
-                            <a class="dropdown-item" href="extinfo.cgi?type=1&amp;host=[% host_name | uri %]"><img src='[% logo_path_prefix %][% h.icon_image_expanded %]' alt="[% h.icon_image_alt | html %]" title="[% h.icon_image_alt | html %]"></a>
+                          <div class="flex px-2">
+                            <a class="link" href="extinfo.cgi?type=1&amp;host=[% host_name | uri %]">
+                              <img class="h-fit" style="max-width: 22px !important;" src='[% logo_path_prefix %][% h.icon_image_expanded %]' alt="[% h.icon_image_alt | html %]" title="[% h.icon_image_alt | html %]">
+                            </a>
                           </div>
                         [% END %]
                       </div>
@@ -133,18 +139,20 @@
                     [% ELSIF h.state == 2 %]
                     <td class='bg-cyan-lt text-center'>UNREACHABLE</td>
                     [% END %]
-                    <td class="p-0">
+                    <td class="h-full">
                       [% SET total_hosts = h.ok + h.warning + h.unknown + h.critical + h.pending %]
                       [% IF total_hosts == 0 %]
-                      <div class="px-1.5">No matching services</div>
+                      <!--<div class="px-2">-->
+                        No matching services
+                      <!--</div>-->
                       [% ELSE %]
-                        <div class="flex h-full">
+                        <div class="p-0 m-0 w-100 h-100">
                           [% grouplink = substyle _ 'group' %]
-                          [% IF h.ok       %][% SET ok_pct = h.ok / total_hosts * 100 %]<a style="width: [% ok_pct %]%" class="OK pt-0.5 min-w-[15px] px-1" href='[%       uri_with(c, $grouplink => g.name, 'host' => host_name, 'style' => 'detail', 'servicestatustypes' => '2',  'hoststatustypes' => '15', 'serviceprops' => '0', 'hostprops' => '0' ) %]'>[% h.ok %]</a>[% END %]
-                          [% IF h.warning  %][% SET w_pct = h.warning / total_hosts * 100 %]<a style="width: [% w_pct %]%" class="WARNING text-cnter pt-0.5 min-w-[15px] px-1" href='[%  uri_with(c, $grouplink => g.name, 'host' => host_name, 'style' => 'detail', 'servicestatustypes' => '4',  'hoststatustypes' => '15', 'serviceprops' => '0', 'hostprops' => '0' ) %]'>[% h.warning %]</a>[% END %]
-                          [% IF h.unknown  %][% SET u_pct = h.unknown / total_hosts * 100 %]<a style="width: [% u_pct %]%" class="UNKNOWN text-cnter pt-0.5 min-w-[15px] px-1" href='[%  uri_with(c, $grouplink => g.name, 'host' => host_name, 'style' => 'detail', 'servicestatustypes' => '8',  'hoststatustypes' => '15', 'serviceprops' => '0', 'hostprops' => '0' ) %]'>[% h.unknown %]</a>[% END %]
-                          [% IF h.critical %][% SET c_pct = h.critical / total_hosts * 100 %]<a style="width: [% c_pct %]%" class="CRITICAL textcenter pt-0.5 min-w-[15px] px-1" href='[% uri_with(c, $grouplink => g.name, 'host' => host_name, 'style' => 'detail', 'servicestatustypes' => '16', 'hoststatustypes' => '15', 'serviceprops' => '0', 'hostprops' => '0' ) %]'>[% h.critical %]</a>[% END %]
-                          [% IF h.pending  %][% SET p_pct = h.pending / total_hosts * 100 %]<a style="width: [% p_pct %]%" class="PENDING text-cnter pt-0.5 min-w-[15px] px-1" href='[%  uri_with(c, $grouplink => g.name, 'host' => host_name, 'style' => 'detail', 'servicestatustypes' => '1',  'hoststatustypes' => '15', 'serviceprops' => '0', 'hostprops' => '0' ) %]'>[% h.pending %]</a>[% END %]
+                          [% IF h.ok       %][% SET ok_pct = h.ok / total_hosts * 100 %]<a style="width: [% ok_pct %]%" class="bg-green-lt text-center" href='[%       uri_with(c, $grouplink => g.name, 'host' => host_name, 'style' => 'detail', 'servicestatustypes' => '2',  'hoststatustypes' => '15', 'serviceprops' => '0', 'hostprops' => '0' ) %]'>[% h.ok %]</a>[% END %]
+                          [% IF h.warning  %][% SET w_pct = h.warning / total_hosts * 100 %]<a style="width: [% w_pct %]%" class="bg-yellow-lt text-center" href='[%  uri_with(c, $grouplink => g.name, 'host' => host_name, 'style' => 'detail', 'servicestatustypes' => '4',  'hoststatustypes' => '15', 'serviceprops' => '0', 'hostprops' => '0' ) %]'>[% h.warning %]</a>[% END %]
+                          [% IF h.unknown  %][% SET u_pct = h.unknown / total_hosts * 100 %]<a style="width: [% u_pct %]%" class="bg-purple-lt text-center" href='[%  uri_with(c, $grouplink => g.name, 'host' => host_name, 'style' => 'detail', 'servicestatustypes' => '8',  'hoststatustypes' => '15', 'serviceprops' => '0', 'hostprops' => '0' ) %]'>[% h.unknown %]</a>[% END %]
+                          [% IF h.critical %][% SET c_pct = h.critical / total_hosts * 100 %]<a style="width: [% c_pct %]%" class="bg-danger-lt textcenter pt-0.5 min-w-[15px] px-1" href='[% uri_with(c, $grouplink => g.name, 'host' => host_name, 'style' => 'detail', 'servicestatustypes' => '16', 'hoststatustypes' => '15', 'serviceprops' => '0', 'hostprops' => '0' ) %]'>[% h.critical %]</a>[% END %]
+                          [% IF h.pending  %][% SET p_pct = h.pending / total_hosts * 100 %]<a style="width: [% p_pct %]%" class="bg-cyan-lt text-center" href='[%  uri_with(c, $grouplink => g.name, 'host' => host_name, 'style' => 'detail', 'servicestatustypes' => '1',  'hoststatustypes' => '15', 'serviceprops' => '0', 'hostprops' => '0' ) %]'>[% h.pending %]</a>[% END %]
                         </div>
                       [% END %]
                     </td>
@@ -171,11 +179,12 @@
               </tbody>
             </table>
           </div>
+          </div>
         </div>
         [%# every x group is in a new table row #%]
         [% columns_prev = columns - 1 %]
         [% IF loop.index % columns == columns_prev and ! loop.last %]
-          </div>
+        </div>
           <div class="flex border-t">
         [% END %]
       [% END %]
