@@ -27,7 +27,7 @@
 <div class="row px-2 mb-3 align-items-center">
  <label class="col-auto col-form-label" for="fname">Change to configuration type</label>
  <form class="col-auto" method="GET" action="conf.cgi" id="obj_type_show_form">	
-	<select class="form-select" name='sub' onchange="document.getElementById('obj_type_show_form').submit()" class="w-full">
+	<select class="form-select" name='sub' onchange="document.getElementById('obj_type_show_form').submit()">
       <option value='all'[%    IF sub == 'all'   %] selected [% END %]>Overview</option>
       [% IF conf_config.exists('thruk') %]
       <option value='thruk'[%  IF sub == 'thruk' %] selected [% END %]>Thruk</option>
@@ -47,8 +47,8 @@
  </form>
 </div>
   
-<div class="row justify-content-center"> <!-- this must be a row -->
-	<div class="col-auto"> <!-- this must be a col-auto or set inside conf_frame-->
+<div class="row justify-content-center">
+	<div class="col-auto">
 	  [% content %]
 	</div>
 </div>

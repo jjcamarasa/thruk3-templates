@@ -1,76 +1,70 @@
 ﻿[% WRAPPER _conf_frame.tt %]
-<!--<div class="card w-1/2 mx-auto">-->
+<div class="card w-50">
   <div class="card-header">
-    <h3>General Configuration</h3>
+    <h3 class='my-2'>General Configuration</h3>
   </div>
   <div class="card-body">
     [% IF conf_config.exists('thruk') %]
-    <!--<div>-->
-      <a class="link" href="conf.cgi?sub=thruk">
-        <i class="ti ti-adjustments"></i>
-        <span class="inline-block w-1/3 font-semibold">Thruk Settings</span>
-        <span>Thruks settings from the thruk_local.conf</span>
+      <a class="row link" href="conf.cgi?sub=thruk">
+        <span class="col-4 font-semibold">
+        <i class="ti ti-adjustments"></i>&nbsp;Thruk Settings</span>
+        <span class='col'>Thruks settings from the thruk_local.conf</span>
       </a>
-    <!--</div>-->
     <div>
-      <a class="link" href="conf.cgi?sub=backends">
-        <i class="ti ti-share"></i>
-        <span class="inline-block w-1/3 font-semibold">Backends / Sites</span>
-        <span>Configure Backends Connections</span>
+      <a class="row link" href="conf.cgi?sub=backends">
+        <span class="col-4 font-semibold">
+        <i class="ti ti-share"></i>&nbsp;Backends/Sites</span>
+        <span class='col'>Configure Backends Connections</span>
       </a>
     </div>
     [% END %]
     [% IF conf_config.exists('cgi.cfg') %]
     <div>
-      <a class="link" href="conf.cgi?sub=cgi">
-        <i class="ti ti-lock-open"></i>
-        <span class="inline-block w-1/3 font-semibold">CGI &amp; Access</span>
-        <span>Change CGI and access settings from your cgi.cfg</span>
+      <a class="row link" href="conf.cgi?sub=cgi">
+        <span class="col-4 font-semibold">
+        <i class="ti ti-lock-open"></i>&nbsp;CGI &amp; Access</span>
+        <span class='col'>Change CGI and access settings from your cgi.cfg</span>
       </a>
     </div>
     [% END %]
     [% IF conf_config.exists('cgi.cfg') || c.config.exists('htpasswd') %]
     <div>
-      <a class="link" href="conf.cgi?sub=users">
-        <i class="ti ti-users"></i>
-        <span class="inline-block w-1/3 font-semibold">User settings</span>
-        <span>User settings, passwords and permissions</span>
+      <a class="row link" href="conf.cgi?sub=users">
+	<div class='col-4'>
+         <span class="col-4 font-semibold">
+         <i class="ti ti-users"></i>&nbsp;User settings</span>
+  	</div>
+        <span class='col'>User settings, passwords and permissions</span>
       </a>
     </div>
     [% END %]
-    <div>
-      <a class="link" href="conf.cgi?sub=plugins">
-        <i class="ti ti-puzzle"></i>
-        <span class="inline-block w-1/3 font-semibold">Plugins</span>
-        <span>Plugin Manager for Thruk Addons</span>
+      <a class="row link" href="conf.cgi?sub=plugins">
+        <span class="col-4 font-semibold">
+        <i class="ti ti-puzzle"></i>&nbsp;Plugins</span>
+        <span class='col'>Plugin Manager for Thruk Addons</span>
       </a>
-    </div>
-<!--  </div>-->
-<!--</div>-->
 
 
-<!--<div class="card w-[480px] mt-5 mx-auto">-->
-  <div class="mt-5">
-    <h3>Site Configuration</h3>
+  <div class="my-1">
+    <h3 class='text-muted pt-3'>Site Configuration</h3>
   </div>
-    <div class="mt-2">
+    <div>
       [% IF has_obj_conf %]
-        <a class="link" href="conf.cgi?sub=objects">
-          <i class="ti ti-server"></i>
-          <span class="inline-block w-1/3 font-semibold">Object settings</span>
-          <span>Host, service, timeperiods and notification settings</span>
+        <a class="row link" href="conf.cgi?sub=objects">
+          <span class="col-4 font-semibold">
+          <i class="ti ti-server"></i>&nbsp;Object settings</span>
+          <span class='col'>Host, service, timeperiods and notification settings</span>
         </a>
       [% ELSE %]
-      
       <br>
-        <span class="textALERT">
+        <span class="text-warning">
           No object configuration enabled, see
-          <a class="link" href="http://thruk.org/documentation.html#_component_thruk_backend" target="_blank">documentation
+          <a class="row link" href="http://thruk.org/documentation.html#_component_thruk_backend" target="_blank">documentation
           <i class="ti ti-external-link-alt"></i>
           </a>
         </span>
       [% END %]
     </div>
+ </div>
 </div>
-<!--</div>-->
 [% END %]

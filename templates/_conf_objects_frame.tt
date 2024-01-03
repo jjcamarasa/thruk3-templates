@@ -3,7 +3,6 @@
   <div class="card-header">
     [% PROCESS _conf_objects_menu.tt %]
   </div>
-  <!--<div class="card-body">-->
   <div class="row p-3 mt-2">
     <div class="col">
       <form class="mb-2" action="conf.cgi" method="GET" onsubmit="return(setFormBtnSpinner(this))">      
@@ -15,8 +14,7 @@
               <input class="form-control form-control-sm" type="text" name="data.name" id="data.name" value="[% IF show_secondary_select %][% data_name | html %][% END %]"
                 onclick="ajax_search.init(this, '[% type | html %]', {url:'conf.cgi?action=json&amp;long=1&amp;type=[% type | html %]', templates:'both', add_prefix:true})" placeholder="select [% type | html %] to change..." >
               <button type="submit" name="send" class="btn">show</button>
-              </div>
-            <!--</div>-->
+              </div>        
             [% IF show_secondary_select %]
               <div class="input-group">
                 <input class="form-control" type="text" name="data.name2" id="data.name2" value=""
@@ -27,12 +25,11 @@
       </form>
       [% content %]
     </div>
-<!-- Actions menu must be on right side-->      
-    <div class="col-2">
+<!-- Actions menu must be on right side-->
+    <div class="col-auto">
       [% PROCESS _conf_action_menu.tt %]
       [% PROCESS _conf_references_menu.tt %]
     </div>
-  <!--  </div>-->
   </div>
 </div>
 [% END %]
