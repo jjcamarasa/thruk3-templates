@@ -50,6 +50,11 @@
 <div class="row justify-content-center">
 	<div class="col-auto">
 	  [% content %]
+      [% PROCESS small_button btn = {
+          form   => { action => 'conf.cgi', class => 'col-auto'},
+          data   => { sub => 'objects', 'apply' => 'yes', save_and_reload => 'yes', CSRFtoken => get_user_token(c), },          
+          button => { class => 'btn btn-sm hover-green', title => "Apply all changes and reload core", onclick => "return save_reload_apply(this, '" _ show_save_reload _ "')", html => '<i class="ti ti-device-floppy "></i>&nbsp;Save &amp; Reload' },
+        }%]
 	</div>
 </div>
 

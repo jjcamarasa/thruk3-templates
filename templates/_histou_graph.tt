@@ -45,18 +45,16 @@
   });
 </script>
 
+ [% action_url = proxifiy_url(c, service, get_action_url(c, 2, 1, service.action_url_expanded, service)) %]
+ [% replace_url = action_url.replace('d-solo','d') %]
+ [% kiosk_mode_url  = "$replace_url&kiosk=tv" %]
+
 <div class="card w-full">
-  <div class="card-header justify-between">
-	[% action_url = proxifiy_url(c, service, get_action_url(c, 2, 1, service.action_url_expanded, service)) %]
-	[% replace_url = action_url.replace('d-solo','d') %]
-	
-	[% kiosk_mode_url  = "$replace_url&kiosk=tv" %]
-     <div class="font-bold">
-      <a href="[% url_prefix %]#[% histou_url %]" title="Abrir grafica actual en marco">
-        <i class="ti ti-chart-area"></i>&nbsp;Performance Graph
-      </a>
-    </div>
-     	
+  <div class="card-header d-flex justify-content-between">
+    <a class="font-bold" href="[% url_prefix %]#[% histou_url %]" title="Abrir grafica actual en marco">
+      <i class="ti ti-chart-area"></i>&nbsp;Performance Graph (histou)
+    </a>
+
     <div class='pnpSelector'>
       <form action="#">
         <select onchange="histou_source=this.value; set_histou_img();" id="histou_source_select" style="display: none;">
@@ -80,6 +78,7 @@
 
 <script>
   var histou_id     = 'histou_th2';
+  console.log(histou_id);
   var histou_start  = [% date.now - 90000 %];
   var histou_end    = [% date.now %];
   if(window.location.hash != '#') {

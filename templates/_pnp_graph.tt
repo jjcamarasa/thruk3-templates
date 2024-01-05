@@ -34,7 +34,7 @@
 <div class="card w-full">
   <div class="card-header justify-between">
     <div class="font-bold">      
-        <i class="ti ti-chart-area"></i>&nbsp;Performance Graph      
+        <i class="ti ti-chart-area"></i>&nbsp;Performance Graph (pnp)
     </div>
     <div class='pnpSelector'>
       <form action="#">
