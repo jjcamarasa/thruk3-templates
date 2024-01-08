@@ -124,7 +124,7 @@
 	</div>
 
 [% IF obj.flap_detection_enabled || obj.scheduled_downtime_depth > 0 || backends && backends.size > 1 || show_modified_attributes && obj.modified_attributes_list.size > 0 %]	
-  <div class="card p-0 col-auto">
+  <div class="card p-0 col-auto h-fit">
     <div class="card-header">
       <span class="card-title">
         <i class="ti ti-circle-plus "></i>&nbsp;Extra [% type | html %] information
