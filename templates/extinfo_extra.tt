@@ -198,7 +198,7 @@
 [% END %]
 
 [% IF show_contacts && c.check_user_roles('authorized_for_configuration_information') && obj.contacts.size > 0 %]
- <div class="card p-0 col-[% IF obj.contacts.size > 6 %]2[% ELSE %]1[% END %]">
+ <div class="card p-0 col-[% IF obj.contacts.size > 6 %]2[% ELSE %]1[% END %] h-fit">
     <div class="card-header">
       <span class="card-title">
 	  [% IF obj.contacts.size > 1 %][% plural = 's' %][% ELSE %][% plural = '' %][% END %]
@@ -206,13 +206,13 @@
       </span>
     </div>
     <div class="p-3 text-center">
-              [% colors = ['slate','orange','lime','sky','indigo','pink','yellow','green','gray'] %]
+              [% colors = ['slate','sky','indigo','gray'] %]
               <div class="pl-3 whitespace-normal">
               <div>
               [% FOREACH contact_user = obj.contacts %]              
               [% USE Math %]
               [% color_num = Math.int(Math.rand(colors.size)) %]
-              <span title="[% contact_user %]">
+              <span class='font-bold' title="[% contact_user %]">
                 <i class="ti ti-user-circle" style="font-size: 1.8rem !important;height: inherit !important; width: inherit !important; color: var(--color-[% colors.$color_num %]-500)"></i>
               </span>
               [% END %]
