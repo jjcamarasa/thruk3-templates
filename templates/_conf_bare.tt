@@ -15,7 +15,6 @@
   <div style="display:none;" id="search-results"></div>
   [% PROCESS _message.tt %]
   [% content %]
-
   <script>
   <!--
   jQuery(document).ready(function() {

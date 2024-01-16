@@ -13,13 +13,14 @@
 
   /* try to fetch sources */
   var source_url = histou_url.replace(/\/grafana\/dashboard\/script\/histou\.js\?/, '/histou/index.php?_='+random+'&');
-  jQuery.ajax({
+  
+  /*jQuery.ajax({
     url: source_url,
     type: 'POST',
     xhrFields: {
       withCredentials: true
     },
-    success: function(data) {
+    success: function(data) {     
       data = data.replace(/^[\s\S]*<br>\{/, '{');
       data = data.replace(/<br><\/pre>$/, '');
       data = data.replace(/\n/g, '');
@@ -27,6 +28,8 @@
       var sources    = [];
       var has_graphs = false;
       jQuery('#histou_source_select').find('option').remove();
+      //console.log("DATA ROW");
+      //console.log(data.rows);
       jQuery(data.rows).each(function(i, row) {
           jQuery(row.panels).each(function(j, panel) {
             var title = panel.title;
@@ -37,12 +40,13 @@
           });
       });
       /* only useful for multiple sources */
-      if(has_graphs) {
+      /*if(has_graphs) {
         jQuery('#histou_source_select').show();
       }
     },
     error: ajax_xhr_error_logonly
-  });
+  });*/
+  //console.log('END QUERY AJAX');
 </script>
 
  [% action_url = proxifiy_url(c, service, get_action_url(c, 2, 1, service.action_url_expanded, service)) %]
@@ -55,22 +59,36 @@
       <i class="ti ti-chart-area"></i>&nbsp;Performance Graph (histou)
     </a>
 
+ [% IF obj.perf_data %]
+  [% IF histou_frame_url.match('DISK_ALL') %]
     <div class='pnpSelector'>
       <form action="#">
-        <select onchange="histou_source=this.value; set_histou_img();" id="histou_source_select" style="display: none;">
-        </select>
+        <!--<select onchange="histou_source=this.value; set_histou_img();" id="histou_source_select" style="display: none;">-->
+      <select id="histou_source_select" class='form-select form-select-sm' onchange="histou_source=this.value; set_histou_img();">    
+      [% pd_split = split_perfdata(obj.perf_data).0 %]
+      [% FOREACH part = pd_split %]
+        [% IF histou_frame_url.match('WIN') %]
+          this_option = this_option.replace(/:.*$/,":");     
+        [% END %]
+      <option value="[% part.name %]">[% part.name %]</option>;
+      [% END %]
+       </select>
       </form>
     </div>
+   [% END %]
+  [% END %]
+    
   </div>
 
 [% INCLUDE graph_tabs graph_type='histou' %]
 
   <div id="pnp_graph_pane" class="card-body p-0">
-    <div id="histou_graph_pane" class="relative w-full h-full overflow-hidden">
+    <div id="histou_graph_pane" class="relative w-full h-full overflow-hidden" style='min-height: 300px !important;'>
       <div id="pnpwaitimg" class="absolute top-10 left-1/2 transform -translate-x-1/2" title="waiting">
         <div class="spinner w-12 h-12"></div>
       </div>
- <iframe id="histou_iframe" src="[% histou_frame_url %]" class="w-full h-[270px] p-0 m-0 mx-auto border-none">
+ <!--<iframe id="histou_iframe" src="[% histou_frame_url %]" class="w-full h-[270px] p-0 m-0 mx-auto border-none">-->
+ <iframe id="histou_iframe" src="[% histou_frame_url %]" class="w-full h-full p-0 m-0 mx-auto border-none">
  </iframe>
     </div>
   </div>
@@ -78,7 +96,6 @@
 
 <script>
   var histou_id     = 'histou_th2';
-  console.log(histou_id);
   var histou_start  = [% date.now - 90000 %];
   var histou_end    = [% date.now %];
   if(window.location.hash != '#') {
@@ -97,4 +114,6 @@
     }
   }
   set_histou_img(histou_start, histou_end, histou_id, histou_source);
+  
+  
 </script>

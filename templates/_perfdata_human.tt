@@ -19,6 +19,9 @@
     </thead>
     <tbody>
     [% FOREACH p = splited %]
+     <script>
+      //console.log("perfdata: [% p.name %]");      
+     </script>
     <tr class="text-center">
       [% IF !has_parents || last_parent != p.parent %]
       [% END %]

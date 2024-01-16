@@ -3,7 +3,7 @@
   ok        => 'success',
   critical  => 'danger',
   warning   => 'yellow',
-  pending   => 'gray',
+  pending   => 'secondary',
   unknown   => 'purple'
 }
 %]
@@ -287,7 +287,7 @@
     [% state = 'pending' %]
     <div class="flex mx-2 my-2 border border-[% state2color.$state %]">
       <div class="flex items-center p-5 bg-[% state2color.$state %] text-[% state2color.$state %]-fg">
-        <span class="ti ti-hourglass text-5xl border border-[% state2color.$state %]"></span>
+        <span class="ti ti-hourglass text-5xl"></span>
       </div>
       [% pend = service_stats.pending_and_unhandled + service_stats.pending_and_disabled %]
       [% IF pend > 0 %]

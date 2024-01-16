@@ -1,7 +1,7 @@
 ﻿[% WRAPPER _conf_frame.tt %]
 <div class="card w-50">
-  <div class="card-header">
-    <h3 class='my-2'>General Configuration</h3>
+  <div class="card-header py-1">
+    <span class="fw-bold fs-2">General Configuration</span>
   </div>
   <div class="card-body">
     [% IF conf_config.exists('thruk') %]
@@ -45,8 +45,8 @@
       </a>
 
 
-  <div class="my-1">
-    <h3 class='text-muted pt-3'>Site Configuration</h3>
+  <div class="my-1 text-muted pt-3">
+    <span class="fw-bold fs-2">Site Configuration</span>
   </div>
     <div>
       [% IF has_obj_conf %]

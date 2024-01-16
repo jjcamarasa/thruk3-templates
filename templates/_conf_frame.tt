@@ -4,6 +4,7 @@
 %]
 [% PROCESS _message.tt %]
 [% PROCESS _blocks.tt %]
+<div class='m-2'>
 
 [% IF thruk_author && !c.config.demo_mode && c.config.exists('conf_retention_file') %]
 <div class="card z-50 fixed bottom-0 right-0 m-2 mr-64 min-w-fit">
@@ -20,14 +21,19 @@
 [% END %]
 
 <div class="row">
-  [% infoBoxTitle = "Configuration Tool" %]
+ [% infoBoxTitle = "Configuration Tool" %]
+ <div class="col-auto">
   [% PROCESS _infobox.tt has_proc_info=0 %]
+ </div>
 </div>
-
-<div class="row px-2 mb-3 align-items-center">
- <label class="col-auto col-form-label" for="fname">Change to configuration type</label>
- <form class="col-auto" method="GET" action="conf.cgi" id="obj_type_show_form">	
-	<select class="form-select" name='sub' onchange="document.getElementById('obj_type_show_form').submit()">
+ <div class="row my-2">
+  <!--<div class="row align-items-end">-->
+  <form class="col-auto" method="GET" action="conf.cgi" id="obj_type_show_form">	
+   <div class="input-group">
+	<span class="input-group-text">    
+	  Section&nbsp;
+	</span>	
+	<select class="form-control form-select py-1" name='sub' onchange="document.getElementById('obj_type_show_form').submit()">
       <option value='all'[%    IF sub == 'all'   %] selected [% END %]>Overview</option>
       [% IF conf_config.exists('thruk') %]
       <option value='thruk'[%  IF sub == 'thruk' %] selected [% END %]>Thruk</option>
@@ -44,19 +50,24 @@
       <option value='objects'[%  IF sub == 'objects' %] selected [% END %]>Objects</option>
       [% END %]
     </select>
- </form>
-</div>
-  
+    </div>
+  </form>
+ </div>
+ 
 <div class="row justify-content-center">
 	<div class="col-auto">
 	  [% content %]
+      <div class="hidden">
       [% PROCESS small_button btn = {
           form   => { action => 'conf.cgi', class => 'col-auto'},
           data   => { sub => 'objects', 'apply' => 'yes', save_and_reload => 'yes', CSRFtoken => get_user_token(c), },          
           button => { class => 'btn btn-sm hover-green', title => "Apply all changes and reload core", onclick => "return save_reload_apply(this, '" _ show_save_reload _ "')", html => '<i class="ti ti-device-floppy "></i>&nbsp;Save &amp; Reload' },
         }%]
+      </div>
 	</div>
 </div>
+
+</div><!-- page -->
 
 <script>
 <!--
@@ -64,6 +75,5 @@ var show_commit_summary_prompt = [% IF post_obj_save_cmd && show_summary_prompt 
 init_conf_tool_buttons();
 -->
 </script>
-
 
 [% PROCESS _footer.tt %]

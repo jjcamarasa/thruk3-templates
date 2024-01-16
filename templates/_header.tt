@@ -61,7 +61,7 @@
                     <input type='hidden' name='s0_type' value='search' />
                     <input type='hidden' name='add_default_service_filter' value='1' />
                     <!--<input type='search' name='s0_value' class="deletable autosubmit headersearch js-autoexpand" id="header-search" placeholder="search..." />-->
-                    <input type='search' name='s0_value' class="form-control form-control-sm autosubmit" id="header-search" placeholder="Search…" />
+                    <input type='search' name='s0_value' class="form-control py-1 autosubmit" id="header-search" placeholder="Search…" />
                   <!--</fieldset>-->
                 </form>
               </div>

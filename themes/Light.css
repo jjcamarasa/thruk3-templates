@@ -1,5 +1,5 @@
 /*! tailwindcss v3.2.7 | MIT License | https://tailwindcss.com*/
-/* 28/12/2023 */
+/* 10/01/2024 */
 /* TABLER CSS */
 /* Tabler v1.0.0-beta20 (https://tabler.io)
 */
@@ -483,7 +483,114 @@ button:focus:not(:focus-visible) {
   outline: 0;
 }
 
-/* LAST 494 */
+input,
+button,
+select,
+optgroup,
+textarea {
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+button,
+select {
+  text-transform: none;
+}
+
+[role=button] {
+  cursor: pointer;
+}
+
+select {
+  word-wrap: normal;
+}
+select:disabled {
+  opacity: 1;
+}
+
+[list]:not([type=date]):not([type=datetime-local]):not([type=month]):not([type=week]):not([type=time])::-webkit-calendar-picker-indicator {
+  display: none !important;
+}
+
+button,
+[type=button],
+[type=reset],
+[type=submit] {
+  -webkit-appearance: button;
+}
+button:not(:disabled),
+[type=button]:not(:disabled),
+[type=reset]:not(:disabled),
+[type=submit]:not(:disabled) {
+  cursor: pointer;
+}
+
+::-moz-focus-inner {
+  padding: 0;
+  border-style: none;
+}
+
+textarea {
+  resize: vertical;
+}
+
+fieldset {
+  min-width: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+legend {
+  float: left;
+  width: 100%;
+  padding: 0;
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+  line-height: inherit;
+}
+legend + * {
+  clear: left;
+}
+
+::-webkit-datetime-edit-fields-wrapper,
+::-webkit-datetime-edit-text,
+::-webkit-datetime-edit-minute,
+::-webkit-datetime-edit-hour-field,
+::-webkit-datetime-edit-day-field,
+::-webkit-datetime-edit-month-field,
+::-webkit-datetime-edit-year-field {
+  padding: 0;
+}
+
+::-webkit-inner-spin-button {
+  height: auto;
+}
+
+[type=search] {
+  -webkit-appearance: textfield;
+  outline-offset: -2px;
+}
+
+/* rtl:raw:
+[type="tel"],
+[type="url"],
+[type="email"],
+[type="number"] {
+  direction: ltr;
+}
+*/
+::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+/* LAST 601 */
 
 /* TABLER CSS */
 /* *************************** */
@@ -920,35 +1027,67 @@ menu, ol, ul {
 /*   MIXED COLORS   */
 /* **************** */
 
-/*
-menu, ol, ul {
-  list-style: none;
-  margin: 0;
-  padding: 0
+.fs-1 {
+  font-size: 1.5rem !important;
+}
+
+.fs-2 {
+  font-size: 1.25rem !important;
+}
+
+.fs-3 {
+  font-size: 1rem !important;
+}
+
+.fs-4 {
+  font-size: 0.875rem !important;
+}
+
+.fs-5 {
+  font-size: 0.75rem !important;
 }
 
 
-select {
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3E%3C/svg%3E");
-  background-position: right .5rem center;
-  background-repeat: no-repeat;
-  background-size: 1.5em 1.5em;
-  padding-right: 2.5rem;
-  -webkit-print-color-adjust: exact;
-  print-color-adjust: exact;
-  border: 1px solid var(--color-slate-200);
+.fs-6 {
+  font-size: 0.625rem !important;
 }
 
-[multiple] {
-  background-image: none;
-  background-position: 0 0;
-  background-repeat: unset;
-  background-size: initial;
-  padding-right: .75rem;
-  -webkit-print-color-adjust: unset;
-  print-color-adjust: unset
+.fst-italic {
+  font-style: italic !important;
 }
-*/
+
+.fst-normal {
+  font-style: normal !important;
+}
+
+.fw-lighter {
+  font-weight: lighter !important;
+}
+
+.fw-light {
+  font-weight: 300 !important;
+}
+
+.fw-normal {
+  font-weight: 400 !important;
+}
+
+.fw-medium {
+  font-weight: 500 !important;
+}
+
+.fw-semibold {
+  font-weight: 600 !important;
+}
+
+.fw-bold {
+  font-weight: 600 !important;
+}
+
+.fw-bolder {
+  font-weight: bolder !important;
+}
+
 [type=checkbox], [type=radio] {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -9520,6 +9659,38 @@ form-check {
   margin-left: 0.5em;
 }
 
+.form-select {
+  --tblr-form-select-bg-img: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23929dab' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+  display: block;
+  width: 100%;
+  padding: 0.5625rem 2.25rem 0.5625rem 0.75rem;
+  font-family: var(--tblr-font-sans-serif);
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.4285714286;
+  color: var(--tblr-body-color);
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  background-color: var(--tblr-bg-forms);
+  background-image: var(--tblr-form-select-bg-img), var(--tblr-form-select-bg-icon, none);
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 16px 12px;
+  border: var(--tblr-border-width) solid var(--tblr-border-color);
+  border-radius: var(--tblr-border-radius);
+  box-shadow: var(--tblr-box-shadow-input);
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-select-sm {
+  padding-top: 0.125rem;
+  padding-bottom: 0.125rem;
+  padding-left: 0.25rem;
+  font-size: 0.75rem;
+  border-radius: var(--tblr-border-radius-sm);
+}
+
 /*Correction of Form-check position*/
 .form-check-input:checked {
   border: none;
@@ -9537,6 +9708,13 @@ form-check {
 .bg-secondary {
   --tblr-bg-opacity: 1;
   background-color: rgba(var(--tblr-secondary-rgb), var(--tblr-bg-opacity)) !important;
+}
+
+.bg-secondary-lt {
+  --tblr-bg-opacity: 1;
+  --tblr-text-opacity: 1;
+  color: rgba(var(--tblr-secondary-rgb), var(--tblr-text-opacity)) !important;
+  background-color: rgba(var(--tblr-secondary-lt-rgb), var(--tblr-bg-opacity)) !important;
 }
 
 .bg-success {

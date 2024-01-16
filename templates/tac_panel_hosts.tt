@@ -2,6 +2,7 @@
 state2color => {
   ok    => 'success',
   down  => 'danger',
+  pending   => 'secondary',
   unreachable   => 'warning'
 }
 %]

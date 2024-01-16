@@ -3,7 +3,7 @@
 [% IF extra_classes %]
   [% SET extra_classes =  " " _ extra_classes %]  
 [% END %]
-<div class="m-2 mb-3 [% extra_classes %]">
+<div class="[% extra_classes %]">
   <div class="text-2xl text-slate-800">
     [% infoBoxTitle %]
   </div>
