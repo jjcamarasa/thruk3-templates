@@ -3,14 +3,14 @@
     View Actions
   </div>
 
-    <div class="list-group-item">
+    <div class="list-group-item p-2">
         <a href="status.cgi?host=[% host.name | uri %]">
             <i class="ti ti-clipboard-text"></i>&nbsp;Host Status Detail
         </a>
     </div>
 
     [% IF host.childs.size > 0 %]
-    <div class="list-group-item">
+    <div class="list-group-item p-2">
         <a href="status.cgi?style=hostdetail&amp;s0_type=parent&amp;s0_op=%3D&amp;s0_value=[% host.name | uri %]">
         <i class="ti ti-git-merge "></i>&nbsp;Host Childs
         </a>
@@ -18,7 +18,7 @@
     [% END %]
 
     [% IF show_impacts_link %]
-    <div class="list-group-item">
+    <div class="list-group-item p-2">
         <a href="shinken_status.cgi?style=bothtypes&amp;s0_type=impact&amp;s0_op=%3D&amp;s0_value=[% host.name | uri %]&amp;title=Impacts of [% host.name | uri %]">
         <i class="ti ti-git-merge"></i>&nbsp;Impacts For This Problem
         </a>
@@ -26,14 +26,14 @@
     [% END %]
 
     [% IF show_rootproblems_link %]
-    <div class="list-group-item">
+    <div class="list-group-item p-2">
         <a href="shinken_status.cgi?style=bothtypes&amp;s0_type=rootproblem&amp;s0_op=%3D&amp;s0_value=[% host.name | uri %]&amp;title=Root problems of [% host.name | uri %]">
         <i class="ti ti-channel "></i>&nbsp;Root Problem For This Impact
         </a>
     </div>
     [% END %]
 
-    <div class="list-group-item">
+    <div class="list-group-item p-2">
         <a href="history.cgi?host=[% host.name | uri %]&amp;nosystem=1&amp;backend=[% host.peer_key %]">
         <i class="ti ti-file "></i>&nbsp;Host Alert History</a>
         <span class="navsectionsubtitle text-xs">
@@ -44,26 +44,26 @@
     </div>
 
     [% IF use_feature_trends %]
-    <div class="list-group-item">
+    <div class="list-group-item p-2">
         <a href="trends.cgi?host=[% host.name | uri %]">
         <i class="ti ti-chart-line "></i>&nbsp;Host Trends
         </a>
     </div>
     [% END %]
 
-        <div class="list-group-item">
+        <div class="list-group-item p-2">
             <a href="avail.cgi?host=[% host.name | uri %]&amp;show_log_entries">
             <i class="ti ti-book "></i>&nbsp;Host Availability Report
             </a>
             </div>
-        <div class="list-group-item">
+        <div class="list-group-item p-2">
             <a href="notifications.cgi?host=[% host.name | uri %]">
             <i class="ti ti-bell "></i>&nbsp;Host Notifications
             </a>
         </div>
 
     [% IF c.check_user_roles('authorized_for_configuration_information') %]
-        <div class="list-group-item">
+        <div class="list-group-item p-2">
             <a href="config.cgi?type=hosts&amp;jump2=[% host.name | uri %]">
             <i class="ti ti-edit "></i>&nbsp;Host Configuration
             </a>

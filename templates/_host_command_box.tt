@@ -24,7 +24,7 @@
       [% UNLESS command_disabled(c, 96) %]
       <div class="list-group-item p-2">
         <div class="flex justify-content-between align-items-center">
-          <a class="flex js-modal-command-link" href="cmd.cgi?cmd_typ=96&amp;host=[% host.name | uri %]&amp;backend=[% host.peer_key %]">
+          <a class="link" href="cmd.cgi?cmd_typ=96&amp;host=[% host.name | uri %]&amp;backend=[% host.peer_key %]">
             <i class="ti ti-calendar"></i>&nbsp;Schedule next check
           </a>
           <form class="flex" action='cmd.cgi' method='POST'>
@@ -46,7 +46,7 @@
       [% IF host.accept_passive_checks %]
         [% UNLESS command_disabled(c, 87) %]
           <div class="list-group-item p-2">
-            <a class="js-modal-command-link mx-auto" href="cmd.cgi?cmd_typ=87&amp;host=[% host.name | uri %]&amp;backend=[% host.peer_key %]">
+            <a class="link" href="cmd.cgi?cmd_typ=87&amp;host=[% host.name | uri %]&amp;backend=[% host.peer_key %]">
               <i class="ti ti-upload"></i>&nbsp;Submit passive check result
             </a>
           </div>
@@ -57,11 +57,11 @@
         [% UNLESS command_disabled(c, 33) || command_disabled(c, 51) %]
           <div class="list-group-item p-2">
             [% IF host.acknowledged %]
-            <a class="js-modal-command-link mx-auto" href="cmd.cgi?cmd_typ=51&amp;host=[% host.name | uri %]&amp;backend=[% host.peer_key %]">
+            <a class="link" href="cmd.cgi?cmd_typ=51&amp;host=[% host.name | uri %]&amp;backend=[% host.peer_key %]">
               <i class="ti ti-eraser hover-red-text"></i>&nbsp;Remove acknowledgement
             </a>
             [% ELSE %]
-            <a class="js-modal-command-link mx-auto" href="cmd.cgi?cmd_typ=33&amp;host=[% host.name | uri %]&amp;backend=[% host.peer_key %]">
+            <a class="link" href="cmd.cgi?cmd_typ=33&amp;host=[% host.name | uri %]&amp;backend=[% host.peer_key %]">
               <i class="ti ti-file-plus"></i>&nbsp;Acknowledge this problem
             </a>
             [% END %]
@@ -72,7 +72,7 @@
       [% UNLESS command_disabled(c, 10) %]
         [% IF host.state >= 1 %]
         <div class="list-group-item p-2">
-          <a class="js-modal-command-link mx-auto" href="cmd.cgi?cmd_typ=10&amp;host=[% host.name | uri %]&amp;backend=[% host.peer_key %]">
+          <a class="link" href="cmd.cgi?cmd_typ=10&amp;host=[% host.name | uri %]&amp;backend=[% host.peer_key %]">
             <i class="ti ti-clock"></i>&nbsp;Delay next notification
           </a>
         </div>
@@ -80,7 +80,7 @@
       [% END %]
       [% UNLESS command_disabled(c, 159) %]
         <div class="list-group-item p-2">
-          <a class="js-modal-command-link mx-auto" href="cmd.cgi?cmd_typ=159&amp;host=[% host.name | uri %]&amp;backend=[% host.peer_key %]">
+          <a class="link" href="cmd.cgi?cmd_typ=159&amp;host=[% host.name | uri %]&amp;backend=[% host.peer_key %]">
             <i class="ti ti-message-dots"></i>&nbsp;Send custom notification
           </a>
         </div>
@@ -88,7 +88,7 @@
 
       [% UNLESS command_disabled(c, '55') %]
         <div class="list-group-item p-2">
-          <a class="flex js-modal-command-link" href="cmd.cgi?cmd_typ=55&amp;host=[% host.name | uri %]&amp;backend=[% host.peer_key %]">
+          <a class="link" href="cmd.cgi?cmd_typ=55&amp;host=[% host.name | uri %]&amp;backend=[% host.peer_key %]">
             <i class="ti ti-bell-off"></i>&nbsp;Schedule downtime
           </a>
           <span class="navsectionsubtitle text-xs">
@@ -109,7 +109,7 @@
 
       [% UNLESS command_disabled(c, '17') %]
       <div class="list-group-item p-2">
-        <a class="js-modal-command-link" href="cmd.cgi?cmd_typ=17&amp;host=[% host.name | uri %]&amp;backend=[% host.peer_key %]">
+        <a class="link" href="cmd.cgi?cmd_typ=17&amp;host=[% host.name | uri %]&amp;backend=[% host.peer_key %]">
           <i class="ti ti-calendar"></i>&nbsp;Schedule all services check
         </a>
       </div>
