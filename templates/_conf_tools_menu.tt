@@ -3,10 +3,9 @@
   [% IF !loop.first %]
   [% END %]
   <div class="card-header p-2">
-	<h4>[% category %]</h4>
+	<div class='fw-bold'>[% category %]</div>
   </div>
-	<div class="card-body p-2">
-	<p>
+	<div class="card-body">
 		[% FOREACH name = tools_by_category.$category.keys.sort %]
 		  [% t = tools.$name %]
 			<a class="flex" href="conf.cgi?sub=objects&amp;tools=[% name | uri %]">
@@ -14,18 +13,17 @@
 			  [% t.link | html %]
 			</a>
 		[% END %]
-	</p>
 	</div>
 </div>
 [% END %]
 
 <div class="card w-full">
-  <div class="card-header p-3">
-    <h4>Actions</h4>
+  <div class="card-header p-2">
+    <div class='fw-bold'>Actions</div>
   </div>
   <div class="card-body">
       <a class="flex" href="conf.cgi?sub=objects&amp;tools=reset_ignores&amp;oldtool=[% tool | uri %]">
-        <i class="ti ti-bolt"></i>&nbsp;
+        <i class="ti ti-refresh"></i>&nbsp;
         Reset Ignores
       </a>
   </div>
