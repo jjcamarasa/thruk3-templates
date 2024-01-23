@@ -1,5 +1,5 @@
 ﻿[% UNLESS minimal %]
-<div class="navbar-expand bg-light">
+<div class="navbar-expand">
   <div class="row flex-fill align-items-center mx-2 py-2">
     <div class="col">
       <ul class="navbar-nav">

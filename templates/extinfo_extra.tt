@@ -198,14 +198,14 @@
 [% END %]
 
 [% IF show_contacts && c.check_user_roles('authorized_for_configuration_information') && obj.contacts.size > 0 %]
- <div class="card p-0 col-[% IF obj.contacts.size > 6 %]2[% ELSE %]1[% END %] h-fit">
+ <div class="card p-0 col-[% IF obj.contacts.size > 6 %]2[% ELSE %]auto[% END %] h-fit">
     <div class="card-header">
       <span class="card-title">
 	  [% IF obj.contacts.size > 1 %][% plural = 's' %][% ELSE %][% plural = '' %][% END %]
         <span class="ti ti-users"></span>&nbsp;[% obj.contacts.size %] contact[% plural %]
       </span>
     </div>
-    <div class="p-3 text-center">
+    <div class="p-2 text-center">
               [% colors = ['slate','sky','indigo','gray'] %]
               <div class="pl-3 whitespace-normal">
               <div>

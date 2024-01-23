@@ -1,7 +1,7 @@
 ﻿[% WRAPPER config_detail.tt
    dataTitle = 'Service Groups'
 %]
-
+AAA
 <table class='table table-sm table-hover sticky-2d' id="configtable">
   <thead>
     <tr>
