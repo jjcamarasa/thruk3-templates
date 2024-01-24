@@ -1,5 +1,4 @@
-/*! tailwindcss v3.2.7 | MIT License | https://tailwindcss.com*/
-/* 10/01/2024 */
+/* Last Modification:24/01/2024 */
 /* TABLER CSS */
 /* Tabler v1.0.0-beta20 (https://tabler.io)
 */
@@ -590,7 +589,78 @@ legend + * {
   padding: 0;
 }
 
-/* LAST 601 */
+::-webkit-file-upload-button {
+  font: inherit;
+  -webkit-appearance: button;
+}
+
+::file-selector-button {
+  font: inherit;
+  -webkit-appearance: button;
+}
+
+output {
+  display: inline-block;
+}
+
+iframe {
+  border: 0;
+}
+
+summary {
+  display: list-item;
+  cursor: pointer;
+}
+
+progress {
+  vertical-align: baseline;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.lead {
+  font-size: 0.875rem;
+  font-weight: var(--tblr-font-weight-normal);
+}
+
+.display-1 {
+  font-size: 5rem;
+  font-weight: 300;
+  line-height: 1.2;
+}
+
+.display-2 {
+  font-size: 4.5rem;
+  font-weight: 300;
+  line-height: 1.2;
+}
+
+.display-3 {
+  font-size: 4rem;
+  font-weight: 300;
+  line-height: 1.2;
+}
+
+.display-4 {
+  font-size: 3.5rem;
+  font-weight: 300;
+  line-height: 1.2;
+}
+
+.display-5 {
+  font-size: 3rem;
+  font-weight: 300;
+  line-height: 1.2;
+}
+
+.display-6 {
+  font-size: 2rem;
+  font-weight: 300;
+  line-height: 1.2;
+}
+/* LAST 672 */
 
 /* TABLER CSS */
 /* *************************** */
@@ -4310,7 +4380,7 @@ TH a.sort-by:after {
 TH a.sort-by.sort1:after, TH a.sort-by.sort2:before {
   opacity: 1
 }
-
+/*
 TR:nth-child(odd) TD.tableRowSelected.col_host_name, TR:nth-child(odd) TD.tableRowSelected:not(.OK):not(.UNKNOWN):not(.UP):not(.WARNING):not(.UNKNOWN):not(.DOWN):not(.CRITICAL):not(.UNREACHABLE):not(.PENDING) {
   background-color: var(--row-selected-odd-bg) !important;
   color: var(--row-selected-fg) !important
@@ -4320,7 +4390,7 @@ TR:nth-child(2n) TD.tableRowSelected.col_host_name, TR:nth-child(2n) TD.tableRow
   background-color: var(--row-selected-even-bg) !important;
   color: var(--row-selected-fg) !important
 }
-
+*/
 @media print {
   .noprint {
     display: none
@@ -9019,7 +9089,6 @@ Card list group
   vertical-align: bottom;
 }
 
-
 .table-group-divider {
   border-top: calc(var(--tblr-border-width) * 2) solid var(--tblr-border-color-translucent);
 }
@@ -9048,7 +9117,8 @@ Card list group
 }
 
 .table-striped > tbody > tr:nth-of-type(even) > * {
-  --tblr-table-accent-bg: var(--tblr-table-striped-bg);
+    /* Semitransparent bg for striped tables */
+  --tblr-table-accent-bg: rgba(var(--tblr-secondary-rgb),0.08);
   color: var(--tblr-table-striped-color);
 }
 
