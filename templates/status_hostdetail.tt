@@ -2,6 +2,7 @@
 [% PROCESS _header.tt %]
 [% PROCESS _message.tt %]
 [% PROCESS _sounds.tt %]
+[% PROCESS _blocks.tt %]
 [% authorized_for_read_only = 0 %][% IF c.check_user_roles('authorized_for_read_only') %][% authorized_for_read_only = 1 %][% END %]
 
 [% PROCESS _status_cmd_pane.tt %]
@@ -27,7 +28,6 @@
         [% END %]
   [% END %]
 
-<div class="container">  
   [% IF custom_title != '' %]
     [% custom_title %]
   [% ELSIF hostgroup == 'all' %]
@@ -40,8 +40,8 @@
   
   [% PROCESS _infobox.tt %]
 
-  <div class="flexrow sm:flex-nowrap my-2 gap-y-1">
-    <div class="flex basis-1/3 self-end gap-1">
+  <div class="row mx-0 my-2 justify-content-between">
+    <div class="col-4 px-0">
       <div class="flex place-items-end gap-1">
         <div class="btn-group">
         [% columns=[ 'Site:0', 'Hostname', 'Displayname:0', 'IP', 'Alias:0', 'Parents:0', 'Groups:0', 'Status', 'Acknowledged', 'Downtime', 'Notifications', 'Active Checks', 'Flapping', 'Last Check', 'Duration', 'Status Information', 'Extra Status Information:0', 'Comments:0' ] %]
@@ -52,8 +52,8 @@
         </div>
       </div>
     </div>
+      <div class="col-4">
       [% UNLESS authorized_for_read_only %]
-      <div class="basis-1/3">
         <div class="hint flex gap-x-0.5 sm:justify-center">
           <div class="btn-group">
           <button class="btn btn-sm px-2" onclick="selectAllHosts(true,'[% paneprefix %]');return false;">Hosts</button>
@@ -62,22 +62,23 @@
           <button class="btn btn-sm px-2" onclick="selectAllHosts(false,'[% paneprefix %]');return false;">Unselect all</button>
           </div>
         </div>
-      </div>
       [% END %]
-    <div class="basis-1/3 hidden sm:flex self-end justify-end relative">
-      <button class="btn btn-sm" onclick="toggleElement('show_table_info_hst', undefined, true); return false;" title="Toggle help">
-        <i class="ti ti-question-mark"></i>
-      </button>
-      <div class="card shadow-float absolute z-20 top-7" style="visibility: hidden;" id="show_table_info_hst">
-        <div class="head justify-between">
-          <h3>Info</h3>
-          <button class="iconOnly btn-sm hover-red" onclick="toggleElement('show_table_info_hst'); return false;"><i class="ti ti-square-x-filled text-danger"></i></button>
-        </div>
-        <div class="body">
-          <div class="whitespace-nowrap">You can select hosts with leftclick to send multiple commands.</div>
-          <div class="whitespace-nowrap">Select multiple by holding shift + leftclick</div>
-        </div>
       </div>
+    <div class="col-4 d-flex justify-content-end">
+      <!-- <button class="btn btn-sm" onclick="toggleElement('show_table_info_hst', undefined, true); return false;" title="Toggle help"> -->
+        <!-- <i class="ti ti-question-mark"></i> -->
+      <!-- </button> -->
+      <!-- <div class="card shadow-float absolute z-20 top-7" style="visibility: hidden;" id="show_table_info_hst"> -->
+        <!-- <div class="head justify-between"> -->
+          <!-- <h3>Info</h3> -->
+          <!-- <button class="iconOnly btn-sm hover-red" onclick="toggleElement('show_table_info_hst'); return false;"><i class="ti ti-square-x-filled text-danger"></i></button> -->
+        <!-- </div> -->
+        <!-- <div class="body"> -->
+          <!-- <div class="whitespace-nowrap">You can select hosts with leftclick to send multiple commands.</div> -->
+          <!-- <div class="whitespace-nowrap">Select multiple by holding shift + leftclick</div> -->
+        <!-- </div> -->
+      <!-- </div> -->
+      [% PROCESS help_button %]
     </div>
   </div>
 [% END %]
@@ -104,7 +105,6 @@
     [% PROCESS _pager_total_items.tt %]
   </div>
 </div>
-</div> <!-- page container -->
 
 [% UNLESS authorized_for_read_only %]
 <script>
