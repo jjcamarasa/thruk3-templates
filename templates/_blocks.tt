@@ -232,15 +232,16 @@
 [% END %]
 
 [% BLOCK help_button %]
-<div class="popover bs-popover-start fade show hidden absolute" role="popover" id="info_popover" data-popper-placement="start" style='margin-right: 2.65rem; margin-top: -0.5rem'>
+<div class="popover bs-popover-start fade show hidden absolute" role="popover" id="[% this_id %]" data-popper-placement="start" style='margin-right: 2.65rem; margin-top: -0.5rem'>
   <div class="popover-arrow mt-3 absolute"></div>
       <div class="popover-header fw-bold">Help Information</div>
       <div class="popover-body">
         You can select hosts / services with leftclick to send multiple commands.</br>
         Select multiple by holding shift + leftclick
+		[% this_message %]
       </div>
   </div>
-<button class="btn btn-sm" onclick="toggleElement('info_popover', undefined, true); return false;" title="Show help info">
+<button class="btn btn-sm" onclick="toggleElement('[% this_id %]', undefined, true); return false;" title="Show help info">
   <i class="ti ti-question-mark"></i>
 </button>
 [% END %]

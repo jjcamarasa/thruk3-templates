@@ -1,13 +1,12 @@
 ﻿[% USE date %]
 [% PROCESS _header.tt %]
- [% infoBoxTitle = "<i class='ti ti-cloud-network'></i> $infoBoxTitle" %]
+ [% infoBoxTitle = "<i class='ti ti-cloud-network text-2xl'></i> $infoBoxTitle" %]
 [% IF outages.size == 0 %]
- [% infoBoxTitle = "$infoBoxTitle <span class='text-success text-sm'><i class='ti ti-chevrons-right text-sm'></i>&nbsp;No Blocking Outages</span>" %]
+ [% #infoBoxTitle = "$infoBoxTitle <span class='text-success text-sm'><i class='ti ti-chevrons-right text-sm'></i>&nbsp;No Blocking Outages</span>" %]
 [% END %]
 
-[% PROCESS _infobox.tt %]
-
 [% IF outages.size > 0 %]
+[% PROCESS _infobox.tt %]
  <h1 class="mt-5">Blocking Outages</h1>
   <div class="card min-w-[420px] w-full mt-2 overflow-hidden">
     <div class="mainTable [% IF main_table_full %]fullsize[% END %] border-t-0">
@@ -74,5 +73,20 @@
       </div>
     </div>
   </div>
+[% ELSE %]
+<div class='row justify-content-center py-3'>
+  <div class='col-3'>
+	<div class='card rounded fs-2 border-green'>
+	  <div class='card-header fs-1 text-center bg-green-lt border-green'>
+		<div class='fw-bold py-2'>[% infoBoxTitle %]</div>
+	  </div>
+	  <div class='card-body text-center'>
+		<p class='p-3 text-muted'>
+		No blocking outages detected.
+		</p>
+	  </div>
+	</div>
+  </div>
+</div>
 [% END %]
 [% PROCESS _footer.tt %]

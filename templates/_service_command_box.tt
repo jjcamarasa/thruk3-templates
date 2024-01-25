@@ -30,7 +30,7 @@
       [% IF service.accept_passive_checks %]
         [% UNLESS command_disabled(c, '30') %]
           <div class="list-group-item p-2">
-            <a class="js-modal-command-link mx-auto" href="cmd.cgi?cmd_typ=30&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
+            <a class="link" href="cmd.cgi?cmd_typ=30&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
               <i class="ti ti-upload"></i>&nbsp;Submit passive check result
             </a>
           </div>
@@ -40,11 +40,11 @@
         [% UNLESS command_disabled(c, '34') || command_disabled(c, '52') %]
           <div class="list-group-item p-2">
             [% IF service.acknowledged %]
-            <a class="js-modal-command-link mx-auto" href="cmd.cgi?cmd_typ=52&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
+            <a class="link" href="cmd.cgi?cmd_typ=52&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
               <i class="ti ti-eraser hover-red-text"></i>&nbsp;Remove acknowledgement
             </a>
             [% ELSE %]
-            <a class="js-modal-command-link mx-auto" href="cmd.cgi?cmd_typ=34&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
+            <a class="link" href="cmd.cgi?cmd_typ=34&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
               <i class="ti ti-message-exclamation"></i>&nbsp;Acknowledge this problem
             </a>
             [% END %]
@@ -54,7 +54,7 @@
       [% IF service.state >= 1 %]
         [% UNLESS command_disabled(c, '9') %]
           <div class="list-group-item p-2">
-            <a class="js-modal-command-link mx-auto" href="cmd.cgi?cmd_typ=9&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
+            <a class="link" href="cmd.cgi?cmd_typ=9&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
               <i class="ti ti-clock"></i>&nbsp;Delay next notification
             </a>
           </div>
@@ -62,14 +62,14 @@
       [% END %]
       [% UNLESS command_disabled(c, '160') %]
         <div class="list-group-item p-2">
-          <a class="js-modal-command-link" href="cmd.cgi?cmd_typ=160&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
+          <a class="link" href="cmd.cgi?cmd_typ=160&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
             <i class="ti ti-message-dots"></i>&nbsp;Send custom notification
           </a>
         </div>
       [% END %]
       [% UNLESS command_disabled(c, '56') %]
         <div class="list-group-item p-2">
-          <a class="js-modal-command-link mx-auto" href="cmd.cgi?cmd_typ=56&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
+          <a class="link" href="cmd.cgi?cmd_typ=56&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
             <i class="ti ti-moon"></i>&nbsp;Schedule downtime
           </a>
         </div>
@@ -77,7 +77,7 @@
       [% IF service.modified_attributes_list.size > 0 %]
         [% UNLESS command_disabled(c, '155') %]
           <div class="list-group-item p-2">
-            <a class="js-modal-command-link mx-auto" href="cmd.cgi?cmd_typ=155&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
+            <a class="link" href="cmd.cgi?cmd_typ=155&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
               <i class="ti ti-file-off"></i>&nbsp;Reset Modified Attributes
             </a>
           </div>
