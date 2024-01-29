@@ -9,7 +9,7 @@
       [% UNLESS command_disabled(c, '7') %]
       <div class="list-group-item p-2">
         <div class="flex justify-content-between align-items-center">
-          <a class="flex js-modal-command-link" href="cmd.cgi?cmd_typ=7&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
+          <a class="link" href="cmd.cgi?cmd_typ=7&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
             <i class="ti ti-calendar"></i>&nbsp;Schedule next check
           </a>
           <form class="flex" action='cmd.cgi' method='POST'>
