@@ -1,4 +1,4 @@
-/* Last Modification:24/01/2024 */
+/* Last Modification: 31/01/2024 */
 /* TABLER CSS */
 /* Tabler v1.0.0-beta20 (https://tabler.io)
 */
@@ -660,7 +660,76 @@ progress {
   font-weight: 300;
   line-height: 1.2;
 }
-/* LAST 672 */
+
+.list-unstyled {
+  padding-left: 0;
+  list-style: none;
+}
+
+.list-inline {
+  padding-left: 0;
+  list-style: none;
+}
+
+.list-inline-item {
+  display: inline-block;
+}
+.list-inline-item:not(:last-child) {
+  margin-right: 0.5rem;
+}
+
+.initialism {
+  font-size: 85.714285%;
+  text-transform: uppercase;
+}
+
+.blockquote {
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+}
+.blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+.blockquote-footer {
+  margin-top: -1rem;
+  margin-bottom: 1rem;
+  font-size: 85.714285%;
+  color: #667382;
+}
+.blockquote-footer::before {
+  content: "— ";
+}
+
+.img-fluid {
+  max-width: 100%;
+  height: auto;
+}
+
+.img-thumbnail {
+  padding: 0.25rem;
+  background-color: var(--tblr-body-bg);
+  border: var(--tblr-border-width) solid var(--tblr-border-color);
+  border-radius: var(--tblr-border-radius);
+  box-shadow: var(--tblr-box-shadow-sm);
+  max-width: 100%;
+  height: auto;
+}
+
+.figure {
+  display: inline-block;
+}
+
+.figure-img {
+  margin-bottom: 0.5rem;
+  line-height: 1;
+}
+
+.figure-caption {
+  font-size: 85.714285%;
+  color: var(--tblr-secondary-color);
+}
+/* LAST 742 */
 
 /* TABLER CSS */
 /* *************************** */
@@ -679,8 +748,7 @@ html {
 /* *************************** */
 /* DO NOT TOUCH - EXTRA DATA */
 /* *************************** */
-/* From Latest tabler.css */
-/* Line 700 */
+/* Line 742 */
 .container,
 .container-fluid,
 .container-xxl,
@@ -695,6 +763,33 @@ html {
   padding-left: calc(var(--tblr-gutter-x) * 0.5);
   margin-right: auto;
   margin-left: auto;
+}
+/* LINE 784 */
+:root {
+  --tblr-breakpoint-xs: 0;
+  --tblr-breakpoint-sm: 576px;
+  --tblr-breakpoint-md: 768px;
+  --tblr-breakpoint-lg: 992px;
+  --tblr-breakpoint-xl: 1200px;
+  --tblr-breakpoint-xxl: 1400px;
+}
+
+.row {
+  --tblr-gutter-x: var(--tblr-page-padding);
+  --tblr-gutter-y: 0;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: calc(-1 * var(--tblr-gutter-y));
+  margin-right: calc(-0.5 * var(--tblr-gutter-x));
+  margin-left: calc(-0.5 * var(--tblr-gutter-x));
+}
+.row > * {
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 100%;
+  padding-right: calc(var(--tblr-gutter-x) * 0.5);
+  padding-left: calc(var(--tblr-gutter-x) * 0.5);
+  margin-top: var(--tblr-gutter-y);
 }
 
 /* POPOVER  FROM 6779 TO 6935 */
@@ -854,12 +949,9 @@ html {
   padding: var(--tblr-popover-body-padding-y) var(--tblr-popover-body-padding-x);
   color: var(--tblr-popover-body-color);
 }
-
 /* POPOVER */
 
-
 /* line 8000 */
-
 .d-inline {
   display: inline !important;
 }
@@ -2100,9 +2192,9 @@ menu, ol, ul {
   color: var(--text-hint) !important
 }
 
-/*.textActive2 {
+.textActive2 {
   color: var(--text-active2) !important
-}*/
+}
 
 .textSUCCESS, .textSUCCESS-mixed {
   color: var(--text-success) !important
@@ -2347,7 +2439,7 @@ menu, ol, ul {
 .container {
   width: 100%
 }
-
+/*
 @media (min-width:640px) {
   .\!container {
     max-width: 640px !important
@@ -2392,7 +2484,7 @@ menu, ol, ul {
     max-width: 1536px
   }
 }
-
+*/
 .visible {
   visibility: visible !important
 }
@@ -9579,7 +9671,7 @@ Card list group
   color: #fcfdfe !important;
   background-color: RGBA(var(--tblr-danger-rgb), var(--tblr-bg-opacity, 1)) !important;
 }
-
+/*
 .row {
   --tblr-gutter-x: var(--tblr-page-padding);
   --tblr-gutter-y: 0;
@@ -9597,7 +9689,7 @@ Card list group
   padding-left: calc(var(--tblr-gutter-x) * 0.5);
   margin-top: var(--tblr-gutter-y);
 }
-
+*/
 .row > * {
   min-width: 0;
 }
