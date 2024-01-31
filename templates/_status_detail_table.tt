@@ -6,7 +6,7 @@
   [% start_with = start_with + 1 %]
 [% END %]
 
-<table class="[% paneprefix %]_table table table-sm table-hover" onmouseout='reset_all_hosts_and_services();'[% IF has_columns %] style="visibility: hidden;"[% END %] data-base-column-length="[% start_with %]">
+<table class="[% paneprefix %]_table table table-sm table-hover table-striped" onmouseout='reset_all_hosts_and_services();'[% IF has_columns %] style="visibility: hidden;"[% END %] data-base-column-length="[% start_with %]">
   <thead title="click to sort, double click to rename, drag columns to reorder">
     <tr onmouseover="initStatusTableColumnSorting('[% paneprefix %]', 'mainTable');">
       <th class="status col_host_name">
