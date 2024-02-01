@@ -232,6 +232,9 @@
 [% END %]
 
 [% BLOCK help_button %]
+[% IF !this_id %]
+ [% this_id = 'pophelpbtn' %]
+[% END %]
 <div class="popover bs-popover-start fade show hidden absolute" role="popover" id="[% this_id %]" data-popper-placement="start" style='margin-right: 2.65rem; margin-top: -0.5rem'>
   <div class="popover-arrow mt-3 absolute"></div>
       <div class="popover-header fw-bold">Help Information</div>
