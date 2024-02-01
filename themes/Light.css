@@ -4634,6 +4634,11 @@ TH a.sort-by:after {
 TH a.sort-by.sort1:after, TH a.sort-by.sort2:before {
   opacity: 1
 }
+
+.tableRowSelected {
+ background-color: rgba(var(--tblr-primary-rgb),.3) !important;
+}
+
 /*
 TR:nth-child(odd) TD.tableRowSelected.col_host_name, TR:nth-child(odd) TD.tableRowSelected:not(.OK):not(.UNKNOWN):not(.UP):not(.WARNING):not(.UNKNOWN):not(.DOWN):not(.CRITICAL):not(.UNREACHABLE):not(.PENDING) {
   background-color: var(--row-selected-odd-bg) !important;
