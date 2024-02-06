@@ -1,92 +1,96 @@
 ﻿[% USE date %]
 <div class="card z-50 fixed right-0 top-[50px] mt-0 w-full md:w-[500px] rounded-t-none rounded-r-none" style="display: none;" id="cmd_pane">
-  <div class="card-header">
-    <h3>Quick Commands</h3>
-    <button class="iconOnly medium absolute right-2 top-2" onClick="selectAllHosts(false,'dfl_');selectAllServices(false,'dfl_');selectAllHosts(false,'svc_');selectAllServices(false,'svc_');selectAllHosts(false,'hst_');return false;"><i class="ti ti-square-x-filled text-danger"></i></button>
+  <div class="card-header flex justify-content-between">
+	  <div class='fs-3 fw-bold'>Quick Commands</div>
+	  <div onClick="selectAllHosts(false,'dfl_');selectAllServices(false,'dfl_');selectAllHosts(false,'svc_');selectAllServices(false,'svc_');selectAllHosts(false,'hst_');return false;">
+		<i class="ti ti-x text-danger fs-2"></i>
+	  </div>
   </div>
-  <div class="body">
-    <form action="cmd.cgi" method="POST" id="quick_cmd_form" onsubmit="setFormBtnSpinner(this)">
+  <form action="cmd.cgi" method="POST" id="quick_cmd_form" onsubmit="setFormBtnSpinner(this)">
+  <div class="card-body">
       <input type="hidden" name="referer" value="[% short_uri(c) %]" id="form_cmd_referer">
       <input type="hidden" name="selected_services" id="selected_services" value="">
       <input type="hidden" name="selected_hosts"    id="selected_hosts"    value="">
       <input type="hidden" name="CSRFtoken" value="[% get_user_token(c) %]">
-      <table class="cellspacing">
+      <table class="table table-sm table-borderless">
         <tr>
-          <th class="w-24">Command</th>
+          <th class="w-33">Command</th>
           <td class="relative">
             <input type='hidden' id="opt_persistent" name='persistent' value="comments">
-            <select name="quick_command" id="quick_command" onChange="check_selected_command(this.value)" class="w-full" onclick="toggleElement('command_select', null, true); jQuery(this).blur(); return false;">
+            <!-- <select name="quick_command" id="quick_command" onChange="check_selected_command(this.value)" class="w-full" onclick="toggleElement('command_select', null, true); jQuery(this).blur(); return false;"> -->
+            <select name="quick_command" id="quick_command" onChange="check_selected_command(this.value)" class="w-full">
               [% IF c.config.cmd_quick_status.reschedule %]
-                <option hidden value="1" [% IF c.config.cmd_quick_status.default == "reschedule next check" %] selected[% END %]>Reschedule Next Check</option>
+                <option value="1" [% IF c.config.cmd_quick_status.default == "reschedule next check" %] selected[% END %]>Reschedule Next Check</option>
               [% END %]
               [% IF c.config.cmd_quick_status.downtime %]
-                <option hidden value="2" [% IF c.config.cmd_quick_status.default == "add downtime" %] selected[% END %]>Add Downtime</option>
-                <option hidden value="5" [% IF c.config.cmd_quick_status.default == "remove downtimes" %] selected[% END %]>Remove Downtimes</option>
+                <option value="2" [% IF c.config.cmd_quick_status.default == "add downtime" %] selected[% END %]>Add Downtime</option>
+                <option value="5" [% IF c.config.cmd_quick_status.default == "remove downtimes" %] selected[% END %]>Remove Downtimes</option>
               [% END %]
               [% IF c.config.cmd_quick_status.comment %]
-                <option hidden value="3" [% IF c.config.cmd_quick_status.default == "add comment" %] selected[% END %]>Add Comment</option>
-                <option hidden value="6" [% IF c.config.cmd_quick_status.default == "remove comments" %] selected[% END %]>Remove Comments</option>
+                <option value="3" [% IF c.config.cmd_quick_status.default == "add comment" %] selected[% END %]>Add Comment</option>
+                <option value="6" [% IF c.config.cmd_quick_status.default == "remove comments" %] selected[% END %]>Remove Comments</option>
               [% END %]
               [% IF c.config.cmd_quick_status.acknowledgement %]
-                <option hidden value="4" [% IF c.config.cmd_quick_status.default == "add acknowledgement" %] selected[% END %]>Add Acknowledgement</option>
-                <option hidden value="7" [% IF c.config.cmd_quick_status.default == "remove acknowledgement" %] selected[% END %]>Remove Acknowledgement</option>
+                <option value="4" [% IF c.config.cmd_quick_status.default == "add acknowledgement" %] selected[% END %]>Add Acknowledgement</option>
+                <option value="7" [% IF c.config.cmd_quick_status.default == "remove acknowledgement" %] selected[% END %]>Remove Acknowledgement</option>
               [% END %]
               [% IF c.config.cmd_quick_status.active_checks %]
-                <option hidden value="8" [% IF c.config.cmd_quick_status.default == "enable active checks" %] selected[% END %]>Enable Active Checks</option>
-                <option hidden value="9" [% IF c.config.cmd_quick_status.default == "disable active checks" %] selected[% END %]>Disable Active Checks</option>
+                <option value="8" [% IF c.config.cmd_quick_status.default == "enable active checks" %] selected[% END %]>Enable Active Checks</option>
+                <option value="9" [% IF c.config.cmd_quick_status.default == "disable active checks" %] selected[% END %]>Disable Active Checks</option>
               [% END %]
               [% IF c.config.cmd_quick_status.notifications %]
-                <option hidden value="10" [% IF c.config.cmd_quick_status.default == "enable notifications" %] selected[% END %]>Enable Notifications</option>
-                <option hidden value="11" [% IF c.config.cmd_quick_status.default == "disable notifications" %] selected[% END %]>Disable Notifications</option>
+                <option value="10" [% IF c.config.cmd_quick_status.default == "enable notifications" %] selected[% END %]>Enable Notifications</option>
+                <option value="11" [% IF c.config.cmd_quick_status.default == "disable notifications" %] selected[% END %]>Disable Notifications</option>
               [% END %]
               [% IF c.config.cmd_quick_status.eventhandler %]
-                <option hidden value="15" [% IF c.config.cmd_quick_status.default == "enable eventhandler" %] selected[% END %]>Enable Eventhandler</option>
-                <option hidden value="16" [% IF c.config.cmd_quick_status.default == "disable eventhandler" %] selected[% END %]>Disable Eventhandler</option>
+                <option value="15" [% IF c.config.cmd_quick_status.default == "enable eventhandler" %] selected[% END %]>Enable Eventhandler</option>
+                <option value="16" [% IF c.config.cmd_quick_status.default == "disable eventhandler" %] selected[% END %]>Disable Eventhandler</option>
               [% END %]
               [% IF c.config.cmd_quick_status.submit_result %]
-                <option hidden value="12" [% IF c.config.cmd_quick_status.default == "submit passive check result" %] selected[% END %]>Submit Passive Check Result</option>
+                <option value="12" [% IF c.config.cmd_quick_status.default == "submit passive check result" %] selected[% END %]>Submit Passive Check Result</option>
               [% END %]
               [% IF c.config.cmd_quick_status.reset_attributes %]
-                <option hidden value="14" [% IF c.config.cmd_quick_status.default == "reset modified attributes" %] selected[% END %]>Reset Modified Attributes</option>
+                <option value="14" [% IF c.config.cmd_quick_status.default == "reset modified attributes" %] selected[% END %]>Reset Modified Attributes</option>
               [% END %]
             </select>
-            <div class="card shadow-float absolute w-[376px] rounded-t-none overflow-hidden" style="display: none;" id="command_select">
+            <!--<div class="card shadow-float absolute rounded-t-none overflow-hidden" style="display: none;" id="command_select">-->
+            <div class="card shadow-float absolute rounded-t-none overflow-hidden" style="display: none;" id="command_select">
               <div class="actionbox less-padding">
               [% IF c.config.cmd_quick_status.reschedule %]
                 <div><a onclick="selectCommand(1); return false;" class="flex" href="#"><i class="ti ti-clock"></i>&nbsp;Reschedule Next Check</a></div>
               [% END %]
               [% IF c.config.cmd_quick_status.downtime %]
-                <hr class="pt-px mb-px">
+                <!-- <hr class="pt-px mb-px"> -->
                 <div><a onclick="selectCommand(2); return false;" class="flex" href="#"><i class="ti ti-moon"></i>&nbsp;Add Downtime</a></div>
                 <div><a onclick="selectCommand(5); return false;" class="flex hover-red-text" href="#"><i class="ti ti-moon"></i>&nbsp;Remove Downtimes</a></div>
               [% END %]
               [% IF c.config.cmd_quick_status.comment %]
-                <hr class="pt-px mb-px">
+                <!-- <hr class="pt-px mb-px"> -->
                 <div><a onclick="selectCommand(3); return false;" class="flex" href="#"><i class="ti ti-message"></i>&nbsp;Add Comment</a></div>
                 <div><a onclick="selectCommand(6); return false;" class="flex hover-red-text" href="#"><i class="ti ti-message-off"></i>&nbsp;Remove Comments</a></div>
               [% END %]
               [% IF c.config.cmd_quick_status.acknowledgement %]
-                <hr class="pt-px mb-px">
+                <!-- <hr class="pt-px mb-px"> -->
                 <div><a onclick="selectCommand(4); return false;" class="flex" href="#"><i class="ti ti-barrier-block"></i>&nbsp;Add Acknowledgement</a></div>
                 <div><a onclick="selectCommand(7); return false;" class="flex hover-red-text" href="#"><i class="ti ti-barrier-block"></i>&nbsp;Remove Acknowledgement</a></div>
               [% END %]
               [% IF c.config.cmd_quick_status.active_checks %]
-                <hr class="pt-px mb-px">
+                <!-- <hr class="pt-px mb-px"> -->
                 <div><a onclick="selectCommand(8); return false;" class="flex" href="#"><i class="ti ti-check"></i>&nbsp;Enable Active Checks</a></div>
                 <div><a onclick="selectCommand(9); return false;" class="flex hover-red-text" href="#"><i class="ti ti-square-x-filled text-danger"></i>&nbsp;Disable Active Checks</a></div>
               [% END %]
               [% IF c.config.cmd_quick_status.notifications %]
-                <hr class="pt-px mb-px">
+                <!-- <hr class="pt-px mb-px"> -->
                 <div><a onclick="selectCommand(10); return false;" class="flex" href="#"><i class="ti ti-check"></i>&nbsp;Enable Notifications</a></div>
                 <div><a onclick="selectCommand(11); return false;" class="flex hover-red-text" href="#"><i class="ti ti-square-x-filled text-danger"></i>&nbsp;Disable Notifications</a></div>
               [% END %]
               [% IF c.config.cmd_quick_status.eventhandler %]
-                <hr class="pt-px mb-px">
+                <!-- <hr class="pt-px mb-px"> -->
                 <div><a onclick="selectCommand(15); return false;" class="flex" href="#"><i class="ti ti-check"></i>&nbsp;Enable Eventhandler</a></div>
                 <div><a onclick="selectCommand(16); return false;" class="flex hover-red-text" href="#"><i class="ti ti-square-x-filled text-danger"></i>&nbsp;Disable Eventhandler</a></div>
               [% END %]
               [% IF c.config.cmd_quick_status.submit_result %]
-                <hr class="pt-px mb-px">
+                <!-- <hr class="pt-px mb-px"> -->
                 <div><a onclick="selectCommand(12); return false;" class="flex" href="#"><i class="ti ti-upload"></i>&nbsp;Submit Passive Check Result</a></div>
               [% END %]
               [% IF c.config.cmd_quick_status.reset_attributes %]
@@ -243,13 +247,17 @@
             </table>
           </td>
         </tr>
-        <tr>
-          <td></td>
-          <td><button id="multi_cmd_submit_button" onClick="return collectFormData('quick_cmd_form')" class="w-full submit"></button></td>
-        </tr>
+        <!--<tr class="table-footer">
+          <td>
+			 <button id="multi_cmd_submit_button" onClick="return collectFormData('quick_cmd_form')" class="w-full submit"></button>
+		  </td>
+        </tr>-->
       </table>
-    </form>
   </div>
+  <div class='card-footer text-center'>
+	<button id="multi_cmd_submit_button" onClick="return collectFormData('quick_cmd_form')" class="btn btn-sm w-50 submit"></button>
+  </div>
+  </form>
 </div>
 
 <script>

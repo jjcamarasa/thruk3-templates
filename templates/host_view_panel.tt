@@ -1,17 +1,15 @@
 <div class="card list-group list-group-sm list-group-flush list-group-hoverable">
-  <div class="list-group-header">
-    View Actions
-  </div>
+  <div class="list-group-header">View Actions</div>
 
     <div class="list-group-item p-2">
-        <a href="status.cgi?host=[% host.name | uri %]">
+        <a class='link' href="status.cgi?host=[% host.name | uri %]">
             <i class="ti ti-clipboard-text"></i>&nbsp;Host Status Detail
         </a>
     </div>
 
     [% IF host.childs.size > 0 %]
     <div class="list-group-item p-2">
-        <a href="status.cgi?style=hostdetail&amp;s0_type=parent&amp;s0_op=%3D&amp;s0_value=[% host.name | uri %]">
+        <a class='link' href="status.cgi?style=hostdetail&amp;s0_type=parent&amp;s0_op=%3D&amp;s0_value=[% host.name | uri %]">
         <i class="ti ti-git-merge "></i>&nbsp;Host Childs
         </a>
     </div>
@@ -19,7 +17,7 @@
 
     [% IF show_impacts_link %]
     <div class="list-group-item p-2">
-        <a href="shinken_status.cgi?style=bothtypes&amp;s0_type=impact&amp;s0_op=%3D&amp;s0_value=[% host.name | uri %]&amp;title=Impacts of [% host.name | uri %]">
+        <a class='link' href="shinken_status.cgi?style=bothtypes&amp;s0_type=impact&amp;s0_op=%3D&amp;s0_value=[% host.name | uri %]&amp;title=Impacts of [% host.name | uri %]">
         <i class="ti ti-git-merge"></i>&nbsp;Impacts For This Problem
         </a>
     </div>
@@ -27,49 +25,49 @@
 
     [% IF show_rootproblems_link %]
     <div class="list-group-item p-2">
-        <a href="shinken_status.cgi?style=bothtypes&amp;s0_type=rootproblem&amp;s0_op=%3D&amp;s0_value=[% host.name | uri %]&amp;title=Root problems of [% host.name | uri %]">
+        <a class='link' href="shinken_status.cgi?style=bothtypes&amp;s0_type=rootproblem&amp;s0_op=%3D&amp;s0_value=[% host.name | uri %]&amp;title=Root problems of [% host.name | uri %]">
         <i class="ti ti-channel "></i>&nbsp;Root Problem For This Impact
         </a>
     </div>
     [% END %]
 
     <div class="list-group-item p-2">
-        <a href="history.cgi?host=[% host.name | uri %]&amp;nosystem=1&amp;backend=[% host.peer_key %]">
+        <a class='link' href="history.cgi?host=[% host.name | uri %]&amp;nosystem=1&amp;backend=[% host.peer_key %]">
         <i class="ti ti-file "></i>&nbsp;Host Alert History</a>
         <span class="navsectionsubtitle text-xs">
-            <a href="showlog.cgi?host=[% host.name | uri %]&amp;backend=[% host.peer_key %]">Logs</a>
+            <a class='link' href="showlog.cgi?host=[% host.name | uri %]&amp;backend=[% host.peer_key %]">Logs</a>
             <span class="px-1">&nbsp;-&nbsp;</span>
-            <a href="avail.cgi?outages=1&host=[% host.name | uri %]&amp;backend=[% host.peer_key %]">Outages</a>
+            <a class='link' href="avail.cgi?outages=1&host=[% host.name | uri %]&amp;backend=[% host.peer_key %]">Outages</a>
         </span>
     </div>
 
     [% IF use_feature_trends %]
     <div class="list-group-item p-2">
-        <a href="trends.cgi?host=[% host.name | uri %]">
+        <a class='link' href="trends.cgi?host=[% host.name | uri %]">
         <i class="ti ti-chart-line "></i>&nbsp;Host Trends
         </a>
     </div>
     [% END %]
 
         <div class="list-group-item p-2">
-            <a href="avail.cgi?host=[% host.name | uri %]&amp;show_log_entries">
+            <a class='link' href="avail.cgi?host=[% host.name | uri %]&amp;show_log_entries">
             <i class="ti ti-book "></i>&nbsp;Host Availability Report
             </a>
             </div>
         <div class="list-group-item p-2">
-            <a href="notifications.cgi?host=[% host.name | uri %]">
+            <a class='link' href="notifications.cgi?host=[% host.name | uri %]">
             <i class="ti ti-bell "></i>&nbsp;Host Notifications
             </a>
         </div>
 
     [% IF c.check_user_roles('authorized_for_configuration_information') %]
         <div class="list-group-item p-2">
-            <a href="config.cgi?type=hosts&amp;jump2=[% host.name | uri %]">
+            <a class='link' href="config.cgi?type=hosts&amp;jump2=[% host.name | uri %]">
             <i class="ti ti-edit "></i>&nbsp;Host Configuration
             </a>
         [% IF use_feature_configtool && c.check_user_roles('authorized_for_system_commands') && backends_with_obj_config.$peer_key %]
         <span class="navsectionsubtitle text-xs">
-            <a href="conf.cgi?edit&amp;host=[% host.name | uri %]&amp;backend=[% host.peer_key %]">
+            <a class='link' href="conf.cgi?edit&amp;host=[% host.name | uri %]&amp;backend=[% host.peer_key %]">
                 <i class="ti ti-pencil text-lg"></i>&nbsp;Edit in tool
             </a>
         </span>
