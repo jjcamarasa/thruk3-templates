@@ -1,31 +1,47 @@
-﻿[% infoBoxPreTitle = "System Health Summary" %]
+﻿[% PROCESS _blocks.tt %]
+[% infoBoxPreTitle = "System Health Summary" %]
 
 <div class="h-full p-2">
   [% PROCESS _infobox.tt %]  
-  <div class="row mb-2">   
-    <div class="btn-group w-fit">
-      <div class="btn btn-sm">
+  <div class="row my-1">   
+    <div class="btn-group col-auto btn-group-sm">
+      <div class="btn">
         [% PROCESS _status_filter.tt small_button = 1 %]
       </div>
-      [% PROCESS _json_export.tt %]    
+      [% PROCESS _json_export.tt %]    	  
     </div>
   </div>
   
- <div class="row col">  
-    [% PROCESS tac_panel_netoutage.tt %]  
-  <div class="col">
+ <div class="row my-1">  
+    [% PROCESS tac_panel_netoutage.tt %]
+ </div>
+ 
+ <div class="row my-1">
+  <div class="col-4">
     [% PROCESS tac_panel_hosts.tt %]
   </div>
-  <div class="col">
+  <div class="col-4">
     [% PROCESS tac_panel_services.tt %]
   </div>
-  <div class="col-auto">
-    <div class="col-auto card mb-2">
+ </div>  
+  
+  <div class="row my-2">
+    <div id='table_monit' class="col-auto">
+      <div class='card'>
+      <div class='card-header fw-bold fs-3'>
+        Monitoring features
+      </div>
       [% PROCESS tac_panel_monit_features.tt %]
+      </div>
     </div>
-    <div class="col-auto card mt-2">
+    <div id="table_perf" class="col-auto">
+     <div class='card'>
+      <div class='card-header fw-bold fs-3'>
+        Performance metrics
+      </div>
       [% PROCESS tac_panel_monitperf.tt %]
+     </div>
     </div>
-  </div>
- </div>
+  </div> 
 </div>
+

@@ -1,9 +1,9 @@
 ﻿[% USE date %]
-<div class="card z-50 fixed right-0 top-[50px] mt-0 w-full md:w-[500px] rounded-t-none rounded-r-none" style="display: none;" id="cmd_pane">
+<div class="card z-50 fixed right-0 top-[50px] m-2 w-full md:w-[500px] rounded-t-none rounded-r-none" style="display: none;" id="cmd_pane">
   <div class="card-header flex justify-content-between">
 	  <div class='fs-3 fw-bold'>Quick Commands</div>
 	  <div onClick="selectAllHosts(false,'dfl_');selectAllServices(false,'dfl_');selectAllHosts(false,'svc_');selectAllServices(false,'svc_');selectAllHosts(false,'hst_');return false;">
-		<i class="ti ti-x text-danger fs-2"></i>
+		<i class="ti ti-x text-danger fs-1"></i>
 	  </div>
   </div>
   <form action="cmd.cgi" method="POST" id="quick_cmd_form" onsubmit="setFormBtnSpinner(this)">
