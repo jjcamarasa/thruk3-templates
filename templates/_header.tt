@@ -67,20 +67,20 @@
               </div>
             [% END %]
             
-			<div class="btn-group">
-			  <button class="btn text-xl" title="reload page" id="refresh_button" onClick="refresh_button()">
+			<div class="btn-group btn-group-sm">
+			  <button class="btn" title="reload page" id="refresh_button" onClick="refresh_button()">
 				<i class="ti ti-refresh"></i>
 			  </button>
 			  [% IF !show_error_reports %]
 			  <span class="w-fit" id="bug_report" style="display: none;">
-				<button class="btn text-xl" id="bug_report-btnEl">
+				<button class="btn" id="bug_report_button">
 				  <i class="ti ti-bug"></i>
 				</button>
 			  </div>
 			  [% END %]
 			  [% IF c.user_exists %]
-				<button class="btn text-xl" title="user preferences" onClick="toggleElementRemote('pref_pane', '_header_prefs', true); return false;">
-				  <i class="ti ti-settings"></i>
+				<button class="btn" title="user preferences" onClick="toggleElementRemote('pref_pane', '_header_prefs', true); return false;">
+				  <i class="ti ti-user"></i>
 				</button>
 				<a class="btn" title="Change color mode" href='#'>
 					<i class="ti ti-moon"></i>
