@@ -1,74 +1,76 @@
-﻿<table class="cellspacing-x">
+﻿<div class="row g-2">
   [% IF source %]
-    <tr>
-      <th>Source</th>
-      <td>[% source %]</td>
-    </tr>
+    <div class='row mb-2'>
+      <div class='form-label'>Source</div>
+      <div class='col-10'>[% source %]</td>
+    </div>
     [% IF source2 %]
-    <tr>
-      <th></th>
-      <td>[% source2 %]</td>
-    </tr>
+    <div class='row mb-2'>
+      <div class='form-label'>Source</div>
+      <div class='col-10'>[% source2 %]</td>
+    </div>
     [% END %]
     [% IF source3 %]
-      <tr>
-        <th></th>
-        <td>[% source3 %]</td>
-      </tr>
+      <div class='row mb-2'>
+        <div class='form-label'>Source</div>
+        <div class='col-10'>[% source3 %]</td>
+      </div>
     [% END %]
   [% END %]
-  <tr class="whitespace-normal">
-    <th class="align-top w-[170px]">Check Command</th>
-    <td>
-      <div class="flex px-2 rounded-md items-center codeBG">
-        <div>
-          <button class="iconOnly px-1 copy_button" onclick="copyCode(event, 'copyToClipboard'); return false;"><i class="ti ti-copy" title="Copy command to clipboard"></i></button>
+  <div class='row mb-2'>
+    <div class='form-label'>Check Command</div>
+    <div class='col-10'>
+      <div class="input-group mb-2">
+        <div class='input-group-text form-control-sm'>
+          <a onclick="copyCode(event, 'copyToClipboard'); return false;"><i class="ti ti-copy" title="Copy command to clipboard"></i></a>
         </div>
-        <div class="flex-grow">
-          <pre id="copyToClipboard" class="whitespace-normal"><code>[% command.line | html %]</code></pre>
+        <div class='form-control'>
+          <span id="copyToClipboard" class="whitespace-normal"><code>[% command.line | html %]</code></span>
         </div>
       </div>
-    </td>
-  </tr>
-  <tr class="whitespace-normal">
-    <th class="align-top w-[170px]">
+    </div>
+  </div>
+
+  <div class='row mb-2'>
+    <div class='form-label'>
       Expanded Command
-    </th>
-    <td>
+    </div>
+    <div class='col-10'>
       [% IF command.note %]
-        <div class="textALERT text-xs italic"><span class="font-semibold">Note:</span> [% command.note | html %]</div>
+        <div class="text-danger fw-bold"><span class="fst-italic">Note:</span> [% command.note | html %]</div>
       [% END %]
-      <div class="flex px-2 rounded-md items-center codeBG">
-        <div>
-          <button class="iconOnly px-1 copy_button" onclick="copyCode(event, 'copyToClipboard2'); return false;"><i class="ti ti-copy" title="Copy expanded command to clipboard"></i></button>
+      <div class="input-group mb-2">
+        <div class='input-group-text form-control-sm'>
+          <a onclick="copyCode(event, 'copyToClipboard2'); return false;"><i class="ti ti-copy" title="Copy expanded command to clipboard"></i></a>
         </div>
-        <div class="flex-grow">
-          <pre id="copyToClipboard2" class="whitespace-normal"><code>[% command.line_expanded | html %]</code></pre>
+        <div class='form-control'>
+          <span id="copyToClipboard2" class="whitespace-normal"><code>[% command.line_expanded | html %]</code></span>
         </div>
       </div>
-    </td>
-  </tr>
-  [% IF command.obfuscated %]
-    <tr class="whitespace-normal">
-      <th class="align-top w-[170px]"></th>
-      <td>
-        <div class="flex px-2 rounded-md codeBG">
-          <div>
-            <button class="iconOnly px-1 copy_button" onclick="copyCode(event, 'copyToClipboard3'); return false;"><i class="ti ti-copy" title="Copy thruk command to clipboard"></i></button>
+    </div>
+  </div>
+   [% IF command.obfuscated %]
+    <div class='row mb-2'>
+      <div class='form-label'></div>
+      <div class='col-10'>
+          <div class="input-group mb-2">
+        <div class='input-group-text form-control-sm'>
+            <a onclick="copyCode(event, 'copyToClipboard3'); return false;"><i class="ti ti-copy" title="Copy thruk command to clipboard"></i></a>
           </div>
           [% cmd = 'thruk command -n' %]
           [% IF command.backend && show_sitepanel != 'off'; cmd = "${cmd} -b \"${command.backend}\""; END %]
           [% IF command.host;    cmd = "${cmd} \"${command.host}\""; END %]
           [% IF command.service; cmd = "${cmd} \"${command.service}\""; END %]
-          <div class="flex-grow">
-            <div class="textALERT text-xs italic">
-              <span class="font-semibold">Note:</span>
+          <div class='form-control'>
+            <div class="text-danger fw-bold">
+              <span class="fst-italic">Note:</span>
               This command has been obfuscated. Get full commandline with:
             </div>
             <div id="copyToClipboard3">[% cmd | html %]</div>
           </div>
         </div>
-      </td>
-    </tr>
+      </div>
+    </div>
   [% END %]
-</table>
+</div>
+

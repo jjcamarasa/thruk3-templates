@@ -40,7 +40,7 @@
 
 [% IF comments.size > 0 %]
 <div class="card">
-  <div class="card-header flex justify-between">
+  <div class="card-header flex p-2 justify-content-between align-items-center">
     <h3>Service Comments</h3>
     [% IF c.check_cmd_permissions('service', service.description, service.host_name) %]
       <div class="flex gap-1">
@@ -71,7 +71,7 @@
 
 [% IF downtimes.size != 0 || recurring_downtimes.size != 0 %]
 <div class="card mt-5 p-2">
-  <div class="card-header flex justify-between">
+  <div class="card-header flex p-2 justify-content-between align-items-center">
     <h3>Service Downtimes</h3>
     [% IF c.check_cmd_permissions('service', service.description, service.host_name) %]
       <div class="flex gap-1">
@@ -110,7 +110,7 @@
 [% END %]
 </div><!-- main col -->
 
-  <div class="flexcol order-2 max-w-[350px] min-w-[200px] gap-1 h-full">
+  <div class="flexcol order-2 max-w-[350px] min-w-[200px] gap-1 h-full mb-3">
     [% PROCESS service_view_panel.tt %]
 	[% PROCESS _service_command_box.tt %]
 
@@ -167,24 +167,25 @@
 </div>
 
 [% IF show_full_commandline == 2 || ( show_full_commandline == 1 && c.check_user_roles('authorized_for_configuration_information') ) %]
-  <!--<div class="flex flex-row m-3">-->
-  <div class="flexrow mt-2 p-2">
+<div class="row-col my-2">
   <div class="card">
-    <div class="card-header flex justify-between">
-      <h3>Configuration Information</h3>
-      <div class="flex gap-x-1">
-        [% IF use_feature_configtool && c.check_user_roles('authorized_for_system_commands') && backends_with_obj_config.$peer_key %]
-          <a class="[% INCLUDE button_small %]" href="conf.cgi?edit&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]"><i class="ti ti-tool "></i>Configure service</a>
-        [% ELSE %]
-          <a class="[% INCLUDE button_small %]" href="config.cgi?type=services&amp;jump2=[% service.host_name | uri %]&amp;jump3=[% service.description | uri %]"><i class="ti ti-eye "></i>View Configuration</a>
-        [% END %]
-      </div>
-    </div>
-    <div>
-      [% PROCESS _extinfo_command_line.tt %]
-    </div>
+  <div class='card-header flex p-2 justify-content-between align-items-center'>
+      <span class='fw-bold fs-3'>Configuration Information</span> 
+[% IF use_feature_configtool && c.check_user_roles('authorized_for_system_commands') && backends_with_obj_config.$peer_key %]
+	  <a class="btn btn-sm" href="conf.cgi?edit&amp;host=[% service.host_name | uri %]&amp;service=[% service.description | uri %]&amp;backend=[% service.peer_key %]">
+		<i class="ti ti-tool"></i>&nbsp;Configure service
+	  </a>
+[% ELSE %]
+	  <a class="btn btn-sm" href="config.cgi?type=services&amp;jump2=[% service.host_name | uri %]&amp;jump3=[% service.description | uri %]">
+		<i class="ti ti-eye"></i>&nbsp;View Configuration
+	  </a>
+[% END %]
+  </div>
+  <div class="card-body">
+   [% PROCESS _extinfo_command_line.tt %]
   </div>
   </div>
+<div>
 [% END %]
 
 [% PROCESS user_ext_service_info.tt %]

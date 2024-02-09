@@ -149,21 +149,26 @@
 </div>
 
 [% IF show_full_commandline == 2 || ( show_full_commandline == 1 && c.check_user_roles('authorized_for_configuration_information') ) %]
-  <div class="card mt-5 w-full">
-    <div class="head justify-between">
-      <h3>Configuration Information</h3>
-      <div class="flex gap-x-1">
-        [% IF use_feature_configtool && c.check_user_roles('authorized_for_system_commands') && backends_with_obj_config.$peer_key %]
-          <a class="[% INCLUDE button_small %]" href="conf.cgi?edit&amp;host=[% host.name | uri %]&amp;backend=[% host.peer_key %]"><i class="ti ti-tool"></i>Configure host</a>
-        [% ELSE %]
-          <a class="button" href="config.cgi?type=hosts&amp;jump2=[% host.name | uri %]"><i class="ti ti-eye"></i>View Configuration</a>
-        [% END %]
-      </div>
-    </div>
-    <div>
-      [% PROCESS _extinfo_command_line.tt %]
-    </div>
+<div class="row-col my-2">
+  <div class="card">
+  <div class='card-header flex p-2 justify-content-between align-items-center'>
+      <span class='fw-bold fs-3'>Configuration Information</span> 
+[% IF use_feature_configtool && c.check_user_roles('authorized_for_system_commands') && backends_with_obj_config.$peer_key %]
+   <a class="btn btn-sm" href="conf.cgi?edit&amp;host=[% host.name | uri %]&amp;backend=[% host.peer_key %]">
+		<i class="ti ti-tool"></i>&nbsp;Configure host
+	  </a>
+[% ELSE %]
+   <a class="button" href="config.cgi?type=hosts&amp;jump2=[% host.name | uri %]">
+		<i class="ti ti-eye "></i>&nbsp;View Configuration
+	  </a>
+[% END %]
   </div>
+  <div class="card-body">
+   [% PROCESS _extinfo_command_line.tt %]
+  </div>
+  </div>
+<div>
+
 [% END %]
 
 [% PROCESS user_ext_host_info.tt %]
