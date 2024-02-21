@@ -1,7 +1,7 @@
 ﻿[% WRAPPER _conf_frame.tt %]
-<div class="card w-50">
-  <div class="card-header py-1">
-    <span class="fw-bold fs-2">General Configuration</span>
+<div class="card" style="min-width: 520px;">
+  <div class="card-header py-2">
+    <span class="fw-bold fs-2 text-muted">General Configuration</span>
   </div>
   <div class="card-body">
     [% IF conf_config.exists('thruk') %]

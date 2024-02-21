@@ -13,8 +13,8 @@
   <input type="hidden" name="action" value="save">
   <input type="hidden" name="CSRFtoken" value="[% get_user_token(c) %]">
 
-    <div class="card-header d-flex justify-content-between align-items-center">
-      <h2 class="font-bold text-muted">Backends Configuration</h2>
+    <div class="card-header flex justify-content-between align-items-center">
+      <div class="font-bold fs-2 text-muted">Backends Configuration</div>
       <button class="btn btn-default" onclick="conf_sites_add(); return false;">
         <i class="ti ti-circle-plus"></i>&nbsp;New connection
       </button>

@@ -1,11 +1,11 @@
-﻿<div class="card min-w-[600px] h-auto[% IF modal %] shadow-float[% END %]">
-  <div class="head justify-between">
-    <h3>[% IF modal %][% request %][% ELSE %]Command Options[% END %]</h3>
+﻿<div class="card">
+  <div class="card-header p-2">
+    <div class='fs-3 fw-bold'>[% IF modal %][% request %][% ELSE %]Command Options[% END %]</div>
     [% IF modal %]
-    <button class="iconOnly medium" onClick="closeModalWindow(); return false;"><i class="ti ti-square-x-filled text-danger"></i></button>
+      <!--<button class="iconOnly medium" onClick="closeModalWindow(); return false;"><i class="ti ti-square-x-filled text-danger"></i></button>-->
     [% END %]
   </div>
-  <div class="body">
+  <div class="card-body">
     <form method='post' action='cmd.cgi' onsubmit="setFormBtnSpinner(this)">
       <input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;"/>
       <input type="hidden" name="referer" value="[% referer | html %]">
@@ -15,7 +15,7 @@
       [% IF backends.size == 1 %]
         <input type="hidden" name="backend" value="[% backends.0 | html %]">
       [% END %]
-      <table class="cellspacing">
+      <table class="table-borderless w-full">
         [% content %]
         [% IF content.trim() == "" %]
           <tr>
@@ -24,24 +24,21 @@
           </tr>
         [% END %]
         [% PROCESS cmd_form_backends %]
-        <tr>
-          <td></td>
-          <td>
-            <div class="flexrow gap-1">
-              [% IF modal %]
-              <button class="w-20" onclick="closeModalWindow()">Cancel</button>
-              [% ELSIF referer != "" %]
-              <a href="[% referer %]" class="button w-20">Cancel</a>
-              [% ELSE %]
-              <button class="w-20" onclick="window.history.go(-1)">Cancel</button>
-              [% END %]
-              <button type='submit' name='btnSubmit' value='Commit' class="w-40 green">
-                <i class="ti ti-corner-down-right"></i>Commit
-              </button>
-            </div>
-          </td>
-        </tr>
       </table>
+      <div class="row justify-content-center my-2">
+        <div class="col-6 btn-group">
+        [% IF modal %]
+        <button class="btn btn-default" onclick="closeModalWindow()">Cancel</button>
+        [% ELSIF referer != "" %]
+          <a href="[% referer %]" class="btn btn-default">Cancel</a>
+        [% ELSE %]
+          <button class="btn" onclick="window.history.go(-1)">Cancel</button>
+        [% END %]
+        <button type='submit' name='btnSubmit' value='Commit' class="btn btn-success text-white">
+          <i class="ti ti-corner-down-right"></i>&nbsp;Commit
+        </button>
+        </div>
+      </div>
     </form>
   </div>
 </div>

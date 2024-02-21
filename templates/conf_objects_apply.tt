@@ -3,125 +3,109 @@
   <div class="card-header">
     [% PROCESS _conf_objects_menu.tt type="apply" %]
   </div>
-
   <div class="card-body">
-   <div class="flex w-full gap-2">
-   <div class="w-3/4 flexcol">
-      <form action="conf.cgi" method="POST" id="save_form">
+   <div class="row">
+   <div class="col-10">
+	<form action="conf.cgi" method="POST" id="save_form">
         <input type="hidden" name="sub" value="objects">
         <input type="hidden" name="apply" value="commit">
         <input type="hidden" name="CSRFtoken" value="[% get_user_token(c) %]">
-        <div class="card">
+        
+		<div class="card">
           <div class="card-header">
-            <h3>Apply Configuration Changes</h3>
+            <div class='fw-bold fs-3 text-muted'>Apply Configuration Changes</div>
+            [% IF needs_commit %]
+              <!--<i class="ti ti-alert-triangle-filled text-warning fs-2 py-1" title='Config changes needs to be saved'></i>-->
+            [% END %]            
           </div>
-
           <div class="card-body">
-            <table>
               [% IF parse_errors.size > 0 %]
                 <tr>
-                  <th class="px-2 align-top">Config Parse Errors</th>
-                  <td class="align-top">
-                    <i class="ti ti-alert-circle-filled text-orange-600 text-2xl" title='there are parse errors'></i>&nbsp;
-                  </td>
-                  <td class="px-2">
+                  <div class='col'>Config Parse Errors
+                    <i class="ti ti-alert-triangle-filled text-warning" title='there are parse errors'></i>&nbsp;
+                  </div>
+                  <div class='col-4'>
                     <ul class="overflow-x-auto max-w-[60vw]">
                       [% FOREACH err IN parse_errors %]
-                        <li class="textALERT">[% err %]</li>
+                        <li class="text-danger">[% err %]</li>
                       [% END %]
                     </ul>
-                  </td>
+                  </div>
                 </tr>
-                <tr><td colspan=3><hr class="mt-2 pb-2"></td></tr>
               [% END %]
-
-              <tr>
-                <th class="px-2 align-top">
-                  1. Verify your changes
-                </th>
-                <td>
-                  [% IF needs_commit %]
-                    <i class="ti ti-alert-circle-filled text-orange-600 text-2xl" title='Config changes needs to be saved'></i>&nbsp;
-                  [% END %]
-                </td>
-                <td class="px-2">
-                  [% IF changed_files.size > 0 %]
+			  <table class='table table-sm align-middle'>
+				<tr>
+				  <th>&nbsp;</th>
+				  <th>Information</th>
+				  <th>Action</th>
+				</tr>
+				<tr>
+                <td class='fw-bold w-fit'>1.</td>
+				<td>Verify your changes</td>
+				<td>
+                [% IF changed_files.size > 0 %]
                     <input type='hidden' name='ignore_whitespace' value='1'>
-                    <button name="diff" class="w-full" onClick="document.getElementById('save_form').action = 'conf.cgi?sub=objects&apply=yes#output'; return true;">
-                      <i class="ti ti-search"></i>&nbsp;
-                      view diff of changed files
+                    <button name="diff" class="btn btn-default w-1/4" onClick="document.getElementById('save_form').action = 'conf.cgi?sub=objects&apply=yes#output'; return true;">
+                      <i class="ti ti-search"></i>&nbsp;View
                     </button>
-                  [% ELSE %]
-                    There are no pending changes.
-                  [% END %]
-                </td>
-              </tr>
-              <tr><td colspan=3><hr class="mt-2 pb-2"></td></tr>
-
+				[% ELSE %]
+                    <span class='text-success'>
+					  <i class="ti ti-circle-check-filled" title='There are no pending changes.'></i>&nbsp;There are no pending changes.
+					</span>
+				[% END %]
+				  </td>
+              </tr>			  
               <tr>
-                <th class="px-2 align-top">
-                  2. Save changes to disk:
-                </th>
-                <td class="align-top">
-                  [% IF needs_commit %]
-                    <i class="ti ti-alert-circle-filled text-orange-600 text-2xl" title='Config changes needs to be saved'></i>&nbsp;
-                  [% END %]
-                </td>
-                <td class="px-2">
+                <td class='fw-bold'>2.</td>
+				<td>Save changes to disk</td>
+				<td>
                   [% IF changed_files.size > 0 %]
-                    The following files have been changed:
-                    <ul class="py-2 pl-5">
-                    [% FOREACH f = changed_files %]
-                      <li>[% f.display %]</li>
-                    [% END %]
-                    </ul>
-                    <button name="save" class="submit w-full" onclick="save_apply(this, 'save_form'); return false;">
-                      <i class="ti ti-save"></i>&nbsp;
-                      save your changes to disk
-                    </button>
+				  <div class='col'>
+					<div class='text-warning'>&nbsp;The following files have been changed:</div>
+					  <ul class="py-2 pl-2">
+					  [% FOREACH f = changed_files %]
+						<li>[% f.display %]</li>
+					  [% END %]
+					  </ul>
+				  </div>
+					  <button name="save" class="btn btn-default submit w-1/4" onclick="save_apply(this, 'save_form'); return false;">
+						  <i class="ti ti-device-floppy"></i>&nbsp;Save
+					  </button>					
                   [% ELSE %]
-                    There are no pending changes to commit.
+					<span class='text-success'>
+					  <i class="ti ti-circle-check-filled" title='There are no pending changes.'></i>&nbsp;There are no pending changes to commit.
+					</span>
                   [% END %]
-                </td>
+				  </td>
               </tr>
-              <tr><td colspan=3><hr class="mt-2 pb-2"></td></tr>
-
               <tr>
-                <th class="px-2 align-top">
-                  3. Check your configuration changes
-                </th>
-                <td>
+                <td class='fw-bold'>3.</td>
+				<td>Check your configuration changes
                   [% IF last_changed %]
-                    <i class='ti ti-alert-circle-filled text-orange-600 text-2xl' title='Core needs to be reloaded'></i>&nbsp;
+                    <i class='ti ti-alert-triangle-filled text-warning' title='Core needs to be reloaded'></i>&nbsp;
                   [% END %]
-                </td>
-                <td class="px-2">
+				</td>
+                <td>
                   [% IF peer_conftool.exists('obj_check_cmd') %]
-                    <button name="check" class="submit w-full" onclick="setBtnSpinner(this); document.getElementById('save_form').action = 'conf.cgi?sub=objects&apply=yes#output'; return true;">
-                      <i class="ti ti-check"></i>&nbsp;
-                      check your configuration changes
+                    <button name="check" class="btn btn-default submit w-1/4" onclick="setBtnSpinner(this); document.getElementById('save_form').action = 'conf.cgi?sub=objects&apply=yes#output'; return true;">
+                      <i class="ti ti-check"></i>&nbsp;Check
                     </button>
                   [% ELSE %]
                     please set a <i>obj_check_cmd</i>&nbsp; option in your peer config in your thruk_local.conf.
                   [% END %]
                 </td>
               </tr>
-              <tr><td colspan=3><hr class="mt-2 pb-2"></td></tr>
-
               <tr>
-                <th class="px-2 align-top">
-                  4. Reload your monitoring core
-                </th>
-                <td>
+                <td class='fw-bold'>4.</td>
+                  <td>Reload your monitoring core
                   [% IF last_changed %]
-                    <i class='ti ti-alert-circle-filled text-orange-600 text-2xl' title='Core needs to be reloaded'></i>&nbsp;
+                    <i class='ti ti-alert-triangle-filled text-warning' title='Core needs to be reloaded'></i>&nbsp;
                   [% END %]
                 </td>
-                <td class="px-2">
+                <td>
                   [% IF peer_conftool.exists('obj_reload_cmd') %]
-                    <button name="reload" class="submit w-full" onclick="setBtnSpinner(this); document.getElementById('save_form').action = 'conf.cgi?sub=objects&apply=yes#output'; return true;">
-                      <i class="ti ti-refresh"></i>&nbsp;
-                      reload your monitoring core
+                    <button name="reload" class="btn btn-default submit w-1/4" onclick="setBtnSpinner(this); document.getElementById('save_form').action = 'conf.cgi?sub=objects&apply=yes#output'; return true;">
+                      <i class="ti ti-refresh"></i>&nbsp;Reload
                     </button>
                   [% ELSE %]
                     please set a <i>obj_reload_cmd</i>&nbsp; option in your peer config in your thruk_local.conf.
@@ -130,41 +114,42 @@
               </tr>
 
               [% IF changed_files.size > 0 %]
-                <tr><td colspan=3><hr class="mt-8 pb-2"></td></tr>
                 <tr>
-                  <th class="px-2 align-top">
-                    Discard changes
-                  </th>
-                  <td></td>
-                  <td class="px-2">
-                    <button class="submit w-full hover-red" onclick="if(confirm('really discard all unsaved changes?')) { send_form_in_background_and_reload(this, { discard: true }); return false; } else { return false; }">
-                      <i class="ti ti-trash"></i>&nbsp;discard all unsaved changes
+                  <td class='fw-bold'>5.</td>
+				  <td>Discard changes</td>                  
+                  <td>
+                    <button class="btn submit w-1/4 hover-red" onclick="if(confirm('really discard all unsaved changes?')) { send_form_in_background_and_reload(this, { discard: true }); return false; } else { return false; }">
+                      <i class="ti ti-trash"></i>&nbsp;Discard
                     </button>
                   </td>
                 </tr>
               [% END %]
-
-            </table>
-          </div>
-        </div>
-      </form>
-      [% IF output %]
-    <a name="output"></a>
-    <div class="card">
-      <div class="card-header">
-        <h3>Command Output</h3>
-      </div>
-      <div class="card-body">
-        [% output %]
-      </div>
-    </div>
-  [% END %]
-    </div>
+			</table>
+		</div>
+	  </div>
+	</form>
+  </div>
   
-      <div class="w-1/4">
-        [% PROCESS _conf_action_menu.tt show_object="" %]
-      </div>
-    </div>
+  <div class="col">
+	[% PROCESS _conf_action_menu.tt show_object="" %]
   </div>
  </div>
+  
+  [% IF output %]
+  <div class="row mt-3">
+	<div class="col">
+	  <a name="output"></a>
+	  <div class="card">
+		  <div class="card-header">
+			<div class='fw-bold fs-3 text-muted'>Command Output</div>
+		  </div>
+		  <div class="card-body">
+			[% output %]
+		  </div>
+	  </div>
+	</div>
+  </div>
+  [% END %]
+  </div>
+</div>
 [% END %]

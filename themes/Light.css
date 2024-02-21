@@ -5474,9 +5474,9 @@ DIV.progressbar DIV.percent SPAN {
   opacity: 1 !important
 }
 
-TH A.button a.sort-by, TH INPUT[type=button] a.sort-by, TH INPUT[type=submit] a.sort-by, TH [type=button] a.sort-by, THBUTTON a.sort-by, TH[type=submit] a.sort-by {
+/*TH A.button a.sort-by, TH INPUT[type=button] a.sort-by, TH INPUT[type=submit] a.sort-by, TH [type=button] a.sort-by, THBUTTON a.sort-by, TH[type=submit] a.sort-by {
   padding-left: 18px
-}
+}*/
 
 .green {
   background-color: var(--button-green-bg);
@@ -8774,7 +8774,7 @@ Form select
   color: var(--tblr-secondary-color);
 }
 
-.form-control {
+.form-control, input[type=text] {
   display: block;
   width: 100%;
   padding: 0.35rem 0.55rem;
