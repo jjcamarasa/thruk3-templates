@@ -1,118 +1,99 @@
 ﻿[% IF pager.total_pages > 1 %]
-<ul class="pagination">
+<!--<ul class="btn-group btn-group-sm">-->
+<div class="btn-group btn-group-sm">
   [% prev_page = pager.page - 1 %]
     [% IF prev_page <= 0 %]
       [% prev_page = 1 %]
       [% extra_class = 'disabled' %]
-    [% END %]
-    <li class="page-item [% extra_class %]">
-      <a class="page-link" href="[% uri_with(c, 'page' => prev_page) %]">
+    [% END %]    
+      <a class="btn btn-outline [% extra_class %]" href="[% uri_with(c, 'page' => prev_page) %]">
         <i class="ti ti-chevron-left text-xl"></i>
       </a>
-    </li>
     [% IF pager.total_pages <= 13 %]
       [% page  = 1 %]
       [% WHILE page <= pager.total_pages %]
-        [% class = "" %]
+        [% extra_class = "" %]
         [% IF page == pager.page %]
-          [% class = " active" %]
+          [% extra_class = " btn-primary" %]
         [% ELSE %]
-          [% class = " small-pager" %]
+          [% extra_class = " small-pager" %]
         [% END %]
-        <li class="page-item [% class %]">
-          <a class="page-link" href="[% uri_with(c, 'page' => page) %]">
+          <a class="btn btn-outline [% extra_class %]" href="[% uri_with(c, 'page' => page) %]">
             [% page %]
           </a>
-        </li>
         [% page  = page + 1 %]
       [% END %]
     [% ELSE %]
       [% IF pager.page < 8 %]
         [% page  = 1 %]
         [% WHILE page < 10 %]
-          [% class = "" %]
+          [% extra_class = "" %]
           [% IF page == pager.page %]
-            [% class = " active" %]
+            [% extra_class = " btn-primary" %]
           [% ELSE %]
-            [% class = " small-pager" %]
+            [% extra_class = " small-pager" %]
           [% END %]
-          <li class="page-item [% class %]">
-            <a class="page-link" href="[% uri_with(c, 'page' => page) %]">
+            <a class="btn btn-outline [% extra_class %]" href="[% uri_with(c, 'page' => page) %]">
               [% page %]
             </a>
-          </li>
           [% page  = page + 1 %]
         [% END %]
-        <li class="page-item">
-          <a class="page-link bg-transparent cursor-default small-pager">...</a>
-        </li>
-        <li class="page-item">        
-          <a class="page-link small-pager" href="[% uri_with(c, 'page' => pager.total_pages) %]">[% pager.total_pages %]</a>
-        </li>
+        
+          <a class="btn btn-light disabled">...</a>
+                
+          <a class="btn btn-outline" href="[% uri_with(c, 'page' => pager.total_pages) %]">[% pager.total_pages %]</a>
+        
       [% ELSIF pager.page > pager.total_pages - 8 %]
-        <li class="page-item">
-          <a class="page-link small-pager" href="[% uri_with(c, page => 1) %]">1</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link bg-transparent cursor-default small-pager">...</a>
-        </li>
+       
+          <a class="btn btn-outline" href="[% uri_with(c, page => 1) %]">1</a>
+        
+          <a class="btn btn-light disabled">...</a>
+        
         [% page  = pager.total_pages - 8 %]
         [% WHILE page <= pager.total_pages %]
-          [% class = "" %]
+          [% extra_class = "" %]
           [% IF page == pager.page %]
-            [% class = " active" %]
+            [% extra_class = " btn-primary" %]
           [% ELSE %]
-            [% class = " small-pager" %]
+            [% extra_class = " small-pager" %]
           [% END %]
-          <li class="page-item [% class %]">
-          <a class="page-link" href="[% uri_with(c, 'page' => page) %]">
+          
+          <a class="btn btn-outline [% extra_class %]" href="[% uri_with(c, 'page' => page) %]">
             [% page %]
           </a>
-          </li>
+          
           [% page  = page + 1 %]
         [% END %]
       [% ELSE %]
-        <li class="page-item">
-          <a class="page-link small-pager" href="[% uri_with(c, page => 1) %]">1</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link bg-transparent cursor-default small-pager">...</a>
-        </li>
+          <a class="btn btn-outline" href="[% uri_with(c, page => 1) %]">1</a>
+          <a class="btn btn-light disabled">...</a>
         [% page  = pager.page - 3 %]
         [% endpage = pager.page + 3 %]
         [% WHILE page <= endpage %]
-          [% class = "" %]
+          [% extra_class = "" %]
           [% IF page == pager.page %]
-            [% class = " active" %]
+            [% extra_class = " btn-primary" %]
           [% ELSE %]
-            [% class = " small-pager" %]
+            [% extra_class = " small-pager" %]
           [% END %]
-          <li class="page-item [% class %]">
-            <a class="page-link" href="[% uri_with(c, 'page' => page) %]">
+            <a class="btn btn-outline [% extra_class %]" href="[% uri_with(c, 'page' => page) %]">
               [% page %]
             </a>
-          </li>
           [% page  = page + 1 %]
         [% END %]
-        <li class="page-item">
-          <a class="page-link bg-transparent cursor-default small-pager">...</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link small-pager" href="[% uri_with(c, 'page' => pager.total_pages) %]">
+          <a class="btn btn-light disabled">...</a>        
+          <a class="btn btn-outline" href="[% uri_with(c, 'page' => pager.total_pages) %]">
             [% pager.total_pages %]
           </a>
-        </li>
       [% END %]
     [% END %]
     [% next_page = pager.page + 1 %]
     [% IF next_page > pager.total_pages %]
       [% next_page = pager.total_pages %]
-      [% extra_class = 'disabled' %]
+      [% extra_class = 'disabled text-muted' %]
     [% END %]
-    <li class="page-item [% extra_class %]">
-      <a class="page-link" href="[% uri_with(c, 'page' => next_page) %]">
+      <a class="btn btn-outline [% extra_class %]" href="[% uri_with(c, 'page' => next_page) %]">
         <i class="ti ti-chevron-right text-xl"></i>
       </a>
-    </li>
-</ul>
+</div>
 [% END %]

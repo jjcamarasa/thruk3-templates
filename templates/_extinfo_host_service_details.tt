@@ -89,10 +89,13 @@ END
   [% END %]
 [% END %]
 
+[% IF current_status == "PENDING" %]
+ [% obj.state = 4 %]
+[% END %]
 [%
- host_color = [ 'green', 'red', 'warning', 'purple']
- state_color = [ 'green', 'yellow', 'red', 'purple', 'info' ]
- host_icon = [ 'check', 'server-off', 'share-off','help-circle' ]
+ host_color = [ 'green', 'red', 'warning', 'purple', 'info']
+ state_color = [ 'green', 'yellow', 'red', 'purple', 'info', 'dark' ]
+ host_icon = [ 'check', 'server-off', 'share-off','help-circle','hourglass' ]
  state_icon = [ 'check', 'alert-triangle', 'circle-x', 'help-circle' ]
  colorfg = "fg"
  colorbg = "bg"

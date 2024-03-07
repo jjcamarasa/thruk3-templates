@@ -7620,6 +7620,12 @@ button.disabled, input[type=submit].disabled, input[type=button].disabled {
   cursor: not-allowed
 }
 
+.btn:disabled, .btn.disabled, fieldset:disabled .btn,.btn.disabled:hover {
+  pointer-events: none;
+  opacity: 0.3 !important;
+  box-shadow: none;
+}
+
 button[type=reset] {
   background-image: none;
 }
@@ -7651,6 +7657,21 @@ button.btn-success,btn.btn-success,.btn-success  {
   --tblr-btn-active-bg: rgba(var(--tblr-success-rgb), .8);
   --tblr-btn-disabled-bg: var(--tblr-success);
   --tblr-btn-disabled-color: var(--tblr-success-fg);
+  --tblr-btn-box-shadow: var(--tblr-box-shadow-input);
+}
+
+.btn-info {
+  --tblr-btn-border-color: transparent;
+  --tblr-btn-hover-border-color: transparent;
+  --tblr-btn-active-border-color: transparent;
+  --tblr-btn-color: var(--tblr-info-fg);
+  --tblr-btn-bg: var(--tblr-info);
+  --tblr-btn-hover-color: var(--tblr-info-fg);
+  --tblr-btn-hover-bg: rgba(var(--tblr-info-rgb), .8);
+  --tblr-btn-active-color: var(--tblr-info-fg);
+  --tblr-btn-active-bg: rgba(var(--tblr-info-rgb), .8);
+  --tblr-btn-disabled-bg: var(--tblr-info);
+  --tblr-btn-disabled-color: var(--tblr-info-fg);
   --tblr-btn-box-shadow: var(--tblr-box-shadow-input);
 }
 
