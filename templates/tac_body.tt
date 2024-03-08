@@ -9,6 +9,9 @@
         [% PROCESS _status_filter.tt small_button = 1 %]
       </div>
       [% PROCESS _json_export.tt %]    	  
+      <a class="btn" href='#' onclick='toggleRow()' title='Hide/Show PerfData Table row'>
+	<i id='eye_button' class='ti ti-eye-off'></i>
+      </a>
     </div>
   </div>
   
@@ -17,15 +20,15 @@
  </div>
  
  <div class="row my-1">
-  <div class="col-4">
+  <div class="col-6">
     [% PROCESS tac_panel_hosts.tt %]
   </div>
-  <div class="col-4">
+  <div class="col-6">
     [% PROCESS tac_panel_services.tt %]
   </div>
  </div>  
   
-  <div class="row my-2">
+  <div id='row_perf_data' class="row g-1">
     <div id='table_monit' class="col-auto">
       <div class='card'>
       <div class='card-header fw-bold fs-3'>
@@ -45,3 +48,16 @@
   </div> 
 </div>
 
+<script type='text/javascript'>
+ function toggleRow() {
+      var x = document.getElementById("row_perf_data");
+      var y = document.getElementById("eye_button");
+      if (x.style.display === "none") {
+        x.style.display = "flex";
+        y.className = "ti ti-eye-off";
+      } else {
+        x.style.display = "none";
+        y.className = "ti ti-eye";
+      }
+    }
+</script>
