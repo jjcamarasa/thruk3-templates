@@ -4549,7 +4549,7 @@ HTML.minimal {
   scrollbar-color: auto
 }
 */
-header.header {
+.header {
   background-color: var(--header-bg);
   position: sticky;
   top: 0;
@@ -4557,12 +4557,12 @@ header.header {
   display: block;
   height: 50px;
   flex-shrink: 0;
-  overflow-x: auto;
+  overflow-x: none;
   overflow-y: hidden;
   padding-left: 1.25rem;
   padding-right: 1.25rem;
-  scrollbar-width: thin;
-  scrollbar-color: var(--scrollbar) #0000;
+  scrollbar-width: none;
+/*  scrollbar-color: var(--scrollbar) #0000;*/
   border-bottom: 1px solid var(--color-slate-200);
 }
 

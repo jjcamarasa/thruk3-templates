@@ -1,6 +1,8 @@
-﻿<div class="flexcol flex-nowrap gap-0 w-[200px] h-full [% IF menu_states.exists('cl') && menu_states.cl == 1 %]collapsed[% END %]" id="nav-container" onmouseover="resetRefresh()">
+﻿<!--<div class="flexcol flex-nowrap gap-0 w-[200px] h-full [% IF menu_states.exists('cl') && menu_states.cl == 1 %]collapsed[% END %]" id="nav-container" onmouseover="resetRefresh()">-->
+<div class="flexcol w-[200px] h-full [% IF menu_states.exists('cl') && menu_states.cl == 1 %]collapsed[% END %]" id="nav-container" onmouseover="resetRefresh()">
 
-  <header class="header flex-shrink-0 hidden lg:flex h-[50px]">
+  <!--<header class="header flex-shrink-0 hidden lg:flex h-[50px]">-->
+  <header class="header d-flex align-items-center">
     <a href="[% c.config.home_link %]" target="_blank" class="m-auto block">
       <img src="[% url_prefix %]themes/[% theme %]/images/logo_thruk_small.png" alt="Thruk" title="Thruk" class="h-[42px]" />
       <img src="[% url_prefix %]themes/[% theme %]/images/logo_thruk_small_icon.png" alt="Thruk" title="Thruk" class="h-[36px] collapsed-only" />
@@ -11,10 +13,15 @@
     <ul class="navbar-menu">
       [% FOREACH section = navigation %]
       [% cookie_section_name = section.name.replace(' ', '_') | lower %]
+        <!--<li class='navitem'>-->
         <li>
-          <a class="navsectiontitle navitem">
-            <i class="ti [% IF section.defined('icon') && section.icon != "" %][% section.icon | html %][% ELSE %]ti-folder[% END %] "></i>
-              <span class="ml-1">[% section.name | html %]</span>
+          <a class="navsectiontitle" href='#'>
+            [% IF section.defined('icon') && section.icon != "" %]
+            <i class="ti ti-[% section.icon %]"></i>
+	    [% ELSE %]
+             <i class="ti ti-folder"></i>
+	    [% END %]
+	    <span>&nbsp;[% section.name | html %]</span>
             <i class="ti ti-chevron-down ml-auto"></i>
           </a>
 
@@ -75,10 +82,12 @@
   </div>
   
   <div class="flex mt-auto w-full mb-0 collapse-btn">        
-      <button class="iconOnly w-full py-0 px-1.5 pl-[15px] m-0 block text-down hoverable js-menu-collapse" title="toggle collapsed side navigation.">
+      <!--<button class="iconOnly w-full py-0 px-1.5 pl-[15px] m-0 block text-down hoverable js-menu-collapse" title="toggle collapsed side navigation.">-->
+      <button class="iconOnly w-full py-0 px-1.5 m-0 block text-down hoverable js-menu-collapse" title="toggle collapsed side navigation.">
         <i class="ti ti-arrow-badge-left contents" title="collapse navigation"></i>
       </button>
-      <button class="iconOnly w-full py-0 px-1.5 pl-[15px] m-0 block hoverable btn-nav-hide js-menu-hide" title="toggle hover side navigation.">
+<!--      <button class="iconOnly w-full py-0 px-1.5 pl-[15px] m-0 block hoverable btn-nav-hide js-menu-hide" title="toggle hover side navigation.">-->
+      <button class="iconOnly w-full py-0 px-1.5 m-0 block hoverable btn-nav-hide js-menu-hide" title="toggle hover side navigation.">
         <i class="ti ti-arrow-badge-up contents" title="hide navigation"></i>
       </button>
   </div>
