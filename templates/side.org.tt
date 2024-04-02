@@ -92,5 +92,4 @@
       </button>
   </div>
 </div>
-
 [% PROCESS _ajax_search.tt %]

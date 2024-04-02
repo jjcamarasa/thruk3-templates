@@ -4887,7 +4887,7 @@ BODY.topNavOpen #pageStats, BODY.topNavOpen MAIN {
   overflow: visible
 }
 
-#nav-container.collapsed UL.navsectionlinks>LI {
+#nav-container.collapsed UL.navsectionlinks>LI, ul.navsectionlinks {
   background-color: var(--navbar-item-bg)
 }
 
