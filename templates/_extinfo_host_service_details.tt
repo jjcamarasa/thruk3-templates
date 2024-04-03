@@ -173,13 +173,14 @@ END
       </div>
     [% END %]
 
-<div class="flex flex-row gap-2">
- <div class="card w-1/2 h-full [% IF obj.perf_data.empty %] grow [% END %] border-[% state_color.${obj.state} %]">  
+<!--<div class="flex flex-row gap-2">-->
+<div class='row g-sm-1'>
+ <!--<div class="card w-1/2 h-full [% IF obj.perf_data.empty %] grow [% END %] border-[% state_color.${obj.state} %]">  -->
+<div class='col-sm-12 col-xl-6'>
+ <div class="card border-[% state_color.${obj.state} %]">
   <div class="card-header bg-[% state_color.${obj.state} %]-lt text-[% state_color.${obj.state} %] border-[% state_color.${obj.state} %]">
-	<div>
-	  <i class="ti ti-[% state_icon.${obj.state} %] text-lg" style="color: inherit !important;"></i>
+   <i class="ti ti-[% state_icon.${obj.state} %] text-lg" style="color: inherit !important;"></i>
       &nbsp;[% type|html %] <b>[% IF type == "host" %][% hst_name %][% ELSE %][% obj.description %][% END %]</b> is <b>[% current_status %]</b>&nbsp;-&nbsp;<span class="inline-block">[% IF obj.last_state_change %][% duration(date.now - obj.last_state_change, 6) %][% ELSE %][% duration(date.now - program_start, 6) %]+[% END %]</span>
-	</div>
   </div>
 	<div class='detail_plugin_output whitespace-normal p-3'>
 		  [% IF obj.has_been_checked == 0 %]obj has not been checked yet[% END %]
@@ -189,31 +190,21 @@ END
 		  [% END %]
 	</div>
   </div>
-
+ </div>
 [% IF obj.perf_data %]
-  [% tmp = split_perfdata(obj.perf_data) %]
-  [% has_warn = tmp.2; has_crit = tmp.3; has_min = tmp.4; has_max = tmp.5; %]
-  [% IF has_warn && has_crit %]
-    [% IF has_min && has_max %]
-      [% card_size = "w-1/2" %]
-    [% ELSE %]
-      [% card_size = "w-1/3" %]
-    [% END %]
-  [% ELSE %]
-    [% card_size = "w-1/4" %]
-  [% END %]
-  <div class="card w-1/4 grow">
+ <div class='col'>
+  <div class="card">
     <div class="card-header d-flex justify-content-between">
-	  <div class="font-bold">
-		<i class="ti ti-chart-histogram"></i>&nbsp;Performance Data
-	  </div>
-	  <div>
-		<span class="link hoverable rounded clickable font-normal" id="raw_perf_switch" onclick="showElement('perfdata_raw'); hideElement('perfdata_human'); hideElement('raw_perf_switch'); showElement('human_perf_switch');">
-		  <i class="ti ti-align-left " title="Show raw data"></i>
-		</span>
-		<span class="link hoverable rounded clickable font-normal" style="display: none;" id="human_perf_switch" onclick="hideElement('perfdata_raw'); showElement('perfdata_human'); hideElement('human_perf_switch'); showElement('raw_perf_switch');">
-		  <i class="ti ti-eye " title="Show human data"></i>
-		</span>
+     <div class="font-bold">
+ 	<i class="ti ti-chart-histogram"></i>&nbsp;Performance Data
+     </div>
+    <div>
+  <span class="link hoverable rounded clickable font-normal" id="raw_perf_switch" onclick="showElement('perfdata_raw'); hideElement('perfdata_human'); hideElement('raw_perf_switch'); showElement('human_perf_switch');">
+   <i class="ti ti-align-left " title="Show raw data"></i>
+  </span>
+  <span class="link hoverable rounded clickable font-normal" style="display: none;" id="human_perf_switch" onclick="hideElement('perfdata_raw'); showElement('perfdata_human'); hideElement('human_perf_switch'); showElement('raw_perf_switch');">
+   <i class="ti ti-eye " title="Show human data"></i>
+  </span>
 	  </div>
 	</div>
     <div class="p-0">
@@ -228,6 +219,7 @@ END
         %]
     </div>
   </div>
+ </div>
 [% END %]
 </div><!-- segona fila -->
 
