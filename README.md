@@ -5,7 +5,7 @@ Modified templates for a better visual experience
 This template rearranges html page objects like service/host info.
 It has been created trying not to modify too much the default Light/Dark themes (only added a few tailwind basic classes)\
 Changed default font to tabler-icons.css\
-If you want to use unicons all over thruk instead of fontawesome, try my script in https://github.com/jjcamarasa/thruk3-tt-utils\
+If you want to use unicons all over thruk instead of fontawesome, try my script in https://github.com/jjcamarasa/thruk3-tt-utils
 Latest version uses lots of classes from [tabler.css](https://github.com/tabler) and needs the included Light.css (if not used, some dialog boxes may break functionality or do not show as expected)
 
 ## How to test/use it
